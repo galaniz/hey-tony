@@ -1,0 +1,26 @@
+/**
+ * Themes
+ */
+
+/* Imports */
+
+@use "../config" as con;
+
+/* Styles */
+
+#ht .ht {
+  .t-text-light {
+    &,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    a,
+    p {
+      @extend %u-color-background-base;
+    }
+  }
+}

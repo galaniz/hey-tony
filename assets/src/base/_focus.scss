@@ -1,0 +1,20 @@
+/**
+ * Focus
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/config";
+@use "@alanizcreative/formation/src/utils/functions" as func;
+
+/* Styles */
+
+*:focus {
+  body:not([data-using-mouse]) & {
+    outline: func.calc-rem(4px) solid func.get-color("primary-light");
+  }
+
+  body[data-using-mouse] & {
+    outline: 0;
+  }
+}

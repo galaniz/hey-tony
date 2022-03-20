@@ -1,0 +1,63 @@
+/**
+ * Theme js
+ */
+
+/* Imports */
+
+import { setElements, usingMouse } from 'Formation/utils'
+import Nav from './components/nav'
+
+/* Variables */
+
+const el = {}
+const elMeta = [
+  {
+    prop: 'nav',
+    selector: '.c-nav'
+  }
+]
+
+/* DOM loaded */
+
+const initialize = () => {
+  /* Check if reduce motion */
+
+  let reduceMotion = false
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+  if (!mediaQuery || mediaQuery.matches) { reduceMotion = true }
+
+  /* Set elements object */
+
+  setElements(elMeta, el)
+
+  /* Check if using mouse */
+
+  usingMouse()
+
+  /* Fixed Header */
+
+  if (el.nav) {
+    const nav = new Nav({
+      button: el.nav.querySelector('.c-nav__button'),
+      outer: el.nav,
+      inner: el.nav.firstElementChild,
+      scaleTo: [
+        {
+          width: 0,
+          scale: 0.6
+        },
+        {
+          width: 900,
+          scale: 0.45
+        }
+      ],
+      makeFixed: true,
+      friction: 1.15,
+      maxOffset: 600,
+      reduceMotion: reduceMotion
+    })
+  }
+} // end initialize
+
+document.addEventListener('DOMContentLoaded', initialize)

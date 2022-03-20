@@ -1,0 +1,36 @@
+/**
+ * Overrides
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+#ht .ht {
+  .skip-link {
+    @extend %u-font-weight-extrabold;
+
+    border-radius: func.calc-rem(100px);
+    margin: func.calc-rem(8px);
+  }
+}
+
+.textwidget > * {
+  margin-bottom: func.calc-rem(15px);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.fusion-social-networks-wrapper {
+  @extend %u-display-flex;
+}
+
+.admin-bar .c-nav.fusion-flex-container.fusion-builder-row-1 {
+  margin-top: var(--adminbar-height);
+}

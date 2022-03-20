@@ -1,0 +1,104 @@
+/**
+ * Layouts: flexbox
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.l-flex {
+  /* Row */
+
+  @include mix.breakpoint-min(800) {
+    &[data-row="m"] {
+      flex-direction: row;
+    }
+  }
+
+  /* Gap */
+
+  &[data-gap="s"] {
+    $v: 20px;
+
+    margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+    & > * {
+      padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+    }
+  }
+
+  &[data-gap="r"] {
+    $v: 40px;
+
+    margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+    & > * {
+      padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+    }
+  }
+
+  &[data-gap="m"] {
+    $v: 60px;
+
+    margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+    & > * {
+      padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+    }
+  }
+
+  &[data-gap="l"] {
+    $v: 80px;
+
+    margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+    & > * {
+      padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+    }
+  }
+
+  @include mix.breakpoint-min(1000) {
+    &[data-gap-l="s"] {
+      $v: 20px;
+
+      margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+      & > * {
+        padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+      }
+    }
+
+    &[data-gap-l="r"] {
+      $v: 40px;
+
+      margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+      & > * {
+        padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+      }
+    }
+
+    &[data-gap-l="m"] {
+      $v: 60px;
+
+      margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+      & > * {
+        padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+      }
+    }
+
+    &[data-gap-l="l"] {
+      $v: 80px;
+
+      margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+      & > * {
+        padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+      }
+    }
+  }
+}

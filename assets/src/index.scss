@@ -1,0 +1,66 @@
+/*!
+Theme Name: Avada Child
+Theme URI: https://heytony.ca/
+Description: Theme for heyTony based on Avada
+Template: Avada
+Author: Graciela Alaniz
+Author URI: https://alanizcreative.com
+Version: 1.0.0
+Text Domain: Avada
+*/
+
+/* Config */
+
+@forward "config";
+
+/* Base */
+
+@use "@alanizcreative/formation/src/base";
+@use "@alanizcreative/formation/src/base/inputs-reset";
+@use "base" as b;
+@use "base/focus";
+
+/* Utility classes */
+
+@use "utils/classes";
+
+/* Layouts */
+
+@use "@alanizcreative/formation/src/layouts/flex" as f;
+@use "layouts/flex";
+@use "layouts/padding";
+@use "layouts/margin";
+
+/* Components */
+
+@use "components/nav/index";
+
+/* Objects */
+
+@use "objects/logo";
+
+/* Themes */
+
+@use "themes";
+
+/* Overrides */
+
+@use "overrides";
+
+/* Remove animations */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none;
+    transition-easing-function: linear;
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.001ms;
+  }
+}
