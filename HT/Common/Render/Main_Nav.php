@@ -27,6 +27,7 @@ class Main_Nav {
 		 */
 
 		public static function render() {
+
 				/* Main navigation */
 
 				$counter = 1;
@@ -91,6 +92,8 @@ class Main_Nav {
 						}
 				}
 
+				/* Output */
+
 				return (
 					'<nav>' .
 						'<div class="c-nav__bg c-nav__full c-nav__toggle u-p-a"></div>' .
@@ -114,7 +117,7 @@ class Main_Nav {
 								'</button>' .
 							'</div>' .
 						'</div>' .
-						'<div class="c-nav__overflow c-nav__toggle c-nav__full l-flex u-p-a" id="js-nav-overflow">' .
+						'<div class="c-nav__overflow c-nav__toggle c-nav__full t-text-light l-flex u-p-a" id="js-nav-overflow">' .
 							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
 								"<ul class='l-mb-m-all'>$main_nav</ul>" .
 							'</div>' .

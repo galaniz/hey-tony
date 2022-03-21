@@ -47,34 +47,34 @@ main {
   .h1 * {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(56px) func.calc-rem(100px),
-	    600 1200
-	  );
+      func.calc-rem(56px) func.calc-rem(100px),
+      600 1200
+    );
   }
 
   .h1-s * {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(48px) func.calc-rem(72px),
-	    600 1200
-	  );
+      func.calc-rem(48px) func.calc-rem(72px),
+      600 1200
+    );
   }
 
   h2,
   .h2 * {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(36px) func.calc-rem(48px),
-	    600 1200
-	  );
+      func.calc-rem(36px) func.calc-rem(48px),
+      600 1200
+    );
   }
 
   .h2-l * {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(40px) func.calc-rem(60px),
-	    600 1200
-	  );
+      func.calc-rem(40px) func.calc-rem(60px),
+      600 1200
+    );
   }
 
   h3,
@@ -87,17 +87,17 @@ main {
   .h3 * {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(28px) func.calc-rem(32px),
-	    600 1200
-	  );
+      func.calc-rem(28px) func.calc-rem(32px),
+      600 1200
+    );
   }
 
   .h3-l * {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(32px) func.calc-rem(36px),
-	    600 1200
-	  );
+      func.calc-rem(32px) func.calc-rem(36px),
+      600 1200
+    );
   }
 
   h4,
@@ -105,9 +105,9 @@ main {
   .p-l * {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(24px) func.calc-rem(28px),
-	    600 1200
-	  );
+      func.calc-rem(24px) func.calc-rem(28px),
+      600 1200
+    );
   }
 
   h5,
@@ -116,9 +116,9 @@ main {
   p {
     @include mix.fluid-size(
       font-size,
-	    func.calc-rem(20px) func.calc-rem(24px),
-	    600 1200
-	  );
+      func.calc-rem(20px) func.calc-rem(24px),
+      600 1200
+    );
   }
 
   h6,

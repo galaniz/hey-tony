@@ -13,21 +13,25 @@
   @extend %u-transition-transform-ease;
   @include mix.fluid-size(
     width,
-		func.calc-rem(130px) func.calc-rem(150px),
-		600 1200
-	);
+    func.calc-rem(130px) func.calc-rem(150px),
+    600 1200
+  );
 
   &[data-size="l"] {
     @include mix.fluid-size(
       width,
-			func.calc-rem(140px) func.calc-rem(180px),
-			600 1200
-		);
+      func.calc-rem(140px) func.calc-rem(180px),
+      600 1200
+    );
   }
 
+  img {
+    @extend %u-transition-opacity-ease;
+  }
+
+  &[data-invert],
   [data-scale="down"] &,
-  .c-nav[data-open] &,
-  &[data-invert] {
+  .c-nav[data-open] & {
     img {
       @extend %u-background-color-background-base;
 
@@ -35,17 +39,13 @@
       border-radius: func.calc-rem(8px);
     }
   }
-
-  img {
-    @extend %u-transition-opacity-ease;
-  }
 }
 
 @supports (filter: invert(1)) {
   .o-logo {
+    &[data-invert],
     [data-scale="down"] &,
-    .c-nav[data-open] &,
-    &[data-invert] {
+    .c-nav[data-open] & {
       img {
         padding: 0;
         border-radius: 0;

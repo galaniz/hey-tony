@@ -11,7 +11,9 @@ namespace HT\Common\Render;
  * Imports
  */
 
+use HT\HT as HT;
 use Formation\Utils;
+use Formation\Pub\Nav_Walker;
 
 /**
  * Class
@@ -26,6 +28,7 @@ class Main_Footer {
 		 */
 
 		public static function render() {
+
 				/* Widgets output */
 
 				$widgets = wp_get_sidebars_widgets();
@@ -50,6 +53,7 @@ class Main_Footer {
 								$wid    = wp_render_widget( $w, $k );
 
 								if ( $social ) {
+										$wid = HT::filter_social( $wid );
 										$wid = "<div class='l-pt-xxs'>$wid</div>";
 								}
 
@@ -83,19 +87,52 @@ class Main_Footer {
 						}
 				}
 
+				/* Navigation */
+
+				$footer_nav = wp_nav_menu(
+						[
+							'menu'       => 'footer_navigation',
+							'container'  => '',
+							'items_wrap' => '%3$s',
+							'echo'       => false,
+							'depth'      => 0,
+						]
+				);
+
+				if ( $footer_nav ) {
+						$footer_nav = "<div><ul class='l-flex o-underline' data-gap='s'>$footer_nav</ul></div>";
+				} else {
+						$footer_nav = '';
+				}
+
+				/* Swoop */
+
+				/* phpcs:ignore */
+				$swoop = file_get_contents( get_stylesheet_directory() . '/assets/public/svg/swoop.svg' ); // Ignore: local path
+
+				if ( $swoop ) {
+						$swoop = "<div class='o-swoop u-p-a u-t-0' data-reverse>$swoop</div>";
+				}
+
+				/* Output */
+
 				return (
-					'<div class="l-pt-r l-pb-s l-pt-l-l l-pb-r-l t-text-light">' .
-						'<div class="l-flex l-pb-s">' .
-							$logo .
-						'</div>' .
-						'<div class="l-pb-s">' .
-							'<div class="l-flex" data-gap="r" data-justify="def" data-row="m" data-col data-wrap>' .
-								implode( $widgets_output, '' ) .
+					'<div class="u-p-r">' .
+						$swoop .
+						'<div class="l-pt-r l-pb-s l-pt-l-l l-pb-r-l t-text-light">' .
+							'<div class="l-flex l-pb-s">' .
+								$logo .
 							'</div>' .
-						'</div>' .
-						'<div class="l-flex" data-gap="s" data-justify="def" data-wrap>' .
-							'<div class="p-xs">' .
-								'<p>&copy; ' . get_bloginfo( 'name' ) . ' ' . gmdate( 'Y' ) . '</p>' .
+							'<div class="l-pb-s">' .
+								'<div class="l-flex" data-gap="r" data-justify="def" data-row="m" data-col data-wrap>' .
+									implode( $widgets_output, '' ) .
+								'</div>' .
+							'</div>' .
+							'<div class="l-flex p-xs" data-gap="s" data-gap-l="r" data-align="center" data-justify="def" data-wrap>' .
+								'<div>' .
+									'<p>&copy; ' . get_bloginfo( 'name' ) . ' ' . gmdate( 'Y' ) . '</p>' .
+								'</div>' .
+								$footer_nav .
 							'</div>' .
 						'</div>' .
 					'</div>'

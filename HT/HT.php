@@ -13,6 +13,7 @@ namespace HT;
 
 use HT\Common\Render\Main_Nav;
 use HT\Common\Render\Main_Footer;
+use HT\Utils;
 
 /**
  * Class
@@ -48,6 +49,7 @@ class HT {
 
 				/* Actions */
 
+				add_action( 'after_setup_theme', [$this, 'init'] );
 				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_styles'], 20 );
 
 				/* Filters */
@@ -55,6 +57,18 @@ class HT {
 				add_filter( 'body_class', [$this, 'body_class'], 10, 1 );
 				add_filter( 'language_attributes', [$this, 'html_id'], 10, 1 );
 				add_filter( 'dynamic_sidebar_params', [$this, 'widget_title'], 10, 1 );
+		}
+
+		/**
+		 * Initalize theme.
+		 */
+
+		public function init() {
+				register_nav_menus(
+						[
+							'footer_navigation' => 'Footer Navigation',
+						]
+				);
 		}
 
 		/**
@@ -120,5 +134,11 @@ class HT {
 
 				return $params;
 		}
+
+		/**
+		 * Utilities.
+		 */
+
+		use Utils;
 
 } // End HT

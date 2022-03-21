@@ -5,6 +5,7 @@
 /* Imports */
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 /* State */
@@ -162,6 +163,18 @@ const outputCompatEnv = {
   module: false
 }
 
+/* Copy patterns */
+
+const copyPatterns = [
+  {
+    from: '*.svg',
+    context: path.resolve(__dirname, 'assets', 'src', 'svg'),
+    to ({ context, absoluteFilename }) {
+      return path.resolve(__dirname, 'assets/public/svg/[name][ext]')
+    }
+  }
+]
+
 /* Entries */
 
 let entries = []
@@ -210,6 +223,9 @@ module.exports = [
     plugins: [
       new MiniCssExtractPlugin({
         filename: '../../style.css'
+      }),
+      new CopyWebpackPlugin({
+        patterns: copyPatterns
       })
     ]
   },

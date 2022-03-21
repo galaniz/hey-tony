@@ -95,6 +95,12 @@
   .u-lh-130 {
     line-height: 1.3;
   }
+
+	/* Border */
+
+	.u-b-100 {
+		@extend %u-border-radius-100;
+	}
 }
 
 /* Overflow */

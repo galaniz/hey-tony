@@ -1,0 +1,31 @@
+/**
+ * Objects: swoop
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-swoop {
+	width: 100vw;
+	left: 50%;
+	transform: translateX(-50%, 100%);
+
+	@include mix.fluid-size(
+		height,
+		func.calc-rem(85px) func.calc-rem(280px),
+		600 1200
+	);
+
+	&[data-reverse] {
+		transform: translate(-50%, -100%) rotate(180deg);
+	}
+
+	svg {
+		@extend %u-width-100;
+		@extend %u-height-100;
+	}
+}

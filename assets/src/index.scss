@@ -38,6 +38,8 @@ Text Domain: Avada
 /* Objects */
 
 @use "objects/logo";
+@use "objects/underline";
+@use "objects/swoop";
 
 /* Themes */
 
@@ -58,7 +60,7 @@ Text Domain: Avada
   *::before,
   *::after {
     transition: none;
-    transition-easing-function: linear;
+    transition-timing-function: linear;
     animation-duration: 0.001ms;
     animation-iteration-count: 1;
     transition-duration: 0.001ms;
