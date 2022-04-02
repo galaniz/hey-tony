@@ -10,22 +10,25 @@
 /* Styles */
 
 .o-swoop {
-	width: 100vw;
-	left: 50%;
-	transform: translateX(-50%, 100%);
+	transform: translate(-50%, 100%);
 
-	@include mix.fluid-size(
-		height,
-		func.calc-rem(85px) func.calc-rem(280px),
-		600 1200
-	);
-
-	&[data-reverse] {
-		transform: translate(-50%, -100%) rotate(180deg);
+	&[data-size="r"] {
+		@include mix.fluid-size(
+			height,
+			func.calc-rem(85px) func.calc-rem(280px),
+			600 1200
+		);
 	}
 
-	svg {
-		@extend %u-width-100;
-		@extend %u-height-100;
+	&[data-size="s"] {
+		@include mix.fluid-size(
+			height,
+			func.calc-rem(60px) func.calc-rem(140px),
+			600 1200
+		);
+	}
+
+	&[data-flip] {
+		transform: translate(-50%, -100%) rotate(180deg);
 	}
 }

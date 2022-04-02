@@ -24,3 +24,7 @@
     }
   }
 }
+
+.t-primary-base {
+	@extend %u-color-primary-base;
+}

@@ -35,11 +35,34 @@
 
 /* Hero */
 
-.fusion-page-title-bar::before {
-  @extend %u-content-empty;
-  @extend %u-display-block;
+.fusion-page-title-bar {
+	@extend %u-position-relative;
 
-  height: var(--ht-nav-h);
+	color: var(--ht-hero-c);
+	padding-top: var(--ht-nav-h);
+}
+
+.fusion-page-title-bar .ht-swoop {
+	display: none;
+}
+
+@supports (object-position: 50% 50%) {
+	.fusion-page-title-bar .ht-swoop {
+		display: block;
+	}
+}
+
+#ht .ht .c-hero,
+#ht .ht .c-hero div {
+	position: static;
+}
+
+#ht .ht .c-hero .fusion-column-wrapper {
+	min-height: auto;
+}
+
+.fusion-title.title {
+	margin-bottom: 0 !important;
 }
 
 /* Button */
@@ -184,4 +207,28 @@
 			@extend %u-background-color-primary-base;
 		}
 	}
+}
+
+/* Swoop */
+
+.ht-swoop {
+	color: var(--ht-hero-bg-c);
+}
+
+/* Text */
+
+.fusion-text:empty {
+	@extend %u-display-none;
+}
+
+/* Content */
+
+#ht .ht #content {
+	margin-bottom: 0;
+}
+
+/* Footer */
+
+#ht .ht footer .fusion-row  {
+	z-index: 1;
 }

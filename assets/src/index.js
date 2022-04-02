@@ -14,6 +14,10 @@ const elMeta = [
   {
     prop: 'nav',
     selector: '.c-nav'
+  },
+  {
+    prop: 'hero',
+    selector: '.fusion-page-title-bar'
   }
 ]
 
@@ -57,6 +61,28 @@ const initialize = () => {
       maxOffset: 600,
       reduceMotion: reduceMotion
     })
+  }
+
+  /* Get height of hero */
+
+  if (el.hero) {
+    let resizeTimer
+
+    const set = () => {
+      document.documentElement.style.setProperty('--ht-hero-h', (el.hero.clientHeight / 16) + 'rem')
+    }
+
+    const resizeHandler = () => {
+      clearTimeout(resizeTimer)
+
+      resizeTimer = setTimeout(() => {
+        set()
+      }, 100)
+    }
+
+    set()
+
+    window.addEventListener('resize', resizeHandler)
   }
 } // end initialize
 

@@ -5,6 +5,7 @@
 /* Imports */
 
 @use "sass:map";
+@use "sass:color";
 @use "@alanizcreative/formation/src/config" as con;
 @use "@alanizcreative/formation/src/utils/functions" as func;
 @use "@alanizcreative/formation/src/utils/mixins" as mix;
@@ -25,7 +26,7 @@
   &::before {
     @extend %u-transition-opacity-ease;
 
-    background-color: func.get-color("primary-base");
+    background-color: func.get-color("foreground-base");
     opacity: 0;
   }
 
@@ -70,7 +71,13 @@
   }
 
   &[data-scale-to="true"] {
-    box-shadow: 0 0.5rem 0 0 rgba(func.get-color("primary-light"), 0.3);
+    box-shadow: 0 0.5rem 0 0 rgba(
+			color.scale(
+				func.get-color("foreground-base"),
+				$lightness: 50%
+			),
+			0.3
+		);
 
     &::before {
       opacity: 1;
@@ -116,19 +123,11 @@
   @extend %u-opacity-0;
 }
 
-/* Full screen */
-
-.c-nav__full {
-  transform: translateX(-50%);
-  left: 50%;
-  height: 100vh;
-  width: 100vw;
-}
-
 /* Decorative background swoop */
 
 .c-nav__swoop {
   @extend %u-opacity-0;
+	@extend %u-color-foreground-base;
 
   .c-nav[data-open] & {
     transform: translateX(-50%);
@@ -138,17 +137,21 @@
   transform: translateX(-55%);
   transition: visibility 0ms ease 400ms, opacity 400ms ease 10ms, transform 400ms ease 10ms;
 
-  div {
+  > div {
     @extend %u-background-color-foreground-base;
 
     width: 60vw;
     opacity: 0.1;
   }
 
+	> div > div {
+		width: 50%;
+		max-width: func.calc-rem(300px);
+		transform: translateX(100%);
+	}
+
   svg {
-    width: 50%;
-    transform: translateX(100%);
-    max-width: func.calc-rem(300px);
+    transform: rotate(180deg) scaleX(-1);
   }
 }
 
@@ -188,7 +191,7 @@
   @extend %u-opacity-0;
 
   transform: translateX(#{func.calc-rem(-20px)});
-  transition-delay: var(--ht-nav-item-delay);
+  transition-delay: var(--ht-nav-i-d);
   transition-duration: 600ms, 1000ms;
 
   .c-nav[data-open] & {

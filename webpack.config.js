@@ -6,6 +6,7 @@
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 const path = require('path')
 
 /* State */
@@ -202,6 +203,20 @@ entries = entries.map(e => {
   return obj
 })
 
+/* Style comment */
+
+const styleBanner =
+`/*!
+Theme Name: Avada Child
+Theme URI: https://heytony.ca/
+Description: Theme for heyTony based on Avada
+Template: Avada
+Author: Graciela Alaniz
+Author URI: https://alanizcreative.com
+Version: 1.0.0
+Text Domain: Avada
+*/`
+
 /* Exports */
 
 module.exports = [
@@ -223,6 +238,10 @@ module.exports = [
     plugins: [
       new MiniCssExtractPlugin({
         filename: '../../style.css'
+      }),
+      new webpack.BannerPlugin({
+        raw: true,
+        banner: styleBanner
       }),
       new CopyWebpackPlugin({
         patterns: copyPatterns

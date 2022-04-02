@@ -11,6 +11,8 @@ namespace HT\Common\Render;
  * Imports
  */
 
+use HT\HT as HT;
+use HT\Common\Render\Swoop;
 use Formation\Pub\Nav_Walker;
 use Formation\Utils;
 
@@ -96,15 +98,13 @@ class Main_Nav {
 
 				return (
 					'<nav>' .
-						'<div class="c-nav__bg c-nav__full c-nav__toggle u-p-a"></div>' .
-						'<div class="c-nav__swoop c-nav__full c-nav__toggle u-p-a">' .
+						'<div class="c-nav__bg c-nav__toggle l-breakout u-h-100vh u-p-a"></div>' .
+						'<div class="c-nav__swoop c-nav__toggle l-breakout u-h-100vh u-p-a">' .
 							'<div class="u-h-100 u-p-r">' .
-								'<svg class="u-h-100 u-p-a u-r-0" preserveAspectRatio="none" viewBox="0 0 280 900" fill="none" xmlns="http://www.w3.org/2000/svg">' .
-									'<path d="M0 0C19.3197 415.134 87.235 707.445 280 900H0.00011464L0 0Z" fill="#202020"></path>' .
-								'</svg>' .
+								Swoop::render( ['nav' => true] ) .
 							'</div>' .
 						'</div>' .
-						'<div class="l-flex u-p-r u-z-1" data-gap="r" data-align="center" data-justify="def">' .
+						'<div class="l-flex u-p-r u-z-1' . ( HT::$nav_light ? ' t-text-light' : '' ) . '" data-gap="r" data-align="center" data-justify="def">' .
 							$logo .
 							'<div class="l-flex">' .
 								'<button class="c-nav__button" type="button" aria-expanded="false" aria-controls="js-nav-overflow">' .
@@ -117,9 +117,9 @@ class Main_Nav {
 								'</button>' .
 							'</div>' .
 						'</div>' .
-						'<div class="c-nav__overflow c-nav__toggle c-nav__full t-text-light l-flex u-p-a" id="js-nav-overflow">' .
+						'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout u-h-100vh u-p-a" id="js-nav-overflow">' .
 							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
-								"<ul class='l-mb-m-all'>$main_nav</ul>" .
+								"<ul class='l-mb-m-all o-accent-a-r o-accent-a-r-l'>$main_nav</ul>" .
 							'</div>' .
 						'</div>' .
 					'</nav>'

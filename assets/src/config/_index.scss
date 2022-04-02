@@ -26,7 +26,7 @@ $color-error: #c22300;
     background: (
       base: #F8F3F0,
       light: #FFFFFF,
-      dark: #EDE8E6,
+      dark: #EBE6E4,
     ),
   ),
 
@@ -64,7 +64,6 @@ $color-error: #c22300;
           m: 600ms,
           s: 1000ms,
         ),
-        timing-function: "ease",
         timing-function-cubic: "cubic-bezier(0.65, 0, 0.35, 1)"
       )
     )

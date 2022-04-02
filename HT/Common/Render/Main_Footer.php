@@ -12,6 +12,7 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
+use HT\Common\Render\Swoop;
 use Formation\Utils;
 use Formation\Pub\Nav_Walker;
 
@@ -54,7 +55,9 @@ class Main_Footer {
 
 								if ( $social ) {
 										$wid = HT::filter_social( $wid );
-										$wid = "<div class='l-pt-xxs'>$wid</div>";
+										$wid = "<div class='l-pt-xxxs'>$wid</div>";
+								} else {
+										$wid = "<div class='o-accent-a'>$wid</div>";
 								}
 
 								$ww .= $wid;
@@ -79,7 +82,7 @@ class Main_Footer {
 								$logo = (
 									'<a class="u-d-b" href="' . esc_url( home_url( '/' ) ) . '">' .
 										'<span class="u-v-h">' . get_bloginfo( 'name' ) . ' home</span>' .
-										'<div class="o-logo" data-align="center" data-invert>' .
+										'<div class="o-logo" data-align="center">' .
 											"<img class='u-d-b' src='$src' alt='' srcset='$srcset' sizes='$sizes'>" .
 										'</div>' .
 									'</a>'
@@ -105,20 +108,11 @@ class Main_Footer {
 						$footer_nav = '';
 				}
 
-				/* Swoop */
-
-				/* phpcs:ignore */
-				$swoop = file_get_contents( get_stylesheet_directory() . '/assets/public/svg/swoop.svg' ); // Ignore: local path
-
-				if ( $swoop ) {
-						$swoop = "<div class='o-swoop u-p-a u-t-0' data-reverse>$swoop</div>";
-				}
-
 				/* Output */
 
 				return (
 					'<div class="u-p-r">' .
-						$swoop .
+						Swoop::render( ['flip' => true, 'position' => 'top'] ) .
 						'<div class="l-pt-r l-pb-s l-pt-l-l l-pb-r-l t-text-light">' .
 							'<div class="l-flex l-pb-s">' .
 								$logo .

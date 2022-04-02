@@ -13,6 +13,10 @@ namespace HT;
 
 use HT\Common\Render\Main_Nav;
 use HT\Common\Render\Main_Footer;
+use HT\Common\Render\Hero_Image;
+use HT\Common\Render\Testimonial;
+use HT\Common\Render\Swoop;
+use HT\Common\Posts;
 use HT\Utils;
 
 /**
@@ -38,19 +42,72 @@ class HT {
 		public static $script_ver = '1.0.0';
 
 		/**
+		 * Hero background color (ACF).
+		 *
+		 * @var string $hero_background_color
+		 */
+
+		public static $hero_background_color = 'foreground-base';
+
+		/**
+		 * Hero color based on $hero_background_color.
+		 *
+		 * @var string $hero_color
+		 */
+
+		public static $hero_color = 'background-base';
+
+		/**
+		 * Hero grayscale based on $hero_background_color.
+		 *
+		 * @var string $hero_grayscale
+		 */
+
+		public static $hero_grayscale = false;
+
+		/**
+		 * Nav color based on $hero_background_color.
+		 *
+		 * @var boolean $nav_light
+		 */
+
+		public static $nav_light = true;
+
+		/**
+		 * Theme colors.
+		 *
+		 * @var array $colors
+		 */
+
+		public static $colors = [
+			'primary-base'    => '#1B4ECC',
+			'primary-light'   => '#4B7FFF',
+			'primary-dark'    => '#0734A1',
+			'foreground-base' => '#202020',
+			'background-base' => '#F8F3F0',
+			'background-dark' => '#EDE8E6',
+		];
+
+		/**
 		 * Constructor
 		 */
 
 		public function __construct() {
 				/* Shortcodes */
 
-				add_shortcode( 'get-main-nav', ['HT\Common\Render\Main_Nav', 'shortcode'] );
-				add_shortcode( 'get-main-footer', ['HT\Common\Render\Main_Footer', 'shortcode'] );
+				add_shortcode( 'ht-main-nav', ['HT\Common\Render\Main_Nav', 'shortcode'] );
+				add_shortcode( 'ht-main-footer', ['HT\Common\Render\Main_Footer', 'shortcode'] );
+				add_shortcode( 'ht-hero-image', ['HT\Common\Render\Hero_Image', 'shortcode'] );
+				add_shortcode( 'ht-testimonial', ['HT\Common\Render\Testimonial', 'shortcode'] );
+				add_shortcode( 'ht-swoop', ['HT\Common\Render\Swoop', 'shortcode'] );
+				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
 				/* Actions */
 
 				add_action( 'after_setup_theme', [$this, 'init'] );
+				add_action( 'wp', [$this, 'wp'] );
 				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_styles'], 20 );
+				add_action( 'wp_head', [$this, 'head'] );
 
 				/* Filters */
 
@@ -69,6 +126,35 @@ class HT {
 							'footer_navigation' => 'Footer Navigation',
 						]
 				);
+		}
+
+		/**
+		 * After WP object is set up.
+		 */
+
+		public function wp() {
+				global $post;
+
+				if ( ! is_object( $post ) || ! isset( $post->ID ) ) {
+						return;
+				}
+
+				self::set_meta( $post->ID );
+		}
+
+		/**
+		 * Output in head tag.
+		 */
+
+		public function head() {
+				/* phpcs:disable */ ?>
+					<style id="ht">
+						:root {
+							--ht-hero-c: <?php echo self::$colors[self::$hero_color] ?>;
+							--ht-hero-bg-c: <?php echo self::$colors[self::$hero_background_color] ?>;
+						}
+					</style>
+				<?php /* phpcs:enable */
 		}
 
 		/**
@@ -110,6 +196,11 @@ class HT {
 
 		public function body_class( $classes ) {
 				$classes[] = 'ht';
+
+				if ( self::$hero_grayscale ) {
+						$classes[] = 'ht-hero-grayscale';
+				}
+
 				return $classes;
 		}
 
@@ -129,10 +220,25 @@ class HT {
 		public function widget_title( $params ) {
 				$params[0]['before_widget'] = '<div>';
 				$params[0]['after_widget']  = '</div>';
-				$params[0]['before_title']  = '<div class="p-s u-fw-bold l-mb-s"><p role="heading" aria-level="2">';
+				$params[0]['before_title']  = '<div class="p-s u-fw-b l-mb-s"><p role="heading" aria-level="2">';
 				$params[0]['after_title']   = '</p></div>';
 
 				return $params;
+		}
+
+		/**
+		 * Set values of meta.
+		 *
+		 * @param int $id
+		 */
+
+		public static function set_meta( $id ) {
+				$hero_background_color = get_field( 'background_color', $id );
+
+				self::$hero_background_color = $hero_background_color ? $hero_background_color : 'background-dark';
+				self::$nav_light             = 'background-dark' === self::$hero_background_color ? false : true;
+				self::$hero_grayscale        = 'foreground-base' === self::$hero_background_color ? false : true;
+				self::$hero_color            = 'background-dark' === self::$hero_background_color ? 'foreground-base' : 'background-base';
 		}
 
 		/**

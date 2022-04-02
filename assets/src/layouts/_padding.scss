@@ -16,8 +16,12 @@
 
   /* Padding top */
 
-  .l-pt-xxs {
+  .l-pt-xxxs {
     padding-top: func.calc-rem(20px);
+  }
+
+	.l-pt-xxs {
+    padding-top: func.calc-rem(30px);
   }
 
   .l-pt-xs {
@@ -50,8 +54,12 @@
 
   /* Padding bottom */
 
-  .l-pb-xxs {
+  .l-pb-xxxs {
     padding-bottom: func.calc-rem(20px);
+  }
+
+	.l-pb-xxs {
+    padding-bottom: func.calc-rem(30px);
   }
 
   .l-pb-xs {

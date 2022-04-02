@@ -1,0 +1,39 @@
+/**
+ * Components: hero
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/config" as con;
+
+/* Styles */
+
+.c-hero {
+	&::before {
+		background-color: var(--ht-hero-bg-c);
+	}
+}
+
+.c-hero__media,
+.c-hero__swoop {
+	opacity: 0.25;
+
+	.ht-hero-grayscale & {
+		@extend %u-grayscale;
+	}
+}
+
+.c-hero__media,
+.c-hero__swoop img {
+	object-fit: cover;
+}
+
+.c-hero__media {
+	height: calc(100% + var(--ht-hero-s-h));
+	object-position: 0 0;
+}
+
+.c-hero__swoop img {
+	height: calc(var(--ht-hero-s-h) + var(--ht-hero-h));
+	object-position: 0 calc(-1 * var(--ht-hero-h));
+}
