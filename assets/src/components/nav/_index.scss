@@ -71,21 +71,20 @@
   }
 
   &[data-scale-to="true"] {
-    box-shadow: 0 0.5rem 0 0 rgba(
-			color.scale(
-				func.get-color("foreground-base"),
-				$lightness: 50%
-			),
-			0.3
-		);
-
     &::before {
-      opacity: 1;
+      opacity: 0.7;
     }
   }
 
   &[data-open] {
     color: func.get-color("background-base");
+  }
+
+  .current-menu-parent a,
+  .current-menu-item a {
+    &::after {
+      @extend %u-opacity-1;
+    }
   }
 }
 
@@ -127,7 +126,7 @@
 
 .c-nav__swoop {
   @extend %u-opacity-0;
-	@extend %u-color-foreground-base;
+  @extend %u-color-foreground-base;
 
   .c-nav[data-open] & {
     transform: translateX(-50%);
@@ -144,11 +143,11 @@
     opacity: 0.1;
   }
 
-	> div > div {
-		width: 50%;
-		max-width: func.calc-rem(300px);
-		transform: translateX(100%);
-	}
+  > div > div {
+    width: 50%;
+    max-width: func.calc-rem(300px);
+    transform: translateX(100%);
+  }
 
   svg {
     transform: rotate(180deg) scaleX(-1);

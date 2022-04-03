@@ -10,16 +10,16 @@
 /* Styles */
 
 :root {
-	--ht-hero-c: #{func.get-color('background-base')}; // color
-	--ht-hero-bg-c: #{func.get-color('foreground-base')}; // background color
-	--ht-hero-h: #{func.calc-rem(726px)}; // height
-	--ht-hero-s-h: #{func.calc-rem(280px)}; // swoop height
+  --ht-hero-c: #{func.get-color("background-base")}; // color
+  --ht-hero-bg-c: #{func.get-color("foreground-base")}; // background color
+  --ht-hero-h: #{func.calc-rem(726px)}; // height
+  --ht-hero-s-h: #{func.calc-rem(280px)}; // swoop height
   --ht-nav-p: #{func.calc-rem(20px)}; // padding
   --ht-nav-h: 3rem; // height
-  --ht-nav-t-y: 0rem; // translate Y
+  --ht-nav-t-y: 0; // translate Y
   --ht-nav-s: 1; // scale
   --ht-nav-i-d: 0ms; // item delay
-	--ht-flex-gap: 0; // flex container gap
+  --ht-flex-gap: 0; // flex container gap
 }
 
 main {

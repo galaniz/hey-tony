@@ -26,5 +26,9 @@
 }
 
 .t-primary-base {
-	@extend %u-color-primary-base;
+  @extend %u-color-primary-base;
+}
+
+.t-foreground-base {
+  @extend %u-color-foreground-base;
 }

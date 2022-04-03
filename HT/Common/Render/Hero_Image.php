@@ -31,8 +31,8 @@ class Hero_Image {
 				}
 
 				return (
-					'<span class="l-breakout u-h-100 u-d-b u-p-a u-t-0 u-o-h">' .
-						"<img class='c-hero__media u-w-100' src='$featured_image_url' alt=''>" .
+					'<span class="l-breakout l-h-100-pc u-d-b u-p-a u-t-0 u-o-h">' .
+						"<img class='c-hero__media l-w-100-pc' src='$featured_image_url' alt=''>" .
 					'</span>'
 				);
 		}

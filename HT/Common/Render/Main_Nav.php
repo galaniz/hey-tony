@@ -72,7 +72,7 @@ class Main_Nav {
 						$sticky_logo = '';
 
 						if ( $sticky_logo_info ) {
-								$sticky_logo = '<img class="u-p-a u-l-0 u-h-100" src="' . $sticky_logo_info['url'] . '" alt="">';
+								$sticky_logo = '<img class="u-p-a u-l-0 l-h-100-pc" src="' . $sticky_logo_info['url'] . '" alt="">';
 						}
 
 						if ( $image ) {
@@ -84,7 +84,7 @@ class Main_Nav {
 									'<div>' .
 										'<a class="u-d-b" href="' . esc_url( home_url( '/' ) ) . '">' .
 											'<span class="u-v-h">' . get_bloginfo( 'name' ) . ' home</span>' .
-											'<div class="o-logo l-flex u-p-r" data-align="center">' .
+											'<div class="o-logo l-flex u-p-r" data-align="center" data-size="l">' .
 												"<img class='u-d-b' src='$src' alt='' srcset='$srcset' sizes='$sizes'>" .
 												$sticky_logo .
 											'</div>' .
@@ -98,13 +98,13 @@ class Main_Nav {
 
 				return (
 					'<nav>' .
-						'<div class="c-nav__bg c-nav__toggle l-breakout u-h-100vh u-p-a"></div>' .
-						'<div class="c-nav__swoop c-nav__toggle l-breakout u-h-100vh u-p-a">' .
-							'<div class="u-h-100 u-p-r">' .
+						'<div class="c-nav__bg c-nav__toggle l-breakout l-h-100-vh u-p-a"></div>' .
+						'<div class="c-nav__swoop c-nav__toggle l-breakout l-h-100-vh u-p-a">' .
+							'<div class="l-h-100-pc u-p-r">' .
 								Swoop::render( ['nav' => true] ) .
 							'</div>' .
 						'</div>' .
-						'<div class="l-flex u-p-r u-z-1' . ( HT::$nav_light ? ' t-text-light' : '' ) . '" data-gap="r" data-align="center" data-justify="def">' .
+						'<div class="l-flex u-p-r u-zi-1' . ( HT::$nav_light ? ' t-text-light' : '' ) . '" data-gap="r" data-align="center" data-justify="def">' .
 							$logo .
 							'<div class="l-flex">' .
 								'<button class="c-nav__button" type="button" aria-expanded="false" aria-controls="js-nav-overflow">' .
@@ -117,9 +117,9 @@ class Main_Nav {
 								'</button>' .
 							'</div>' .
 						'</div>' .
-						'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout u-h-100vh u-p-a" id="js-nav-overflow">' .
+						'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout l-h-100-vh u-p-a" id="js-nav-overflow">' .
 							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
-								"<ul class='l-mb-m-all o-accent-a-r o-accent-a-r-l'>$main_nav</ul>" .
+								"<ul class='l-mb-m-all o-accent-r o-accent-r-l u-d-ib-a'>$main_nav</ul>" .
 							'</div>' .
 						'</div>' .
 					'</nav>'

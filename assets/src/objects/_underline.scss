@@ -8,13 +8,27 @@
 
 /* Styles */
 
-.o-underline a {
-	box-shadow: 0 func.calc-rem(1px) 0 0 currentColor;
-	transition: box-shadow 300ms ease;
+.o-underline a,
+.o-underline-r a {
+  transition: box-shadow 300ms ease;
+}
 
-	&:hover,
-	&:focus,
-	&:active {
-		box-shadow: 0 func.calc-rem(1px) 0 0 transparent;
-	}
+.o-underline a {
+  box-shadow: 0 func.calc-rem(1px) 0 0 currentcolor;
+}
+
+.o-underline-r a {
+  box-shadow: 0 func.calc-rem(1px) 0 0 transparent;
+}
+
+.o-underline a:hover,
+.o-underline a:active,
+.o-underline a:focus {
+  box-shadow: 0 func.calc-rem(1px) 0 0 transparent;
+}
+
+.o-underline-r a:hover,
+.o-underline-r a:active,
+.o-underline-r a:focus {
+  box-shadow: 0 func.calc-rem(1px) 0 0 currentcolor;
 }

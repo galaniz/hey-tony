@@ -64,7 +64,7 @@ class Swoop {
 										'</defs>' .
 										'<switch>' .
 											'<foreignObject x="0" y="0" width="100%" height="100%" clip-path="url(#htsw)">' .
-												"<img class='u-w-100' src='$featured_image_url' alt=''>" .
+												"<img class='l-w-100-pc' src='$featured_image_url' alt=''>" .
 											'</foreignObject>' .
 										'</switch>' .
 									'</svg>' .
@@ -75,11 +75,11 @@ class Swoop {
 
 				/* Output */
 
-				$classes = ['u-p-a', 'u-svg-100'];
+				$classes = ['u-p-a', 'u-svg-100-pc'];
 				$attr    = [];
 
 				if ( $nav ) {
-						$classes[] = 'u-h-100 u-r-0';
+						$classes[] = 'l-h-100-pc u-r-0';
 				} else {
 						$classes[] = 'o-swoop l-breakout';
 						$classes[] = 'top' === $position ? 'u-t-0' : 'u-b-0';

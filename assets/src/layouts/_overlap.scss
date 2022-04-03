@@ -1,0 +1,113 @@
+/**
+ * Layouts: overlap
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "sass:math";
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.l-overlap__bg {
+  .l-overlap:nth-child(odd) & {
+    margin-left: 6%;
+  }
+
+  .l-overlap:nth-child(even) & {
+    margin-left: -6%;
+  }
+
+  @include mix.breakpoint-min(700) {
+    .l-overlap:nth-child(odd) & {
+      margin-left: 12%;
+    }
+
+    .l-overlap:nth-child(even) & {
+      margin-left: -12%;
+    }
+  }
+
+  @include mix.breakpoint-min(1300) {
+    $container: map.get(con.$containers, "def");
+    $max: map.get(con.$vars, "max-widths", "l");
+
+    .l-overlap:nth-child(odd) & {
+      margin-left: calc((50vw - func.calc-rem($max - math.div($container, 2))));
+    }
+
+    .l-overlap:nth-child(even) & {
+      margin-left: calc(((50vw - func.calc-rem($max - math.div($container, 2)))) * -1);
+    }
+  }
+
+  @include mix.breakpoint-min(1800) {
+    .l-overlap:nth-child(odd) & {
+      margin-left: func.calc-rem(240px);
+    }
+
+    .l-overlap:nth-child(even) & {
+      margin-left: func.calc-rem(240px * -1);
+    }
+  }
+}
+
+.l-overlap__fg {
+  @include mix.fluid-size(
+    min-height,
+    func.calc-rem(110px) func.calc-rem(240px),
+    700 1200
+  );
+  @include mix.fluid-size(
+    margin-top,
+    func.calc-rem(-110px) func.calc-rem(-240px),
+    700 1200
+  );
+
+  &::before {
+    @extend %u-border-radius-100;
+    @extend %u-background-color-background-base;
+    @include mix.fluid-size(
+      height,
+      func.calc-rem(110px) func.calc-rem(240px),
+      700 1200
+    );
+
+    bottom: auto;
+    transform: scale(2, 2.25);
+  }
+
+  .l-overlap:nth-child(odd) & {
+    padding-right: func.calc-rem(20px);
+
+    &::before {
+      transform-origin: 100% 0;
+      margin-right: func.calc-rem(-30px);
+    }
+  }
+
+  .l-overlap:nth-child(even) & {
+    @extend %u-text-align-right;
+    @extend %u-margin-left-auto;
+
+    padding-left: func.calc-rem(20px);
+
+    &::before {
+      transform-origin: 0 0;
+      margin-left: func.calc-rem(-30px);
+    }
+  }
+
+  @include mix.breakpoint-min(700) {
+    .l-overlap:nth-child(odd) & {
+      padding-right: func.calc-rem(60px);
+    }
+
+    .l-overlap:nth-child(even) & {
+      padding-left: func.calc-rem(60px);
+    }
+  }
+}

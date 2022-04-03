@@ -52,8 +52,8 @@ const initialize = () => {
           scale: 0.6
         },
         {
-          width: 900,
-          scale: 0.45
+          width: 1000,
+          scale: 0.4
         }
       ],
       makeFixed: true,

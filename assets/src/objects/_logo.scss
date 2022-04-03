@@ -30,7 +30,7 @@
   }
 
   [data-scale="down"] &,
-	.t-text-light &,
+  .t-text-light &,
   .c-nav[data-open] & {
     img {
       @extend %u-background-color-background-base;
@@ -44,7 +44,7 @@
 @supports (filter: invert(1)) {
   .o-logo {
     [data-scale="down"] &,
-		.t-text-light &,
+    .t-text-light &,
     .c-nav[data-open] & {
       img {
         padding: 0;

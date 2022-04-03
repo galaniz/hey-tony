@@ -9,23 +9,25 @@
 /* Styles */
 
 .o-border {
-	&::before,
-	&::after {
-		@extend %u-content-empty;
-		border-color: func.get-color('foreground-base');
-		opacity: 0.3;
-	}
+  &::before,
+  &::after {
+    @extend %u-content-empty;
 
-	&::before {
-		@extend %u-position-absolute;
-		@extend %u-bottom-0;
-		transform: translateY(calc(var(--ht-flex-gap) / 2));
-		border-bottom: func.calc-rem(1px) solid;
-		width: calc(100% - var(--ht-flex-gap));
-	}
+    border-color: func.get-color("foreground-base");
+    opacity: 0.3;
+  }
 
-	&::after {
-		transform: translateX(calc(var(--ht-flex-gap) / 2));
-		border-right: func.calc-rem(1px) solid;
-	}
+  &::before {
+    @extend %u-position-absolute;
+    @extend %u-bottom-0;
+
+    transform: translateY(calc(var(--ht-flex-gap) / 2));
+    border-bottom: func.calc-rem(1px) solid;
+    width: calc(100% - var(--ht-flex-gap));
+  }
+
+  &::after {
+    transform: translateX(calc(var(--ht-flex-gap) / 2));
+    border-right: func.calc-rem(1px) solid;
+  }
 }
