@@ -1,0 +1,70 @@
+/**
+ * Theme styles
+ */
+
+/* Config */
+
+@forward "config";
+
+/* Base */
+
+@use "@alanizcreative/formation/src/base";
+@use "@alanizcreative/formation/src/base/inputs-reset";
+@use "base" as b;
+@use "base/focus";
+
+/* Utility classes */
+
+@use "utils/classes";
+
+/* Layouts */
+
+@use "@alanizcreative/formation/src/layouts/flex" as f;
+@use "layouts/flex";
+@use "layouts/padding";
+@use "layouts/margin";
+@use "layouts/width";
+@use "layouts/height";
+@use "layouts/breakout";
+@use "layouts/overlap";
+
+/* Components */
+
+@use "components/nav/index";
+@use "components/hero";
+@use "components/logos";
+
+/* Objects */
+
+@use "@alanizcreative/formation/src/objects/aspect-ratio";
+@use "objects/logo";
+@use "objects/swoop";
+@use "objects/underline";
+@use "objects/accent";
+@use "objects/border";
+
+/* Themes */
+
+@use "themes";
+
+/* Overrides */
+
+@use "overrides";
+
+/* Remove animations */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none;
+    transition-timing-function: linear;
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.001ms;
+  }
+}

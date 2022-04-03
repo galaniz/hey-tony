@@ -1,0 +1,260 @@
+/**
+ * Overrides
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Skip link */
+
+#ht .ht .skip-link {
+  @extend %u-font-weight-extrabold;
+
+  border-radius: func.calc-rem(100px);
+  margin: func.calc-rem(8px);
+}
+
+/* Text widget */
+
+.textwidget > * {
+  margin-bottom: func.calc-rem(15px);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Admin bar height */
+
+.admin-bar .c-nav.fusion-flex-container.fusion-builder-row-1 {
+  margin-top: var(--adminbar-height);
+}
+
+/* Swoop */
+
+.ht-swoop {
+  color: var(--ht-hero-bg-c);
+}
+
+/* Hero */
+
+.fusion-page-title-bar {
+  @extend %u-position-relative;
+
+  color: var(--ht-hero-c);
+  padding-top: var(--ht-nav-h);
+}
+
+.fusion-page-title-bar .ht-swoop {
+  display: none;
+}
+
+@supports (object-position: 50% 50%) {
+  .fusion-page-title-bar .ht-swoop {
+    display: block;
+  }
+}
+
+#ht .ht .c-hero,
+#ht .ht .c-hero div {
+  position: static;
+}
+
+#ht .ht .c-hero .fusion-column-wrapper {
+  min-height: auto;
+}
+
+.fusion-title.title {
+  margin-bottom: 0 !important;
+}
+
+/* Button */
+
+#ht .ht {
+  a::after,
+  a::before {
+    color: inherit;
+  }
+
+  .fusion-button {
+    @extend %u-font-weight-extrabold;
+    @extend %u-position-relative;
+
+    line-height: 1.3;
+
+    .fusion-button-text {
+      @extend %u-position-relative;
+      @extend %u-display-block;
+      @extend %u-transition-transform-ease;
+
+      color: inherit;
+      transform: scale(1) translateZ(0);
+    }
+
+    &.button-medium {
+      font-size: func.calc-rem(18px);
+      padding: func.calc-rem(14px) func.calc-rem(24px);
+    }
+
+    &.button-outline {
+      @extend %u-color-foreground-base;
+
+      background-color: transparent;
+      border: func.calc-rem(2px) solid currentcolor;
+      padding: func.calc-rem(12px) func.calc-rem(22px); // Fill 14px 24px
+    }
+
+    &.button-small {
+      @extend %u-font-weight-bold;
+
+      font-size: func.calc-rem(16px);
+      padding: func.calc-rem(8px) func.calc-rem(18px);
+
+      &.button-outline {
+        padding: func.calc-rem(6px) func.calc-rem(16px);
+      }
+    }
+
+    &.button-large {
+      font-size: func.calc-rem(24px);
+    }
+
+    &.button-xlarge {
+      font-size: func.calc-rem(28px);
+    }
+
+    &.button-large,
+    &.button-xlarge {
+      padding: func.calc-rem(16px) func.calc-rem(26px);
+
+      &.button-outline {
+        padding: func.calc-rem(14px) func.calc-rem(24px);
+      }
+    }
+
+    &::before {
+      @extend %u-content-empty;
+      @extend %u-position-absolute;
+      @extend %u-top-0;
+      @extend %u-right-0;
+      @extend %u-left-0;
+      @extend %u-bottom-0;
+      @extend %u-opacity-0;
+      @extend %u-transition-opacity-ease;
+
+      background-color: currentcolor;
+      border-radius: inherit;
+      mix-blend-mode: hard-light;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      &::before {
+        opacity: 0.2;
+      }
+
+      .fusion-button-text {
+        transform: scale(1.045) translateZ(0);
+      }
+    }
+  }
+
+  .t-text-light .fusion-button {
+    @extend %u-background-color-background-base;
+    @extend %u-color-foreground-base;
+
+    &.button-outline {
+      @extend %u-color-background-base;
+
+      background-color: transparent;
+    }
+  }
+
+  .fusion-social-network-icon {
+    @extend %u-position-relative;
+    @extend %u-border-radius-100;
+
+    background-color: rgba(func.get-color("foreground-base"), 0.15);
+    transition: color 400ms ease, background-color 400ms ease;
+    color: inherit;
+    border: 0;
+    padding: 0.8rem;
+    font-size: 1.5rem;
+
+    &::before {
+      @extend %u-transition-transform-ease;
+
+      transform: scale(1) translateZ(0);
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: rgba(func.get-color("primary-light"), 0.75);
+
+      &::before {
+        transform: scale(1.085) translateZ(0);
+      }
+    }
+  }
+
+  .t-text-light .fusion-social-network-icon {
+    background-color: rgba(func.get-color("background-base"), 0.2);
+
+    &:hover,
+    &:focus,
+    &:active {
+      @extend %u-background-color-primary-base;
+    }
+  }
+}
+
+/* Text */
+
+.fusion-text:empty {
+  @extend %u-display-none;
+}
+
+/* Content */
+
+#ht .ht #content {
+  margin-bottom: 0;
+}
+
+/* Footer */
+
+#ht .ht footer .fusion-row {
+  z-index: 1;
+}
+
+/* Aspect ratio */
+
+.o-aspect-ratio {
+  &[data-type="overlap"] {
+    &::before {
+      @include mix.fluid-size(
+        padding-top,
+        func.calc-rem( 290px ) func.calc-rem( 500px ),
+        700 1200
+      );
+    }
+  }
+}
+
+.o-aspect-ratio__media {
+  @extend %u-transition-transform-ease;
+
+  transition-duration: 1000ms;
+  background-color: rgba(func.get-color("foreground-base"), 0.1);
+  transform: scale(1);
+
+  a:hover .o-aspect-ratio[data-hover="scale"] &,
+  a:active .o-aspect-ratio[data-hover="scale"] &,
+  a:focus .o-aspect-ratio[data-hover="scale"] & {
+    transform: scale(1.03);
+  }
+}

@@ -1,0 +1,164 @@
+/**
+ * Base
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+:root {
+  --ht-hero-c: #{func.get-color("background-base")}; // color
+  --ht-hero-bg-c: #{func.get-color("foreground-base")}; // background color
+  --ht-hero-h: #{func.calc-rem(726px)}; // height
+  --ht-hero-s-h: #{func.calc-rem(280px)}; // swoop height
+  --ht-nav-p: #{func.calc-rem(20px)}; // padding
+  --ht-nav-h: 3rem; // height
+  --ht-nav-t-y: 0; // translate Y
+  --ht-nav-s: 1; // scale
+  --ht-nav-i-d: 0ms; // item delay
+  --ht-flex-gap: 0; // flex container gap
+}
+
+main {
+  min-height: 100vh;
+}
+
+#ht .ht {
+  .h1 *,
+  .h1-s *,
+  .h2 *,
+  .h2-l *,
+  .h3 *,
+  .h3-l *,
+  .h4 *,
+  .h5 *,
+  .h6 * {
+    @extend %u-font-weight-extrabold;
+  }
+
+  h1,
+  .h1 *,
+  .h1-s *,
+  h2,
+  .h2 *,
+  .h2-l * {
+    line-height: 1.15;
+  }
+
+  h1,
+  .h1 * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(56px) func.calc-rem(100px),
+      600 1200
+    );
+  }
+
+  .h1-s * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(48px) func.calc-rem(72px),
+      600 1200
+    );
+  }
+
+  h2,
+  .h2 * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(36px) func.calc-rem(48px),
+      600 1200
+    );
+  }
+
+  .h2-l * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(40px) func.calc-rem(60px),
+      600 1200
+    );
+  }
+
+  h3,
+  .h3 *,
+  .h3-l * {
+    line-height: 1.25;
+  }
+
+  h3,
+  .h3 * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(28px) func.calc-rem(32px),
+      600 1200
+    );
+  }
+
+  .h3-l * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(32px) func.calc-rem(36px),
+      600 1200
+    );
+  }
+
+  h4,
+  .h4 *,
+  .p-l * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(24px) func.calc-rem(28px),
+      600 1200
+    );
+  }
+
+  h5,
+  .h5 *,
+  .p *,
+  p {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(20px) func.calc-rem(24px),
+      600 1200
+    );
+  }
+
+  h6,
+  .h6 * {
+    font-size: func.calc-rem(18px);
+
+    @include mix.breakpoint-min(1200) {
+      font-size: func.calc-rem(20px);
+    }
+  }
+
+  .p-l *,
+  .p-m *,
+  .p *,
+  p {
+    letter-spacing: 0.01em;
+  }
+
+  .p-m *,
+  .p-s * {
+    font-size: func.calc-rem(16px);
+  }
+
+  .p-m *,
+  .p-xs * {
+    letter-spacing: 0.02em;
+  }
+
+  .p-m * {
+    @include mix.breakpoint-min(1200) {
+      font-size: func.calc-rem(18px);
+    }
+  }
+
+  .p-xs * {
+    font-size: func.calc-rem(14px);
+  }
+}

@@ -1,0 +1,13 @@
+{
+	"require": {
+		"alanizcreative/wp-theme-formation": "2.0.6"
+	},
+	"autoload": {
+		"psr-4": {
+			"HT\\": "HT"
+		}
+	},
+	"config": {
+		"optimize-autoloader": true
+	}
+}

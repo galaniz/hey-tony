@@ -1,0 +1,34 @@
+/**
+ * Objects: swoop
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-swoop {
+  transform: translate(-50%, 100%);
+
+  &[data-size="r"] {
+    @include mix.fluid-size(
+      height,
+      func.calc-rem(85px) func.calc-rem(280px),
+      600 1300
+    );
+  }
+
+  &[data-size="s"] {
+    @include mix.fluid-size(
+      height,
+      func.calc-rem(50px) func.calc-rem(140px),
+      600 1300
+    );
+  }
+
+  &[data-flip] {
+    transform: translate(-50%, -100%) rotate(180deg);
+  }
+}

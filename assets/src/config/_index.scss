@@ -1,0 +1,91 @@
+/**
+ * Config
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/config/mixins" as mix;
+
+/* Internal variables */
+
+$color-error: #c22300;
+
+/* Variables */
+
+@use "@alanizcreative/formation/src/config" with (
+
+  $colors: (
+    primary: (
+      base: #1B4ECC,
+      light: #4B7FFF,
+      dark: #0734A1,
+    ),
+    foreground: (
+      base: #202020,
+    ),
+    background: (
+      base: #F8F3F0,
+      light: #FFFFFF,
+      dark: #EBE6E4,
+    ),
+  ),
+
+  $fonts: (
+    weight: (
+      extrabold: 800,
+      bold: 700,
+      normal: 300,
+    )
+  ),
+
+  $container-padding: 20px,
+
+  $containers: (
+    def: 1150px,
+  ),
+
+  $breakpoints: (
+    1300: 1300px,
+    1800: 1800px,
+  ),
+
+  $z-index: (
+    skip-link: 205,
+    nav: 185,
+  ),
+
+  $nav: (
+    icon: (
+      width: 60px,
+      line-width: 2px,
+      margin: 13px
+    ),
+    overlay: (
+      duration: 400ms
+    )
+  ),
+
+  $transitions: (
+    (
+      def: (
+        durations: (
+          def: 400ms,
+          m: 600ms,
+          s: 1000ms,
+        ),
+        timing-function-cubic: "cubic-bezier(0.65, 0, 0.35, 1)"
+      )
+    )
+  ),
+
+  $vars: (
+    color-error: $color-error,
+    wp-selector: ".wp-editor",
+    max-widths: (
+      l: 1100px,
+      r: 660px,
+      s: 300px,
+    ),
+  ),
+
+);
