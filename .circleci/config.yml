@@ -12,7 +12,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "9f:49:99:61:a7:da:d7:4f:51:cd:e7:1f:e1:dd:e6:b6"
-      - run: sudo apt update
+      - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
       - run: sudo apt install rsync
       - run:
           rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
@@ -26,7 +26,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "9f:49:99:61:a7:da:d7:4f:51:cd:e7:1f:e1:dd:e6:b6"
-      - run: sudo apt update
+      - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
       - run: sudo apt install rsync
       - run:
           rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
