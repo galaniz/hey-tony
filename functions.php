@@ -23,6 +23,6 @@ require get_stylesheet_directory() . '/vendor/autoload.php';
 
 use HT\HT as HT;
 
-/* Instantiate theme classsss */
+/* Instantiate theme class */
 
 $ht = new HT();
