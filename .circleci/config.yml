@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   build-and-deploy-staging:
     docker:
-      - image: cimg/php:7.4-node-browsers
+      - image: cimg/php:7.4-node
     steps:
       - checkout
       - run: npm install
@@ -18,7 +18,7 @@ jobs:
           rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
   build-and-deploy-production:
     docker:
-      - image: cimg/php:7.4-node-browsers
+      - image: cimg/php:7.4-node
     steps:
       - checkout
       - run: npm install
