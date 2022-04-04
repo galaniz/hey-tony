@@ -24,6 +24,7 @@
   --ht-flex-gap: 0; // flex container gap
 	--ht-error-c: #{map.get(con.$vars, 'color-error')}; // error color
 	--ht-primary-base-c: #{func.get-color('primary-base')}; // primary color
+	--ht-outline-offset: #{func.calc-rem(4px)};
 }
 
 main {

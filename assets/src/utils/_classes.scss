@@ -9,11 +9,22 @@
 /* Styles */
 
 #ht .ht {
-  /* Hide */
+  /* A11y */
 
   .u-v-h {
     @extend %u-visually-hidden;
   }
+
+	.u-h-i {
+	  @extend %u-position-absolute;
+	  @extend %u-overflow-hidden;
+
+	  width: 0.063rem;
+	  height: 0.063rem;
+	  padding: 0;
+	  border: 0;
+	  clip: rect(0.063rem 0.063rem 0.063rem 0.063rem);
+	}
 
   /* Position */
 

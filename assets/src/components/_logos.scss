@@ -12,11 +12,6 @@
 
 #ht .ht .c-logos .fusion-column-wrapper {
 	@extend %u-gap-r;
-
-  @include mix.breakpoint-min(600) {
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
 }
 
 .c-logos {
@@ -28,11 +23,10 @@
 	}
 
   img {
-    @extend %u-width-100;
-
     max-width: func.calc-rem(180px);
     max-height: func.calc-rem(50px);
     height: auto;
+		width: auto;
   }
 
   @include mix.breakpoint-min(600) {
@@ -40,6 +34,12 @@
   }
 
   @include mix.breakpoint-min(1000) {
+		flex-grow: 0;
+
+		> div > div {
+			margin-left: 0;
+		}
+
     img {
       max-width: func.calc-rem(210px);
       max-height: func.calc-rem(70px);

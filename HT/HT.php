@@ -15,6 +15,7 @@ use HT\Common\Render\Main_Nav;
 use HT\Common\Render\Main_Footer;
 use HT\Common\Render\Hero_Image;
 use HT\Common\Render\Swoop;
+use HT\Common\Render\Filters;
 use HT\Common\Posts;
 use HT\Utils;
 
@@ -98,6 +99,7 @@ class HT {
 				add_shortcode( 'ht-main-footer', ['HT\Common\Render\Main_Footer', 'shortcode'] );
 				add_shortcode( 'ht-hero-image', ['HT\Common\Render\Hero_Image', 'shortcode'] );
 				add_shortcode( 'ht-swoop', ['HT\Common\Render\Swoop', 'shortcode'] );
+				add_shortcode( 'ht-filters', ['HT\Common\Render\Filters', 'shortcode'] );
 				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
 				/* Actions */

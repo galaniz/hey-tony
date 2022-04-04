@@ -100,8 +100,7 @@
     }
 
     &.button-outline {
-      @extend %u-color-foreground-base;
-
+      color: inherit;
       background-color: transparent;
       border: func.calc-rem(2px) solid currentcolor;
       padding: func.calc-rem(12px) func.calc-rem(22px); // Fill 14px 24px
