@@ -1,0 +1,154 @@
+/**
+ * Objects: form
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "../config/placeholders";
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-form {
+	input[type="text"],
+	input[type="email"],
+	input[type="tel"],
+	input[type="url"],
+	select,
+	textarea {
+		padding: func.calc-rem(12px) func.calc-rem(24px);
+		border: func.calc-rem(2px) solid currentColor;
+		font-size: inherit;
+		line-height: inherit;
+		transition: all 300ms ease;
+
+		&:focus {
+			border-color: var(--ht-primary-base-c);
+			box-shadow: inset 0 0 0 func.calc-rem(1px) var(--ht-primary-base-c);
+		}
+	}
+
+	textarea {
+		border-radius: func.calc-rem(20px);
+	}
+
+	/* Ninja forms overrides */
+
+	.nf-field-container {
+		margin: 0;
+	}
+
+	.submit-container {
+		padding-top: func.calc-rem(10px);
+	}
+
+	.list-select-wrap .nf-field-element {
+		@extend %u-position-relative;
+
+		&::after {
+			@extend %u-content-empty;
+	    @extend %u-position-absolute;
+	    @extend %u-position-vertical-center;
+
+	    background-image: url("assets/public/svg/caret.svg");
+	    background-repeat: no-repeat;
+	    background-size: 100% 100%;
+			width: func.calc-rem(16px);
+	    height: func.calc-rem(10px);
+			right: 1.5rem;
+		}
+	}
+
+	.nf-field-container,
+	.nf-field-element,
+	nf-fields-wrap {
+		@extend %u-display-flex;
+		flex-wrap: wrap;
+	}
+
+	.field-wrap input[type=button] {
+		width: 100%;
+	}
+
+	.nf-field {
+		@extend %u-width-100;
+	}
+
+	.nf-input-limit {
+		margin-top: 0;
+	}
+
+	.nf-error-msg,
+	.ninja-forms-req-symbol {
+		color: var(--ht-error-c);
+	}
+
+	.nf-error-msg,
+	.nf-response-msg {
+		@extend %u-font-weight-bold;
+		border-radius: func.calc-rem(5px);
+	}
+
+	.nf-error-msg {
+		font-size: func.calc-rem(18px);
+		background-color: rgba(map.get(con.$vars, 'color-error'), 0.2);
+		padding: func.calc-rem(5px) func.calc-rem(10px);
+		margin-top: 1rem;
+	}
+
+	.nf-error-field-errors,
+	.nf-response-msg {
+		padding: func.calc-rem(15px) func.calc-rem(20px);
+	}
+
+	.nf-response-msg {
+		@extend %u-color-primary-base;
+
+		background-color: rgba(func.get-color('primary-base'), 0.2);
+
+		p {
+			margin: 0;
+		}
+	}
+
+	.nf-error-field-errors {
+		margin-top: 2rem;
+	}
+
+	.nf-response-msg,
+	.nf-before-form-content {
+		margin-bottom: 2rem;
+	}
+
+	.nf-error .ninja-forms-field {
+		border-color: var(--ht-error-c);
+		border-width: func.calc-rem(2px);
+		box-shadow: inset 0 0 0 func.calc-rem(1px) var(--ht-error-c);
+	}
+
+	nf-fields-wrap {
+		@extend %u-gap-r;
+	}
+
+	nf-field {
+		@extend %u-flex-grow-1;
+	}
+
+	nf-field-label {
+		margin-bottom: func.calc-rem(12px);
+	}
+
+	@include mix.breakpoint-min(800) {
+		nf-field {
+			width: 50%;
+
+			&:last-child,
+			&:nth-last-child(2) {
+				width: 100%;
+			}
+		}
+	}
+}

@@ -1,0 +1,27 @@
+/**
+ * Config: placeholders
+ */
+
+%u-gap-r {
+	$v: 1.875rem;
+
+	margin-top: ($v * -1);
+	margin-left: ($v * -1);
+
+	& > * {
+		padding-top: $v;
+		padding-left: $v;
+	}
+
+	@media only screen and (min-width: 62.5rem) {
+		$v: 2.5rem;
+
+		margin-top: ($v * -1);
+		margin-left: ($v * -1);
+
+		& > * {
+			padding-top: $v;
+			padding-left: $v;
+		}
+	}
+}

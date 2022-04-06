@@ -4,6 +4,8 @@
 
 /* Imports */
 
+@use "sass:map";
+@use "@alanizcreative/formation/src/config" as con;
 @use "@alanizcreative/formation/src/utils/functions" as func;
 @use "@alanizcreative/formation/src/utils/mixins" as mix;
 
@@ -20,6 +22,9 @@
   --ht-nav-s: 1; // scale
   --ht-nav-i-d: 0ms; // item delay
   --ht-flex-gap: 0; // flex container gap
+	--ht-error-c: #{map.get(con.$vars, 'color-error')}; // error color
+	--ht-primary-base-c: #{func.get-color('primary-base')}; // primary color
+	--ht-outline-offset: #{func.calc-rem(4px)};
 }
 
 main {

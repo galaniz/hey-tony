@@ -4,58 +4,57 @@
 
 /* Imports */
 
+@use "../config/placeholders";
 @use "@alanizcreative/formation/src/utils/functions" as func;
 @use "@alanizcreative/formation/src/utils/mixins" as mix;
 
 /* Styles */
 
 #ht .ht .c-logos .fusion-column-wrapper {
-  margin-left: func.calc-rem(-40px);
-  margin-top: func.calc-rem(-40px);
-
-  @include mix.breakpoint-min(500) {
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
+	@extend %u-gap-r;
 }
 
 .c-logos {
   opacity: 0.5;
   justify-content: center;
 
-  > div > div {
-    padding-left: func.calc-rem(40px);
-    padding-top: func.calc-rem(40px);
-    text-align: center;
-    width: 50%;
-  }
+	> div > div {
+		@extend %u-margin-left-auto;
+	}
 
   img {
-    @extend %u-width-100;
-
     max-width: func.calc-rem(180px);
     max-height: func.calc-rem(50px);
     height: auto;
+		width: auto;
   }
 
-  @include mix.breakpoint-min(500) {
+  @include mix.breakpoint-min(600) {
     justify-content: flex-end;
-
-    > div > div {
-      width: auto;
-    }
-  }
-
-  @include mix.breakpoint-min(800) {
-    padding-left: 15%;
   }
 
   @include mix.breakpoint-min(1000) {
-    padding-left: 20%;
+		flex-grow: 0;
+
+		> div > div {
+			margin-left: 0;
+		}
 
     img {
       max-width: func.calc-rem(210px);
       max-height: func.calc-rem(70px);
+    }
+  }
+}
+
+.c-logos__m {
+  img {
+    max-height: func.calc-rem(40px);
+  }
+
+  @include mix.breakpoint-min(1000) {
+    img {
+      max-height: func.calc-rem(55px);
     }
   }
 }

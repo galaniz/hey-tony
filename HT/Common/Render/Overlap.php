@@ -94,7 +94,7 @@ class Overlap {
 
 				return (
 					'<div class="l-overlap">' .
-						( $link ? "<a class='o-accent-r o-accent-r-m' href='$link' data-theme='primary-base'>" : '' ) .
+						( $link ? "<a class='o-accent-r o-accent-r-m u-d-b' href='$link' data-theme='primary-base'>" : '' ) .
 						"<div class='l-overlap__bg l-mw-l'>" .
 							'<div class="o-aspect-ratio" data-type="overlap" data-hover="scale">' .
 								$image .

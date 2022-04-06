@@ -10,11 +10,25 @@
 /* Styles */
 
 *:focus {
-  body:not([data-using-mouse]) & {
+  body:not([data-using-mouse]) &,
+	body:not([data-using-mouse]) &.o-radio__input ~ div,
+	body:not([data-using-mouse]) &.o-checkbox__input ~ div {
     outline: func.calc-rem(4px) solid func.get-color("primary-light");
+		outline-offset: var(--ht-outline-offset);
   }
 
   body[data-using-mouse] & {
     outline: 0;
   }
+}
+
+#ht .ht input[type="radio"]:checked ~ .fusion-button.button-outline {
+	@extend %u-background-color-primary-base;
+	@extend %u-color-background-base;
+
+	border-color: var(--ht-primary-base-c);
+
+	&::before {
+		@extend %u-opacity-0;
+	}
 }
