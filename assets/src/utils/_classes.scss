@@ -133,6 +133,22 @@
     border: 0;
   }
 
+	.u-b-s {
+		border: 0.125rem solid currentColor;
+	}
+
+	.u-b-m {
+		border: 0.3125rem solid currentColor;
+	}
+
+	.u-b-hover {
+		&:hover,
+		&:focus,
+		&:active {
+			border-color: func.get-color('primary-base');
+		}
+	}
+
   /* Color */
 
   .u-c-i * {
@@ -153,4 +169,10 @@
     @extend %u-width-100;
     @extend %u-height-100;
   }
+}
+
+/* Transform */
+
+.u-t-180 {
+	transform: rotate(180deg);
 }

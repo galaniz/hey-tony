@@ -230,6 +230,11 @@
   z-index: 1;
 }
 
+.fusion-footer {
+	@extend %u-position-relative;
+	z-index: 11;
+}
+
 /* Aspect ratio */
 
 .o-aspect-ratio {
@@ -247,9 +252,13 @@
 .o-aspect-ratio__media {
   @extend %u-transition-transform-ease;
 
-  transition-duration: 1000ms;
-  background-color: rgba(func.get-color("foreground-base"), 0.1);
+	background-color: rgba(func.get-color("foreground-base"), 0.1);
+	transition-duration: 600ms;
   transform: scale(1);
+
+	.o-aspect-ratio[data-scale="slow"] {
+		transition-duration: 1000ms;
+	}
 
   a:hover .o-aspect-ratio[data-hover="scale"] &,
   a:active .o-aspect-ratio[data-hover="scale"] &,

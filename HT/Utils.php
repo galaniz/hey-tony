@@ -8,13 +8,44 @@
 namespace HT;
 
 /**
- * Trait
+ * Imports
  */
 
-trait Utils {
+use Formation\Utils as FrmUtils;
+
+/**
+ * Class
+ */
+
+class Utils {
+
+		/**
+		 * Namespace for FrmUtils.
+		 *
+		 * @var string $namespace
+		 */
+
+		public static $namespace = 'ht';
+
+		/**
+		 * For FrmUtils.
+		 *
+		 * @var array $posts_per_page
+		 */
+
+		public static $posts_per_page = [];
+
+		/**
+		 * Formation utilities.
+		 */
+
+		use FrmUtils;
 
 		/**
 		 * Filter Avada social icons output.
+		 *
+		 * @param string $html
+		 * @return string
 		 */
 
 		public static function filter_social( $html ) {

@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use Formation\Utils;
+use HT\Utils;
 
 /**
  * Class

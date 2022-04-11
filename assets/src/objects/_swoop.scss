@@ -28,6 +28,14 @@
     );
   }
 
+	&[data-size="xs"] {
+    @include mix.fluid-size(
+      height,
+      func.calc-rem(40px) func.calc-rem(110px),
+      600 1300
+    );
+  }
+
   &[data-flip] {
     transform: translate(-50%, -100%) rotate(180deg);
   }

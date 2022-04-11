@@ -11,10 +11,6 @@ class ComposerStaticInite4780a21c4fe0bbf9346d1b4cf8437b4
     );
 
     public static $prefixLengthsPsr4 = array (
-        'V' => 
-        array (
-            'Vendor\\Formation\\' => 17,
-        ),
         'H' => 
         array (
             'HT\\' => 3,
@@ -26,10 +22,6 @@ class ComposerStaticInite4780a21c4fe0bbf9346d1b4cf8437b4
     );
 
     public static $prefixDirsPsr4 = array (
-        'Vendor\\Formation\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/',
-        ),
         'HT\\' => 
         array (
             0 => __DIR__ . '/../..' . '/HT',
@@ -56,8 +48,18 @@ class ComposerStaticInite4780a21c4fe0bbf9346d1b4cf8437b4
         'Formation\\Utils' => __DIR__ . '/..' . '/alanizcreative/wp-theme-formation/Formation/Utils.php',
         'Formation\\Utils_Optional' => __DIR__ . '/..' . '/alanizcreative/wp-theme-formation/Formation/Utils_Optional.php',
         'Formation\\Utils_Render' => __DIR__ . '/..' . '/alanizcreative/wp-theme-formation/Formation/Utils_Render.php',
+        'HT\\Common\\Posts' => __DIR__ . '/../..' . '/HT/Common/Posts.php',
+        'HT\\Common\\Render\\Columns' => __DIR__ . '/../..' . '/HT/Common/Render/Columns.php',
+        'HT\\Common\\Render\\Filters' => __DIR__ . '/../..' . '/HT/Common/Render/Filters.php',
+        'HT\\Common\\Render\\Hero_Image' => __DIR__ . '/../..' . '/HT/Common/Render/Hero_Image.php',
+        'HT\\Common\\Render\\Main_Footer' => __DIR__ . '/../..' . '/HT/Common/Render/Main_Footer.php',
         'HT\\Common\\Render\\Main_Nav' => __DIR__ . '/../..' . '/HT/Common/Render/Main_Nav.php',
+        'HT\\Common\\Render\\Overlap' => __DIR__ . '/../..' . '/HT/Common/Render/Overlap.php',
+        'HT\\Common\\Render\\Swoop' => __DIR__ . '/../..' . '/HT/Common/Render/Swoop.php',
+        'HT\\Common\\Render\\Testimonial' => __DIR__ . '/../..' . '/HT/Common/Render/Testimonial.php',
         'HT\\HT' => __DIR__ . '/../..' . '/HT/HT.php',
+        'HT\\Pub\\Ajax' => __DIR__ . '/../..' . '/HT/Pub/Ajax.php',
+        'HT\\Utils' => __DIR__ . '/../..' . '/HT/Utils.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -53,7 +53,7 @@
 	    @extend %u-position-absolute;
 	    @extend %u-position-vertical-center;
 
-	    background-image: url("assets/public/svg/caret.svg");
+	    background-image: url("assets/public/svg/caret-down.svg");
 	    background-repeat: no-repeat;
 	    background-size: 100% 100%;
 			width: func.calc-rem(16px);

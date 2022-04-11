@@ -1,6 +1,6 @@
 <?php
 /**
- * Render overlap image text layout
+ * Render card layout
  *
  * @package hey-tony
  */
@@ -17,15 +17,15 @@ use HT\Utils;
  * Class
  */
 
-class Overlap {
+class Cards {
 
 		/**
-		 * Output overlap layout item.
+		 * Output card.
 		 *
 		 * @return string
 		 */
 
-		public static function render_item( $args = [] ) {
+		public static function render_card( $args = [] ) {
 				$args = array_merge(
 						[
 							'title'    => '',
@@ -33,6 +33,8 @@ class Overlap {
 							'excerpt'  => '',
 							'media_id' => 0,
 							'pretitle' => '',
+							'index'    => 0,
+							'width'    => 33,
 						],
 						$args
 				);
@@ -43,7 +45,15 @@ class Overlap {
 					'excerpt'  => $excerpt,
 					'media_id' => $media_id,
 					'pretitle' => $pretitle,
+					'index'    => $index,
+					'width'    => $width,
 				] = $args;
+
+				$first_two = 0 === $index || 1 === $index;
+
+				if ( $first_two ) {
+						$width = 50;
+				}
 
 				/* Title required */
 
@@ -57,7 +67,7 @@ class Overlap {
 
 				if ( $pretitle ) {
 						$pretitle_output = (
-							'<div class="p-s u-fw-b l-pb-xxxs">' .
+							'<div class="p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs">' .
 								"<p class='l-m-0'>$pretitle</p>" .
 							'</div>'
 						);
@@ -78,7 +88,7 @@ class Overlap {
 				$image = '<div class="o-aspect-ratio__media"></div>';
 
 				if ( $media_id ) {
-						$image = Utils::get_image( $media_id, '1536x1536' );
+						$image = Utils::get_image( $media_id, $first_two ? 'large' : 'medium_large' );
 
 						if ( $image ) {
 								$src    = esc_url( $image['url'] );
@@ -93,31 +103,27 @@ class Overlap {
 				/* Output */
 
 				return (
-					'<div class="l-overlap">' .
-						( $link ? "<a class='o-accent-r o-accent-r-m u-d-b' href='$link' data-theme='primary-base'>" : '' ) .
-						"<div class='l-overlap__bg l-mw-l'>" .
-							'<div class="o-aspect-ratio" data-type="overlap" data-hover="scale" data-scale="slow">' .
-								$image .
-							'</div>' .
-						'</div>' .
-						'<div class="l-overlap__fg u-o-h">' .
-							'<div class="l-mw-r l-pt-s l-pt-r-l u-p-r u-tlrb-b">' .
+					"<div class='l-w-$width-pc'>" .
+						'<div class="l-pb-xxxs l-pb-xs-l">' .
+							( $link ? "<a class='l-overlap-v o-underline-r u-d-b' href='$link'>" : '' ) .
+								'<div class="o-aspect-ratio" data-p="66" data-hover="scale">' .
+									$image .
+								'</div>' .
 								'<div class="u-p-r">' .
 									$pretitle_output .
-									'<div class="h2-l l-pb-xxxs t-foreground-base u-c-i">' .
-										"<h2 class='l-m-0'><span class='u-zi-1'>$title</span></h2>" .
+									'<div class="' . ( $first_two ? 'h3-l l-mb-s' : 'h4' ) . ' t-foreground-base u-c-i">' .
+										"<h2 class='l-m-0'><span>$title</span></h2>" .
 									'</div>' .
-									$excerpt .
+									( $first_two && $excerpt ? $excerpt : '' ) .
 								'</div>' .
-							'</div>' .
+							( $link ? '</a>' : '' ) .
 						'</div>' .
-						( $link ? '</a>' : '' ) .
 					'</div>'
 				);
 		}
 
 		/**
-		 * Output overlap layout.
+		 * Output cards.
 		 *
 		 * @return string
 		 */
@@ -142,17 +148,17 @@ class Overlap {
 						return '';
 				}
 
-				$class = 'l-flex' . ( $class ? " $class" : '' );
+				$class = 'l-flex l-w-all' . ( $class ? " $class" : '' );
 
 				/* Output */
 
 				return (
 					'<div>' .
-						"<div class='$class' data-gap='l' data-gap-l='xl' data-col>" .
+						"<div class='$class' data-gap='r' data-row='s' data-wrap='s' data-col>" .
 							$content .
 						'</div>' .
 					'</div>'
 				);
 		}
 
-} // End Overlap
+} // End Cards

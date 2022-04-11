@@ -101,7 +101,7 @@ class Swoop {
 		}
 
 		/**
-		 * Shortcode to output main footer.
+		 * Shortcode to output swoop.
 		 *
 		 * @param array $atts
 		 * @param string $content

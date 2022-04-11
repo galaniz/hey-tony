@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Vendor\\Formation\\' => array($baseDir . '/'),
     'HT\\' => array($baseDir . '/HT'),
     'Formation\\' => array($vendorDir . '/alanizcreative/wp-theme-formation/Formation'),
 );

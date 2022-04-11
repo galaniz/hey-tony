@@ -24,6 +24,7 @@ class Columns {
 						[
 							'content' => '',
 							'border'  => true,
+							'width'   => 50,
 						],
 						$args
 				);
@@ -31,6 +32,7 @@ class Columns {
 				[
 					'content' => $content,
 					'border'  => $border,
+					'width'   => $width,
 				] = $args;
 
 				/* Content required */
@@ -41,8 +43,10 @@ class Columns {
 
 				/* Output */
 
+				$border_class = $border ? ' o-border' : '';
+
 				return (
-					'<div class="l-flex u-p-r' . ( $border ? ' o-border' : '' ) . '">' .
+					"<div class='l-w-$width-pc l-flex u-p-r$border_class'>" .
 						'<div class="l-flex">' .
 							$content .
 						'</div>' .
@@ -61,7 +65,7 @@ class Columns {
 						[
 							'content' => '',
 							'border'  => true,
-							'width'   => 50,
+							'class'   => '',
 						],
 						$args
 				);
@@ -69,7 +73,7 @@ class Columns {
 				[
 					'content' => $content,
 					'border'  => $border,
-					'width'   => $width,
+					'class'   => $class,
 				] = $args;
 
 				/* Content required */
@@ -79,12 +83,13 @@ class Columns {
 				}
 
 				$gap_l = $border ? 'xl' : 'l';
+				$class = 'l-flex l-w-all u-o-h' . ( $class ? " $class" : '' );
 
 				/* Output */
 
 				return (
 					'<div>' .
-						"<div class='l-flex l-w-all u-o-h' data-width='$width-pc' data-gap='l' data-gap-l='$gap_l' data-row='m' data-wrap data-col>" .
+						"<div class='$class' data-gap='l' data-gap-l='$gap_l' data-row='m' data-wrap='m' data-col>" .
 							$content .
 						'</div>' .
 					'</div>'

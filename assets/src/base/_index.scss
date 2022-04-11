@@ -25,10 +25,23 @@
 	--ht-error-c: #{map.get(con.$vars, 'color-error')}; // error color
 	--ht-primary-base-c: #{func.get-color('primary-base')}; // primary color
 	--ht-outline-offset: #{func.calc-rem(4px)};
+	--ht-underline-w: #{func.calc-rem(1px)};
+	--ht-underline-c: currentColor;
 }
 
 main {
-  min-height: 100vh;
+	@extend %u-position-relative;
+
+  min-height: 50vh;
+}
+
+*:disabled,
+*[aria-disabled="true"],
+input[type="radio"]:disabled ~ span,
+input[type="checkbox"]:disabled ~ span {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 #ht .ht {
