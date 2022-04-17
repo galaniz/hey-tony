@@ -16,12 +16,12 @@
 
 .c-hero__media {
   height: calc(100% + var(--ht-hero-s-h));
-  object-position: 0 0;
+  object-position: 50% 0;
 }
 
 .c-hero__swoop img {
   height: calc(var(--ht-hero-s-h) + var(--ht-hero-h));
-  object-position: 0 calc(-1 * var(--ht-hero-h));
+  object-position: 50% calc(-1 * var(--ht-hero-h));
 }
 
 .c-hero__media,

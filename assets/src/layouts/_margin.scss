@@ -20,12 +20,22 @@
     margin: 0;
   }
 
+  .l-mb-0-all * {
+    margin-bottom: 0;
+  }
+
   .l-mb-auto {
     margin-bottom: auto;
   }
 
   .l-mt-auto {
     margin-top: auto;
+  }
+
+  /* Margin right */
+
+  .l-mr-xxs {
+    margin-right: func.calc-rem(5px);
   }
 
   /* Margin bottom */

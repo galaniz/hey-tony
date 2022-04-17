@@ -24,19 +24,19 @@
 }
 
 .l-w-50-pc {
-	@include mix.breakpoint-min(800) {
-		width: 50%;
-	}
+  @include mix.breakpoint-min(800) {
+    width: 50%;
+  }
 }
 
 .l-w-33-pc {
-	@include mix.breakpoint-min(600) {
-		width: 50%;
-	}
+  @include mix.breakpoint-min(600) {
+    width: 50%;
+  }
 
-	@include mix.breakpoint-min(900) {
-		width: 33.33333%;
-	}
+  @include mix.breakpoint-min(900) {
+    width: 33.3333%;
+  }
 }
 
 @each $k, $v in map.get(con.$vars, "max-widths") {

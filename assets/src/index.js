@@ -11,10 +11,17 @@ import LoadMore from 'Formation/objects/load/more'
 /* Variables */
 
 const el = {}
+
 const elMeta = [
   {
     prop: 'nav',
-    selector: '.c-nav'
+    selector: '.c-nav',
+    items: [
+      {
+        prop: 'navButton',
+        selector: '.c-nav__button'
+      }
+    ]
   },
   {
     prop: 'hero',
@@ -22,7 +29,46 @@ const elMeta = [
   },
   {
     prop: 'loadMore',
-    selector: '.js-load-more'
+    selector: '.js-load-more',
+    context: document,
+    items: [
+      {
+        prop: 'loadMoreInsert',
+        selector: '.js-insert'
+      },
+      {
+        prop: 'loadMorePrev',
+        selector: '.js-load-more-prev'
+      },
+      {
+        prop: 'loadMoreLoader',
+        selector: '.js-load-more-loader'
+      },
+      {
+        prop: 'loadMoreCurrent',
+        selector: '.js-load-more-current'
+      },
+      {
+        prop: 'loadMoreTotal',
+        selector: '.js-load-more-total'
+      },
+      {
+        prop: 'loadMoreError',
+        selector: '.js-text-err'
+      },
+      {
+        prop: 'loadMoreNoResults',
+        selector: '.js-text-no-res',
+        all: true,
+        array: true
+      },
+      {
+        prop: 'loadMoreFilters',
+        selector: '.js-load-more-filter',
+        all: true,
+        array: true
+      }
+    ]
   }
 ]
 
@@ -38,7 +84,7 @@ const initialize = () => {
 
   /* Set elements object */
 
-  setElements(elMeta, el)
+  setElements(document, elMeta, el)
 
   /* Check if using mouse */
 
@@ -47,8 +93,8 @@ const initialize = () => {
   /* Fixed Header */
 
   if (el.nav) {
-    const n = new Nav({
-      button: el.nav.querySelector('.c-nav__button'),
+    const nav = new Nav({
+      button: el.navButton,
       outer: el.nav,
       inner: el.nav.firstElementChild,
       scaleTo: [
@@ -93,33 +139,23 @@ const initialize = () => {
   /* Load posts */
 
   if (el.loadMore) {
+    /* Global variables */
+
     const ns = 'ht'
     const n = window[ns]
 
-    const next = el.loadMore
-    const baseLink = next.getAttribute('data-base-link')
-    const type = next.getAttribute('data-type')
-    const page = parseInt(next.getAttribute('data-page'))
-    const ppp = parseInt(next.getAttribute('data-per-page'))
-    const total = parseInt(next.getAttribute('data-total'))
-    const insertInfo = document.querySelector(next.getAttribute('data-insert-selector'))
-
-    /* Vars outside of next */
-
-    const prev = document.querySelector('.js-load-more-prev')
-    const loader = document.querySelector('.js-load-more-loader')
-    const current = document.querySelector('.js-load-more-current')
-    const tot = document.querySelector('.js-load-more-total')
-    const error = document.querySelector('.js-p-err')
-    const noResults = Array.from(document.querySelectorAll('.js-p-no-res'))
-    const filters = Array.from(document.querySelectorAll('.js-load-more-filter'))
-    const pagination = prev && current
+    const baseLink = el.loadMore.getAttribute('data-base-link')
+    const type = el.loadMore.getAttribute('data-type')
+    const page = parseInt(el.loadMore.getAttribute('data-page'))
+    const ppp = parseInt(el.loadMore.getAttribute('data-per-page'))
+    const total = parseInt(el.loadMore.getAttribute('data-total'))
+    const pagination = el.loadMorePrev && el.loadMoreCurrent
     const loaders = []
 
     /* Loaders */
 
-    if (loader) {
-      loaders.push(loader)
+    if (el.loadMoreLoader) {
+      loaders.push(el.loadMoreLoader)
     }
 
     /* Data */
@@ -142,19 +178,19 @@ const initialize = () => {
     const args = {
       url: n.ajax_url,
       data: data,
-      next: next,
+      next: el.loadMore,
       loaders: loaders,
       ppp: ppp,
       total: total,
-      filters: filters,
-      insertInto: insertInfo
+      filters: el.loadMoreFilters,
+      insertInto: el.loadMoreInsert
     }
 
     if (pagination) {
-      args.prev = prev
-      args.current = current
+      args.prev = el.loadMorePrev
+      args.current = el.loadMoreCurrent
       args.page = page
-      args.tot = tot
+      args.tot = el.loadMoreTotal
 
       args.filterPostData = function (data) {
         const { page = false } = data
@@ -283,11 +319,11 @@ const initialize = () => {
       }
     }
 
-    if (noResults) {
+    if (el.loadMoreNoResults) {
       const containers = []
       const buttons = []
 
-      noResults.forEach(n => {
+      el.loadMoreNoResults.forEach(n => {
         const b = n.querySelector('.js-p-no-res__btn')
 
         if (b) { buttons.push(b) }
@@ -301,11 +337,11 @@ const initialize = () => {
       }
     }
 
-    if (error) {
-      args.error = error
+    if (el.loadMoreError) {
+      args.error = el.loadMoreError
     }
 
-    const lm = new LoadMore(args)
+    const loadMore = new LoadMore(args)
   }
 } // end initialize
 

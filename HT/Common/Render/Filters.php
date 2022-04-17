@@ -45,6 +45,14 @@ class Filters {
 				$options = Utils::get_terms_as_options( $tax );
 
 				if ( $options ) {
+						if ( 'post' === $post_type && is_category() ) {
+								$c = get_the_category();
+
+								if ( ! empty( $c ) ) {
+										$val = $c[0]->cat_ID;
+								}
+						}
+
 						if ( $tax === $tax_url_param && $terms_url_param ) {
 								$val = $terms_url_param;
 						}

@@ -16,16 +16,16 @@
     @extend %u-visually-hidden;
   }
 
-	.u-h-i {
-	  @extend %u-position-absolute;
-	  @extend %u-overflow-hidden;
+  .u-h-i {
+    @extend %u-position-absolute;
+    @extend %u-overflow-hidden;
 
-	  width: 0.063rem;
-	  height: 0.063rem;
-	  padding: 0;
-	  border: 0;
-	  clip: rect(0.063rem 0.063rem 0.063rem 0.063rem);
-	}
+    width: 0.063rem;
+    height: 0.063rem;
+    padding: 0;
+    border: 0;
+    clip: rect(0.063rem 0.063rem 0.063rem 0.063rem);
+  }
 
   /* Position */
 
@@ -62,12 +62,6 @@
     @extend %u-content-empty;
   }
 
-  /* Z index */
-
-  .u-zi-1 {
-    z-index: 1;
-  }
-
   /* Display */
 
   .u-d-n {
@@ -76,6 +70,10 @@
 
   .u-d-b {
     @extend %u-display-block;
+  }
+
+  .u-d-i {
+    display: inline;
   }
 
   .u-d-ib {
@@ -134,21 +132,25 @@
     border: 0;
   }
 
-	.u-b-s {
-		border: 0.125rem solid currentColor;
-	}
+  .u-b-s {
+    border: 0.125rem solid currentcolor;
+  }
 
-	.u-b-m {
-		border: 0.3125rem solid currentColor;
-	}
+  .u-b-m {
+    border: 0.3125rem solid currentcolor;
+  }
 
-	.u-b-hover {
-		&:hover,
-		&:focus,
-		&:active {
-			border-color: func.get-color('primary-base');
-		}
-	}
+  .u-bt-1 {
+    border-top: func.calc-rem(1px) solid rgba(func.get-color("foreground-base"), 0.3);
+  }
+
+  .u-b-hover {
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: func.get-color("primary-base");
+    }
+  }
 
   /* Color */
 
@@ -175,5 +177,43 @@
 /* Transform */
 
 .u-t-180 {
-	transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+/* Z index */
+
+.u-zi--1 {
+  z-index: -1;
+}
+
+.u-zi-0 {
+  z-index: 0;
+}
+
+.u-zi-1 {
+  z-index: 1;
+}
+
+.u-zi-2 {
+  z-index: 2;
+}
+
+/* Order */
+
+.u-or-2 {
+  order: 2;
+}
+
+/* Outline offset */
+
+.u-oo-s {
+  --ht-outline-offset: func.calc-rem(-4px);
+}
+
+/* Image width */
+
+.u-img-100-pc {
+  img {
+    @extend %u-width-100;
+  }
 }

@@ -1,0 +1,172 @@
+/**
+ * Objects: overlap
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "sass:math";
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-overlap__bg {
+  .o-overlap:nth-child(odd) & {
+    margin-left: 8%;
+  }
+
+  .o-overlap:nth-child(even) & {
+    margin-left: -8%;
+  }
+
+  @include mix.breakpoint-min(700) {
+    .o-overlap:nth-child(odd) & {
+      margin-left: 12%;
+    }
+
+    .o-overlap:nth-child(even) & {
+      margin-left: -12%;
+    }
+  }
+
+  @include mix.breakpoint-min(1300) {
+    $container: map.get(con.$containers, "def");
+    $max: map.get(con.$vars, "max-widths", "l");
+
+    .o-overlap:nth-child(odd) & {
+      margin-left: calc((50vw - func.calc-rem($max - math.div($container, 2))));
+    }
+
+    .o-overlap:nth-child(even) & {
+      margin-left: calc(((50vw - func.calc-rem($max - math.div($container, 2)))) * -1);
+    }
+  }
+
+  @include mix.breakpoint-min(1800) {
+    .o-overlap:nth-child(odd) & {
+      margin-left: func.calc-rem(240px);
+    }
+
+    .o-overlap:nth-child(even) & {
+      margin-left: func.calc-rem(240px * -1);
+    }
+  }
+}
+
+.o-overlap__fg {
+  @include mix.fluid-size(
+    min-height,
+    func.calc-rem(110px) func.calc-rem(240px),
+    700 1200
+  );
+  @include mix.fluid-size(
+    margin-top,
+    func.calc-rem(-110px) func.calc-rem(-240px),
+    700 1200
+  );
+
+  & > div::before {
+    @extend %u-background-color-background-base;
+    @include mix.fluid-size(
+      height,
+      func.calc-rem(110px) func.calc-rem(240px),
+      700 1200
+    );
+
+    bottom: auto;
+    transform: scale(1, 2.25);
+  }
+
+  .o-overlap:nth-child(odd) & {
+    margin-right: func.calc-rem(-20px);
+
+    & > div {
+      padding-right: func.calc-rem(40px);
+
+      &::before {
+        transform-origin: 100% 0;
+        margin-right: func.calc-rem(-30px);
+        border-radius: 0% 100% 100% 0% / 100% 50% 50% 0%;
+      }
+    }
+  }
+
+  .o-overlap:nth-child(even) & {
+    margin-left: func.calc-rem(-20px);
+
+    & > div {
+      @extend %u-text-align-right;
+      @extend %u-margin-left-auto;
+
+      h2 {
+        direction: rtl;
+      }
+
+      padding-left: func.calc-rem(40px);
+
+      &::before {
+        transform-origin: 0 0;
+        margin-left: func.calc-rem(-30px);
+        border-radius: 100% 0% 0% 100% / 50% 0% 100% 50%;
+      }
+    }
+  }
+
+  @include mix.breakpoint-min(700) {
+    .o-overlap:nth-child(odd) & > div {
+      padding-right: func.calc-rem(60px);
+
+      h2 {
+        padding-right: func.calc-rem(60px);
+      }
+    }
+
+    .o-overlap:nth-child(even) & > div {
+      padding-left: func.calc-rem(60px);
+
+      h2 {
+        padding-left: func.calc-rem(60px);
+      }
+    }
+  }
+}
+
+.o-overlap-v {
+  --ht-underline-c: #{func.get-color("primary-base")};
+  --ht-overlap-v-theme: #{func.get-color("background-base")};
+
+  &[data-theme="background-dark"] {
+    --ht-overlap-v-theme: #{func.get-color("background-dark")};
+  }
+
+  .o-overlap-v__h {
+    --ht-underline-w: #{func.calc-rem(2px)};
+  }
+}
+
+.o-overlap-v__bg::after {
+  @extend %u-content-empty;
+  @extend %u-position-absolute;
+  @extend %u-bottom-0;
+  @extend %u-left-0;
+
+  right: func.calc-rem(-10px);
+  max-height: func.calc-rem(60px);
+  min-height: func.calc-rem(45px);
+  height: 20%;
+  border-radius: 0% 100% 100% 0% / 100% 50% 50% 0%;
+  background-color: var(--ht-overlap-v-theme);
+  transform-origin: 100% 0;
+  transform: scale(1, 2.25);
+}
+
+.o-overlap-v__fg {
+  margin-top: func.calc-rem(-20px);
+  padding-right: func.calc-rem(80px);
+
+  .o-overlap-v[data-size="l"] & {
+    margin-top: func.calc-rem(-24px);
+  }
+}

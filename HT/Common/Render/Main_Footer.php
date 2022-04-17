@@ -118,7 +118,7 @@ class Main_Footer {
 								$logo .
 							'</div>' .
 							'<div class="l-pb-s">' .
-								'<div class="l-flex" data-gap="r" data-justify="def" data-row="m" data-wrap="m" data-col>' .
+								'<div class="l-flex" data-gap="r" data-justify="def" data-row="m" data-wrap-m data-col>' .
 									implode( '', $widgets_output ) .
 								'</div>' .
 							'</div>' .

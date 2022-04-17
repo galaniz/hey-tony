@@ -13,7 +13,7 @@
   .l-flex {
     /* Row */
 
-		@include mix.breakpoint-min(600) {
+    @include mix.breakpoint-min(600) {
       &[data-row="s"] {
         flex-direction: row;
       }
@@ -25,16 +25,16 @@
       }
     }
 
-		/* Wrap */
+    /* Wrap */
 
-		@include mix.breakpoint-min(600) {
-      &[data-wrap="s"] {
+    @include mix.breakpoint-min(600) {
+      &[data-wrap-s] {
         flex-wrap: wrap;
       }
     }
 
     @include mix.breakpoint-min(800) {
-      &[data-wrap="m"] {
+      &[data-wrap-m] {
         flex-wrap: wrap;
       }
     }
@@ -49,7 +49,7 @@
 
     /* Gap */
 
-		&[data-gap="xs"] {
+    &[data-gap="xs"] {
       $v: 12px;
 
       --ht-flex-gap: #{func.calc-rem($v)};

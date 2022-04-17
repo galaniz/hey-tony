@@ -17,6 +17,7 @@ use HT\Common\Render\Cards;
 use HT\Common\Render\Columns;
 use HT\Common\Render\Testimonial;
 use HT\Common\Render\Overlap;
+use function Formation\additional_script_data;
 
 /**
  * Class
@@ -61,14 +62,13 @@ class Posts {
 				];
 
 				$next = [
-					'class'                => "$link_classes js-load-more",
-					'data-base-link'       => $base_link,
-					'data-type'            => $type,
-					'data-page'            => $current_page,
-					'data-per-page'        => $ppp,
-					'data-total'           => $total,
-					'data-insert-selector' => '.js-insert',
-					'role'                 => 'link',
+					'class'          => "$link_classes js-load-more",
+					'data-base-link' => $base_link,
+					'data-type'      => $type,
+					'data-page'      => $current_page,
+					'data-per-page'  => $ppp,
+					'data-total'     => $total,
+					'role'           => 'link',
 				];
 
 				$prev_link = '';
@@ -128,6 +128,7 @@ class Posts {
 							'meta_value'     => '',
 							'meta_type'      => 'string',
 							'ids'            => '',
+							'section_title'  => '',
 							'pagination'     => false,
 							'return_array'   => false, // back end
 							'query_args'     => [], // back end
@@ -146,6 +147,7 @@ class Posts {
 					'meta_value'     => $meta_value,
 					'meta_type'      => $meta_type,
 					'ids'            => $ids,
+					'section_title'  => $section_title,
 					'pagination'     => $pagination,
 					'return_array'   => $return_array,
 					'query_args'     => $query_args,
@@ -157,6 +159,7 @@ class Posts {
 				$post_type      = $type;
 				$search         = is_search();
 				$archive        = is_archive() || is_home() || $search || is_post_type_archive( $type );
+				$single         = is_singular( $type );
 
 				$pagination  = filter_var( $pagination, FILTER_VALIDATE_BOOLEAN );
 				$no_posts    = false;
@@ -217,6 +220,32 @@ class Posts {
 								);
 
 								$args['post__in'] = $post_ids;
+						}
+
+						if ( $single ) {
+								$post_id = get_the_ID();
+
+								$args['post__not_in'] = [$post_id];
+
+								$taxonomy = 'category';
+
+								if ( 'work' === $type ) {
+										$taxonomy = 'work_category';
+								}
+
+								$terms = get_the_terms( $post_id, $taxonomy );
+
+								if ( $terms && ! is_wp_error( $terms ) ) {
+										$terms = wp_list_pluck( $terms, 'slug' );
+
+										$args['tax_query'] = [
+											[
+												'taxonomy' => $taxonomy,
+												'field'    => 'slug',
+												'terms'    => $terms,
+											],
+										];
+								}
 						}
 
 						if ( $meta_key && $meta_value ) {
@@ -285,8 +314,10 @@ class Posts {
 								}
 
 								if ( 'cards' === $layout || 'overlap' === $layout ) {
-										$pretitle = '';
-										$excerpt  = Utils::get_excerpt(
+										$pretitle      = '';
+										$pretitle_link = '';
+
+										$excerpt = Utils::get_excerpt(
 												[
 													'post_id' => $id,
 													'content' => $text,
@@ -304,31 +335,44 @@ class Posts {
 										$cat = Utils::get_first_cat( $id, $tax );
 
 										if ( $cat ) {
-												$pretitle = $cat[0];
+												$pretitle      = $cat[0];
+												$pretitle_link = $cat[1];
 										}
 								}
 
 								if ( 'cards' === $layout ) {
-										$output .= Cards::render_card(
-												[
-													'title'    => $title,
-													'link'     => $link,
-													'excerpt'  => $excerpt,
-													'media_id' => $media_id,
-													'pretitle' => $pretitle,
-													'index'    => $index,
-												]
-										);
+										$card_args = [
+											'title'    => $title,
+											'link'     => $link,
+											'excerpt'  => $excerpt,
+											'media_id' => $media_id,
+											'index'    => 10,
+										];
+
+										if ( ! $single ) {
+												$card_args['pretitle']      = $pretitle;
+												$card_args['pretitle_link'] = $pretitle_link;
+										} else {
+												$card_args['small'] = true;
+												$card_args['theme'] = 'background-dark';
+										}
+
+										if ( is_home() ) {
+												$card_args['index'] = $index;
+										}
+
+										$output .= Cards::render_card( $card_args );
 								}
 
 								if ( 'overlap' === $layout ) {
 										$output .= Overlap::render_item(
 												[
-													'title'    => $title,
-													'link'     => $link,
-													'excerpt'  => $excerpt,
-													'media_id' => $media_id,
-													'pretitle' => $pretitle,
+													'title'         => $title,
+													'link'          => $link,
+													'excerpt'       => $excerpt,
+													'media_id'      => $media_id,
+													'pretitle'      => $pretitle,
+													'pretitle_link' => $pretitle_link,
 												]
 										);
 								}
@@ -440,11 +484,44 @@ class Posts {
 								'</div>' .
 							'</div>'
 						);
+
+						$query_static = [];
+
+						if ( $search ) {
+								$query_static['s'] = get_search_query();
+						}
+
+						if ( is_author() ) {
+								$query_static['author'] = get_queried_object_id();
+						}
+
+						if ( is_tag() ) {
+								$query_static['tag_id'] = get_queried_object()->term_id;
+						}
+
+						if ( is_category() ) {
+								$query_static['cat'] = get_queried_object()->term_id;
+						}
+
+						if ( ! empty( $query_static ) ) {
+								additional_script_data( HT::$namespace . '_load_posts_query_static', $query_static );
+						}
 				}
 
 				/* Return */
 
 				if ( ! $return_array ) {
+						if ( $section_title ) {
+								$output = (
+									'<div class="l-pt-s l-pb-s l-pt-r-l l-pb-r-l">' .
+										'<div class="h4">' .
+											"<h2>$section_title</h2>" .
+										'</div>' .
+										$output .
+									'</div>'
+								);
+						}
+
 						return $output;
 				} else {
 						return [

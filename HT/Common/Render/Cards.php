@@ -28,25 +28,31 @@ class Cards {
 		public static function render_card( $args = [] ) {
 				$args = array_merge(
 						[
-							'title'    => '',
-							'link'     => '',
-							'excerpt'  => '',
-							'media_id' => 0,
-							'pretitle' => '',
-							'index'    => 0,
-							'width'    => 33,
+							'title'         => '',
+							'link'          => '',
+							'excerpt'       => '',
+							'media_id'      => 0,
+							'pretitle'      => '',
+							'pretitle_link' => '',
+							'index'         => 0,
+							'width'         => 33,
+							'theme'         => 'background-base',
+							'small'         => false,
 						],
 						$args
 				);
 
 				[
-					'title'    => $title,
-					'link'     => $link,
-					'excerpt'  => $excerpt,
-					'media_id' => $media_id,
-					'pretitle' => $pretitle,
-					'index'    => $index,
-					'width'    => $width,
+					'title'         => $title,
+					'link'          => $link,
+					'excerpt'       => $excerpt,
+					'media_id'      => $media_id,
+					'pretitle'      => $pretitle,
+					'pretitle_link' => $pretitle_link,
+					'index'         => $index,
+					'width'         => $width,
+					'theme'         => $theme,
+					'small'         => $small,
 				] = $args;
 
 				$first_two = 0 === $index || 1 === $index;
@@ -61,14 +67,33 @@ class Cards {
 						return '';
 				}
 
+				$title_id    = uniqid();
+				$title_h     = 'h2';
+				$title_class = 'o-overlap-v__h t-foreground-base u-c-i';
+
+				if ( $first_two ) {
+						$title_class .= ' h3-l l-mb-s';
+				} elseif ( $small ) {
+						$title_class .= ' h5';
+						$title_h      = 'h3';
+				} else {
+						$title_class .= ' h4';
+				}
+
 				/* Pretitle */
 
 				$pretitle_output = '';
 
 				if ( $pretitle ) {
+						if ( $pretitle_link ) {
+								$pretitle = "<a class='l-m-0 u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
+						} else {
+								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle</p>";
+						}
+
 						$pretitle_output = (
-							'<div class="p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs">' .
-								"<p class='l-m-0'>$pretitle</p>" .
+							'<div class="o-underline-r p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs l-flex">' .
+								$pretitle .
 							'</div>'
 						);
 				}
@@ -77,7 +102,7 @@ class Cards {
 
 				if ( $excerpt ) {
 						$excerpt = (
-							'<div class="p-m t-foreground-base">' .
+							'<div class="p-m t-foreground-base u-p-r u-zi-2">' .
 								"<p class='l-m-0'>$excerpt</p>" .
 							'</div>'
 						);
@@ -100,25 +125,38 @@ class Cards {
 						}
 				}
 
+				/* Link */
+
+				$link_output = '';
+
+				if ( $link ) {
+						$link_output = (
+							"<a class='o-underline-rs u-oo-s u-p-a u-b-0 u-t-0 u-l-0 u-r-0 u-zi-1 u-d-b' href='$link' aria-labelledby='$title_id'></a>"
+						);
+				}
+
 				/* Output */
 
 				return (
-					"<div class='l-w-$width-pc'>" .
-						'<div class="l-pb-xxxs l-pb-xs-l">' .
-							( $link ? "<a class='l-overlap-v o-underline-r u-d-b' href='$link'>" : '' ) .
-								'<div class="o-aspect-ratio" data-p="66" data-hover="scale">' .
-									$image .
-								'</div>' .
-								'<div class="u-p-r">' .
+					"<li class='l-w-$width-pc'>" .
+						( ! $small ? '<div class="l-pb-xxxs l-pb-xs-l">' : '' ) .
+							'<div class="o-overlap-v l-flex u-p-r" data-theme="' . $theme . '" data-col>' .
+								$link_output .
+								'<div class="o-overlap-v__fg u-or-2">' .
 									$pretitle_output .
-									'<div class="' . ( $first_two ? 'h3-l l-mb-s' : 'h4' ) . ' t-foreground-base u-c-i">' .
-										"<h2 class='l-m-0'><span>$title</span></h2>" .
+									"<div class='$title_class'>" .
+										"<$title_h id='$title_id' class='l-m-0'><span>$title</span></$title_h>" .
 									'</div>' .
 									( $first_two && $excerpt ? $excerpt : '' ) .
 								'</div>' .
-							( $link ? '</a>' : '' ) .
-						'</div>' .
-					'</div>'
+								'<div class="u-p-r u-zi--1">' .
+									'<div class="o-overlap-v__bg o-aspect-ratio" data-p="66" data-hover="scale">' .
+										$image .
+									'</div>' .
+								'</div>' .
+							'</div>' .
+						( ! $small ? '</div>' : '' ) .
+					'</li>'
 				);
 		}
 
@@ -154,9 +192,9 @@ class Cards {
 
 				return (
 					'<div>' .
-						"<div class='$class' data-gap='r' data-row='s' data-wrap='s' data-col>" .
+						"<ul class='$class' data-gap='r' data-row='s' data-wrap-s data-col>" .
 							$content .
-						'</div>' .
+						'</ul>' .
 					'</div>'
 				);
 		}

@@ -46,11 +46,11 @@ class Columns {
 				$border_class = $border ? ' o-border' : '';
 
 				return (
-					"<div class='l-w-$width-pc l-flex u-p-r$border_class'>" .
+					"<li class='l-w-$width-pc l-flex u-p-r$border_class'>" .
 						'<div class="l-flex">' .
 							$content .
 						'</div>' .
-					'</div>'
+					'</li>'
 				);
 		}
 
@@ -89,9 +89,9 @@ class Columns {
 
 				return (
 					'<div>' .
-						"<div class='$class' data-gap='l' data-gap-l='$gap_l' data-row='m' data-wrap='m' data-col>" .
+						"<ul class='$class' data-gap='l' data-gap-l='$gap_l' data-row='m' data-wrap-m data-col>" .
 							$content .
-						'</div>' .
+						'</ul>' .
 					'</div>'
 				);
 		}

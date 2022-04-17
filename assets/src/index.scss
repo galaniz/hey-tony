@@ -26,7 +26,6 @@
 @use "layouts/width";
 @use "layouts/height";
 @use "layouts/breakout";
-@use "layouts/overlap";
 
 /* Components */
 
@@ -40,10 +39,12 @@
 @use "@alanizcreative/formation/src/objects/aspect-ratio";
 @use "objects/logo";
 @use "objects/swoop";
+@use "objects/overlap";
 @use "objects/underline";
 @use "objects/accent";
 @use "objects/border";
 @use "objects/form";
+@use "objects/stat";
 
 /* Themes */
 

@@ -15,22 +15,22 @@
   --ht-hero-c: #{func.get-color("background-base")}; // color
   --ht-hero-bg-c: #{func.get-color("foreground-base")}; // background color
   --ht-hero-h: #{func.calc-rem(726px)}; // height
-  --ht-hero-s-h: #{func.calc-rem(280px)}; // swoop height
+  --ht-hero-s-h: #{func.calc-rem(85px)}; // swoop height
   --ht-nav-p: #{func.calc-rem(20px)}; // padding
   --ht-nav-h: 3rem; // height
   --ht-nav-t-y: 0; // translate Y
   --ht-nav-s: 1; // scale
   --ht-nav-i-d: 0ms; // item delay
   --ht-flex-gap: 0; // flex container gap
-	--ht-error-c: #{map.get(con.$vars, 'color-error')}; // error color
-	--ht-primary-base-c: #{func.get-color('primary-base')}; // primary color
-	--ht-outline-offset: #{func.calc-rem(4px)};
-	--ht-underline-w: #{func.calc-rem(1px)};
-	--ht-underline-c: currentColor;
+  --ht-error-c: #{map.get(con.$vars, "color-error")}; // error color
+  --ht-primary-base-c: #{func.get-color("primary-base")}; // primary color
+  --ht-outline-offset: #{func.calc-rem(4px)};
+  --ht-underline-w: #{func.calc-rem(1px)};
+  --ht-underline-c: currentcolor;
 }
 
 main {
-	@extend %u-position-relative;
+  @extend %u-position-relative;
 
   min-height: 50vh;
 }
@@ -44,7 +44,31 @@ input[type="checkbox"]:disabled ~ span {
   cursor: not-allowed;
 }
 
-#ht .ht {
+.ht-swoop-r {
+  @include mix.fluid-size(
+    --ht-hero-s-h,
+    func.calc-rem(85px) func.calc-rem(280px),
+    600 1300
+  );
+}
+
+.ht-swoop-s {
+  @include mix.fluid-size(
+    --ht-hero-s-h,
+    func.calc-rem(50px) func.calc-rem(140px),
+    600 1300
+  );
+}
+
+.ht-swoop-xs {
+  @include mix.fluid-size(
+    --ht-hero-s-h,
+    func.calc-rem(40px) func.calc-rem(110px),
+    600 1300
+  );
+}
+
+#ht .ht #wrapper {
   .h1 *,
   .h1-s *,
   .h2 *,
@@ -139,7 +163,7 @@ input[type="checkbox"]:disabled ~ span {
   p {
     @include mix.fluid-size(
       font-size,
-      func.calc-rem(20px) func.calc-rem(24px),
+      func.calc-rem(19px) func.calc-rem(24px),
       600 1200
     );
   }
@@ -178,5 +202,16 @@ input[type="checkbox"]:disabled ~ span {
 
   .p-xs * {
     font-size: func.calc-rem(14px);
+  }
+}
+
+#ht .ht #wrapper .post-content .ht-single__main {
+  h2,
+  .h2 * {
+    @include mix.fluid-size(
+      font-size,
+      func.calc-rem(36px) func.calc-rem(48px),
+      600 1200
+    );
   }
 }

@@ -14,6 +14,10 @@
     padding: 0;
   }
 
+  .l-pb-1 {
+    padding-bottom: func.calc-rem(1px);
+  }
+
   /* Padding top */
 
   .l-pt-xxxs {

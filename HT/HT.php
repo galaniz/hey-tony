@@ -16,9 +16,12 @@ use HT\Common\Render\Main_Nav;
 use HT\Common\Render\Main_Footer;
 use HT\Common\Render\Hero_Image;
 use HT\Common\Render\Swoop;
+use HT\Common\Render\Meta;
 use HT\Common\Render\Filters;
+use HT\Common\Render\Stat;
 use HT\Common\Posts;
 use HT\Admin\Reading;
+use HT\Admin\User;
 use HT\Pub\Ajax;
 
 /**
@@ -146,7 +149,9 @@ class HT {
 				add_shortcode( 'ht-main-footer', ['HT\Common\Render\Main_Footer', 'shortcode'] );
 				add_shortcode( 'ht-hero-image', ['HT\Common\Render\Hero_Image', 'shortcode'] );
 				add_shortcode( 'ht-swoop', ['HT\Common\Render\Swoop', 'shortcode'] );
+				add_shortcode( 'ht-meta', ['HT\Common\Render\Meta', 'shortcode'] );
 				add_shortcode( 'ht-filters', ['HT\Common\Render\Filters', 'shortcode'] );
+				add_shortcode( 'ht-stat', ['HT\Common\Render\Stat', 'shortcode'] );
 				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
 				/* Actions */
@@ -170,6 +175,7 @@ class HT {
 
 				if ( is_admin() ) {
 						$reading_settings = new Reading();
+						$user_settings    = new User();
 				}
 		}
 
@@ -357,6 +363,18 @@ class HT {
 						$classes[] = 'ht-hero-grayscale';
 				}
 
+				$swoop_size = 's';
+
+				if ( is_front_page() ) {
+						$swoop_size = 'r';
+				}
+
+				if ( is_single() || is_singular( 'work' ) || is_archive() ) {
+						$swoop_size = 'xs';
+				}
+
+				$classes[] = "ht-swoop-$swoop_size";
+
 				return $classes;
 		}
 
@@ -390,6 +408,14 @@ class HT {
 
 		public static function set_meta( $id ) {
 				$hero_background_color = get_field( 'background_color', $id );
+
+				if ( is_single() || is_singular( 'work' ) ) {
+						$hero_background_color = 'foreground-base';
+				}
+
+				if ( is_archive() ) {
+						$hero_background_color = get_field( 'background_color', (int) get_option( 'page_for_posts' ) );
+				}
 
 				self::$hero_background_color = $hero_background_color ? $hero_background_color : 'background-dark';
 				self::$nav_light             = 'background-dark' === self::$hero_background_color ? false : true;

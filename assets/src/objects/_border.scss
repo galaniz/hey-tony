@@ -31,3 +31,9 @@
     border-right: func.calc-rem(1px) solid;
   }
 }
+
+.o-border-s::before {
+  width: func.calc-rem(1px);
+  background: currentcolor;
+  transform: translateX(calc(-1 * var(--ht-flex-gap) / 2));
+}
