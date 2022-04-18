@@ -25,6 +25,8 @@ class Columns {
 							'content' => '',
 							'border'  => true,
 							'width'   => 50,
+							'fill'    => false,
+							'class'   => '',
 						],
 						$args
 				);
@@ -33,6 +35,8 @@ class Columns {
 					'content' => $content,
 					'border'  => $border,
 					'width'   => $width,
+					'fill'    => $fill,
+					'class'   => $class,
 				] = $args;
 
 				/* Content required */
@@ -43,11 +47,25 @@ class Columns {
 
 				/* Output */
 
-				$border_class = $border ? ' o-border' : '';
+				$classes = "l-w-$width-pc l-flex";
+
+				if ( $class ) {
+						$classes .= " $class";
+				}
+
+				$inner_class = 'l-flex u-p-r';
+
+				if ( $border ) {
+						$inner_class .= ' o-border';
+				}
+
+				if ( $fill ) {
+						$inner_class .= ' l-flex-grow';
+				}
 
 				return (
-					"<li class='l-w-$width-pc l-flex u-p-r$border_class'>" .
-						'<div class="l-flex">' .
+					"<li class='$classes'>" .
+						"<div class='$inner_class'>" .
 							$content .
 						'</div>' .
 					'</li>'
@@ -63,17 +81,19 @@ class Columns {
 		public static function render( $args = [] ) {
 				$args = array_merge(
 						[
-							'content' => '',
-							'border'  => true,
-							'class'   => '',
+							'content'  => '',
+							'border'   => true,
+							'class'    => '',
+							'overflow' => 'hidden',
 						],
 						$args
 				);
 
 				[
-					'content' => $content,
-					'border'  => $border,
-					'class'   => $class,
+					'content'  => $content,
+					'border'   => $border,
+					'class'    => $class,
+					'overflow' => $overflow,
 				] = $args;
 
 				/* Content required */
@@ -83,12 +103,12 @@ class Columns {
 				}
 
 				$gap_l = $border ? 'xl' : 'l';
-				$class = 'l-flex l-w-all u-o-h' . ( $class ? " $class" : '' );
+				$class = 'l-flex' . ( $class ? " $class" : '' );
 
 				/* Output */
 
 				return (
-					'<div>' .
+					'<div' . ( 'hidden' === $overflow ? ' class="u-o-h"' : '' ) . '>' .
 						"<ul class='$class' data-gap='l' data-gap-l='$gap_l' data-row='m' data-wrap-m data-col>" .
 							$content .
 						'</ul>' .

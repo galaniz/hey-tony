@@ -144,13 +144,16 @@
     border-top: func.calc-rem(1px) solid rgba(func.get-color("foreground-base"), 0.3);
   }
 
-  .u-b-hover {
-    &:hover,
-    &:focus,
-    &:active {
-      border-color: func.get-color("primary-base");
-    }
-  }
+	/* Hover */
+
+	.u-pb-hover {
+		&:hover,
+		&:focus,
+		&:active {
+			border-color: func.get-color("primary-base");
+			color: func.get-color("primary-base");
+		}
+	}
 
   /* Color */
 
@@ -216,4 +219,14 @@
   img {
     @extend %u-width-100;
   }
+}
+
+/* Underline */
+
+.u-ul-c {
+	--ht-underline-c: #{func.get-color("primary-base")};
+}
+
+.u-ul-w {
+	--ht-underline-w: #{func.calc-rem(2px)};
 }

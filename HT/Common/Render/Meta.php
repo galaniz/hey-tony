@@ -37,6 +37,7 @@ class Meta {
 							'inline'           => true,
 							'border'           => false,
 							'items'            => '', // comma separated list
+							'justify'          => 'center',
 						],
 						$args
 				);
@@ -53,6 +54,7 @@ class Meta {
 					'inline'           => $inline,
 					'border'           => $border,
 					'items'            => $items,
+					'justify'          => $justify,
 				] = $args;
 
 				$inline = filter_var( $inline, FILTER_VALIDATE_BOOLEAN );
@@ -90,7 +92,7 @@ class Meta {
 												$caret = file_get_contents( get_stylesheet_directory() . '/assets/public/svg/caret-right.svg' ); // Ignore: local path
 
 												$output[] = (
-													'<div class="p-s u-fw-b o-underline-r l-pb-1">' .
+													'<div class="p-s u-fw-b o-underline-r l-pb-1 u-oo-s">' .
 														"<a class='l-flex' href='$archive_link'>" .
 															"<div class='l-mr-xxs u-d-ib u-t-180'>$caret</div>" .
 															'<span class="u-v-h">Back to </span>' .
@@ -104,7 +106,7 @@ class Meta {
 										$cat = Utils::get_first_cat( $id, $tax );
 
 										if ( $cat ) {
-												$output[] = '<div class="p-s u-fw-b o-underline-r l-pb-1"><a class="l-flex" href="' . $cat[1] . '">' . $cat[0] . '</a></div>';
+												$output[] = '<div class="p-s u-fw-b o-underline-r l-pb-1 u-oo-s"><a class="l-flex" href="' . $cat[1] . '">' . $cat[0] . '</a></div>';
 										}
 
 										break;
@@ -123,10 +125,10 @@ class Meta {
 												}
 
 												$output[] = (
-													'<div class="l-flex" data-align="center" data-justify="center" data-gap="xs" data-wrap>' .
+													"<div class='l-flex' data-align='center' data-justify='$justify' data-gap='xs' data-wrap>" .
 														( $categories_label ? "<div class='p-s u-fw-b'><p class='l-m-0'>$categories_label</p></div>" : '' ) .
 														'<div>' .
-															'<div class="l-flex t-primary-base" data-align="center" data-justify="center" data-gap="xs" data-wrap>' .
+															"<div class='l-flex t-primary-base' data-align='center' data-justify='$justify' data-gap='xs' data-wrap>" .
 																$terms_output .
 															'</div>' .
 														'</div>' .
@@ -150,10 +152,10 @@ class Meta {
 												}
 
 												$output[] = (
-													'<div class="l-flex o-underline" data-align="center" data-justify="center" data-gap="xs" data-wrap>' .
+													"<div class='l-flex o-underline' data-align='center' data-justify='$justify' data-gap='xs' data-wrap>" .
 														( $tags_label ? "<div class='p-s u-fw-b'><p class='l-m-0'>$tags_label</p></div>" : '' ) .
 														'<div>' .
-															'<div class="l-flex t-primary-base" data-align="center" data-justify="center" data-gap="xs" data-wrap>' .
+															"<div class='l-flex t-primary-base' data-align='center' data-justify='$justify' data-gap='xs' data-wrap>" .
 																$tags_output .
 															'</div>' .
 														'</div>' .
@@ -202,7 +204,7 @@ class Meta {
 												}
 
 												$output[] = (
-													'<div class="p-s o-underline-r l-pt-xxxs">' .
+													'<div class="p-s o-underline-r l-pt-xxxs u-oo-s">' .
 														'<p>' .
 															( $author_label ? "$author_label " : '' ) .
 															$author_name .
@@ -221,7 +223,7 @@ class Meta {
 						return '';
 				}
 
-				$attr = 'data-gap="s" data-align="center" data-justify="center"';
+				$attr = "data-gap='s' data-align='center' data-justify='$justify'";
 
 				if ( $inline ) {
 						$attr .= ' data-gap-l="r" data-wrap';
@@ -248,7 +250,7 @@ class Meta {
 
 				return (
 					( $border ? '<div class="l-pt-xs l-pt-s-l"><div class="l-pt-xs l-pt-s-l u-bt-1">' : '' ) .
-					'<div class="l-flex" data-justify="center">' .
+					"<div class='l-flex' data-justify='$justify'>" .
 						'<div class="u-d-ib' . ( $inline ? ' u-o-h' : '' ) . '">' .
 							"<div class='l-flex' $attr>" .
 								implode( '', $output ) .
@@ -279,6 +281,7 @@ class Meta {
 							'inline'           => true,
 							'border'           => false,
 							'items'            => '', // comma separated list
+							'justify'          => 'center',
 						],
 						$atts,
 						'ht-meta'

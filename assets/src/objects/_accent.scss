@@ -12,7 +12,6 @@
 .o-accent span,
 .o-accent a,
 .o-accent-r span,
-.o-accent-rs ~ div span,
 .o-accent-r a {
   @extend %u-position-relative;
 
@@ -50,7 +49,6 @@
 .o-accent-m span,
 .o-accent-m a,
 .o-accent-r-m span,
-.o-accent-r-ms ~ div span,
 .o-accent-r-m a {
   @include mix.breakpoint-min(1000) {
     padding-bottom: func.calc-rem(13px);
@@ -81,8 +79,7 @@ a.o-accent span {
   }
 }
 
-a.o-accent-r span,
-a.o-accent-rs ~ div span {
+a.o-accent-r span {
   &::after {
     @extend %u-transition-opacity-ease;
     @extend %u-opacity-0;
@@ -92,7 +89,6 @@ a.o-accent-rs ~ div span {
 .o-accent[data-theme="primary-base"] span,
 .o-accent[data-theme="primary-base"] a,
 .o-accent-r[data-theme="primary-base"] span,
-.o-accent-rs[data-theme="primary-base"] ~ div span,
 .o-accent-r[data-theme="primary-base"] a {
   &::after {
     background-image: url("assets/public/svg/underline-primary-base.svg");
@@ -112,8 +108,6 @@ a.o-accent:focus span,
 
 a.o-accent-r:hover span,
 a.o-accent-r:active span,
-a.o-accent-rs:hover ~ div span,
-a.o-accent-rs:active ~ div span,
 .o-accent-r a:hover,
 .o-accent-r a:active {
   &::after {

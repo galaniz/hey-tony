@@ -43,7 +43,7 @@ class Stat {
 					'wide'       => $wide,
 				] = $args;
 
-				$classes = 'o-stat u-p-a u-b-0 u-d-ib';
+				$classes = 'o-stat t-bg-background-base u-p-a u-b-0 u-d-ib';
 
 				if ( 'right' === $align ) {
 						$classes .= ' u-r-0';

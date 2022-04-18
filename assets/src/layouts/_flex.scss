@@ -49,6 +49,10 @@
 
     /* Gap */
 
+		&[data-gap=""] {
+			--ht-flex-gap: #{func.calc-rem(1px)};
+		}
+
     &[data-gap="xs"] {
       $v: 12px;
 

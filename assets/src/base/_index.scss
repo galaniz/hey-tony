@@ -27,6 +27,7 @@
   --ht-outline-offset: #{func.calc-rem(4px)};
   --ht-underline-w: #{func.calc-rem(1px)};
   --ht-underline-c: currentcolor;
+	--ht-border-op: 0.3;
 }
 
 main {
@@ -63,7 +64,7 @@ input[type="checkbox"]:disabled ~ span {
 .ht-swoop-xs {
   @include mix.fluid-size(
     --ht-hero-s-h,
-    func.calc-rem(40px) func.calc-rem(110px),
+    func.calc-rem(40px) func.calc-rem(100px),
     600 1300
   );
 }

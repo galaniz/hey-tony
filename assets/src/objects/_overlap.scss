@@ -12,6 +12,20 @@
 
 /* Styles */
 
+.o-overlap {
+	@include mix.fluid-size(
+		--ht-overlap-p,
+		func.calc-rem( 290px ) func.calc-rem( 500px ),
+		700 1200
+	);
+
+	@include mix.fluid-size(
+    --ht-overlap-h,
+    func.calc-rem(110px) func.calc-rem(240px),
+    700 1200
+  );
+}
+
 .o-overlap__bg {
   .o-overlap:nth-child(odd) & {
     margin-left: 8%;
@@ -56,16 +70,8 @@
 }
 
 .o-overlap__fg {
-  @include mix.fluid-size(
-    min-height,
-    func.calc-rem(110px) func.calc-rem(240px),
-    700 1200
-  );
-  @include mix.fluid-size(
-    margin-top,
-    func.calc-rem(-110px) func.calc-rem(-240px),
-    700 1200
-  );
+	min-height: var(--ht-overlap-h);
+	margin-top: calc(-1 * var(--ht-overlap-h));
 
   & > div::before {
     @extend %u-background-color-background-base;
@@ -75,8 +81,11 @@
       700 1200
     );
 
+		height: var(--ht-overlap-h);
     bottom: auto;
-    transform: scale(1, 2.25);
+		transform: scale(1.02, 1.15);
+		transform-origin: 0 0;
+		z-index: -1;
   }
 
   .o-overlap:nth-child(odd) & {
@@ -86,9 +95,8 @@
       padding-right: func.calc-rem(40px);
 
       &::before {
-        transform-origin: 100% 0;
         margin-right: func.calc-rem(-30px);
-        border-radius: 0% 100% 100% 0% / 100% 50% 50% 0%;
+        border-radius: 0% 100% 100% 0% / 100% 100% 0% 0%;
       }
     }
   }
@@ -107,9 +115,8 @@
       padding-left: func.calc-rem(40px);
 
       &::before {
-        transform-origin: 0 0;
         margin-left: func.calc-rem(-30px);
-        border-radius: 100% 0% 0% 100% / 50% 0% 100% 50%;
+        border-radius: 100% 0% 100% 0% / 100% 100% 0% 0% ;
       }
     }
   }
@@ -133,16 +140,28 @@
   }
 }
 
+.o-overlap__r {
+	.o-overlap:nth-child(even) & {
+		margin-left: auto;
+	}
+}
+
+.o-overlap__a::before {
+	margin-top: calc(-1 * (var(--ht-overlap-p) - var(--ht-overlap-h)));
+	width: 100vw;
+
+	@include mix.breakpoint-min(660) {
+		.o-overlap:nth-child(even) & {
+			margin-left: calc((100vw - #{func.calc-rem(660px)}) * -1);
+		}
+	}
+}
+
 .o-overlap-v {
-  --ht-underline-c: #{func.get-color("primary-base")};
   --ht-overlap-v-theme: #{func.get-color("background-base")};
 
   &[data-theme="background-dark"] {
     --ht-overlap-v-theme: #{func.get-color("background-dark")};
-  }
-
-  .o-overlap-v__h {
-    --ht-underline-w: #{func.calc-rem(2px)};
   }
 }
 
@@ -156,10 +175,8 @@
   max-height: func.calc-rem(60px);
   min-height: func.calc-rem(45px);
   height: 20%;
-  border-radius: 0% 100% 100% 0% / 100% 50% 50% 0%;
+  border-radius: 0% 100% 100% 0% / 100% 100% 0% 0%;
   background-color: var(--ht-overlap-v-theme);
-  transform-origin: 100% 0;
-  transform: scale(1, 2.25);
 }
 
 .o-overlap-v__fg {

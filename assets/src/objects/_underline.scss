@@ -10,8 +10,7 @@
 
 .o-underline a,
 .o-underline-r a,
-a.o-underline-r span,
-a.o-underline-rs ~ div span {
+a.o-underline-r span {
   transition: box-shadow 300ms ease;
 }
 
@@ -20,8 +19,7 @@ a.o-underline-rs ~ div span {
 }
 
 .o-underline-r a,
-a.o-underline-r span,
-a.o-underline-rs ~ div span {
+a.o-underline-r span {
   box-shadow: 0 var(--ht-underline-w) 0 0 transparent;
 }
 
@@ -36,9 +34,6 @@ a.o-underline-rs ~ div span {
 .o-underline-r a:focus,
 a.o-underline-r:hover span,
 a.o-underline-r:active span,
-a.o-underline-r:focus span,
-a.o-underline-rs:hover ~ div span,
-a.o-underline-rs:active ~ div span,
-a.o-underline-rs:focus ~ div span {
+a.o-underline-r:focus span {
   box-shadow: 0 var(--ht-underline-w) 0 0 var(--ht-underline-c);
 }

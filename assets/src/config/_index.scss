@@ -45,6 +45,7 @@ $color-error: #ba3c20;
   ),
 
   $breakpoints: (
+		660: 660px,
     1300: 1300px,
     1800: 1800px,
   ),
@@ -65,7 +66,7 @@ $color-error: #ba3c20;
     )
   ),
 
-  $aspect-ratio-padding: ( 0.66 ),
+  $aspect-ratio-padding: ( 0, 0.66 ),
 
   $transitions: (
     (

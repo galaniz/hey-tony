@@ -54,7 +54,7 @@ class Posts {
 					'total_pages'  => $total_pages,
 				] = $args;
 
-				$link_classes = 't-foreground-base l-w-s u-d-b u-b-s u-b-hover u-br-100-pc u-p-r';
+				$link_classes = 't-foreground-base l-w-s u-d-b u-b-s u-pb-hover u-br-100-pc u-p-r';
 
 				$prev = [
 					'class' => "$link_classes u-t-180 js-load-more-prev",
@@ -121,17 +121,17 @@ class Posts {
 		public static function shortcode( $atts, $content ) {
 				$atts = shortcode_atts(
 						[
-							'type'           => '',
-							'posts_per_page' => 10,
-							'layout'         => 'columns',
-							'meta_key'       => '',
-							'meta_value'     => '',
-							'meta_type'      => 'string',
-							'ids'            => '',
-							'section_title'  => '',
-							'pagination'     => false,
-							'return_array'   => false, // back end
-							'query_args'     => [], // back end
+							'type'               => '',
+							'posts_per_page'     => 10,
+							'meta_key'           => '',
+							'meta_value'         => '',
+							'meta_type'          => 'string',
+							'ids'                => '',
+							'section_title'      => '',
+							'a11y_section_title' => '',
+							'pagination'         => false,
+							'return_array'       => false, // back end
+							'query_args'         => [], // back end
 						],
 						$atts,
 						'ht-posts'
@@ -140,17 +140,17 @@ class Posts {
 				/* Destructure */
 
 				[
-					'type'           => $type,
-					'posts_per_page' => $posts_per_page,
-					'layout'         => $layout,
-					'meta_key'       => $meta_key,
-					'meta_value'     => $meta_value,
-					'meta_type'      => $meta_type,
-					'ids'            => $ids,
-					'section_title'  => $section_title,
-					'pagination'     => $pagination,
-					'return_array'   => $return_array,
-					'query_args'     => $query_args,
+					'type'               => $type,
+					'posts_per_page'     => $posts_per_page,
+					'meta_key'           => $meta_key,
+					'meta_value'         => $meta_value,
+					'meta_type'          => $meta_type,
+					'ids'                => $ids,
+					'section_title'      => $section_title,
+					'a11y_section_title' => $a11y_section_title,
+					'pagination'         => $pagination,
+					'return_array'       => $return_array,
+					'query_args'         => $query_args,
 				] = $atts;
 
 				/* Process args + more variables */
@@ -160,6 +160,8 @@ class Posts {
 				$search         = is_search();
 				$archive        = is_archive() || is_home() || $search || is_post_type_archive( $type );
 				$single         = is_singular( $type );
+				$overflow       = 'hidden';
+				$output         = '';
 
 				$pagination  = filter_var( $pagination, FILTER_VALIDATE_BOOLEAN );
 				$no_posts    = false;
@@ -182,20 +184,25 @@ class Posts {
 						$post_type = 'any';
 				}
 
-				$output = '';
-
-				$pre_def_layout = HT::$post_types_info[ $type ] ?? false;
-
-				if ( $pre_def_layout ) {
-						$layout = $pre_def_layout['layout'];
-				}
-
 				if ( 'int' === $meta_type ) {
 						$meta_value = (int) $meta_value;
 				}
 
 				if ( 'string' === $meta_type ) {
 						$meta_value = strval( $meta_value );
+				}
+
+				/* Layout */
+
+				$layout         = 'columns';
+				$pre_def_layout = HT::$post_types_info[ $type ] ?? false;
+
+				if ( $pre_def_layout ) {
+						$layout = $pre_def_layout['layout'];
+				}
+
+				if ( 'work' === $type && $single ) {
+						$layout = 'columns';
 				}
 
 				/* Process query */
@@ -291,24 +298,56 @@ class Posts {
 								$excerpt  = '';
 								$content  = '';
 
-								if ( 'testimonial' === $type ) {
-										$content = Testimonial::render(
-												[
-													'text'     => $text,
-													'title'    => $title,
-													'subtitle' => get_field( 'subtitle', $id ),
-													'media_id' => $media_id,
-													'center'   => ! ( $archive || $return_array ),
-													'large'    => ! ( $archive || $return_array ),
-												]
-										);
-								}
-
 								if ( 'columns' === $layout ) {
+										$fill  = false;
+										$class = '';
+
+										if ( 'testimonial' === $type ) {
+												$content = Testimonial::render(
+														[
+															'text'     => $text,
+															'title'    => $title,
+															'subtitle' => get_field( 'subtitle', $id ),
+															'media_id' => $media_id,
+															'center'   => ! ( $archive || $return_array ),
+															'large'    => ! ( $archive || $return_array ),
+														]
+												);
+										}
+
+										if ( 'work' === $type ) {
+												$fill     = true;
+												$class    = 'o-flush';
+												$overflow = '';
+
+												$content = (
+													'<div class="l-pt-r l-pb-r l-flex-grow u-p-r u-zi-1" data-hover>' .
+														'<div class="o-flush__media o-aspect-ratio u-zi--1 u-p-a u-l-0 u-t-0 u-r-0 u-b-0" data-p="0" data-hover="scale" aria-hidden="true">' .
+															'<img class="o-aspect-ratio__media" src="https://images.unsplash.com/photo-1650194160865-7b442b765ab8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80">' .
+														'</div>' .
+														'<div class="o-underline-r p-s u-fw-b l-pb-xxxs l-flex">' .
+															"<a class='u-p-r u-zi-2' href=''>Category</a>" .
+														'</div>' .
+														'<div class="h3-l">' .
+															'<h3 class="l-m-0 t-foreground-base u-c-i">' .
+																"<a href='$link' class='o-flush__link o-underline-r u-tlrb-b u-ul-w u-ul-c'>" .
+																	"<span class='u-p-r'>$title</span>" .
+																'</a>' .
+															'</h3>' .
+														'</div>' .
+														'<div class="p-m l-pt-xxxs">' .
+															'<p>akjflks fjsdlkfjs kfsldjflskjfsk flsjdlkfjsd ksjf</p>' .
+														'</div>' .
+													'</div>'
+												);
+										}
+
 										$output .= Columns::render_column(
 												[
 													'content' => $content,
-													'width'   => $archive || $return_array ? 50 : 100,
+													'width'   => $archive || $return_array || $single ? 50 : 100,
+													'fill'    => $fill,
+													'class'   => $class,
 												]
 										);
 								}
@@ -386,8 +425,9 @@ class Posts {
 								if ( 'columns' === $layout ) {
 										$output = Columns::render(
 												[
-													'content' => $output,
-													'class'   => $pagination ? 'js-insert' : '',
+													'content'  => $output,
+													'class'    => $pagination ? 'js-insert' : '',
+													'overflow' => $overflow,
 												]
 										);
 								}
@@ -501,6 +541,16 @@ class Posts {
 
 						if ( is_category() ) {
 								$query_static['cat'] = get_queried_object()->term_id;
+						}
+
+						if ( is_tax( 'work_category' ) ) {
+								$query_static['tax_query'] = [
+									[
+										'taxonomy' => 'work_category',
+										'field'    => 'term_id',
+										'terms'    => get_queried_object()->term_id,
+									],
+								];
 						}
 
 						if ( ! empty( $query_static ) ) {

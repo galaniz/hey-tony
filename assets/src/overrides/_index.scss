@@ -259,22 +259,24 @@
   z-index: 11;
 }
 
+/* Socials */
+
+.ht .fusion-social-networks {
+	overflow: visible;
+}
+
 /* Aspect ratio */
 
 .o-aspect-ratio {
   &[data-type="overlap"] {
     &::before {
-      @include mix.fluid-size(
-        padding-top,
-        func.calc-rem( 290px ) func.calc-rem( 500px ),
-        700 1200
-      );
+      padding-top: var(--ht-overlap-p);
     }
   }
 }
 
 .o-aspect-ratio__media {
-  @extend %u-transition-transform-ease;
+  @extend %u-transition-opacity-transform-ease;
 
   &:not([data-bg="false"]) {
     background-color: rgba(func.get-color("foreground-base"), 0.1);
@@ -287,9 +289,7 @@
     transition-duration: 1000ms;
   }
 
-  a:hover ~ div .o-aspect-ratio[data-hover="scale"] &,
-  a:active ~ div .o-aspect-ratio[data-hover="scale"] &,
-  a:focus ~ div .o-aspect-ratio[data-hover="scale"] & {
+  [data-hover]:hover .o-aspect-ratio[data-hover="scale"] & {
     transform: scale(1.03);
   }
 }
@@ -367,6 +367,8 @@
     --ht-single-p: #{func.calc-rem(60px)};
   }
 }
+
+/* Table */
 
 #ht .ht table {
   background: rgba(func.get-color("background-light"), 0.5);

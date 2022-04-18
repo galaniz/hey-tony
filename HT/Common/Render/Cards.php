@@ -67,9 +67,12 @@ class Cards {
 						return '';
 				}
 
-				$title_id    = uniqid();
+				if ( $link ) {
+						$title = "<a href='$link' class='u-tlrb-b'>$title</a>";
+				}
+
 				$title_h     = 'h2';
-				$title_class = 'o-overlap-v__h t-foreground-base u-c-i';
+				$title_class = 't-foreground-base u-ul-w u-c-i u-ul-w';
 
 				if ( $first_two ) {
 						$title_class .= ' h3-l l-mb-s';
@@ -86,7 +89,7 @@ class Cards {
 
 				if ( $pretitle ) {
 						if ( $pretitle_link ) {
-								$pretitle = "<a class='l-m-0 u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
+								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
 						} else {
 								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle</p>";
 						}
@@ -125,27 +128,16 @@ class Cards {
 						}
 				}
 
-				/* Link */
-
-				$link_output = '';
-
-				if ( $link ) {
-						$link_output = (
-							"<a class='o-underline-rs u-oo-s u-p-a u-b-0 u-t-0 u-l-0 u-r-0 u-zi-1 u-d-b' href='$link' aria-labelledby='$title_id'></a>"
-						);
-				}
-
 				/* Output */
 
 				return (
 					"<li class='l-w-$width-pc'>" .
 						( ! $small ? '<div class="l-pb-xxxs l-pb-xs-l">' : '' ) .
-							'<div class="o-overlap-v l-flex u-p-r" data-theme="' . $theme . '" data-col>' .
-								$link_output .
+							'<div class="o-overlap-v l-flex u-p-r u-ul-c" data-theme="' . $theme . '" data-col data-hover>' .
 								'<div class="o-overlap-v__fg u-or-2">' .
 									$pretitle_output .
 									"<div class='$title_class'>" .
-										"<$title_h id='$title_id' class='l-m-0'><span>$title</span></$title_h>" .
+										"<$title_h class='l-m-0 o-underline-r'>$title</$title_h>" .
 									'</div>' .
 									( $first_two && $excerpt ? $excerpt : '' ) .
 								'</div>' .

@@ -413,7 +413,9 @@ class HT {
 						$hero_background_color = 'foreground-base';
 				}
 
-				if ( is_archive() ) {
+				/* Blog related archives */
+
+				if ( is_archive() && ! is_post_type_archive() && ! is_tax() ) {
 						$hero_background_color = get_field( 'background_color', (int) get_option( 'page_for_posts' ) );
 				}
 
