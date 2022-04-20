@@ -4,6 +4,7 @@
 
 /* Imports */
 
+@use "@alanizcreative/formation/src/utils/functions" as func;
 @use "@alanizcreative/formation/src/utils/mixins" as mix;
 
 /* Styles */
@@ -15,16 +16,16 @@
     @extend %u-visually-hidden;
   }
 
-	.u-h-i {
-	  @extend %u-position-absolute;
-	  @extend %u-overflow-hidden;
+  .u-h-i {
+    @extend %u-position-absolute;
+    @extend %u-overflow-hidden;
 
-	  width: 0.063rem;
-	  height: 0.063rem;
-	  padding: 0;
-	  border: 0;
-	  clip: rect(0.063rem 0.063rem 0.063rem 0.063rem);
-	}
+    width: 0.063rem;
+    height: 0.063rem;
+    padding: 0;
+    border: 0;
+    clip: rect(0.063rem 0.063rem 0.063rem 0.063rem);
+  }
 
   /* Position */
 
@@ -61,12 +62,6 @@
     @extend %u-content-empty;
   }
 
-  /* Z index */
-
-  .u-zi-1 {
-    z-index: 1;
-  }
-
   /* Display */
 
   .u-d-n {
@@ -75,6 +70,10 @@
 
   .u-d-b {
     @extend %u-display-block;
+  }
+
+  .u-d-i {
+    display: inline;
   }
 
   .u-d-ib {
@@ -133,6 +132,29 @@
     border: 0;
   }
 
+  .u-b-s {
+    border: 0.125rem solid currentcolor;
+  }
+
+  .u-b-m {
+    border: 0.3125rem solid currentcolor;
+  }
+
+  .u-bt-1 {
+    border-top: func.calc-rem(1px) solid rgba(func.get-color("foreground-base"), var(--ht-border-op));
+  }
+
+  /* Hover */
+
+  .u-pb-hover {
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: func.get-color("primary-base");
+      color: func.get-color("primary-base");
+    }
+  }
+
   /* Color */
 
   .u-c-i * {
@@ -153,4 +175,60 @@
     @extend %u-width-100;
     @extend %u-height-100;
   }
+}
+
+/* Transform */
+
+.u-t-180 {
+  transform: rotate(180deg);
+}
+
+/* Z index */
+
+.u-zi--1 {
+  z-index: -1;
+}
+
+.u-zi-0 {
+  z-index: 0;
+}
+
+.u-zi-1 {
+  z-index: 1;
+}
+
+.u-zi-2 {
+  z-index: 2;
+}
+
+/* Order */
+
+.u-or-2 {
+  order: 2;
+}
+
+/* Image width */
+
+.u-img-100-pc {
+  img {
+    @extend %u-width-100;
+  }
+}
+
+/* Variables */
+
+.u-oo-s {
+  --ht-outline-offset: func.calc-rem(-4px);
+}
+
+.u-ul-c {
+  --ht-underline-c: #{func.get-color("primary-base")};
+}
+
+.u-ul-w {
+  --ht-underline-w: #{func.calc-rem(2px)};
+}
+
+.u-b-op {
+  --ht-border-op: 0.15;
 }

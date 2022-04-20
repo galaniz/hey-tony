@@ -11,22 +11,22 @@
 /* Styles */
 
 #ht .ht .c-logos .fusion-column-wrapper {
-	@extend %u-gap-r;
+  @extend %u-gap-r;
 }
 
 .c-logos {
   opacity: 0.5;
   justify-content: center;
 
-	> div > div {
-		@extend %u-margin-left-auto;
-	}
+  > div > div {
+    @extend %u-margin-left-auto;
+  }
 
   img {
     max-width: func.calc-rem(180px);
     max-height: func.calc-rem(50px);
     height: auto;
-		width: auto;
+    width: auto;
   }
 
   @include mix.breakpoint-min(600) {
@@ -34,11 +34,11 @@
   }
 
   @include mix.breakpoint-min(1000) {
-		flex-grow: 0;
+    flex-grow: 0;
 
-		> div > div {
-			margin-left: 0;
-		}
+    > div > div {
+      margin-left: 0;
+    }
 
     img {
       max-width: func.calc-rem(210px);

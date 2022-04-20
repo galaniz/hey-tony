@@ -15,6 +15,7 @@
 
   border-radius: func.calc-rem(100px);
   margin: func.calc-rem(8px);
+  box-shadow: none;
 }
 
 /* Text widget */
@@ -63,8 +64,16 @@
   position: static;
 }
 
-#ht .ht .c-hero .fusion-column-wrapper {
-  min-height: auto;
+/* Column */
+
+.fusion-column-wrapper {
+  .ht-single & {
+    @extend %u-position-relative;
+  }
+
+  #ht .ht .c-hero & {
+    min-height: auto;
+  }
 }
 
 .fusion-title.title {
@@ -173,35 +182,49 @@
     }
   }
 
-  .fusion-social-network-icon {
+  .fusion-sharing-box {
+    min-height: auto;
+  }
+
+  .fusion-social-networks a {
     @extend %u-position-relative;
     @extend %u-border-radius-100;
 
-    background-color: rgba(func.get-color("foreground-base"), 0.15);
+    background-color: rgba(func.get-color("primary-base"), 0.2);
     transition: color 400ms ease, background-color 400ms ease;
     color: inherit;
     border: 0;
     padding: 0.8rem;
     font-size: 1.5rem;
+    line-height: 1;
 
     &::before {
-      @extend %u-transition-transform-ease;
+      @extend %u-opacity-1;
+    }
 
-      transform: scale(1) translateZ(0);
+    i {
+      @extend %u-opacity-1;
+
+      font-size: inherit;
+
+      &::before {
+        transition: color 400ms ease;
+      }
     }
 
     &:hover,
     &:focus,
     &:active {
-      background-color: rgba(func.get-color("primary-light"), 0.75);
+      @extend %u-background-color-primary-base;
 
-      &::before {
-        transform: scale(1.085) translateZ(0);
+      &,
+      i::before {
+        @extend %u-color-background-base;
       }
     }
   }
 
-  .t-text-light .fusion-social-network-icon {
+  .t-text-light .fusion-social-networks a {
     background-color: rgba(func.get-color("background-base"), 0.2);
 
     &:hover,
@@ -230,30 +253,134 @@
   z-index: 1;
 }
 
+.fusion-footer {
+  @extend %u-position-relative;
+
+  z-index: 11;
+}
+
+/* Socials */
+
+.ht .fusion-social-networks {
+  overflow: visible;
+}
+
 /* Aspect ratio */
 
 .o-aspect-ratio {
   &[data-type="overlap"] {
     &::before {
-      @include mix.fluid-size(
-        padding-top,
-        func.calc-rem( 290px ) func.calc-rem( 500px ),
-        700 1200
-      );
+      padding-top: var(--ht-overlap-p);
     }
   }
 }
 
 .o-aspect-ratio__media {
-  @extend %u-transition-transform-ease;
+  @extend %u-transition-opacity-transform-ease;
 
-  transition-duration: 1000ms;
-  background-color: rgba(func.get-color("foreground-base"), 0.1);
+  &:not([data-bg="false"]) {
+    background-color: rgba(func.get-color("foreground-base"), 0.1);
+  }
+
+  transition-duration: 600ms;
   transform: scale(1);
 
-  a:hover .o-aspect-ratio[data-hover="scale"] &,
-  a:active .o-aspect-ratio[data-hover="scale"] &,
-  a:focus .o-aspect-ratio[data-hover="scale"] & {
+  .o-aspect-ratio[data-scale="slow"] & {
+    transition-duration: 1000ms;
+  }
+
+  [data-hover]:hover .o-aspect-ratio[data-hover="scale"] & {
     transform: scale(1.03);
+  }
+}
+
+/* Single content */
+
+.ht-single__main {
+  --ht-underline-w: #{func.calc-rem(1.5px)};
+
+  ul,
+  ol {
+    margin-left: 6%;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  .post-content & {
+    blockquote {
+      margin: 0 0 0 5%;
+      padding: 0 0 0 5%;
+    }
+
+    p,
+    ul,
+    blockquote {
+      margin-bottom: func.calc-rem(30px);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  li {
+    padding-left: 1.5%;
+    margin-bottom: func.calc-rem(10px);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.ht-single {
+  --ht-single-m: #{func.calc-rem(-40px)};
+  --ht-single-p: #{func.calc-rem(40px)};
+
+  #ht .ht #wrapper & .ht-single__main {
+    margin: var(--ht-single-m) 0 0 calc(0.375 * var(--ht-single-m));
+  }
+
+  .fusion-builder-row {
+    > * {
+      padding: var(--ht-single-p) 0 0 calc(0.375 * var(--ht-single-p));
+    }
+  }
+
+  .fusion-content-layout-column > * {
+    margin-bottom: var(--ht-single-p);
+
+    > *:last-child,
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @include mix.breakpoint-min(1000) {
+    --ht-single-m: #{func.calc-rem(-60px)};
+    --ht-single-p: #{func.calc-rem(60px)};
+  }
+}
+
+/* Table */
+
+#ht .ht table {
+  background: rgba(func.get-color("foreground-base"), 0.15);
+
+  &,
+  tr td,
+  th {
+    border: 0;
+  }
+
+  th,
+  tr:nth-child(2n) {
+    @extend %u-background-color-background-dark;
   }
 }

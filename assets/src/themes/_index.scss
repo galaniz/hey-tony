@@ -32,3 +32,7 @@
 .t-foreground-base {
   @extend %u-color-foreground-base;
 }
+
+.t-bg-background-base {
+  @extend %u-background-color-background-base;
+}

@@ -13,142 +13,155 @@
 /* Styles */
 
 .o-form {
-	input[type="text"],
-	input[type="email"],
-	input[type="tel"],
-	input[type="url"],
-	select,
-	textarea {
-		padding: func.calc-rem(12px) func.calc-rem(24px);
-		border: func.calc-rem(2px) solid currentColor;
-		font-size: inherit;
-		line-height: inherit;
-		transition: all 300ms ease;
+  textarea {
+    border-radius: func.calc-rem(20px);
+  }
 
-		&:focus {
-			border-color: var(--ht-primary-base-c);
-			box-shadow: inset 0 0 0 func.calc-rem(1px) var(--ht-primary-base-c);
-		}
-	}
+  #ht .ht & input[type="search"],
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    padding: func.calc-rem(12px) func.calc-rem(24px);
+    border: func.calc-rem(2px) solid currentcolor;
+    font-size: inherit;
+    line-height: inherit;
+    transition: all 300ms ease;
 
-	textarea {
-		border-radius: func.calc-rem(20px);
-	}
+    &:focus {
+      border-color: var(--ht-primary-base-c);
+      box-shadow: inset 0 0 0 func.calc-rem(1px) var(--ht-primary-base-c);
+    }
+  }
 
-	/* Ninja forms overrides */
+  /* Fusion search */
 
-	.nf-field-container {
-		margin: 0;
-	}
+	#ht .ht & input[type="search"] {
+    padding-left: func.calc-rem(60px);
+  }
 
-	.submit-container {
-		padding-top: func.calc-rem(10px);
-	}
+  #ht .ht & .searchsubmit {
+    padding: func.calc-rem(12px) func.calc-rem(24px);
+  }
 
-	.list-select-wrap .nf-field-element {
-		@extend %u-position-relative;
+  /* Ninja forms overrides */
 
-		&::after {
-			@extend %u-content-empty;
-	    @extend %u-position-absolute;
-	    @extend %u-position-vertical-center;
+  .nf-field-container {
+    margin: 0;
+  }
 
-	    background-image: url("assets/public/svg/caret.svg");
-	    background-repeat: no-repeat;
-	    background-size: 100% 100%;
-			width: func.calc-rem(16px);
-	    height: func.calc-rem(10px);
-			right: 1.5rem;
-		}
-	}
+  .submit-container {
+    padding-top: func.calc-rem(10px);
+  }
 
-	.nf-field-container,
-	.nf-field-element,
-	nf-fields-wrap {
-		@extend %u-display-flex;
-		flex-wrap: wrap;
-	}
+  .nf-field-container,
+  .nf-field-element,
+  nf-fields-wrap {
+    @extend %u-display-flex;
 
-	.field-wrap input[type=button] {
-		width: 100%;
-	}
+    flex-wrap: wrap;
+  }
 
-	.nf-field {
-		@extend %u-width-100;
-	}
+  .list-select-wrap .nf-field-element {
+    @extend %u-position-relative;
 
-	.nf-input-limit {
-		margin-top: 0;
-	}
+    &::after {
+      @extend %u-content-empty;
+      @extend %u-position-absolute;
+      @extend %u-position-vertical-center;
 
-	.nf-error-msg,
-	.ninja-forms-req-symbol {
-		color: var(--ht-error-c);
-	}
+      background-image: url("assets/public/svg/caret-down.svg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: func.calc-rem(16px);
+      height: func.calc-rem(10px);
+      right: 1.5rem;
+    }
+  }
 
-	.nf-error-msg,
-	.nf-response-msg {
-		@extend %u-font-weight-bold;
-		border-radius: func.calc-rem(5px);
-	}
+  .field-wrap input[type="button"] {
+    width: 100%;
+  }
 
-	.nf-error-msg {
-		font-size: func.calc-rem(18px);
-		background-color: rgba(map.get(con.$vars, 'color-error'), 0.2);
-		padding: func.calc-rem(5px) func.calc-rem(10px);
-		margin-top: 1rem;
-	}
+  .nf-field {
+    @extend %u-width-100;
+  }
 
-	.nf-error-field-errors,
-	.nf-response-msg {
-		padding: func.calc-rem(15px) func.calc-rem(20px);
-	}
+  .nf-input-limit {
+    margin-top: 0;
+  }
 
-	.nf-response-msg {
-		@extend %u-color-primary-base;
+  .nf-error-msg,
+  .ninja-forms-req-symbol {
+    color: var(--ht-error-c);
+  }
 
-		background-color: rgba(func.get-color('primary-base'), 0.2);
+  .nf-error-msg,
+  .nf-response-msg {
+    @extend %u-font-weight-bold;
 
-		p {
-			margin: 0;
-		}
-	}
+    border-radius: func.calc-rem(5px);
+  }
 
-	.nf-error-field-errors {
-		margin-top: 2rem;
-	}
+  .nf-error-msg {
+    font-size: func.calc-rem(18px);
+    background-color: rgba(map.get(con.$vars, "color-error"), 0.2);
+    padding: func.calc-rem(5px) func.calc-rem(10px);
+    margin-top: 1rem;
+  }
 
-	.nf-response-msg,
-	.nf-before-form-content {
-		margin-bottom: 2rem;
-	}
+  .nf-error-field-errors,
+  .nf-response-msg {
+    padding: func.calc-rem(15px) func.calc-rem(20px);
+  }
 
-	.nf-error .ninja-forms-field {
-		border-color: var(--ht-error-c);
-		border-width: func.calc-rem(2px);
-		box-shadow: inset 0 0 0 func.calc-rem(1px) var(--ht-error-c);
-	}
+  .nf-response-msg {
+    @extend %u-color-primary-base;
 
-	nf-fields-wrap {
-		@extend %u-gap-r;
-	}
+    background-color: rgba(func.get-color("primary-base"), 0.2);
 
-	nf-field {
-		@extend %u-flex-grow-1;
-	}
+    p {
+      margin: 0;
+    }
+  }
 
-	nf-field-label {
-		margin-bottom: func.calc-rem(12px);
-	}
+  .nf-error-field-errors {
+    margin-top: 2rem;
+  }
 
-	@include mix.breakpoint-min(800) {
-		nf-field {
-			width: 50%;
+  .nf-response-msg,
+  .nf-before-form-content {
+    margin-bottom: 2rem;
+  }
 
-			&:last-child,
-			&:nth-last-child(2) {
-				width: 100%;
-			}
-		}
-	}
+  .nf-error .ninja-forms-field {
+    border-color: var(--ht-error-c);
+    border-width: func.calc-rem(2px);
+    box-shadow: inset 0 0 0 func.calc-rem(1px) var(--ht-error-c);
+  }
+
+  nf-fields-wrap {
+    @extend %u-gap-r;
+  }
+
+  nf-field {
+    @extend %u-flex-grow-1;
+  }
+
+  nf-field-label {
+    margin-bottom: func.calc-rem(12px);
+  }
+
+  @include mix.breakpoint-min(800) {
+    nf-field {
+      width: 50%;
+
+      &:last-child,
+      &:nth-last-child(2) {
+        width: 100%;
+      }
+    }
+  }
 }

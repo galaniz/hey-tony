@@ -11,6 +11,10 @@
 
 /* Styles */
 
+.l-w-s {
+  width: func.calc-rem(32px);
+}
+
 .l-w-r {
   width: func.calc-rem(80px);
 }
@@ -19,11 +23,19 @@
   @extend %u-width-100;
 }
 
-.l-w-all {
+.l-w-50-pc {
   @include mix.breakpoint-min(800) {
-    &[data-width="50-pc"] > * {
-      width: 50%;
-    }
+    width: 50%;
+  }
+}
+
+.l-w-33-pc {
+  @include mix.breakpoint-min(600) {
+    width: 50%;
+  }
+
+  @include mix.breakpoint-min(900) {
+    width: 33.3333%;
   }
 }
 

@@ -1,0 +1,41 @@
+/**
+ * Objects: stat
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-stat {
+  padding-top: 12.5%;
+  max-width: 50%;
+  max-height: 100%;
+
+  &[data-align="left"] {
+    border-top-right-radius: 100%;
+    padding-right: 12.5%;
+  }
+
+  &[data-align="right"] {
+    @extend %u-text-align-right;
+
+    border-top-left-radius: 100%;
+    padding-left: 12.5%;
+  }
+
+  @include mix.breakpoint-min(700) {
+    &[data-wide="true"] {
+      padding-top: 7.5%;
+    }
+
+    &[data-wide="true"][data-align="left"] {
+      padding-right: 7.5%;
+    }
+
+    &[data-wide="true"][data-align="right"] {
+      padding-left: 7.5%;
+    }
+  }
+}

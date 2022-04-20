@@ -1,6 +1,6 @@
 <?php
 /**
- * Render overlap image text layout
+ * Render card layout
  *
  * @package hey-tony
  */
@@ -17,15 +17,15 @@ use HT\Utils;
  * Class
  */
 
-class Overlap {
+class Cards {
 
 		/**
-		 * Output overlap layout item.
+		 * Output card.
 		 *
 		 * @return string
 		 */
 
-		public static function render_item( $args = [] ) {
+		public static function render_card( $args = [] ) {
 				$args = array_merge(
 						[
 							'title'         => '',
@@ -34,6 +34,10 @@ class Overlap {
 							'media_id'      => 0,
 							'pretitle'      => '',
 							'pretitle_link' => '',
+							'index'         => 0,
+							'width'         => 33,
+							'theme'         => 'background-base',
+							'small'         => false,
 						],
 						$args
 				);
@@ -45,7 +49,17 @@ class Overlap {
 					'media_id'      => $media_id,
 					'pretitle'      => $pretitle,
 					'pretitle_link' => $pretitle_link,
+					'index'         => $index,
+					'width'         => $width,
+					'theme'         => $theme,
+					'small'         => $small,
 				] = $args;
+
+				$first_two = 0 === $index || 1 === $index;
+
+				if ( $first_two ) {
+						$width = 50;
+				}
 
 				/* Title required */
 
@@ -53,12 +67,20 @@ class Overlap {
 						return '';
 				}
 
-				if ( $title ) {
-						$title = (
-							"<a href='$link' class='o-overlap__a u-tlrb-b o-accent-r o-accent-r-m' data-theme='primary-base'>" .
-								"<span class='u-zi-1'>$title</span>" .
-							'</a>'
-						);
+				if ( $link ) {
+						$title = "<a href='$link' class='u-tlrb-b'>$title</a>";
+				}
+
+				$title_h     = 'h2';
+				$title_class = 't-foreground-base u-ul-w u-c-i u-ul-w';
+
+				if ( $first_two ) {
+						$title_class .= ' h3-l l-mb-s';
+				} elseif ( $small ) {
+						$title_class .= ' h5';
+						$title_h      = 'h3';
+				} else {
+						$title_class .= ' h4';
 				}
 
 				/* Pretitle */
@@ -67,13 +89,13 @@ class Overlap {
 
 				if ( $pretitle ) {
 						if ( $pretitle_link ) {
-								$pretitle = "<a class='o-overlap__r u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
+								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
 						} else {
 								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle</p>";
 						}
 
 						$pretitle_output = (
-							'<div class="p-s u-fw-b l-pb-xxxs o-underline-r l-flex">' .
+							'<div class="o-underline-r p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs l-flex">' .
 								$pretitle .
 							'</div>'
 						);
@@ -94,7 +116,7 @@ class Overlap {
 				$image = '<div class="o-aspect-ratio__media"></div>';
 
 				if ( $media_id ) {
-						$image = Utils::get_image( $media_id, '1536x1536' );
+						$image = Utils::get_image( $media_id, $first_two ? 'large' : 'medium_large' );
 
 						if ( $image ) {
 								$src    = esc_url( $image['url'] );
@@ -109,29 +131,29 @@ class Overlap {
 				/* Output */
 
 				return (
-					'<li class="o-overlap">' .
-						'<div class="l-flex u-p-r" data-col data-hover>' .
-							'<div class="o-overlap__fg u-or-2">' .
-								'<div class="l-mw-r l-pt-s l-pt-r-l u-p-r u-tlrb-b u-zi-1">' .
+					"<li class='l-w-$width-pc'>" .
+						( ! $small ? '<div class="l-pb-xxxs l-pb-xs-l">' : '' ) .
+							'<div class="o-overlap-v l-flex u-p-r u-ul-c" data-theme="' . $theme . '" data-col data-hover>' .
+								'<div class="o-overlap-v__fg u-or-2">' .
 									$pretitle_output .
-									'<div class="h2-l l-pb-xxxs t-foreground-base u-c-i">' .
-										"<h2 class='l-m-0'>$title</h2>" .
+									"<div class='$title_class'>" .
+										"<$title_h class='l-m-0 o-underline-r'>$title</$title_h>" .
 									'</div>' .
-									$excerpt .
+									( $first_two && $excerpt ? $excerpt : '' ) .
+								'</div>' .
+								'<div class="u-p-r u-zi--1">' .
+									'<div class="o-overlap-v__bg o-aspect-ratio" data-p="66" data-hover="scale">' .
+										$image .
+									'</div>' .
 								'</div>' .
 							'</div>' .
-							"<div class='o-overlap__bg l-mw-l u-p-r u-zi--1'>" .
-								'<div class="o-aspect-ratio" data-type="overlap" data-hover="scale" data-scale="slow">' .
-									$image .
-								'</div>' .
-							'</div>' .
-						'</div>' .
+						( ! $small ? '</div>' : '' ) .
 					'</li>'
 				);
 		}
 
 		/**
-		 * Output overlap layout.
+		 * Output cards.
 		 *
 		 * @return string
 		 */
@@ -156,17 +178,17 @@ class Overlap {
 						return '';
 				}
 
-				$class = 'l-flex' . ( $class ? " $class" : '' );
+				$class = 'l-flex l-w-all' . ( $class ? " $class" : '' );
 
 				/* Output */
 
 				return (
 					'<div>' .
-						"<ul class='$class' data-gap='l' data-gap-l='xl' data-col>" .
+						"<ul class='$class' data-gap='r' data-row='s' data-wrap-s data-col>" .
 							$content .
 						'</ul>' .
 					'</div>'
 				);
 		}
 
-} // End Overlap
+} // End Cards

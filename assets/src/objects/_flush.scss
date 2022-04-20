@@ -1,0 +1,55 @@
+/**
+ * Objects: flush
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-flush {
+  img {
+    @extend %u-grayscale;
+    @extend %u-opacity-0;
+  }
+
+  [data-hover]:hover {
+    img {
+      opacity: 0.2;
+    }
+  }
+
+  &:last-child > div {
+    &::before,
+    &::after {
+      content: none;
+    }
+  }
+}
+
+.o-flush__media,
+.o-flush__link::before {
+  height: calc(100% + var(--ht-flex-gap));
+  margin-top: calc(-1 * var(--ht-flex-gap) / 2);
+  margin-left: func.calc-rem(-20px);
+  width: 100vw;
+
+  @include mix.breakpoint-min(800) {
+    width: 50vw;
+
+    .o-flush:nth-child(odd) & {
+      margin-right: calc((var(--ht-flex-gap) / 2) * -1);
+      margin-left: 0;
+    }
+
+    .o-flush:nth-child(even) & {
+      margin-left: calc((var(--ht-flex-gap) / 2) * -1);
+    }
+
+    #ht .ht .o-flush:nth-child(odd) & {
+      left: auto;
+    }
+  }
+}

@@ -13,9 +13,29 @@
   .l-flex {
     /* Row */
 
+    @include mix.breakpoint-min(600) {
+      &[data-row="s"] {
+        flex-direction: row;
+      }
+    }
+
     @include mix.breakpoint-min(800) {
       &[data-row="m"] {
         flex-direction: row;
+      }
+    }
+
+    /* Wrap */
+
+    @include mix.breakpoint-min(600) {
+      &[data-wrap-s] {
+        flex-wrap: wrap;
+      }
+    }
+
+    @include mix.breakpoint-min(800) {
+      &[data-wrap-m] {
+        flex-wrap: wrap;
       }
     }
 
@@ -28,6 +48,22 @@
     }
 
     /* Gap */
+
+    &[data-gap=""] {
+      --ht-flex-gap: #{func.calc-rem(1px)};
+    }
+
+    &[data-gap="xs"] {
+      $v: 12px;
+
+      --ht-flex-gap: #{func.calc-rem($v)};
+
+      margin: func.calc-rem($v * -1) 0 0 func.calc-rem($v * -1);
+
+      & > * {
+        padding: func.calc-rem($v) 0 0 func.calc-rem($v);
+      }
+    }
 
     &[data-gap="s"] {
       $v: 20px;

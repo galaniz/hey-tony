@@ -8,6 +8,12 @@
 namespace HT\Common\Render;
 
 /**
+ * Imports
+ */
+
+use HT\Utils;
+
+/**
  * Class
  */
 
@@ -51,10 +57,25 @@ class Swoop {
 					'</svg>'
 				);
 
-				if ( $featured_image && ( ! is_post_type_archive() && ! is_home() ) ) {
-						$featured_image_url = get_the_post_thumbnail_url( get_the_ID(), '1536x1536' );
+				/* Svg + featured image */
 
-						if ( $featured_image_url ) {
+				if ( $featured_image && ( ! is_post_type_archive() && ! is_archive() && ! is_home() && ! is_search() && ! is_404() ) ) {
+						$media_id = get_post_thumbnail_id( get_the_ID() );
+						$image    = '';
+
+						if ( $media_id ) {
+								$image = Utils::get_image( $media_id, '1536x1536' );
+
+								if ( $image ) {
+										$src    = esc_url( $image['url'] );
+										$srcset = esc_attr( $image['srcset'] );
+										$sizes  = esc_attr( $image['sizes'] );
+
+										$image = "<img class='l-w-100-pc' src='$src' alt='' srcset='$srcset' sizes='$sizes'>";
+								}
+						}
+
+						if ( $image ) {
 								$swoop = (
 									'<svg class="c-hero__swoop u-p-a u-t-0 u-l-0" aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">' .
 										'<defs>' .
@@ -64,7 +85,7 @@ class Swoop {
 										'</defs>' .
 										'<switch>' .
 											'<foreignObject x="0" y="0" width="100%" height="100%" clip-path="url(#htsw)">' .
-												"<img class='l-w-100-pc' src='$featured_image_url' alt=''>" .
+												$image .
 											'</foreignObject>' .
 										'</switch>' .
 									'</svg>' .
@@ -83,8 +104,6 @@ class Swoop {
 				} else {
 						$classes[] = 'o-swoop l-breakout';
 						$classes[] = 'top' === $position ? 'u-t-0' : 'u-b-0';
-
-						$attr[] = 'data-size="' . ( is_front_page() ? 'r' : 's' ) . '"';
 				}
 
 				if ( $flip ) {
@@ -101,7 +120,7 @@ class Swoop {
 		}
 
 		/**
-		 * Shortcode to output main footer.
+		 * Shortcode to output swoop.
 		 *
 		 * @param array $atts
 		 * @param string $content

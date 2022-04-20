@@ -12,9 +12,9 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
+use HT\Utils;
 use HT\Common\Render\Swoop;
 use Formation\Pub\Nav_Walker;
-use Formation\Utils;
 
 /**
  * Class
@@ -82,7 +82,7 @@ class Main_Nav {
 
 								$logo = (
 									'<div>' .
-										'<a class="u-d-b" href="' . esc_url( home_url( '/' ) ) . '">' .
+										'<a class="u-oo-s u-d-b" href="' . esc_url( home_url( '/' ) ) . '">' .
 											'<span class="u-v-h">' . get_bloginfo( 'name' ) . ' home</span>' .
 											'<div class="o-logo l-flex u-p-r" data-align="center" data-size="l">' .
 												"<img class='u-d-b' src='$src' alt='' srcset='$srcset' sizes='$sizes'>" .

@@ -12,7 +12,9 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
+use HT\Utils;
 use Formation\Common\Field\Field;
+use function Formation\additional_script_data;
 
 /**
  * Class
@@ -27,37 +29,38 @@ class Filters {
 		 * @return array
 		 */
 
-		public static function get_filter_args() {
-				$post_type = is_archive() ? get_queried_object()->name : false;
-				$tax       = 'category';
-				$n         = HT::$namespace;
-				$options   = [];
-				$args      = [];
-				$val       = '';
+		public static function get_filter_args( $post_type ) {
+				$tax     = 'category';
+				$options = [];
+				$args    = [];
+				$val     = '';
+
+				$tax_url_param   = HT::$get_query_url_params['taxonomy'] ?? false;
+				$terms_url_param = HT::$get_query_url_params['terms'] ?? false;
 
 				if ( 'work' === $post_type ) {
 						$tax = 'work_category';
-
-						$terms = get_terms(
-								[
-									'taxonomy'   => $tax,
-									'hide_empty' => true,
-								]
-						);
-
-						if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-								foreach ( $terms as $term ) {
-										$options[] = [
-											'label' => $term->name,
-											'value' => $term->term_id,
-										];
-								}
-						}
 				}
 
+				$options = Utils::get_terms_as_options( $tax );
+
 				if ( $options ) {
+						if ( 'post' === $post_type && is_category() ) {
+								$c = get_the_category();
+
+								if ( ! empty( $c ) ) {
+										$val = $c[0]->cat_ID;
+								}
+						}
+
+						if ( $tax === $tax_url_param && $terms_url_param ) {
+								$val = $terms_url_param;
+						}
+
+						$id = 'tax_' . uniqid();
+
 						$args[] = [
-							'id'                => $n . '_cat_' . uniqid(),
+							'id'                => $id,
 							'type'              => 'radio-group',
 							'options'           => $options,
 							'value'             => $val,
@@ -65,9 +68,10 @@ class Filters {
 							'label_class'       => 'u-v-h',
 							'opt_buttons_class' => 'l-flex',
 							'opt_buttons_attr'  => [
-								'data-gap'     => 's',
+								'data-gap'     => 'xs',
+								'data-gap-l'   => 's',
 								'data-align'   => 'center',
-								'data-justify' => 'end',
+								'data-justify' => 'right',
 								'data-wrap'    => '',
 							],
 							'opt_button_class'  => 'fusion-button button-flat button-small button-default button-1 fusion-button-default-span fusion-button-default-type button-outline',
@@ -91,15 +95,28 @@ class Filters {
 		 * @return string
 		 */
 
-		public static function render() {
-				$fields = self::get_filter_args();
+		public static function render( $post_type = '' ) {
+				if ( ! $post_type ) {
+						return '';
+				}
+
+				$fields = self::get_filter_args( $post_type );
 				$output = '';
 
 				if ( ! empty( $fields ) ) {
 						foreach ( $fields as $f ) {
-								$field_output = '';
+								$id                  = $f['id'] ?? false;
+								$load_posts_query    = $f['load_posts_query'] ?? false;
+								$load_posts_query_id = $f['load_posts_query_id'] ?? $id;
 
-								$f['name'] = $f['id'];
+								if ( ! $id || ! $load_posts_query ) {
+										continue;
+								}
+
+								$f['class'] = 'js-load-more-filter' . ( isset( $f['class'] ) ? ' ' . $f['class'] : '' );
+								$f['name']  = $id;
+
+								$field_output = '';
 
 								Field::render(
 										[
@@ -110,20 +127,24 @@ class Filters {
 								);
 
 								$output .= $field_output;
+
+								if ( $load_posts_query ) {
+										HT::$load_posts_query[ 'frm_' . $load_posts_query_id ] = $load_posts_query;
+								}
 						}
+
+						additional_script_data( HT::$namespace . '_load_posts_query', HT::$load_posts_query );
 				}
 
 				/* Outupt */
 
 				if ( $output ) {
 						return (
-							'<div class="u-p-r u-f-p">' .
-								'<form class="o-form" data-type="filters">' .
-									'<div class="l-flex t-primary-base" data-align="center" data-justify="right" data-wrap>' .
-										$output .
-									'</div>' .
-								'</form>' .
-							'</div>'
+							'<form class="o-form" data-type="filters">' .
+								'<div class="l-flex t-primary-base" data-align="center" data-justify="right" data-wrap>' .
+									$output .
+								'</div>' .
+							'</form>'
 						);
 				} else {
 						return '';
@@ -139,7 +160,15 @@ class Filters {
 		 */
 
 		public static function shortcode( $atts, $content ) {
-				return self::render();
+				$atts = shortcode_atts(
+						[
+							'type' => 'post',
+						],
+						$atts,
+						'ht-filters'
+				);
+
+				return self::render( $atts['type'] );
 		}
 
 } // End Filters

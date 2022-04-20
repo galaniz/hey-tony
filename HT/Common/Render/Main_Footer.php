@@ -12,8 +12,8 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
+use HT\Utils;
 use HT\Common\Render\Swoop;
-use Formation\Utils;
 use Formation\Pub\Nav_Walker;
 
 /**
@@ -54,7 +54,7 @@ class Main_Footer {
 								$wid    = wp_render_widget( $w, $k );
 
 								if ( $social ) {
-										$wid = HT::filter_social( $wid );
+										$wid = Utils::filter_social( $wid );
 										$wid = "<div class='l-pt-xxxs'>$wid</div>";
 								} else {
 										$wid = "<div class='o-accent u-d-ib-a'>$wid</div>";
@@ -118,8 +118,8 @@ class Main_Footer {
 								$logo .
 							'</div>' .
 							'<div class="l-pb-s">' .
-								'<div class="l-flex" data-gap="r" data-justify="def" data-row="m" data-col data-wrap>' .
-									implode( $widgets_output, '' ) .
+								'<div class="l-flex" data-gap="r" data-justify="def" data-row="m" data-wrap-m data-col>' .
+									implode( '', $widgets_output ) .
 								'</div>' .
 							'</div>' .
 							'<div class="l-flex p-xs" data-gap="s" data-gap-l="r" data-align="center" data-justify="def" data-wrap>' .
