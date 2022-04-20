@@ -8,10 +8,127 @@
 namespace HT\Common\Render;
 
 /**
+ * Imports
+ */
+
+use HT\Utils;
+
+/**
  * Class
  */
 
 class Columns {
+
+		/**
+		 * Output content.
+		 *
+		 * @return string
+		 */
+
+		public static function render_content( $args = [] ) {
+				$args = array_merge(
+						[
+							'title'         => '',
+							'link'          => '',
+							'excerpt'       => '',
+							'media_id'      => 0,
+							'pretitle'      => '',
+							'pretitle_link' => '',
+							'flush'         => true,
+						],
+						$args
+				);
+
+				[
+					'title'         => $title,
+					'link'          => $link,
+					'excerpt'       => $excerpt,
+					'media_id'      => $media_id,
+					'pretitle'      => $pretitle,
+					'pretitle_link' => $pretitle_link,
+					'flush'         => $flush,
+				] = $args;
+
+				/* Title required */
+
+				if ( ! $title || ! $link ) {
+						return '';
+				}
+
+				/* Pretitle */
+
+				$pretitle_output = '';
+
+				if ( $pretitle ) {
+						if ( $pretitle_link ) {
+								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
+						} else {
+								$pretitle = "<p class='u-p-r u-zi-2'>$pretitle</p>";
+						}
+
+						$pretitle_output = (
+							'<div class="o-underline-r p-s u-fw-b l-pb-xxxs l-flex">' .
+								$pretitle .
+							'</div>'
+						);
+				}
+
+				/* Excerpt */
+
+				if ( $excerpt ) {
+						$excerpt = (
+							'<div class="p-m l-pt-xxxs">' .
+								"<p class='l-m-0'>$excerpt</p>" .
+							'</div>'
+						);
+				}
+
+				/* Featured image */
+
+				$image_output = '';
+
+				if ( $media_id && $flush ) {
+						$image = Utils::get_image( $media_id, 'medium_large' );
+
+						if ( $image ) {
+								$src    = esc_url( $image['url'] );
+								$srcset = esc_attr( $image['srcset'] );
+								$sizes  = esc_attr( $image['sizes'] );
+								$alt    = esc_attr( $image['alt'] );
+
+								$image_output = (
+									'<div class="o-flush__media o-aspect-ratio u-zi--1 u-p-a u-l-0 u-t-0 u-r-0 u-b-0" data-p="0" data-hover="scale" aria-hidden="true">' .
+										"<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes'>" .
+									'</div>'
+								);
+						}
+				}
+
+				/* Link */
+
+				$link_classes = 'o-underline-r u-ul-w u-ul-c';
+
+				if ( $flush ) {
+						$link_classes .= ' o-flush__link u-tlrb-b';
+				}
+
+				/* Output */
+
+				return (
+					'<div class="l-flex-grow u-p-r u-zi-1" data-hover>' .
+						$image_output .
+						$pretitle_output .
+						'<div class="h3-l">' .
+							'<h3 class="l-m-0 t-foreground-base u-c-i">' .
+								"<a href='$link' class='$link_classes'>" .
+									"<span class='u-p-r'>$title</span>" .
+								'</a>' .
+							'</h3>' .
+						'</div>' .
+						$excerpt .
+					'</div>'
+				);
+		}
 
 		/**
 		 * Output column.

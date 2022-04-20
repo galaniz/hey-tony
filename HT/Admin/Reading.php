@@ -53,7 +53,7 @@ class Reading {
 
 						add_settings_field(
 								$name . '_field', // id
-								$label . ' page shows at most', // title
+								$label . ' page(s) shows at most', // title
 								function() use ( $name ) {
 										$value = (int) get_option( $name, '' ); ?>
 										<div>

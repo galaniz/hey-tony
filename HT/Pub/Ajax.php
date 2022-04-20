@@ -49,6 +49,10 @@ class Ajax {
 
 				$q_args = $args;
 
+				if ( isset( $q_args['is_home'] ) ) {
+						unset( $q_args['is_home'] );
+				}
+
 				$args['return_array'] = true;
 				$args['query_args']   = $q_args;
 

@@ -1,6 +1,0 @@
-[ht-meta archive="All Work" category="true"]
-[ht-meta archive="Blog" category="true"]
-[ht-meta author="By"]
-[ht-meta date="true" categories="Categories" tags="Tags" inline="false" order="date,categories,tags"]
-Originally published *|OG_DATE|*,*|IF:UP_DATE|*, updated *|UP_DATE|**|END:IF|*
-[/ht-meta]

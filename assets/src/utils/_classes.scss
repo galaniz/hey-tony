@@ -141,19 +141,19 @@
   }
 
   .u-bt-1 {
-    border-top: func.calc-rem(1px) solid rgba(func.get-color("foreground-base"), 0.3);
+    border-top: func.calc-rem(1px) solid rgba(func.get-color("foreground-base"), var(--ht-border-op));
   }
 
-	/* Hover */
+  /* Hover */
 
-	.u-pb-hover {
-		&:hover,
-		&:focus,
-		&:active {
-			border-color: func.get-color("primary-base");
-			color: func.get-color("primary-base");
-		}
-	}
+  .u-pb-hover {
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: func.get-color("primary-base");
+      color: func.get-color("primary-base");
+    }
+  }
 
   /* Color */
 
@@ -207,12 +207,6 @@
   order: 2;
 }
 
-/* Outline offset */
-
-.u-oo-s {
-  --ht-outline-offset: func.calc-rem(-4px);
-}
-
 /* Image width */
 
 .u-img-100-pc {
@@ -221,12 +215,20 @@
   }
 }
 
-/* Underline */
+/* Variables */
+
+.u-oo-s {
+  --ht-outline-offset: func.calc-rem(-4px);
+}
 
 .u-ul-c {
-	--ht-underline-c: #{func.get-color("primary-base")};
+  --ht-underline-c: #{func.get-color("primary-base")};
 }
 
 .u-ul-w {
-	--ht-underline-w: #{func.calc-rem(2px)};
+  --ht-underline-w: #{func.calc-rem(2px)};
+}
+
+.u-b-op {
+  --ht-border-op: 0.15;
 }

@@ -26,7 +26,7 @@ class Hero_Image {
 		 */
 
 		public static function render() {
-				if ( is_post_type_archive() || is_archive() || is_home() ) {
+				if ( is_post_type_archive() || is_archive() || is_home() || is_search() || is_404() ) {
 						return '';
 				}
 

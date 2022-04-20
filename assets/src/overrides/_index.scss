@@ -262,7 +262,7 @@
 /* Socials */
 
 .ht .fusion-social-networks {
-	overflow: visible;
+  overflow: visible;
 }
 
 /* Aspect ratio */
@@ -371,7 +371,7 @@
 /* Table */
 
 #ht .ht table {
-  background: rgba(func.get-color("background-light"), 0.5);
+  background: rgba(func.get-color("foreground-base"), 0.15);
 
   &,
   tr td,

@@ -132,6 +132,7 @@ class Posts {
 							'pagination'         => false,
 							'return_array'       => false, // back end
 							'query_args'         => [], // back end
+							'is_home'            => false, // back end
 						],
 						$atts,
 						'ht-posts'
@@ -151,6 +152,7 @@ class Posts {
 					'pagination'         => $pagination,
 					'return_array'       => $return_array,
 					'query_args'         => $query_args,
+					'is_home'            => $is_home,
 				] = $atts;
 
 				/* Process args + more variables */
@@ -159,7 +161,9 @@ class Posts {
 				$post_type      = $type;
 				$search         = is_search();
 				$archive        = is_archive() || is_home() || $search || is_post_type_archive( $type );
+				$is_home        = filter_var( $is_home, FILTER_VALIDATE_BOOLEAN ) || is_home();
 				$single         = is_singular( $type );
+				$tax            = 'category';
 				$overflow       = 'hidden';
 				$output         = '';
 
@@ -173,15 +177,11 @@ class Posts {
 				if ( -1 !== $posts_per_page && $pagination && $archive ) {
 						$posts_per_page_type = $type;
 
-						if ( 'search' === $type ) {
-								$posts_per_page_type = 'post';
+						if ( 'post' === $type && is_archive() ) {
+								$posts_per_page_type = 'blog_archives';
 						}
 
 						$posts_per_page = Utils::get_posts_per_page( $posts_per_page_type );
-				}
-
-				if ( 'search' === $type ) {
-						$post_type = 'any';
 				}
 
 				if ( 'int' === $meta_type ) {
@@ -190,6 +190,10 @@ class Posts {
 
 				if ( 'string' === $meta_type ) {
 						$meta_value = strval( $meta_value );
+				}
+
+				if ( 'work' === $type ) {
+						$tax = 'work_category';
 				}
 
 				/* Layout */
@@ -234,20 +238,14 @@ class Posts {
 
 								$args['post__not_in'] = [$post_id];
 
-								$taxonomy = 'category';
-
-								if ( 'work' === $type ) {
-										$taxonomy = 'work_category';
-								}
-
-								$terms = get_the_terms( $post_id, $taxonomy );
+								$terms = get_the_terms( $post_id, $tax );
 
 								if ( $terms && ! is_wp_error( $terms ) ) {
 										$terms = wp_list_pluck( $terms, 'slug' );
 
 										$args['tax_query'] = [
 											[
-												'taxonomy' => $taxonomy,
+												'taxonomy' => $tax,
 												'field'    => 'slug',
 												'terms'    => $terms,
 											],
@@ -267,6 +265,10 @@ class Posts {
 
 						if ( is_array( $query_args ) && count( $query_args ) > 0 ) {
 								$args = array_replace_recursive( $args, $query_args );
+						}
+
+						if ( 'search' === $args['post_type'] ) {
+								$args['post_type'] = 'any';
 						}
 
 						$q = new \WP_Query( $args );
@@ -289,14 +291,33 @@ class Posts {
 						while ( $q->have_posts() ) {
 								$q->the_post();
 
-								$id       = get_the_ID();
-								$text     = apply_filters( 'the_content', get_the_content() );
-								$title    = get_the_title();
-								$link     = get_the_permalink( $id );
-								$media_id = get_post_thumbnail_id( $id );
-								$pretitle = '';
-								$excerpt  = '';
-								$content  = '';
+								$id            = get_the_ID();
+								$text          = apply_filters( 'the_content', get_the_content() );
+								$title         = get_the_title();
+								$link          = get_the_permalink( $id );
+								$media_id      = get_post_thumbnail_id( $id );
+								$excerpt       = '';
+								$content       = '';
+								$pretitle      = '';
+								$pretitle_link = '';
+
+								if ( 'work' === $type || 'post' === $type || 'search' === $type ) {
+										$excerpt = Utils::get_excerpt(
+												[
+													'post_id' => $id,
+													'content' => $text,
+													'words'   => true,
+													'length'  => 'cards' === $layout ? 15 : 20,
+												]
+										);
+
+										$cat = Utils::get_first_cat( $id, $tax );
+
+										if ( $cat ) {
+												$pretitle      = $cat[0];
+												$pretitle_link = $cat[1];
+										}
+								}
 
 								if ( 'columns' === $layout ) {
 										$fill  = false;
@@ -317,28 +338,29 @@ class Posts {
 
 										if ( 'work' === $type ) {
 												$fill     = true;
-												$class    = 'o-flush';
+												$class    = 'o-flush u-b-op';
 												$overflow = '';
 
-												$content = (
-													'<div class="l-pt-r l-pb-r l-flex-grow u-p-r u-zi-1" data-hover>' .
-														'<div class="o-flush__media o-aspect-ratio u-zi--1 u-p-a u-l-0 u-t-0 u-r-0 u-b-0" data-p="0" data-hover="scale" aria-hidden="true">' .
-															'<img class="o-aspect-ratio__media" src="https://images.unsplash.com/photo-1650194160865-7b442b765ab8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80">' .
-														'</div>' .
-														'<div class="o-underline-r p-s u-fw-b l-pb-xxxs l-flex">' .
-															"<a class='u-p-r u-zi-2' href=''>Category</a>" .
-														'</div>' .
-														'<div class="h3-l">' .
-															'<h3 class="l-m-0 t-foreground-base u-c-i">' .
-																"<a href='$link' class='o-flush__link o-underline-r u-tlrb-b u-ul-w u-ul-c'>" .
-																	"<span class='u-p-r'>$title</span>" .
-																'</a>' .
-															'</h3>' .
-														'</div>' .
-														'<div class="p-m l-pt-xxxs">' .
-															'<p>akjflks fjsdlkfjs kfsldjflskjfsk flsjdlkfjsd ksjf</p>' .
-														'</div>' .
-													'</div>'
+												$content = Columns::render_content(
+														[
+															'title'         => $title,
+															'link'          => $link,
+															'excerpt'       => $excerpt,
+															'media_id'      => $media_id,
+															'pretitle'      => $pretitle,
+															'pretitle_link' => $pretitle_link,
+														]
+												);
+										}
+
+										if ( 'search' === $type ) {
+												$content = Columns::render_content(
+														[
+															'title'   => $title,
+															'link'    => $link,
+															'excerpt' => $excerpt,
+															'flush'   => false,
+														]
 												);
 										}
 
@@ -350,33 +372,6 @@ class Posts {
 													'class'   => $class,
 												]
 										);
-								}
-
-								if ( 'cards' === $layout || 'overlap' === $layout ) {
-										$pretitle      = '';
-										$pretitle_link = '';
-
-										$excerpt = Utils::get_excerpt(
-												[
-													'post_id' => $id,
-													'content' => $text,
-													'words'   => true,
-													'length'  => 'cards' === $layout ? 15 : 20,
-												]
-										);
-
-										$tax = 'category';
-
-										if ( 'work' === $type ) {
-												$tax = 'work_category';
-										}
-
-										$cat = Utils::get_first_cat( $id, $tax );
-
-										if ( $cat ) {
-												$pretitle      = $cat[0];
-												$pretitle_link = $cat[1];
-										}
 								}
 
 								if ( 'cards' === $layout ) {
@@ -396,7 +391,7 @@ class Posts {
 												$card_args['theme'] = 'background-dark';
 										}
 
-										if ( is_home() ) {
+										if ( $is_home ) {
 												$card_args['index'] = $index;
 										}
 
@@ -423,10 +418,12 @@ class Posts {
 
 						if ( ! $return_array ) {
 								if ( 'columns' === $layout ) {
+										$columns_class = 'work' === $type ? 'l-pt-xs l-pb-xs l-pt-r-l l-pb-r-l' : '';
+
 										$output = Columns::render(
 												[
 													'content'  => $output,
-													'class'    => $pagination ? 'js-insert' : '',
+													'class'    => $pagination ? 'js-insert' : $columns_class,
 													'overflow' => $overflow,
 												]
 										);
@@ -525,7 +522,9 @@ class Posts {
 							'</div>'
 						);
 
-						$query_static = [];
+						$query_static = [
+							'is_home' => is_home(),
+						];
 
 						if ( $search ) {
 								$query_static['s'] = get_search_query();
@@ -561,14 +560,32 @@ class Posts {
 				/* Return */
 
 				if ( ! $return_array ) {
-						if ( $section_title ) {
+						if ( $a11y_section_title ) {
 								$output = (
-									'<div class="l-pt-s l-pb-s l-pt-r-l l-pb-r-l">' .
-										'<div class="h4">' .
-											"<h2>$section_title</h2>" .
-										'</div>' .
+									'<section>' .
+										"<h2 class='u-v-h'>$section_title</h2>" .
 										$output .
+									'</section>'
+								);
+						} elseif ( $section_title ) {
+								$padding = 'l-pt-s l-pb-s l-pt-r-l l-pb-r-l';
+
+								$section_title = (
+									'<div class="h4 u-p-r">' .
+										"<h2>$section_title</h2>" .
 									'</div>'
+								);
+
+								if ( 'work' === $type ) {
+										$padding        = 'l-pt-s';
+										$section_title .= '<div class="l-m-full u-b-op u-bt-1"></div>';
+								}
+
+								$output = (
+									"<section class='$padding'>" .
+										$section_title .
+										$output .
+									'</section>'
 								);
 						}
 

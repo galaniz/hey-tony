@@ -13,13 +13,12 @@
 /* Styles */
 
 .o-overlap {
-	@include mix.fluid-size(
-		--ht-overlap-p,
-		func.calc-rem( 290px ) func.calc-rem( 500px ),
-		700 1200
-	);
-
-	@include mix.fluid-size(
+  @include mix.fluid-size(
+    --ht-overlap-p,
+    func.calc-rem( 290px ) func.calc-rem( 500px ),
+    700 1200
+  );
+  @include mix.fluid-size(
     --ht-overlap-h,
     func.calc-rem(110px) func.calc-rem(240px),
     700 1200
@@ -70,8 +69,8 @@
 }
 
 .o-overlap__fg {
-	min-height: var(--ht-overlap-h);
-	margin-top: calc(-1 * var(--ht-overlap-h));
+  min-height: var(--ht-overlap-h);
+  margin-top: calc(-1 * var(--ht-overlap-h));
 
   & > div::before {
     @extend %u-background-color-background-base;
@@ -81,11 +80,11 @@
       700 1200
     );
 
-		height: var(--ht-overlap-h);
+    height: var(--ht-overlap-h);
     bottom: auto;
-		transform: scale(1.02, 1.15);
-		transform-origin: 0 0;
-		z-index: -1;
+    transform: scale(1.02, 1.15);
+    transform-origin: 0 0;
+    z-index: -1;
   }
 
   .o-overlap:nth-child(odd) & {
@@ -116,7 +115,7 @@
 
       &::before {
         margin-left: func.calc-rem(-30px);
-        border-radius: 100% 0% 100% 0% / 100% 100% 0% 0% ;
+        border-radius: 100% 0% 100% 0% / 100% 100% 0% 0%;
       }
     }
   }
@@ -141,20 +140,20 @@
 }
 
 .o-overlap__r {
-	.o-overlap:nth-child(even) & {
-		margin-left: auto;
-	}
+  .o-overlap:nth-child(even) & {
+    margin-left: auto;
+  }
 }
 
 .o-overlap__a::before {
-	margin-top: calc(-1 * (var(--ht-overlap-p) - var(--ht-overlap-h)));
-	width: 100vw;
+  margin-top: calc(-1 * (var(--ht-overlap-p) - var(--ht-overlap-h)));
+  width: 100vw;
 
-	@include mix.breakpoint-min(660) {
-		.o-overlap:nth-child(even) & {
-			margin-left: calc((100vw - #{func.calc-rem(660px)}) * -1);
-		}
-	}
+  @include mix.breakpoint-min(660) {
+    .o-overlap:nth-child(even) & {
+      margin-left: calc((100vw - #{func.calc-rem(660px)}) * -1);
+    }
+  }
 }
 
 .o-overlap-v {

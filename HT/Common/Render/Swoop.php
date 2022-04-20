@@ -59,7 +59,7 @@ class Swoop {
 
 				/* Svg + featured image */
 
-				if ( $featured_image && ( ! is_post_type_archive() && ! is_archive() && ! is_home() ) ) {
+				if ( $featured_image && ( ! is_post_type_archive() && ! is_archive() && ! is_home() && ! is_search() && ! is_404() ) ) {
 						$media_id = get_post_thumbnail_id( get_the_ID() );
 						$image    = '';
 

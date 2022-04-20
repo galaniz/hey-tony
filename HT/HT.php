@@ -125,17 +125,51 @@ class HT {
 		 */
 
 		public static $post_types_info = [
-			'post'        => [
+			'post'          => [
+				'layout' => 'cards',
+				'nav'    => true,
+			],
+			'blog_archives' => [
+				'label'  => 'Blog archive',
 				'layout' => 'cards',
 			],
-			'work'        => [
-				'label'  => 'Work',
-				'layout' => 'overlap',
-			],
-			'testimonial' => [
-				'label'  => 'Testimonials',
+			'search'        => [
+				'label'  => 'Search',
 				'layout' => 'columns',
 			],
+			'work'          => [
+				'label'  => 'Work',
+				'layout' => 'overlap',
+				'nav'    => true,
+			],
+			'testimonial'   => [
+				'label'  => 'Testimonials',
+				'layout' => 'columns',
+				'nav'    => true,
+			],
+		];
+
+		/**
+		 * Store taxonomy post types.
+		 *
+		 * @var array $taxonomy_post_types
+		 */
+
+		public static $taxonomy_post_types = [
+			'category'      => 'post',
+			'post_tag'      => 'post',
+			'work_category' => 'work',
+		];
+
+		/**
+		 * Script attributes to add in filter.
+		 *
+		 * @var array $script_attributes
+		 */
+
+		public static $script_attributes = [
+			'script-compat' => 'nomodule',
+			'script'        => 'type="module"',
 		];
 
 		/**
@@ -170,6 +204,8 @@ class HT {
 				add_filter( 'body_class', [$this, 'body_class'], 10, 1 );
 				add_filter( 'language_attributes', [$this, 'html_id'], 10, 1 );
 				add_filter( 'dynamic_sidebar_params', [$this, 'widget_title'], 10, 1 );
+				add_filter( 'nav_menu_css_class', [$this, 'pt_nav_classes'], 10, 2 );
+				add_filter( 'script_loader_tag', [$this, 'add_script_attributes'], 10, 2 );
 
 				/* Admin */
 
@@ -228,23 +264,35 @@ class HT {
 
 		public function pre_get_posts( $query ) {
 				if ( ! is_admin() && $query->is_main_query() ) {
+						$post_type = $query->get( 'post_type' );
+						$ppp       = 0;
+
 						/* Update posts_per_page set in Reading settings */
 
-						if ( is_home() || is_category() || is_archive() ) {
-								$ppp = Utils::get_posts_per_page();
+						if ( $query->is_home ) {
+								$ppp = Utils::get_posts_per_page( 'post' );
+						} elseif ( $query->is_archive ) {
+								$ppp = Utils::get_posts_per_page( 'blog_archives' );
+						}
 
-								if ( $ppp ) {
-										$query->set( 'posts_per_page', $ppp );
+						if ( $query->is_search ) {
+								$ppp = Utils::get_posts_per_page( 'search' );
+						}
+
+						if ( $query->is_tax ) {
+								foreach ( self::$taxonomy_post_types as $tpt => $pt ) {
+										if ( $query->is_tax( $tpt ) ) {
+												$ppp = Utils::get_posts_per_page( $pt );
+										}
 								}
 						}
 
-						if ( is_tax() || is_post_type_archive() ) {
-								$post_type = $query->get( 'post_type' );
-								$ppp       = Utils::get_posts_per_page( $post_type );
+						if ( $query->is_post_type_archive ) {
+								$ppp = Utils::get_posts_per_page( $post_type );
+						}
 
-								if ( $ppp ) {
-										$query->set( 'posts_per_page', $ppp );
-								}
+						if ( $ppp ) {
+								$query->set( 'posts_per_page', $ppp );
 						}
 
 						/* Check for get params that affect queries */
@@ -334,7 +382,7 @@ class HT {
 						]
 				);
 
-				// wp_enqueue_script( "$n-script-compat" );
+				wp_enqueue_script( "$n-script-compat" );
 				wp_enqueue_script( "$n-script" );
 		}
 
@@ -369,7 +417,7 @@ class HT {
 						$swoop_size = 'r';
 				}
 
-				if ( is_single() || is_singular( 'work' ) || is_archive() ) {
+				if ( is_single() || is_singular( 'work' ) || is_archive() || is_search() ) {
 						$swoop_size = 'xs';
 				}
 
@@ -398,6 +446,68 @@ class HT {
 				$params[0]['after_title']   = '</p></div>';
 
 				return $params;
+		}
+
+		/**
+		 * Add current class to nav for custom post type.
+		 */
+
+		public function pt_nav_classes( $classes, $item ) {
+				$current_pt = get_queried_object()->post_type ?? false;
+
+				if ( ! $current_pt ) {
+						$current_tax = get_queried_object()->taxonomy ?? false;
+
+						if ( $current_tax ) {
+								$current_pt = self::$taxonomy_post_types[ $current_tax ] ?? false;
+						}
+				}
+
+				if ( ! $current_pt ) {
+						return $classes;
+				}
+
+				foreach ( self::$post_types_info as $pt => $info ) {
+						if ( ! isset( $info['nav'] ) ) {
+								continue;
+						}
+
+						$nav_pt = $item->object;
+
+						/* Check if blog page */
+
+						if ( 'page' === $nav_pt ) {
+								if ( (int) get_option( 'page_for_posts' ) === (int) $item->object_id ) {
+										$nav_pt = 'post';
+								}
+						}
+
+						if ( $pt !== $current_pt ) {
+								continue;
+						}
+
+						if ( $current_pt === $nav_pt ) {
+								$classes[] = 'current-menu-item';
+						}
+				}
+
+				return $classes;
+		}
+
+		/**
+		 * Add attributes to scripts.
+		 */
+
+		public function add_script_attributes( $tag, $handle ) {
+				foreach ( self::$script_attributes as $script => $attr ) {
+						$s = self::$namespace . '-' . $script;
+
+						if ( $s === $handle && $attr ) {
+								$tag = str_replace( ' src', " $attr src", $tag );
+						}
+				}
+
+				return $tag;
 		}
 
 		/**

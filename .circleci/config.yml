@@ -7,6 +7,8 @@ jobs:
       - image: cimg/php:7.4-node
     steps:
       - checkout
+      - run: composer install
+      - run: composer dump-autoload
       - run: npm install
       - run: npm run build
       - add_ssh_keys:
@@ -22,6 +24,8 @@ jobs:
       - image: cimg/php:7.4-node
     steps:
       - checkout
+      - run: composer install
+      - run: composer dump-autoload
       - run: npm install
       - run: npm run build
       - add_ssh_keys:
