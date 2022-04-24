@@ -9,13 +9,45 @@
 
 /* Styles */
 
+.o-accent,
+.o-accent-r {
+  --ht-accent-p: #{func.calc-rem(12px)};
+  --ht-accent-h: #{func.calc-rem(12px)};
+}
+
+.o-accent-m,
+.o-accent-r-m {
+  @include mix.breakpoint-min(1000) {
+    --ht-accent-p: #{func.calc-rem(13px)};
+    --ht-accent-h: #{func.calc-rem(15px)};
+  }
+}
+
+.o-accent-l,
+.o-accent-r-l {
+  @include mix.breakpoint-min(1000) {
+    --ht-accent-p: #{func.calc-rem(15px)};
+    --ht-accent-h: #{func.calc-rem(20px)};
+  }
+}
+
+.o-accent span,
+.o-accent a,
+.o-accent-r span,
+.o-accent-r a,
+.o-accent__d {
+  padding-bottom: var(--ht-accent-p);
+}
+
+.ht .o-accent__f {
+  padding-bottom: func.calc-rem(12px);
+}
+
 .o-accent span,
 .o-accent a,
 .o-accent-r span,
 .o-accent-r a {
   @extend %u-position-relative;
-
-  padding-bottom: func.calc-rem(12px);
 
   &::after {
     @extend %u-content-empty;
@@ -27,7 +59,7 @@
     background-image: url("assets/public/svg/underline.svg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    height: func.calc-rem(12px);
+    height: var(--ht-accent-h);
     z-index: -1;
   }
 }
@@ -43,32 +75,6 @@
   &::after {
     @extend %u-transition-opacity-ease;
     @extend %u-opacity-0;
-  }
-}
-
-.o-accent-m span,
-.o-accent-m a,
-.o-accent-r-m span,
-.o-accent-r-m a {
-  @include mix.breakpoint-min(1000) {
-    padding-bottom: func.calc-rem(13px);
-
-    &::after {
-      height: func.calc-rem(15px);
-    }
-  }
-}
-
-.o-accent-l span,
-.o-accent-l a,
-.o-accent-r-l span,
-.o-accent-r-l a {
-  @include mix.breakpoint-min(1000) {
-    padding-bottom: func.calc-rem(15px);
-
-    &::after {
-      height: func.calc-rem(20px);
-    }
   }
 }
 

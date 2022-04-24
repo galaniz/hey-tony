@@ -161,7 +161,7 @@
 
   /* Color */
 
-	#wrapper .u-c-i * {
+  #wrapper .u-c-i * {
     color: inherit;
   }
 }
@@ -222,7 +222,7 @@
 /* Empty pseudo selector */
 
 .u-empty:empty {
-	@extend %u-display-none;
+  @extend %u-display-none;
 }
 
 /* Variables */

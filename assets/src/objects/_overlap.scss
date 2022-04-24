@@ -107,7 +107,7 @@
       @extend %u-text-align-right;
       @extend %u-margin-left-auto;
 
-      h2 {
+      .o-overlap__h {
         direction: rtl;
       }
 
@@ -124,7 +124,7 @@
     .o-overlap:nth-child(odd) & > div {
       padding-right: func.calc-rem(60px);
 
-      h2 {
+      .o-overlap__h {
         padding-right: func.calc-rem(60px);
       }
     }
@@ -132,7 +132,7 @@
     .o-overlap:nth-child(even) & > div {
       padding-left: func.calc-rem(60px);
 
-      h2 {
+      .o-overlap__h {
         padding-left: func.calc-rem(60px);
       }
     }
