@@ -129,6 +129,8 @@ class Posts {
 							'ids'                => '',
 							'section_title'      => '',
 							'a11y_section_title' => '',
+							'heading_level'      => 'h2',
+							'current_single'     => false,
 							'pagination'         => false,
 							'return_array'       => false, // back end
 							'query_args'         => [], // back end
@@ -149,6 +151,8 @@ class Posts {
 					'ids'                => $ids,
 					'section_title'      => $section_title,
 					'a11y_section_title' => $a11y_section_title,
+					'heading_level'      => $heading_level,
+					'current_single'     => $current_single,
 					'pagination'         => $pagination,
 					'return_array'       => $return_array,
 					'query_args'         => $query_args,
@@ -173,6 +177,13 @@ class Posts {
 				$offset      = 0;
 				$total       = 0;
 				$total_pages = 0;
+
+				$current_single = filter_var( $current_single, FILTER_VALIDATE_BOOLEAN );
+				$current_single = $current_single && 1 === $posts_per_page ? true : false;
+
+				if ( $section_title || $a11y_section_title ) {
+						$heading_level = 'h3';
+				}
 
 				if ( -1 !== $posts_per_page && $pagination && $archive ) {
 						$posts_per_page_type = $type;
@@ -233,7 +244,7 @@ class Posts {
 								$args['post__in'] = $post_ids;
 						}
 
-						if ( $single ) {
+						if ( $single && ! $current_single ) {
 								$post_id = get_the_ID();
 
 								$args['post__not_in'] = [$post_id];
@@ -251,6 +262,10 @@ class Posts {
 											],
 										];
 								}
+						}
+
+						if ( $current_single ) {
+								$args['p'] = get_the_ID();
 						}
 
 						if ( $meta_key && $meta_value ) {
@@ -349,6 +364,7 @@ class Posts {
 															'media_id'      => $media_id,
 															'pretitle'      => $pretitle,
 															'pretitle_link' => $pretitle_link,
+															'heading_level' => $heading_level,
 														]
 												);
 										}
@@ -356,10 +372,12 @@ class Posts {
 										if ( 'search' === $type ) {
 												$content = Columns::render_content(
 														[
-															'title'   => $title,
-															'link'    => $link,
-															'excerpt' => $excerpt,
-															'flush'   => false,
+															'title'         => $title,
+															'link'          => $link,
+															'excerpt'       => $excerpt,
+															'heading_level' => $heading_level,
+															'heading_large' => false,
+															'flush'         => false,
 														]
 												);
 										}
@@ -367,7 +385,7 @@ class Posts {
 										$output .= Columns::render_column(
 												[
 													'content' => $content,
-													'width'   => $archive || $return_array || $single ? 50 : 100,
+													'width'   => ( $archive || $return_array || $single ) && ! $current_single ? 50 : 100,
 													'fill'    => $fill,
 													'class'   => $class,
 												]
@@ -376,11 +394,12 @@ class Posts {
 
 								if ( 'cards' === $layout ) {
 										$card_args = [
-											'title'    => $title,
-											'link'     => $link,
-											'excerpt'  => $excerpt,
-											'media_id' => $media_id,
-											'index'    => 10,
+											'title'         => $title,
+											'link'          => $link,
+											'excerpt'       => $excerpt,
+											'media_id'      => $media_id,
+											'heading_level' => $heading_level,
+											'index'         => 10,
 										];
 
 										if ( ! $single ) {
@@ -407,6 +426,7 @@ class Posts {
 													'media_id'      => $media_id,
 													'pretitle'      => $pretitle,
 													'pretitle_link' => $pretitle_link,
+													'heading_level' => $heading_level,
 												]
 										);
 								}

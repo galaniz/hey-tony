@@ -26,7 +26,7 @@ class Hero_Image {
 		 */
 
 		public static function render() {
-				if ( is_post_type_archive() || is_archive() || is_home() || is_search() || is_404() ) {
+				if ( is_post_type_archive() || is_archive() || is_home() ) {
 						return '';
 				}
 
@@ -40,9 +40,11 @@ class Hero_Image {
 								$src    = esc_url( $image['url'] );
 								$srcset = esc_attr( $image['srcset'] );
 								$sizes  = esc_attr( $image['sizes'] );
+								$width  = esc_attr( $image['width'] );
+								$height = esc_attr( $image['height'] );
 								$alt    = esc_attr( $image['alt'] );
 
-								$image = "<img class='c-hero__media l-w-100-pc' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes'>";
+								$image = "<img class='c-hero__media l-w-100-pc' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$width' height='$height'>";
 						}
 				} else {
 						return '';

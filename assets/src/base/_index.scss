@@ -24,10 +24,19 @@
   --ht-flex-gap: 0; // flex container gap
   --ht-error-c: #{map.get(con.$vars, "color-error")}; // error color
   --ht-primary-base-c: #{func.get-color("primary-base")}; // primary color
-  --ht-outline-offset: #{func.calc-rem(4px)};
+  --ht-outline-o: #{func.calc-rem(4px)};
+	--ht-outline-c: #{func.get-color("primary-base")};
   --ht-underline-w: #{func.calc-rem(1px)};
   --ht-underline-c: currentcolor;
   --ht-border-op: 0.3;
+}
+
+.ht {
+	@include mix.fluid-size(
+    --ht-nav-h,
+    func.calc-rem(84px) func.calc-rem(157px),
+    600 1200
+  );
 }
 
 main {
@@ -95,7 +104,7 @@ input[type="checkbox"]:disabled ~ span {
   .h1 * {
     @include mix.fluid-size(
       font-size,
-      func.calc-rem(56px) func.calc-rem(100px),
+      func.calc-rem(48px) func.calc-rem(100px),
       600 1200
     );
   }

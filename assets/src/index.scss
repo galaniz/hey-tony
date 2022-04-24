@@ -58,17 +58,22 @@
 /* Remove animations */
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html#ht {
     scroll-behavior: auto;
-  }
 
-  *,
-  *::before,
-  *::after {
-    transition: none;
-    transition-timing-function: linear;
-    animation-duration: 0.001ms;
-    animation-iteration-count: 1;
-    transition-duration: 0.001ms;
+		.ht *,
+		.ht *::before,
+		.ht *::after,
+		.ht .u-pb-hover,
+		.ht .fusion-wrapper *,
+		.ht .fusion-button:before,
+		.ht .fusion-button .fusion-button-text,
+		.ht .fusion-social-networks a i:before {
+			transition: none;
+	    transition-timing-function: linear;
+	    animation-duration: 0.001ms;
+	    animation-iteration-count: 1;
+	    transition-duration: 0.001ms;
+		}
   }
 }

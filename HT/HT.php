@@ -188,6 +188,9 @@ class HT {
 				add_shortcode( 'ht-stat', ['HT\Common\Render\Stat', 'shortcode'] );
 				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
+				add_shortcode( 'ht-archive-title', [$this, 'archive_title'] );
+				add_filter( 'get_the_archive_title_prefix', [$this, 'filter_archive_prefix'], 10, 1 );
+
 				/* Actions */
 
 				add_action( 'after_setup_theme', [$this, 'init'] );
@@ -213,6 +216,32 @@ class HT {
 						$reading_settings = new Reading();
 						$user_settings    = new User();
 				}
+		}
+
+		/**
+		 * Shortcode output for archive title.
+		 */
+
+		public function archive_title() {
+				if ( is_search() ) {
+						return (
+							'<div class="u-d-i u-fw-var">' .
+								_x( 'Search &ndash; ', 'search title prefix' ) .
+							'</div>' .
+							get_search_query()
+						);
+				}
+
+				return get_the_archive_title();
+		}
+
+		/**
+		 * Filter archive title prefix.
+		 */
+
+		public function filter_archive_prefix( $prefix ) {
+				$prefix = str_replace( ':', ' &ndash; ', $prefix );
+				return "<div class='u-d-i u-fw-var'>$prefix</div>";
 		}
 
 		/**
@@ -253,7 +282,7 @@ class HT {
 
 		public function head() {
 				/* phpcs:disable */ ?>
-					<style id="ht">
+					<style id="ht-vars">
 						:root {
 							--ht-hero-c: <?php echo self::$colors[self::$hero_color] ?>;
 							--ht-hero-bg-c: <?php echo self::$colors[self::$hero_background_color] ?>;
@@ -417,7 +446,7 @@ class HT {
 						$swoop_size = 'r';
 				}
 
-				if ( is_single() || is_singular( 'work' ) || is_archive() || is_search() ) {
+				if ( is_single() || is_singular( 'work' ) || is_singular( 'testimonial' ) || is_archive() || is_search() ) {
 						$swoop_size = 'xs';
 				}
 
@@ -519,7 +548,7 @@ class HT {
 		public static function set_meta( $id ) {
 				$hero_background_color = get_field( 'background_color', $id );
 
-				if ( is_single() || is_singular( 'work' ) ) {
+				if ( ( is_single() || is_singular( 'work' ) ) && ! is_singular( 'testimonial' ) ) {
 						$hero_background_color = 'foreground-base';
 				}
 

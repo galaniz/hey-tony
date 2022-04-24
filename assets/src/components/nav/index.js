@@ -396,7 +396,7 @@ class Nav {
         }
       }
     } else {
-      if (y >= this._offsetY) {
+      if (y >= this._offsetY && y > 10) {
         this._scaledDown = true
         this._setTransformValues(this._currentScaleTo, transition)
       } else {

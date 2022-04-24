@@ -78,12 +78,14 @@ class Main_Footer {
 								$src    = esc_url( $image['url'] );
 								$srcset = esc_attr( $image['srcset'] );
 								$sizes  = esc_attr( $image['sizes'] );
+								$width  = esc_attr( $image['width'] );
+								$height = esc_attr( $image['height'] );
 
 								$logo = (
 									'<a class="u-d-b" href="' . esc_url( home_url( '/' ) ) . '">' .
 										'<span class="u-v-h">' . get_bloginfo( 'name' ) . ' home</span>' .
 										'<div class="o-logo" data-align="center">' .
-											"<img class='u-d-b' src='$src' alt='' srcset='$srcset' sizes='$sizes'>" .
+											"<img class='u-d-b' src='$src' alt='' srcset='$srcset' sizes='$sizes' width='$width' height='$height'>" .
 										'</div>' .
 									'</a>'
 								);

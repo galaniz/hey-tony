@@ -94,6 +94,10 @@
     @extend %u-font-weight-bold;
   }
 
+	.u-fw-var {
+		font-variation-settings: 'wght' 200;
+	}
+
   /* Font style */
 
   .u-fs-n {
@@ -218,7 +222,11 @@
 /* Variables */
 
 .u-oo-s {
-  --ht-outline-offset: func.calc-rem(-4px);
+  --ht-outline-o: func.calc-rem(-4px);
+}
+
+.u-oc-l {
+  --ht-outline-c: #{func.get-color("background-base")};
 }
 
 .u-ul-c {
