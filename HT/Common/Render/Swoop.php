@@ -59,7 +59,7 @@ class Swoop {
 
 				/* Svg + featured image */
 
-				if ( $featured_image && ( ! is_post_type_archive() && ! is_archive() && ! is_home() && ! is_search() && ! is_404() ) ) {
+				if ( $featured_image && ( ! is_post_type_archive() && ! is_archive() && ! is_home() ) ) {
 						$media_id = get_post_thumbnail_id( get_the_ID() );
 						$image    = '';
 
@@ -70,8 +70,10 @@ class Swoop {
 										$src    = esc_url( $image['url'] );
 										$srcset = esc_attr( $image['srcset'] );
 										$sizes  = esc_attr( $image['sizes'] );
+										$width  = esc_attr( $image['width'] );
+										$height = esc_attr( $image['height'] );
 
-										$image = "<img class='l-w-100-pc' src='$src' alt='' srcset='$srcset' sizes='$sizes'>";
+										$image = "<img class='l-w-100-pc' src='$src' alt='' srcset='$srcset' sizes='$sizes' width='$width' height='$height'>";
 								}
 						}
 

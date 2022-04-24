@@ -34,6 +34,7 @@ class Overlap {
 							'media_id'      => 0,
 							'pretitle'      => '',
 							'pretitle_link' => '',
+							'heading_level' => 'h2',
 						],
 						$args
 				);
@@ -45,6 +46,7 @@ class Overlap {
 					'media_id'      => $media_id,
 					'pretitle'      => $pretitle,
 					'pretitle_link' => $pretitle_link,
+					'heading_level' => $heading_level,
 				] = $args;
 
 				/* Title required */
@@ -100,9 +102,11 @@ class Overlap {
 								$src    = esc_url( $image['url'] );
 								$srcset = esc_attr( $image['srcset'] );
 								$sizes  = esc_attr( $image['sizes'] );
+								$width  = esc_attr( $image['width'] );
+								$height = esc_attr( $image['height'] );
 								$alt    = esc_attr( $image['alt'] );
 
-								$image = "<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes'>";
+								$image = "<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$width' height='$height' loading='lazy'>";
 						}
 				}
 
@@ -115,7 +119,7 @@ class Overlap {
 								'<div class="l-mw-r l-pt-s l-pt-r-l u-p-r u-tlrb-b u-zi-1">' .
 									$pretitle_output .
 									'<div class="h2-l l-pb-xxxs t-foreground-base u-c-i">' .
-										"<h2 class='l-m-0'>$title</h2>" .
+										"<$heading_level class='l-m-0'>$title</$heading_level>" .
 									'</div>' .
 									$excerpt .
 								'</div>' .

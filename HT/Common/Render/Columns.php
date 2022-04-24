@@ -34,6 +34,8 @@ class Columns {
 							'media_id'      => 0,
 							'pretitle'      => '',
 							'pretitle_link' => '',
+							'heading_level' => 'h2',
+							'heading_large' => true,
 							'flush'         => true,
 						],
 						$args
@@ -46,6 +48,8 @@ class Columns {
 					'media_id'      => $media_id,
 					'pretitle'      => $pretitle,
 					'pretitle_link' => $pretitle_link,
+					'heading_level' => $heading_level,
+					'heading_large' => $heading_large,
 					'flush'         => $flush,
 				] = $args;
 
@@ -94,11 +98,13 @@ class Columns {
 								$src    = esc_url( $image['url'] );
 								$srcset = esc_attr( $image['srcset'] );
 								$sizes  = esc_attr( $image['sizes'] );
+								$wid    = esc_attr( $image['width'] );
+								$height = esc_attr( $image['height'] );
 								$alt    = esc_attr( $image['alt'] );
 
 								$image_output = (
 									'<div class="o-flush__media o-aspect-ratio u-zi--1 u-p-a u-l-0 u-t-0 u-r-0 u-b-0" data-p="0" data-hover="scale" aria-hidden="true">' .
-										"<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes'>" .
+										"<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>" .
 									'</div>'
 								);
 						}
@@ -118,12 +124,12 @@ class Columns {
 					'<div class="l-flex-grow u-p-r u-zi-1" data-hover>' .
 						$image_output .
 						$pretitle_output .
-						'<div class="h3-l">' .
-							'<h3 class="l-m-0 t-foreground-base u-c-i">' .
+						'<div class="h3' . ( $heading_large ? '-l' : '' ) . '">' .
+							"<$heading_level class='l-m-0 t-foreground-base u-c-i'>" .
 								"<a href='$link' class='$link_classes'>" .
 									"<span class='u-p-r'>$title</span>" .
 								'</a>' .
-							'</h3>' .
+							"</$heading_level>" .
 						'</div>' .
 						$excerpt .
 					'</div>'

@@ -34,6 +34,7 @@ class Cards {
 							'media_id'      => 0,
 							'pretitle'      => '',
 							'pretitle_link' => '',
+							'heading_level' => 'h2',
 							'index'         => 0,
 							'width'         => 33,
 							'theme'         => 'background-base',
@@ -49,6 +50,7 @@ class Cards {
 					'media_id'      => $media_id,
 					'pretitle'      => $pretitle,
 					'pretitle_link' => $pretitle_link,
+					'heading_level' => $heading_level,
 					'index'         => $index,
 					'width'         => $width,
 					'theme'         => $theme,
@@ -71,14 +73,12 @@ class Cards {
 						$title = "<a href='$link' class='u-tlrb-b'>$title</a>";
 				}
 
-				$title_h     = 'h2';
 				$title_class = 't-foreground-base u-ul-w u-c-i u-ul-w';
 
 				if ( $first_two ) {
 						$title_class .= ' h3-l l-mb-s';
 				} elseif ( $small ) {
 						$title_class .= ' h5';
-						$title_h      = 'h3';
 				} else {
 						$title_class .= ' h4';
 				}
@@ -95,10 +95,12 @@ class Cards {
 						}
 
 						$pretitle_output = (
-							'<div class="o-underline-r p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs l-flex">' .
+							'<div class="o-overlap-v__p o-underline-r p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs l-flex">' .
 								$pretitle .
 							'</div>'
 						);
+				} else {
+						$title_class .= ' o-overlap-v__p';
 				}
 
 				/* Excerpt */
@@ -122,9 +124,11 @@ class Cards {
 								$src    = esc_url( $image['url'] );
 								$srcset = esc_attr( $image['srcset'] );
 								$sizes  = esc_attr( $image['sizes'] );
+								$wid    = esc_attr( $image['width'] );
+								$height = esc_attr( $image['height'] );
 								$alt    = esc_attr( $image['alt'] );
 
-								$image = "<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes'>";
+								$image = "<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>";
 						}
 				}
 
@@ -137,7 +141,7 @@ class Cards {
 								'<div class="o-overlap-v__fg u-or-2">' .
 									$pretitle_output .
 									"<div class='$title_class'>" .
-										"<$title_h class='l-m-0 o-underline-r'>$title</$title_h>" .
+										"<$heading_level class='l-m-0 o-underline-r'>$title</$heading_level>" .
 									'</div>' .
 									( $first_two && $excerpt ? $excerpt : '' ) .
 								'</div>' .

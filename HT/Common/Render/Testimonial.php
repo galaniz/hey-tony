@@ -67,14 +67,16 @@ class Testimonial {
 						$image = Utils::get_image( $media_id, 'thumbnail' );
 
 						if ( $image ) {
-								$src = esc_url( $image['url'] );
-								$alt = esc_attr( $image['alt'] );
+								$src    = esc_url( $image['url'] );
+								$alt    = esc_attr( $image['alt'] );
+								$width  = esc_attr( $image['width'] );
+								$height = esc_attr( $image['height'] );
 
 								$image = (
 									'<div class="l-flex-shrink-0">' .
 										'<div class="l-w-r">' .
 											'<div class="o-aspect-ratio" data-circle>' .
-												"<img class='o-aspect-ratio__media' src='$src' alt='$alt'>" .
+												"<img class='o-aspect-ratio__media' src='$src' alt='$alt' width='$width' height='$height' loading='lazy'>" .
 											'</div>' .
 										'</div>' .
 									'</div>'

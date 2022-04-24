@@ -180,9 +180,12 @@
 
 .o-overlap-v__fg {
   margin-top: func.calc-rem(-20px);
-  padding-right: func.calc-rem(80px);
 
   .o-overlap-v[data-size="l"] & {
     margin-top: func.calc-rem(-24px);
   }
+}
+
+.o-overlap-v__p {
+  padding-right: func.calc-rem(80px);
 }

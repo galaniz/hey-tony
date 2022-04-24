@@ -13,7 +13,7 @@
 /* Styles */
 
 .o-form {
-  textarea {
+	textarea {
     border-radius: func.calc-rem(20px);
   }
 
@@ -36,9 +36,9 @@
     }
   }
 
-  /* Fusion search */
+	/* Fusion search */
 
-	#ht .ht & input[type="search"] {
+  #ht .ht & input[type="search"] {
     padding-left: func.calc-rem(60px);
   }
 
@@ -48,17 +48,32 @@
 
   /* Ninja forms overrides */
 
+  nf-fields-wrap {
+    @extend %u-display-flex;
+    @extend %u-gap-r;
+
+    flex-wrap: wrap;
+  }
+
+  nf-field {
+    @extend %u-flex-grow-1;
+    @extend %u-display-flex;
+
+    flex-direction: column;
+
+    @include mix.breakpoint-min(1000) {
+      flex: 1 0 50%;
+    }
+  }
+
   .nf-field-container {
+    @extend %u-width-100;
+
     margin: 0;
   }
 
-  .submit-container {
-    padding-top: func.calc-rem(10px);
-  }
-
   .nf-field-container,
-  .nf-field-element,
-  nf-fields-wrap {
+  .nf-field-element {
     @extend %u-display-flex;
 
     flex-wrap: wrap;
@@ -141,27 +156,10 @@
     border-width: func.calc-rem(2px);
     box-shadow: inset 0 0 0 func.calc-rem(1px) var(--ht-error-c);
   }
+}
 
-  nf-fields-wrap {
-    @extend %u-gap-r;
-  }
-
-  nf-field {
-    @extend %u-flex-grow-1;
-  }
-
-  nf-field-label {
-    margin-bottom: func.calc-rem(12px);
-  }
-
-  @include mix.breakpoint-min(800) {
-    nf-field {
-      width: 50%;
-
-      &:last-child,
-      &:nth-last-child(2) {
-        width: 100%;
-      }
-    }
+.ht-field-full {
+  @include mix.breakpoint-min(1000) {
+    min-width: func.calc-rem(600px);
   }
 }

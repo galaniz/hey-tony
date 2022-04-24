@@ -371,7 +371,7 @@
 /* Table */
 
 #ht .ht table {
-  background: rgba(func.get-color("foreground-base"), 0.15);
+  background: rgba(func.get-color("foreground-base"), 0.14);
 
   &,
   tr td,
@@ -383,4 +383,10 @@
   tr:nth-child(2n) {
     @extend %u-background-color-background-dark;
   }
+}
+
+/* Recaptcha */
+
+.grecaptcha-badge {
+  @extend %u-visibility-hidden;
 }

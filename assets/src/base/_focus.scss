@@ -13,8 +13,8 @@
   body:not([data-using-mouse]).ht &,
   body:not([data-using-mouse]).ht &.o-radio__input ~ div,
   body:not([data-using-mouse]).ht &.o-checkbox__input ~ div {
-    outline: func.calc-rem(4px) solid func.get-color("primary-light");
-    outline-offset: var(--ht-outline-offset);
+    outline: func.calc-rem(4px) solid var(--ht-outline-c);
+    outline-offset: var(--ht-outline-o);
   }
 
   body[data-using-mouse].ht & {

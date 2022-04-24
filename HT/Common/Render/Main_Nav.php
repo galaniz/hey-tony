@@ -79,13 +79,15 @@ class Main_Nav {
 								$src    = esc_url( $image['url'] );
 								$srcset = esc_attr( $image['srcset'] );
 								$sizes  = esc_attr( $image['sizes'] );
+								$width  = esc_attr( $image['width'] );
+								$height = esc_attr( $image['height'] );
 
 								$logo = (
 									'<div>' .
 										'<a class="u-oo-s u-d-b" href="' . esc_url( home_url( '/' ) ) . '">' .
 											'<span class="u-v-h">' . get_bloginfo( 'name' ) . ' home</span>' .
 											'<div class="o-logo l-flex u-p-r" data-align="center" data-size="l">' .
-												"<img class='u-d-b' src='$src' alt='' srcset='$srcset' sizes='$sizes'>" .
+												"<img class='u-d-b' src='$src' alt='' srcset='$srcset' sizes='$sizes' width='$width' height='$height'>" .
 												$sticky_logo .
 											'</div>' .
 										'</a>' .
@@ -104,7 +106,7 @@ class Main_Nav {
 								Swoop::render( ['nav' => true] ) .
 							'</div>' .
 						'</div>' .
-						'<div class="l-flex u-p-r u-zi-1' . ( HT::$nav_light ? ' t-text-light' : '' ) . '" data-gap="r" data-align="center" data-justify="def">' .
+						'<div class="l-flex u-p-r u-zi-1' . ( HT::$nav_light ? ' t-text-light u-oc-l' : '' ) . '" data-gap="r" data-align="center" data-justify="def">' .
 							$logo .
 							'<div class="l-flex">' .
 								'<button class="c-nav__button" type="button" aria-expanded="false" aria-controls="js-nav-overflow">' .
@@ -117,7 +119,7 @@ class Main_Nav {
 								'</button>' .
 							'</div>' .
 						'</div>' .
-						'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout l-h-100-vh u-p-a" id="js-nav-overflow">' .
+						'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout l-h-100-vh u-p-a u-oc-l" id="js-nav-overflow">' .
 							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
 								"<ul class='l-mb-m-all o-accent-r o-accent-r-l u-d-ib-a'>$main_nav</ul>" .
 							'</div>' .
