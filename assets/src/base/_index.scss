@@ -104,7 +104,7 @@ input[type="checkbox"]:disabled ~ span {
   .h1 * {
     @include mix.fluid-size(
       font-size,
-      func.calc-rem(48px) func.calc-rem(100px),
+      func.calc-rem(50px) func.calc-rem(96px),
       600 1200
     );
   }
