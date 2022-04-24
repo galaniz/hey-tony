@@ -57,7 +57,7 @@ input[type="checkbox"]:disabled ~ span {
 .ht-swoop-r {
   @include mix.fluid-size(
     --ht-hero-s-h,
-    func.calc-rem(85px) func.calc-rem(280px),
+    func.calc-rem(85px) func.calc-rem(250px),
     600 1300
   );
 }

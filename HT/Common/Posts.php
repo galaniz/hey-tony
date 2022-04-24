@@ -443,7 +443,7 @@ class Posts {
 										$output = Columns::render(
 												[
 													'content'  => $output,
-													'class'    => $pagination ? 'js-insert' : $columns_class,
+													'class'    => $pagination ? 'js-insert u-empty' : $columns_class,
 													'overflow' => $overflow,
 												]
 										);
@@ -453,7 +453,7 @@ class Posts {
 										$output = Cards::render(
 												[
 													'content' => $output,
-													'class'   => $pagination ? 'js-insert' : '',
+													'class'   => $pagination ? 'js-insert u-empty' : '',
 												]
 										);
 								}
@@ -462,7 +462,7 @@ class Posts {
 										$output = Overlap::render(
 												[
 													'content' => $output,
-													'class'   => $pagination ? 'js-insert' : '',
+													'class'   => $pagination ? 'js-insert u-empty' : '',
 												]
 										);
 								}
@@ -509,6 +509,16 @@ class Posts {
 						$padding = 'post' === $type ? 'l-pt-xs l-pt-l-s' : 'l-pt-r l-pt-l-l';
 
 						$output = (
+							'<div class="js-load-more-no-res o-notice" data-type="info" role="polite" style="display:' . ( $no_posts ? 'block' : 'none' ) . ';">' .
+								'<div class="l-flex u-c-i" data-gap="s" data-align="center" data-justify="def" data-wrap>' .
+									'<div>' .
+										'<p class="l-m-0 u-fw-b">Sorry looks like nothing was found.</p>' .
+									'</div>' .
+									'<div>' .
+										'<button class="fusion-button button-flat button-small button-default button-1 fusion-button-default-span fusion-button-default-type button-outline js-load-more-no-res__btn" type="button">Reset</button>' .
+									'</div>' .
+								'</div>' .
+							'</div>' .
 							'<div class="u-p-r" aria-live="polite">' .
 								$output .
 								"<div class='$padding'>" .
@@ -538,6 +548,11 @@ class Posts {
 											'</a>' .
 										'</div>' .
 									'</div>' .
+								'</div>' .
+							'</div>' .
+							'<div class="js-load-more-err l-flex l-pt-xs" data-justify="center" role="alert" style="display:none;">' .
+								'<div class="o-notice l-mw-r u-ta-c u-c-i" data-type="error">' .
+									'<p class="l-m-0 u-fw-b">Oops, somewthing went wrong. Please try again later.</p>' .
 								'</div>' .
 							'</div>'
 						);

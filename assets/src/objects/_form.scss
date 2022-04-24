@@ -110,26 +110,26 @@
 
   .nf-error-msg,
   .ninja-forms-req-symbol {
-    color: var(--ht-error-c);
+    @extend %u-color-error;
   }
 
   .nf-error-msg,
   .nf-response-msg {
     @extend %u-font-weight-bold;
-
-    border-radius: func.calc-rem(5px);
+		@extend %u-border-radius-5;
   }
 
   .nf-error-msg {
+		@extend %u-background-color-error;
+
     font-size: func.calc-rem(18px);
-    background-color: rgba(map.get(con.$vars, "color-error"), 0.2);
     padding: func.calc-rem(5px) func.calc-rem(10px);
     margin-top: 1rem;
   }
 
   .nf-error-field-errors,
   .nf-response-msg {
-    padding: func.calc-rem(15px) func.calc-rem(20px);
+    @extend %u-error-padding;
   }
 
   .nf-response-msg {

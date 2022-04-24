@@ -105,7 +105,7 @@ class Main_Footer {
 				);
 
 				if ( $footer_nav ) {
-						$footer_nav = "<div><ul class='l-flex o-underline' data-gap='s'>$footer_nav</ul></div>";
+						$footer_nav = "<div><ul class='l-flex o-underline u-c-i' data-gap='s'>$footer_nav</ul></div>";
 				} else {
 						$footer_nav = '';
 				}
