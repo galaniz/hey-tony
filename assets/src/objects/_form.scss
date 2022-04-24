@@ -13,7 +13,7 @@
 /* Styles */
 
 .o-form {
-  textarea {
+	textarea {
     border-radius: func.calc-rem(20px);
   }
 
@@ -36,9 +36,9 @@
     }
   }
 
-  /* Fusion search */
+	/* Fusion search */
 
-	#ht .ht & input[type="search"] {
+  #ht .ht & input[type="search"] {
     padding-left: func.calc-rem(60px);
   }
 
@@ -48,26 +48,26 @@
 
   /* Ninja forms overrides */
 
-	nf-fields-wrap {
-		@extend %u-display-flex;
+  nf-fields-wrap {
+    @extend %u-display-flex;
     @extend %u-gap-r;
 
-		flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 
-	nf-field {
-	 	@extend %u-flex-grow-1;
-		@extend %u-display-flex;
+  nf-field {
+    @extend %u-flex-grow-1;
+    @extend %u-display-flex;
 
-		flex-direction: column;
+    flex-direction: column;
 
-		@include mix.breakpoint-min(1000) {
-			flex: 1 0 50%;
-		}
-	}
+    @include mix.breakpoint-min(1000) {
+      flex: 1 0 50%;
+    }
+  }
 
   .nf-field-container {
-		@extend %u-width-100;
+    @extend %u-width-100;
 
     margin: 0;
   }
@@ -159,7 +159,7 @@
 }
 
 .ht-field-full {
-	@include mix.breakpoint-min(1000) {
-		min-width: func.calc-rem(600px);
-	}
+  @include mix.breakpoint-min(1000) {
+    min-width: func.calc-rem(600px);
+  }
 }
