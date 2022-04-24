@@ -1,0 +1,23 @@
+/**
+ * Objects: notice
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/config" as con;
+
+/* Styles */
+
+.o-notice {
+	@extend %u-border-radius-5;
+	@extend %u-error-padding;
+
+	&[data-type="error"] {
+		@extend %u-background-color-error;
+		@extend %u-color-error;
+	}
+
+	&[data-type="info"] {
+		@extend %u-background-color-background-dark;
+	}
+}

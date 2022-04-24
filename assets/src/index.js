@@ -54,11 +54,11 @@ const elMeta = [
       },
       {
         prop: 'loadMoreError',
-        selector: '.js-text-err'
+        selector: '.js-load-more-err'
       },
       {
         prop: 'loadMoreNoResults',
-        selector: '.js-text-no-res',
+        selector: '.js-load-more-no-res',
         all: true,
         array: true
       },
@@ -324,7 +324,7 @@ const initialize = () => {
       const buttons = []
 
       el.loadMoreNoResults.forEach(n => {
-        const b = n.querySelector('.js-p-no-res__btn')
+        const b = n.querySelector('.js-load-more-no-res__btn')
 
         if (b) { buttons.push(b) }
 
