@@ -93,8 +93,8 @@ class Meta {
 
 												$output[] = (
 													'<div class="p-s u-fw-b o-underline-r l-pb-1 u-oo-s">' .
-														"<a class='l-flex' href='$archive_link'>" .
-															"<div class='l-mr-xxs u-d-ib u-t-180'>$caret</div>" .
+														"<a class='l-flex' data-align='center' href='$archive_link'>" .
+															"<div class='l-flex l-mr-xxs u-t-180'>$caret</div>" .
 															'<span class="u-v-h">Back to </span>' .
 															$archive_label .
 														'</a>' .

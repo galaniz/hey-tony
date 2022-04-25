@@ -120,6 +120,14 @@ $color-error: #ba3c20;
 			custom: (
 				name: "error-padding",
 				prop: (
+					padding: 0.3125rem 0.625rem
+				)
+			)
+		),
+		(
+			custom: (
+				name: "notice-padding",
+				prop: (
 					padding: 1rem 1.25rem
 				)
 			)

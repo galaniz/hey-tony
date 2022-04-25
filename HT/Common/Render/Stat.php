@@ -45,12 +45,6 @@ class Stat {
 
 				$classes = 'o-stat t-bg-background-base u-p-a u-b-0 u-d-ib';
 
-				if ( 'right' === $align ) {
-						$classes .= ' u-r-0';
-				} else {
-						$classes .= ' u-l-0';
-				}
-
 				/* Output */
 
 				return (
