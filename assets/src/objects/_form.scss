@@ -13,7 +13,7 @@
 /* Styles */
 
 .o-form {
-	textarea {
+  textarea {
     border-radius: func.calc-rem(20px);
   }
 
@@ -36,7 +36,7 @@
     }
   }
 
-	/* Fusion search */
+  /* Fusion search */
 
   #ht .ht & input[type="search"] {
     padding-left: func.calc-rem(60px);
@@ -116,20 +116,20 @@
   .nf-error-msg,
   .nf-response-msg {
     @extend %u-font-weight-bold;
-		@extend %u-border-radius-5;
+    @extend %u-border-radius-5;
   }
 
   .nf-error-msg {
-		@extend %u-background-color-error;
+    @extend %u-background-color-error;
+		@extend %u-error-padding;
 
     font-size: func.calc-rem(18px);
-    padding: func.calc-rem(5px) func.calc-rem(10px);
     margin-top: 1rem;
   }
 
   .nf-error-field-errors,
   .nf-response-msg {
-    @extend %u-error-padding;
+    @extend %u-notice-padding;
   }
 
   .nf-response-msg {

@@ -94,7 +94,7 @@ class Testimonial {
 				return (
 					'<figure class="l-flex" data-align="center"' . ( ! $center ? ' data-align-m="start"' : '' ) . ' data-col>' .
 						"<div class='l-pb-xxs l-pb-xs-l t-primary-base u-lh-0'>$quote_mark</div>" .
-						"<blockquote class='l-pb-xxs l-pb-xxs-l l-m-0 l-p-0 u-ta-c" . ( ! $center ? ' u-ta-l-m' : '' ) . ' u-b-0 u-fs-n p' . ( $large ? '-l' : '' ) . "'>$text</blockquote>" .
+						"<blockquote class='l-pb-xxs l-pb-xxs-l l-m-0 l-p-0 u-ta-c" . ( ! $center ? ' u-ta-l-m' : '' ) . ' u-brd-0 u-fs-n p' . ( $large ? '-l' : '' ) . "'>$text</blockquote>" .
 						'<figcaption class="l-mt-auto">' .
 							'<div class="l-flex" data-align="center" data-gap="s">' .
 								$image .

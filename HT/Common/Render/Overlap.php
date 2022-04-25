@@ -119,7 +119,7 @@ class Overlap {
 								'<div class="l-mw-r l-pt-s l-pt-r-l u-p-r u-tlrb-b u-zi-1">' .
 									$pretitle_output .
 									'<div class="h2-l l-pb-xxxs t-foreground-base u-c-i">' .
-										"<$heading_level class='l-m-0'>$title</$heading_level>" .
+										"<$heading_level class='o-overlap__h l-m-0'>$title</$heading_level>" .
 									'</div>' .
 									$excerpt .
 								'</div>' .

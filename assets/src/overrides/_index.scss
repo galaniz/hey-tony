@@ -385,6 +385,10 @@
   }
 }
 
+.table-1 {
+	max-width: calc(100vw - 2.5rem);
+}
+
 /* Recaptcha */
 
 .grecaptcha-badge {
