@@ -1,0 +1,227 @@
+/**
+ * Components: nav
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "sass:color";
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+@forward "@alanizcreative/formation/src/components/nav/icon";
+@forward "@alanizcreative/formation/src/components/nav/icon/one";
+
+/* Nav */
+
+.c-nav {
+  @extend %u-transform-origin-0-0;
+
+  z-index: map.get(con.$z-index, "nav");
+
+  & > div {
+    transform-origin: 0 50%;
+  }
+
+  &::before {
+    @extend %u-transition-opacity-ease;
+
+    background-color: func.get-color("foreground-base");
+    opacity: 0;
+  }
+
+  .o-logo {
+    img:last-child {
+      @extend %u-opacity-0;
+    }
+
+    img:first-child {
+      transition-delay: 300ms;
+    }
+  }
+
+  &[data-scale="down"] {
+    @extend %u-color-background-base;
+
+    .o-logo {
+      transform-origin: 0 50%;
+      transform: scale(0.66);
+
+      img:first-child {
+        @extend %u-opacity-0;
+
+        transition-delay: 0ms;
+      }
+
+      img:last-child {
+        @extend %u-opacity-1;
+
+        transition-delay: 200ms;
+      }
+    }
+
+    .c-nav__button {
+      transform-origin: 100% 50%;
+      transform: scale(0.75);
+    }
+
+    &::before {
+      opacity: 0.5;
+    }
+  }
+
+  &[data-scale-to="true"] {
+    &::before {
+      opacity: 0.7;
+    }
+  }
+
+  &[data-open] {
+    color: func.get-color("background-base");
+  }
+
+  .current-menu-parent a,
+  .current-menu-item a {
+    &::after {
+      @extend %u-opacity-1;
+    }
+  }
+}
+
+#ht .ht {
+  .c-nav {
+    @extend %u-position-fixed;
+
+    padding-top: var(--ht-nav-p);
+    padding-bottom: var(--ht-nav-p);
+
+    @include mix.breakpoint-min(1000) {
+      --ht-nav-p: #{func.calc-rem(50px)};
+    }
+  }
+}
+
+/* Show/hide when open/close */
+
+.c-nav__toggle {
+  @extend %u-opacity-0;
+  @extend %u-visibility-hidden;
+
+  top: calc(var(--ht-nav-t-y) * -1 - var(--ht-nav-p));
+
+  .c-nav[data-open] & {
+    @extend %u-visibility-visible;
+    @extend %u-opacity-1;
+  }
+}
+
+/* Background */
+
+.c-nav__bg {
+  @extend %u-background-color-primary-base;
+  @extend %u-opacity-0;
+}
+
+/* Decorative background swoop */
+
+.c-nav__swoop {
+  @extend %u-opacity-0;
+  @extend %u-color-foreground-base;
+
+  .c-nav[data-open] & {
+    transform: translateX(-50%);
+    transition: visibility 0ms ease 10ms, opacity 400ms ease, transform 400ms ease;
+  }
+
+  transform: translateX(-55%);
+  transition: visibility 0ms ease 400ms, opacity 400ms ease 10ms, transform 400ms ease 10ms;
+
+  > div {
+    @extend %u-background-color-foreground-base;
+
+    width: 60vw;
+    opacity: 0.1;
+  }
+
+  > div > div {
+    width: 50%;
+    max-width: func.calc-rem(300px);
+    transform: translateX(100%);
+  }
+
+  svg {
+    transform: rotate(180deg) scaleX(-1);
+  }
+}
+
+/* Menu */
+
+.c-nav__overflow {
+  @extend %u-transform-origin-0-0;
+
+  top: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - (var(--ht-nav-s) * var(--ht-nav-h)));
+  margin-top: calc(var(--ht-nav-p) + (var(--ht-nav-t-y)));
+  padding:
+    var(--ht-nav-p)
+    func.calc-rem(con.$container-padding)
+    calc(var(--ht-nav-p) * 2)
+    func.calc-rem(con.$container-padding);
+
+  --mask-image-content:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black calc(var(--ht-nav-p) * 2),
+      black calc(100% - (var(--ht-nav-p) * 2)),
+      transparent
+    );
+
+  mask-image: var(--mask-image-content);
+  mask-size: 100%;
+  mask-position: 0 0;
+  mask-repeat: no-repeat;
+}
+
+.c-nav__item {
+  @extend %u-transition-opacity-transform-ease;
+  @extend %u-opacity-0;
+
+  transform: translateX(#{func.calc-rem(-20px)});
+  transition-delay: var(--ht-nav-i-d);
+  transition-duration: 600ms, 1000ms;
+
+  .c-nav[data-open] & {
+    @extend %u-opacity-1;
+
+    transform: translateX(0);
+  }
+}
+
+/* Background and menu transition */
+
+.c-nav__bg,
+.c-nav__overflow {
+  .c-nav[data-open] & {
+    transition: visibility 0ms ease 10ms, opacity 400ms ease;
+  }
+
+  transition: visibility 0ms ease 400ms, opacity 400ms ease 10ms;
+}
+
+/* Hamburger icon */
+
+.c-nav-icon {
+  @include mix.breakpoint-max(1000) {
+    transform: scale(0.8);
+    transform-origin: 100% 50%;
+  }
+}
+
+.c-nav-icon__top,
+.c-nav-icon__middle,
+.c-nav-icon__bottom {
+  background-color: currentcolor;
+}

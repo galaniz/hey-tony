@@ -1,0 +1,19 @@
+/**
+ * Objects: swoop
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-swoop {
+  transform: translate(-50%, 100%);
+  height: var(--ht-hero-s-h);
+
+  &[data-flip] {
+    transform: translate(-50%, -100%) rotate(180deg);
+  }
+}

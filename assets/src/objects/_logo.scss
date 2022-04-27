@@ -1,0 +1,57 @@
+/**
+ * Objects: logo
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-logo {
+  @extend %u-transition-transform-ease;
+  @include mix.fluid-size(
+    width,
+    func.calc-rem(130px) func.calc-rem(150px),
+    600 1200
+  );
+
+  &[data-size="l"] {
+    @include mix.fluid-size(
+      width,
+      func.calc-rem(140px) func.calc-rem(180px),
+      600 1200
+    );
+  }
+
+  img {
+    @extend %u-transition-opacity-ease;
+  }
+
+  [data-scale="down"] &,
+  .t-text-light &,
+  .c-nav[data-open] & {
+    img {
+      @extend %u-background-color-background-base;
+
+      padding: func.calc-rem(8px) func.calc-rem(12px);
+      border-radius: func.calc-rem(8px);
+    }
+  }
+}
+
+@supports (filter: invert(1)) {
+  .o-logo {
+    [data-scale="down"] &,
+    .t-text-light &,
+    .c-nav[data-open] & {
+      img {
+        padding: 0;
+        border-radius: 0;
+        background-color: transparent;
+        filter: invert(1) brightness(110%);
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+/**
+ * Layouts: width
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.l-w-s {
+  width: func.calc-rem(32px);
+}
+
+.l-w-r {
+  width: func.calc-rem(80px);
+}
+
+.l-w-100-pc {
+  @extend %u-width-100;
+}
+
+.l-w-50-pc {
+  @include mix.breakpoint-min(800) {
+    width: 50%;
+  }
+}
+
+.l-w-33-pc {
+  @include mix.breakpoint-min(600) {
+    width: 50%;
+  }
+
+  @include mix.breakpoint-min(900) {
+    width: 33.3333%;
+  }
+}
+
+@each $k, $v in map.get(con.$vars, "max-widths") {
+  .l-mw-#{$k} {
+    @extend %u-width-100;
+
+    max-width: func.calc-rem($v);
+  }
+}

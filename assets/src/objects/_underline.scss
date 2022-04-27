@@ -1,0 +1,39 @@
+/**
+ * Objects: underline
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+
+/* Styles */
+
+.o-underline a,
+.o-underline-r a,
+a.o-underline-r span {
+  transition: box-shadow 300ms ease;
+}
+
+.o-underline a {
+  box-shadow: 0 var(--ht-underline-w) 0 0 var(--ht-underline-c);
+}
+
+.o-underline-r a,
+a.o-underline-r span {
+  box-shadow: 0 var(--ht-underline-w) 0 0 transparent;
+}
+
+.o-underline a:hover,
+.o-underline a:active,
+.o-underline a:focus {
+  box-shadow: 0 var(--ht-underline-w) 0 0 transparent;
+}
+
+.o-underline-r a:hover,
+.o-underline-r a:active,
+.o-underline-r a:focus,
+a.o-underline-r:hover span,
+a.o-underline-r:active span,
+a.o-underline-r:focus span {
+  box-shadow: 0 var(--ht-underline-w) 0 0 var(--ht-underline-c);
+}

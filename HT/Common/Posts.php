@@ -1,0 +1,637 @@
+<?php
+/**
+ * Posts shortcode
+ *
+ * @package hey-tony
+ */
+
+namespace HT\Common;
+
+/**
+ * Imports
+ */
+
+use HT\HT as HT;
+use HT\Utils;
+use HT\Common\Render\Cards;
+use HT\Common\Render\Columns;
+use HT\Common\Render\Testimonial;
+use HT\Common\Render\Overlap;
+use function Formation\additional_script_data;
+
+/**
+ * Class
+ */
+
+class Posts {
+
+		/**
+		 * Pagination link attributes.
+		 *
+		 * @param array $args
+		 * @return string
+		 */
+
+		private static function get_link_attrs( $args = [] ) {
+				$args = array_merge(
+						[
+							'base_link'    => '',
+							'type'         => '',
+							'current_page' => 1,
+							'ppp'          => 1,
+							'total'        => 1,
+							'total_pages'  => 1,
+						],
+						$args
+				);
+
+				[
+					'base_link'    => $base_link,
+					'type'         => $type,
+					'current_page' => $current_page,
+					'ppp'          => $ppp,
+					'total'        => $total,
+					'total_pages'  => $total_pages,
+				] = $args;
+
+				$link_classes = 't-foreground-base l-w-s u-d-b u-b-s u-pb-hover u-br-100-pc u-p-r';
+
+				$prev = [
+					'class' => "$link_classes u-t-180 js-load-more-prev",
+					'role'  => 'link',
+				];
+
+				$next = [
+					'class'          => "$link_classes js-load-more",
+					'data-base-link' => $base_link,
+					'data-type'      => $type,
+					'data-page'      => $current_page,
+					'data-per-page'  => $ppp,
+					'data-total'     => $total,
+					'role'           => 'link',
+				];
+
+				$prev_link = '';
+				$next_link = '';
+
+				$prev_url_params = HT::$get_query_url_params;
+				$next_url_params = HT::$get_query_url_params;
+
+				if ( $current_page > 1 ) {
+						$prev_link             = $base_link;
+						$prev_url_params['pg'] = $current_page - 1;
+				}
+
+				if ( $current_page < $total_pages ) {
+						$next_link             = $base_link;
+						$next_url_params['pg'] = $current_page + 1;
+				}
+
+				$prev_url_params = http_build_query( $prev_url_params );
+				$next_url_params = http_build_query( $next_url_params );
+
+				if ( ! $prev_link ) {
+						$prev['aria-disabled'] = 'true';
+				} else {
+						$prev_link   .= ( $prev_url_params ? "?$prev_url_params" : '' );
+						$prev['href'] = $prev_link;
+				}
+
+				if ( ! $next_link ) {
+						$next['aria-disabled'] = 'true';
+				} else {
+						$next_link   .= ( $next_url_params ? "?$next_url_params" : '' );
+						$next['href'] = $next_link;
+				}
+
+				return [
+					'prev' => Utils::get_attr_as_str( $prev ),
+					'next' => Utils::get_attr_as_str( $next ),
+				];
+		}
+
+		/**
+		 * Shortcode to output different post types.
+		 *
+		 * @param array $atts
+		 * @param string $content
+		 * @return string
+		 */
+
+		public static function shortcode( $atts, $content ) {
+				$atts = shortcode_atts(
+						[
+							'type'               => '',
+							'posts_per_page'     => 10,
+							'meta_key'           => '',
+							'meta_value'         => '',
+							'meta_type'          => 'string',
+							'ids'                => '',
+							'section_title'      => '',
+							'a11y_section_title' => '',
+							'heading_level'      => 'h2',
+							'current_single'     => false,
+							'pagination'         => false,
+							'return_array'       => false, // back end
+							'query_args'         => [], // back end
+							'is_home'            => false, // back end
+						],
+						$atts,
+						'ht-posts'
+				);
+
+				/* Destructure */
+
+				[
+					'type'               => $type,
+					'posts_per_page'     => $posts_per_page,
+					'meta_key'           => $meta_key,
+					'meta_value'         => $meta_value,
+					'meta_type'          => $meta_type,
+					'ids'                => $ids,
+					'section_title'      => $section_title,
+					'a11y_section_title' => $a11y_section_title,
+					'heading_level'      => $heading_level,
+					'current_single'     => $current_single,
+					'pagination'         => $pagination,
+					'return_array'       => $return_array,
+					'query_args'         => $query_args,
+					'is_home'            => $is_home,
+				] = $atts;
+
+				/* Process args + more variables */
+
+				$posts_per_page = (int) $posts_per_page;
+				$post_type      = $type;
+				$search         = is_search();
+				$archive        = is_archive() || is_home() || $search || is_post_type_archive( $type );
+				$is_home        = filter_var( $is_home, FILTER_VALIDATE_BOOLEAN ) || is_home();
+				$single         = is_singular( $type );
+				$tax            = 'category';
+				$overflow       = 'hidden';
+				$output         = '';
+
+				$pagination  = filter_var( $pagination, FILTER_VALIDATE_BOOLEAN );
+				$no_posts    = false;
+				$row_count   = 0;
+				$offset      = 0;
+				$total       = 0;
+				$total_pages = 0;
+
+				$current_single = filter_var( $current_single, FILTER_VALIDATE_BOOLEAN );
+				$current_single = $current_single && 1 === $posts_per_page ? true : false;
+
+				if ( $section_title || $a11y_section_title ) {
+						$heading_level = 'h3';
+				}
+
+				if ( -1 !== $posts_per_page && $pagination && $archive ) {
+						$posts_per_page_type = $type;
+
+						if ( 'post' === $type && is_archive() ) {
+								$posts_per_page_type = 'blog_archives';
+						}
+
+						$posts_per_page = Utils::get_posts_per_page( $posts_per_page_type );
+				}
+
+				if ( 'int' === $meta_type ) {
+						$meta_value = (int) $meta_value;
+				}
+
+				if ( 'string' === $meta_type ) {
+						$meta_value = strval( $meta_value );
+				}
+
+				if ( 'work' === $type ) {
+						$tax = 'work_category';
+				}
+
+				/* Layout */
+
+				$layout         = 'columns';
+				$pre_def_layout = HT::$post_types_info[ $type ] ?? false;
+
+				if ( $pre_def_layout ) {
+						$layout = $pre_def_layout['layout'];
+				}
+
+				if ( 'work' === $type && $single ) {
+						$layout = 'columns';
+				}
+
+				/* Process query */
+
+				if ( $archive ) {
+						global $wp_query;
+						$q = $wp_query;
+				} else {
+						$args = [
+							'post_type'      => $post_type,
+							'posts_per_page' => $posts_per_page,
+						];
+
+						if ( $ids ) {
+								$post_ids = explode( ',', $ids );
+
+								$post_ids = array_map(
+										function( $v ) {
+												return (int) $v;
+										},
+										$post_ids
+								);
+
+								$args['post__in'] = $post_ids;
+						}
+
+						if ( $single && ! $current_single ) {
+								$post_id = get_the_ID();
+
+								$args['post__not_in'] = [$post_id];
+
+								$terms = get_the_terms( $post_id, $tax );
+
+								if ( $terms && ! is_wp_error( $terms ) ) {
+										$terms = wp_list_pluck( $terms, 'slug' );
+
+										$args['tax_query'] = [
+											[
+												'taxonomy' => $tax,
+												'field'    => 'slug',
+												'terms'    => $terms,
+											],
+										];
+								}
+						}
+
+						if ( $current_single ) {
+								$args['p'] = get_the_ID();
+						}
+
+						if ( $meta_key && $meta_value ) {
+								$args['meta_query'][] = [
+									'key'     => $meta_key,
+									'value'   => $meta_value,
+									'compare' => 'LIKE',
+								];
+						}
+
+						/* Merge query_args with args */
+
+						if ( is_array( $query_args ) && count( $query_args ) > 0 ) {
+								$args = array_replace_recursive( $args, $query_args );
+						}
+
+						if ( 'search' === $args['post_type'] ) {
+								$args['post_type'] = 'any';
+						}
+
+						$q = new \WP_Query( $args );
+				}
+
+				/* Query info */
+
+				if ( is_object( $q ) ) {
+						$total       = $q->found_posts;
+						$total_pages = $q->max_num_pages;
+						$no_posts    = ! $q->found_posts;
+				}
+
+				/* The Loop */
+
+				if ( $q->have_posts() ) {
+						$row_count = $q->post_count;
+						$index     = 0;
+
+						while ( $q->have_posts() ) {
+								$q->the_post();
+
+								$id            = get_the_ID();
+								$text          = apply_filters( 'the_content', get_the_content() );
+								$title         = get_the_title();
+								$link          = get_the_permalink( $id );
+								$media_id      = get_post_thumbnail_id( $id );
+								$excerpt       = '';
+								$content       = '';
+								$pretitle      = '';
+								$pretitle_link = '';
+
+								if ( 'work' === $type || 'post' === $type || 'search' === $type ) {
+										$excerpt = Utils::get_excerpt(
+												[
+													'post_id' => $id,
+													'content' => $text,
+													'words'   => true,
+													'length'  => 'cards' === $layout ? 15 : 20,
+												]
+										);
+
+										$cat = Utils::get_first_cat( $id, $tax );
+
+										if ( $cat ) {
+												$pretitle      = $cat[0];
+												$pretitle_link = $cat[1];
+										}
+								}
+
+								if ( 'columns' === $layout ) {
+										$fill  = false;
+										$class = '';
+
+										if ( 'testimonial' === $type ) {
+												$content = Testimonial::render(
+														[
+															'text'     => $text,
+															'title'    => $title,
+															'subtitle' => get_field( 'subtitle', $id ),
+															'media_id' => $media_id,
+															'center'   => ! ( $archive || $return_array ),
+															'large'    => ! ( $archive || $return_array ),
+														]
+												);
+										}
+
+										if ( 'work' === $type ) {
+												$fill     = true;
+												$class    = 'o-flush u-b-op';
+												$overflow = '';
+
+												$content = Columns::render_content(
+														[
+															'title'         => $title,
+															'link'          => $link,
+															'excerpt'       => $excerpt,
+															'media_id'      => $media_id,
+															'pretitle'      => $pretitle,
+															'pretitle_link' => $pretitle_link,
+															'heading_level' => $heading_level,
+														]
+												);
+										}
+
+										if ( 'search' === $type ) {
+												$content = Columns::render_content(
+														[
+															'title'         => $title,
+															'link'          => $link,
+															'excerpt'       => $excerpt,
+															'heading_level' => $heading_level,
+															'heading_large' => false,
+															'flush'         => false,
+														]
+												);
+										}
+
+										$output .= Columns::render_column(
+												[
+													'content' => $content,
+													'width'   => ( $archive || $return_array || $single ) && ! $current_single ? 50 : 100,
+													'fill'    => $fill,
+													'class'   => $class,
+												]
+										);
+								}
+
+								if ( 'cards' === $layout ) {
+										$card_args = [
+											'title'         => $title,
+											'link'          => $link,
+											'excerpt'       => $excerpt,
+											'media_id'      => $media_id,
+											'heading_level' => $heading_level,
+											'index'         => 10,
+										];
+
+										if ( ! $single ) {
+												$card_args['pretitle']      = $pretitle;
+												$card_args['pretitle_link'] = $pretitle_link;
+										} else {
+												$card_args['small'] = true;
+												$card_args['theme'] = 'background-dark';
+										}
+
+										if ( $is_home ) {
+												$card_args['index'] = $index;
+										}
+
+										$output .= Cards::render_card( $card_args );
+								}
+
+								if ( 'overlap' === $layout ) {
+										$output .= Overlap::render_item(
+												[
+													'title'         => $title,
+													'link'          => $link,
+													'excerpt'       => $excerpt,
+													'media_id'      => $media_id,
+													'pretitle'      => $pretitle,
+													'pretitle_link' => $pretitle_link,
+													'heading_level' => $heading_level,
+												]
+										);
+								}
+
+								$index++;
+						} // end while
+
+						/* Output */
+
+						if ( ! $return_array ) {
+								if ( 'columns' === $layout ) {
+										$columns_class = 'work' === $type ? 'l-pt-xs l-pb-xs l-pt-r-l l-pb-r-l' : '';
+
+										$output = Columns::render(
+												[
+													'content'  => $output,
+													'class'    => $pagination ? 'js-insert u-empty' : $columns_class,
+													'overflow' => $overflow,
+												]
+										);
+								}
+
+								if ( 'cards' === $layout ) {
+										$output = Cards::render(
+												[
+													'content' => $output,
+													'class'   => $pagination ? 'js-insert u-empty' : '',
+												]
+										);
+								}
+
+								if ( 'overlap' === $layout ) {
+										$output = Overlap::render(
+												[
+													'content' => $output,
+													'class'   => $pagination ? 'js-insert u-empty' : '',
+												]
+										);
+								}
+						}
+
+						wp_reset_postdata();
+				}
+
+				/* Pagination */
+
+				if ( -1 !== $posts_per_page && $pagination && $archive ) {
+						if ( ! $total ) {
+								$total = wp_count_posts( $post_type )->publish;
+						}
+
+						$current_page = HT::$get_query_args['paged'] ?? 1;
+
+						if ( $no_posts ) {
+								$current_page = 0;
+						}
+
+						$base_link = get_post_type_archive_link( $type );
+
+						if ( $search ) {
+								$base_link = get_search_link();
+						}
+
+						$link_attrs = self::get_link_attrs(
+								[
+									'base_link'    => $base_link,
+									'type'         => $type,
+									'current_page' => $current_page,
+									'ppp'          => $posts_per_page,
+									'total'        => $total,
+									'total_pages'  => $total_pages,
+								]
+						);
+
+						/* phpcs:ignore */
+						$caret = file_get_contents( get_stylesheet_directory() . '/assets/public/svg/caret-right.svg' ); // Ignore: local path
+
+						/* Output */
+
+						$padding = 'post' === $type ? 'l-pt-xs l-pt-l-s' : 'l-pt-r l-pt-l-l';
+
+						$output = (
+							'<div class="js-load-more-no-res o-notice" data-type="info" role="polite" style="display:' . ( $no_posts ? 'block' : 'none' ) . ';">' .
+								'<div class="l-flex u-c-i" data-gap="s" data-align="center" data-justify="def" data-wrap>' .
+									'<div>' .
+										'<p class="l-m-0 u-fw-b">Sorry looks like nothing was found.</p>' .
+									'</div>' .
+									'<div>' .
+										'<button class="fusion-button button-flat button-small button-default button-1 fusion-button-default-span fusion-button-default-type button-outline js-load-more-no-res__btn" type="button">Reset</button>' .
+									'</div>' .
+								'</div>' .
+							'</div>' .
+							'<div class="u-p-r" aria-live="polite">' .
+								$output .
+								"<div class='$padding'>" .
+									'<div class="l-flex" data-justify="center" data-align="center" data-gap="s">' .
+										'<div>' .
+											'<a ' . $link_attrs['prev'] . '>' .
+												'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
+													$caret .
+												'</div>' .
+												'<div class="u-v-h">Previous</div>' .
+											'</a>' .
+										'</div>' .
+										'<div class="p-s u-fw-b u-ta-c">' .
+											'<p class="l-m-0">' .
+												"<span class='js-load-more-current'>$current_page</span>" .
+												'<span class="u-v-h"> of </span>' .
+												'<span aria-hidden="true"> / </span>' .
+												"<span class='js-load-more-total'>$total_pages</span>" .
+											'</p>' .
+										'</div>' .
+										'<div>' .
+											'<a ' . $link_attrs['next'] . '>' .
+												'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
+													$caret .
+												'</div>' .
+												'<div class="u-v-h">Next</div>' .
+											'</a>' .
+										'</div>' .
+									'</div>' .
+								'</div>' .
+							'</div>' .
+							'<div class="js-load-more-err l-flex l-pt-xs" data-justify="center" role="alert" style="display:none;">' .
+								'<div class="o-notice l-mw-r u-ta-c u-c-i" data-type="error">' .
+									'<p class="l-m-0 u-fw-b">Oops, somewthing went wrong. Please try again later.</p>' .
+								'</div>' .
+							'</div>'
+						);
+
+						$query_static = [
+							'is_home' => is_home(),
+						];
+
+						if ( $search ) {
+								$query_static['s'] = get_search_query();
+						}
+
+						if ( is_author() ) {
+								$query_static['author'] = get_queried_object_id();
+						}
+
+						if ( is_tag() ) {
+								$query_static['tag_id'] = get_queried_object()->term_id;
+						}
+
+						if ( is_category() ) {
+								$query_static['cat'] = get_queried_object()->term_id;
+						}
+
+						if ( is_tax( 'work_category' ) ) {
+								$query_static['tax_query'] = [
+									[
+										'taxonomy' => 'work_category',
+										'field'    => 'term_id',
+										'terms'    => get_queried_object()->term_id,
+									],
+								];
+						}
+
+						if ( ! empty( $query_static ) ) {
+								additional_script_data( HT::$namespace . '_load_posts_query_static', $query_static );
+						}
+				}
+
+				/* Return */
+
+				if ( ! $return_array ) {
+						if ( $a11y_section_title ) {
+								$output = (
+									'<section>' .
+										"<h2 class='u-v-h'>$section_title</h2>" .
+										$output .
+									'</section>'
+								);
+						} elseif ( $section_title ) {
+								$padding = 'l-pt-s l-pb-s l-pt-r-l l-pb-r-l';
+
+								$section_title = (
+									'<div class="h4 u-p-r">' .
+										"<h2>$section_title</h2>" .
+									'</div>'
+								);
+
+								if ( 'work' === $type ) {
+										$padding        = 'l-pt-s';
+										$section_title .= '<div class="l-m-full u-b-op u-bt-1"></div>';
+								}
+
+								$output = (
+									"<section class='$padding'>" .
+										$section_title .
+										$output .
+									'</section>'
+								);
+						}
+
+						return $output;
+				} else {
+						return [
+							'row_count' => $row_count,
+							'output'    => $output,
+							'total'     => $total,
+						];
+				}
+		}
+
+} // End Posts
