@@ -5,11 +5,14 @@
 /* Imports */
 
 @use "../config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
 
 /* Styles */
 
 #ht .ht {
   .t-text-light {
+		--ht-outline-c: #{func.get-color("background-base")};
+
     &,
     h1,
     h2,

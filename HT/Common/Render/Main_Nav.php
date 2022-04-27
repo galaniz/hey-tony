@@ -106,7 +106,7 @@ class Main_Nav {
 								Swoop::render( ['nav' => true] ) .
 							'</div>' .
 						'</div>' .
-						'<div class="l-flex u-p-r u-zi-1' . ( HT::$nav_light ? ' t-text-light u-oc-l' : '' ) . '" data-gap="r" data-align="center" data-justify="def">' .
+						'<div class="l-flex u-p-r u-zi-1' . ( HT::$nav_light ? ' t-text-light' : '' ) . '" data-gap="r" data-align="center" data-justify="def">' .
 							$logo .
 							'<div class="l-flex">' .
 								'<button class="c-nav__button" type="button" aria-expanded="false" aria-controls="js-nav-overflow">' .
@@ -119,7 +119,7 @@ class Main_Nav {
 								'</button>' .
 							'</div>' .
 						'</div>' .
-						'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout l-h-100-vh u-p-a u-oc-l" id="js-nav-overflow">' .
+						'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout l-h-100-vh u-p-a" id="js-nav-overflow">' .
 							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
 								"<ul class='l-mb-m-all o-accent-r o-accent-r-l u-d-ib-a'>$main_nav</ul>" .
 							'</div>' .
