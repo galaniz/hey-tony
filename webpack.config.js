@@ -66,8 +66,9 @@ const rules = [
               'postcss-preset-env': {
                 browsers: [
                   'last 3 versions',
-                  'ie >= 11'
-                ]
+                  'edge >= 16'
+                ],
+                stage: 4
               },
               cssnano: {},
               'postcss-combine-duplicated-selectors': {}
@@ -100,7 +101,7 @@ const rulesCompat = [
         [
           '@babel/preset-env',
           {
-            targets: { chrome: '58', ie: '11' }
+            targets: { chrome: '60', edge: '16' }
           }
         ]
       ]
@@ -127,8 +128,9 @@ const rulesCompat = [
               'postcss-preset-env': {
                 browsers: [
                   'last 3 versions',
-                  'ie >= 11'
-                ]
+                  'edge >= 16'
+                ],
+                stage: 4
               },
               cssnano: {},
               'postcss-combine-duplicated-selectors': {}
