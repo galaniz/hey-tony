@@ -413,6 +413,10 @@ class HT {
 
 				wp_enqueue_script( "$n-script-compat" );
 				wp_enqueue_script( "$n-script" );
+
+				/* Remove Gutenberg root variables */
+
+				wp_dequeue_style( 'global-styles' );
 		}
 
 		/**

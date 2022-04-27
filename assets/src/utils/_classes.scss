@@ -231,10 +231,6 @@
   --ht-outline-o: func.calc-rem(-4px);
 }
 
-.u-oc-l {
-  --ht-outline-c: #{func.get-color("background-base")};
-}
-
 .u-ul-c {
   --ht-underline-c: #{func.get-color("primary-base")};
 }
