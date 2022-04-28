@@ -38,9 +38,9 @@
 
   /* Fusion search */
 
-  #ht .ht & input[type="search"] {
-    padding-left: func.calc-rem(60px);
-  }
+	#ht .ht & input[type="search"] {
+		padding-left: func.calc-rem(60px);
+	}
 
   #ht .ht & .searchsubmit {
     padding: func.calc-rem(12px) func.calc-rem(24px);
@@ -121,7 +121,7 @@
 
   .nf-error-msg {
     @extend %u-background-color-error;
-		@extend %u-error-padding;
+    @extend %u-error-padding;
 
     font-size: func.calc-rem(18px);
     margin-top: 1rem;

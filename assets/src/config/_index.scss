@@ -92,46 +92,46 @@ $color-error: #ba3c20;
   ),
 
   $placeholders: (
-		(
-			custom: (
-				name: "border-radius-5",
-				prop: (
-					border-radius: 0.3125rem
-				)
-			)
-		),
-		(
-			custom: (
-				name: "color-error",
-				prop: (
-					color: var(--ht-error-c)
-				)
-			)
-		),
-		(
-			custom: (
-				name: "background-color-error",
-				prop: (
-					background-color: rgba($color-error, 0.2)
-				)
-			)
-		),
-		(
-			custom: (
-				name: "error-padding",
-				prop: (
-					padding: 0.3125rem 0.625rem
-				)
-			)
-		),
-		(
-			custom: (
-				name: "notice-padding",
-				prop: (
-					padding: 1rem 1.25rem
-				)
-			)
-		),
-	),
+    (
+      custom: (
+        name: "border-radius-5",
+        prop: (
+          border-radius: 0.3125rem
+        )
+      )
+    ),
+    (
+      custom: (
+        name: "color-error",
+        prop: (
+          color: var(--ht-error-c)
+        )
+      )
+    ),
+    (
+      custom: (
+        name: "background-color-error",
+        prop: (
+          background-color: rgba($color-error, 0.2)
+        )
+      )
+    ),
+    (
+      custom: (
+        name: "error-padding",
+        prop: (
+          padding: 0.3125rem 0.625rem
+        )
+      )
+    ),
+    (
+      custom: (
+        name: "notice-padding",
+        prop: (
+          padding: 1rem 1.25rem
+        )
+      )
+    ),
+  ),
 
 );
