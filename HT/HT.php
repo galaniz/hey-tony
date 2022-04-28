@@ -19,6 +19,7 @@ use HT\Common\Render\Swoop;
 use HT\Common\Render\Meta;
 use HT\Common\Render\Filters;
 use HT\Common\Render\Stat;
+use HT\Common\Render\Accent;
 use HT\Common\Posts;
 use HT\Admin\Reading;
 use HT\Admin\User;
@@ -186,6 +187,7 @@ class HT {
 				add_shortcode( 'ht-meta', ['HT\Common\Render\Meta', 'shortcode'] );
 				add_shortcode( 'ht-filters', ['HT\Common\Render\Filters', 'shortcode'] );
 				add_shortcode( 'ht-stat', ['HT\Common\Render\Stat', 'shortcode'] );
+				add_shortcode( 'ht-accent', ['HT\Common\Render\Accent', 'shortcode'] );
 				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
 				add_shortcode( 'ht-archive-title', [$this, 'archive_title'] );

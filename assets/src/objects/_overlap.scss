@@ -169,7 +169,7 @@
   @extend %u-position-absolute;
   @extend %u-left-0;
 
-	bottom: func.calc-rem(-1px);
+  bottom: func.calc-rem(-1px);
   right: func.calc-rem(-10px);
   max-height: func.calc-rem(60px);
   min-height: func.calc-rem(45px);

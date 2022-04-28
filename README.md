@@ -15,6 +15,22 @@ Output archive page title. Replace `:` with `–⁠` and wrap first part of titl
 ### `ht-hero-image`
 Outputs background image in hero. Doesn't accept any parameters. Doesn't apply to archive pages. Pulls image from `post_thumbnail`.
 
+### `ht-accent`
+Outputs text with accent underline where specified.
+
+_Parameters:_
+
+* `text`\
+_Type:_ `string`\
+_Default:_ `''`
+
+* `accent`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Description:_ Text within previous parameter to be underlined.
+
+_Returns:_ `string` of markup
+
 ### `ht-swoop`
 Outputs curved shaped below hero. Doesn't apply to archive pages.
 

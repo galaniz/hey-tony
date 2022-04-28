@@ -314,6 +314,7 @@ class Posts {
 								$excerpt       = '';
 								$content       = '';
 								$pretitle      = '';
+								$pretitle_a11y = '';
 								$pretitle_link = '';
 
 								if ( 'work' === $type || 'post' === $type || 'search' === $type ) {
@@ -331,6 +332,7 @@ class Posts {
 										if ( $cat ) {
 												$pretitle      = $cat[0];
 												$pretitle_link = $cat[1];
+												$pretitle_a11y = 'Category ';
 										}
 								}
 
@@ -364,6 +366,7 @@ class Posts {
 															'media_id'      => $media_id,
 															'pretitle'      => $pretitle,
 															'pretitle_link' => $pretitle_link,
+															'pretitle_a11y' => $pretitle_a11y,
 															'heading_level' => $heading_level,
 														]
 												);
@@ -405,6 +408,7 @@ class Posts {
 										if ( ! $single ) {
 												$card_args['pretitle']      = $pretitle;
 												$card_args['pretitle_link'] = $pretitle_link;
+												$card_args['pretitle_a11y'] = $pretitle_a11y;
 										} else {
 												$card_args['small'] = true;
 												$card_args['theme'] = 'background-dark';
@@ -426,6 +430,7 @@ class Posts {
 													'media_id'      => $media_id,
 													'pretitle'      => $pretitle,
 													'pretitle_link' => $pretitle_link,
+													'pretitle_a11y' => $pretitle_a11y,
 													'heading_level' => $heading_level,
 												]
 										);

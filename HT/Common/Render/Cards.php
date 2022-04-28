@@ -34,6 +34,7 @@ class Cards {
 							'media_id'      => 0,
 							'pretitle'      => '',
 							'pretitle_link' => '',
+							'pretitle_a11y' => '',
 							'heading_level' => 'h2',
 							'index'         => 0,
 							'width'         => 33,
@@ -50,6 +51,7 @@ class Cards {
 					'media_id'      => $media_id,
 					'pretitle'      => $pretitle,
 					'pretitle_link' => $pretitle_link,
+					'pretitle_a11y' => $pretitle_a11y,
 					'heading_level' => $heading_level,
 					'index'         => $index,
 					'width'         => $width,
@@ -94,8 +96,13 @@ class Cards {
 								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle</p>";
 						}
 
+						if ( $pretitle_a11y ) {
+								$pretitle_a11y = "<span class='u-v-h'>$pretitle_a11y</span>";
+						}
+
 						$pretitle_output = (
 							'<div class="o-overlap-v__p o-underline-r p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs l-flex">' .
+								$pretitle_a11y .
 								$pretitle .
 							'</div>'
 						);
