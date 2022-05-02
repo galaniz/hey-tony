@@ -78,12 +78,12 @@
       transition-duration: 0.001ms;
     }
 
-		.c-nav__item {
-		  transition-delay: 0ms;
-		}
+    .c-nav__item {
+      transition-delay: 0ms;
+    }
 
-		[role=tabpanel] {
-			animation: none;
-		}
+    [role="tabpanel"] {
+      animation: none;
+    }
   }
 }

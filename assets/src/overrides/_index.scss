@@ -110,13 +110,13 @@
 
     &.button-outline {
       color: inherit;
-			background-color: transparent;
+      background-color: transparent;
       border: func.calc-rem(2px) solid currentcolor;
       padding: func.calc-rem(12px) func.calc-rem(22px); // Fill 14px 24px
 
-			&.t-bg-inherit {
-				background-color: inherit;
-			}
+      &.t-bg-inherit {
+        background-color: inherit;
+      }
     }
 
     &.button-small {

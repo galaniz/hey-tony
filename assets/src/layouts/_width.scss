@@ -58,11 +58,11 @@
 /* For overflow possibility */
 
 .l-mw-full {
-	max-width: calc(100vw - 2.5rem);
+  max-width: calc(100vw - 2.5rem);
 }
 
 .l-mw-half {
-	@include mix.breakpoint-min(768) {
-		max-width: calc(50vw - 3.75rem);
-	}
+  @include mix.breakpoint-min(768) {
+    max-width: calc(50vw - 3.75rem);
+  }
 }
