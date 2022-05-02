@@ -455,7 +455,7 @@ class HT {
 						$swoop_size = 'r';
 				}
 
-				if ( is_single() || is_singular( 'work' ) || is_singular( 'testimonial' ) || is_archive() || is_search() ) {
+				if ( is_single() || is_singular( 'work' ) || is_singular( 'testimonial' ) || ( is_archive() && ! is_post_type_archive() ) || is_search() ) {
 						$swoop_size = 'xs';
 				}
 

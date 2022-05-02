@@ -62,7 +62,7 @@
 }
 
 .l-mw-half {
-	@include mix.breakpoint-min(769) {
+	@include mix.breakpoint-min(768) {
 		max-width: calc(50vw - 3.75rem);
 	}
 }

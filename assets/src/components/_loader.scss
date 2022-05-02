@@ -12,7 +12,8 @@
   @extend %u-visibility-visible;
   @extend %u-opacity-1;
 
-  background-color: rgba(func.get-color("background-base"), 0.9);
+	background-color: rgba(func.get-color("background-base"), 0.9);
+	border-radius: 100% 0% 100% 0% / 15vw 100% 0% 0%;
   transition: visibility 0ms ease 10ms, opacity 400ms ease;
   z-index: 10;
 

@@ -57,7 +57,7 @@ class Tabs {
 				$titles   = explode( ',', $titles );
 				$tab_ids  = explode( ',', $tab_ids );
 				$steps    = filter_var( $steps, FILTER_VALIDATE_BOOLEAN );
-				$classes  = 't-bg-inherit fusion-button button-small button-outline';
+				$classes  = 't-bg-inherit fusion-button button-small button-outline avada-noscroll';
 
 				if ( $steps ) {
 						$classes = 't-foreground-base t-bg-inherit l-w-m u-d-b u-b-s u-br-100-pc u-p-r p-s u-fw-b';

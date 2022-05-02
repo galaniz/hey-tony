@@ -30,7 +30,7 @@
     right: func.calc-rem(-1px);
   }
 
-  @include mix.breakpoint-min(700) {
+  @include mix.breakpoint-min(768) {
     &[data-wide="true"] {
       padding-top: 7.5%;
     }
