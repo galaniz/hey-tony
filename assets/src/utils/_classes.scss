@@ -172,6 +172,11 @@
   @extend %u-overflow-hidden;
 }
 
+.u-o-xy {
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
 /* Svg */
 
 .u-svg-100-pc {
@@ -223,6 +228,12 @@
 
 .u-empty:empty {
   @extend %u-display-none;
+}
+
+/* White space */
+
+.u-ws-nw {
+	white-space: nowrap;
 }
 
 /* Variables */

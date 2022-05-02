@@ -39,3 +39,7 @@
 .t-bg-background-base {
   @extend %u-background-color-background-base;
 }
+
+.t-bg-inherit {
+	background-color: inherit;
+}

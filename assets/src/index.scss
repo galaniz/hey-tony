@@ -47,6 +47,7 @@
 @use "objects/stat";
 @use "objects/flush";
 @use "objects/notice";
+@use "objects/tabs";
 
 /* Themes */
 
@@ -76,5 +77,9 @@
       animation-iteration-count: 1;
       transition-duration: 0.001ms;
     }
+
+		.c-nav__item {
+		  transition-delay: 0ms;
+		}
   }
 }

@@ -12,11 +12,19 @@
 /* Styles */
 
 .l-w-s {
-  width: func.calc-rem(32px);
+  width: func.calc-rem(36px);
+}
+
+.l-w-m {
+  width: func.calc-rem(48px);
 }
 
 .l-w-r {
   width: func.calc-rem(80px);
+}
+
+.l-w-l {
+  width: func.calc-rem(110px);
 }
 
 .l-w-100-pc {
@@ -45,4 +53,16 @@
 
     max-width: func.calc-rem($v);
   }
+}
+
+/* For overflow possibility */
+
+.l-mw-full {
+	max-width: calc(100vw - 2.5rem);
+}
+
+.l-mw-half {
+	@include mix.breakpoint-min(769) {
+		max-width: calc(50vw - 3.75rem);
+	}
 }

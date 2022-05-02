@@ -91,6 +91,16 @@ input[type="checkbox"]:disabled ~ span {
     @extend %u-font-weight-extrabold;
   }
 
+	p {
+		&:last-child {
+			margin: 0;
+		}
+
+		&:empty {
+			@extend %u-display-none;
+		}
+	}
+
   h1,
   .h1 *,
   .h1-s *,

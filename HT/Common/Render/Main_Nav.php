@@ -40,8 +40,8 @@ class Main_Nav {
 							'before_output' => function( &$obj, &$output, $depth, $args ) use ( &$counter ) {
 								if ( 0 === $depth ) {
 
-										$delay        = ( 150 * $counter ) . 'ms';
-										$obj->li_attr = " style='--ht-nav-item-delay:$delay'";
+										$delay        = ( 50 * $counter ) . 'ms';
+										$obj->li_attr = " style='--ht-nav-i-d:$delay'";
 
 										$counter++;
 								} else {
