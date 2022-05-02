@@ -122,7 +122,7 @@ class Tabs {
 							'id'         => '',
 							'tablist_id' => '',
 							'title'      => '',
-							'img_id'     => '',
+							'img_id'     => 0,
 							'selected'   => false,
 						],
 						$atts,
