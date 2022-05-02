@@ -81,5 +81,9 @@
 		.c-nav__item {
 		  transition-delay: 0ms;
 		}
+
+		[role=tabpanel] {
+			animation: none;
+		}
   }
 }
