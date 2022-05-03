@@ -27,12 +27,13 @@ _Default:_ `''`
 * `accent`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Description:_ Text within previous parameter to be underlined.
+_Description:_ Text within previous parameter to be underlined.\
+_Required_
 
 _Returns:_ `string` of markup
 
 ### `ht-swoop`
-Outputs curved shaped below hero. Doesn't apply to archive pages.
+Outputs curved shaped below hero.
 
 _Parameters:_
 
@@ -47,7 +48,8 @@ _Possible Values:_ `bottom`, `top`
 
 * `featured_image`\
 _Type:_ `boolean`\
-_Default:_ `false`
+_Default:_ `false`\
+_Note:_ Doesn't apply to archive pages.
 
 _Returns:_ `string` of markup
 
@@ -94,7 +96,8 @@ _Description:_ Display pipes in between items in a row.
 * `items`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Description:_ Comma separated list with possible values `archive`, `category`, `categories`, `tags`, `date`, `author`.
+_Description:_ Comma separated list with possible values `archive`, `category`, `categories`, `tags`, `date`, `author`.\
+_Required_
 
 * `justify`\
 _Type:_ `string`\
@@ -111,7 +114,8 @@ _Parameters:_
 * `type`\
 _Type:_ `string`\
 _Default:_ `post`\
-_Possible Values:_ `post`, `work`
+_Possible Values:_ `post`, `work`\
+_Required_
 
 _Returns:_ `string` of markup
 
@@ -199,6 +203,72 @@ _Description:_ Output content for single post within single post. Used in single
 
 _Returns:_ `string` of markup
 
+### `ht-tablist`
+Outputs list of tab links corresponding to sections below.
+
+_Parameters:_
+
+* `ids`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Description:_ Expect comma separated list. Id for each tablist item.\
+_Required_
+
+* `titles`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Description:_ Expect comma separated list. Title for each tablist item.\
+_Required_
+
+* `tab_ids`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Description:_ Expect comma separated list. Id for each corresponding tab.\
+_Required_
+
+* `selected`\
+_Type:_ `int`\
+_Default:_ `1`\
+_Description:_ Index of selected item.
+
+* `steps`\
+_Type:_ `boolean`\
+_Default:_ `false`\
+_Description:_ Output index in circle instead of title (but title output for screen readers).
+
+_Returns:_ `string` of markup
+
+### `ht-tab`
+Output section linked from tablist.
+
+_Parameters:_
+
+* `id`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Required_
+
+* `tablist_id`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Description:_ Id for corresponding tablist item.\
+_Required_
+
+* `title`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Required_
+
+* `img_id`\
+_Type:_ `int`\
+_Default:_ `0`
+
+* `selected`\
+_Type:_ `boolean`\
+_Default:_ `false`
+
+_Returns:_ `string` of markup
+
 ## CSS classes
 
 ### Base
@@ -273,6 +343,13 @@ Used to override default size for semantic heading level.
 | ---------- | ----------------------- |
 | `-all`     | applies to all children |
 
+#### Max widths
+
+| Class          | Description                  |
+| -------------- | ---------------------------- |
+| `.l-mw-full`   | Viewport width as max for overflow possibility                   |
+| `.l-mw-half`   | Half viewport width as max for overflow possibility 2 col layout |
+
 ### Utilities
 
 | Class       | Description                          |
@@ -295,11 +372,12 @@ Used to override default size for semantic heading level.
 
 ### Objects
 
-| Class          | Description                          |
-| -------------- | ------------------------------------ |
-| `.o-form`      | Wrapper class to style various form elements (inputs, textarea, select, ninja form overrides etc.)     |
-| `.o-underline` | Underline for links |
+| Class          | Description                             |
+| -------------- | --------------------------------------- |
+| `.o-form`      | Wrapper class to style various form elements (inputs, textarea, select, ninja form overrides etc.) |
+| `.o-underline` | Underline for links                     |
 | `.o-accent`    | Curved line for links and text in spans |
+| `.o-tabs`      | Wrapper class for tablist and tabs      |
 
 ### Components
 Start with `c-`. Best to avoid removing them.
@@ -321,11 +399,12 @@ Display images in wrappable row.
 
 ### Themes
 
-| Class                | Description                          |
-| -------------------- | ------------------------------------ |
-| `.t-text-light`      | Set color for all children to be theme light as well as focus outline     |
-| `.t-foreground-base` | Set color to theme black |
-| `.t-primary-base`    | Set color to theme blue |
+| Class                | Description                            |
+| -------------------- | -------------------------------------- |
+| `.t-text-light`      | Set color for all children to be theme light as well as focus outline |
+| `.t-foreground-base` | Set color to theme black               |
+| `.t-primary-base`    | Set color to theme blue                |
+| `.t-bg-inherit`      | Inherit background color from parent element |
 
 ### Overrides
 Start with `ht-`. Best to avoid removing them.

@@ -415,6 +415,7 @@ class Nav {
 
     if ([27, 'Escape'].indexOf(key) !== -1 && this._open) {
       this._toggle(false)
+      this.button.focus()
     }
   }
 } // End Nav

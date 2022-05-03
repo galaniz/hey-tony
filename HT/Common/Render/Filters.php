@@ -74,7 +74,7 @@ class Filters {
 								'data-justify' => 'right',
 								'data-wrap'    => '',
 							],
-							'opt_button_class'  => 'fusion-button button-flat button-small button-default button-1 fusion-button-default-span fusion-button-default-type button-outline',
+							'opt_button_class'  => 'fusion-button button-small button-outline',
 							'load_posts_query'  => [
 								'tax_query' => [
 									[

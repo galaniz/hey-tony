@@ -63,7 +63,8 @@
     margin-bottom: func.calc-rem(25px);
   }
 
-  .l-mb-l {
+  .l-mb-l,
+  .l-mb-l-all > * {
     margin-bottom: func.calc-rem(40px);
   }
 
@@ -73,7 +74,8 @@
 
   .l-mb-s-all,
   .l-mb-r-all,
-  .l-mb-m-all {
+  .l-mb-m-all,
+  .l-mb-l-all {
     & > *:last-child {
       margin-bottom: 0;
     }

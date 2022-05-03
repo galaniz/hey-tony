@@ -7,6 +7,7 @@
 import { setElements, usingMouse } from 'Formation/utils'
 import Nav from './components/nav'
 import LoadMore from 'Formation/objects/load/more'
+import Tabs from 'Formation/objects/tabs'
 
 /* Variables */
 
@@ -26,6 +27,22 @@ const elMeta = [
   {
     prop: 'hero',
     selector: '.fusion-page-title-bar'
+  },
+  {
+    prop: 'tabs',
+    selector: '.o-tabs',
+    items: [
+      {
+        prop: 'tabsTabs',
+        selector: '[role="tab"]',
+        all: true
+      },
+      {
+        prop: 'tabsPanels',
+        selector: '[role="tabpanel"]',
+        all: true
+      }
+    ]
   },
   {
     prop: 'loadMore',
@@ -342,6 +359,17 @@ const initialize = () => {
     }
 
     const loadMore = new LoadMore(args)
+  }
+
+  /* Tabs */
+
+  if (el.tabs) {
+    const tabs = new Tabs({
+      tabs: el.tabsTabs,
+      panels: el.tabsPanels,
+      panelsDelay: 400,
+      reduceMotion: reduceMotion
+    })
   }
 } // end initialize
 
