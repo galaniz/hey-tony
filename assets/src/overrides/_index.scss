@@ -405,3 +405,9 @@
 .grecaptcha-badge {
   @extend %u-visibility-hidden;
 }
+
+/* Current page */
+
+#ht .ht #wrapper [aria-current="page"] {
+	color: inherit;
+}
