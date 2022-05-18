@@ -200,7 +200,7 @@ class HT {
 
 				add_action( 'after_setup_theme', [$this, 'init'] );
 				add_action( 'wp', [$this, 'wp'] );
-				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_styles'], 20 );
+				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 20 );
 				add_action( 'wp_head', [$this, 'head'] );
 				add_action( 'pre_get_posts', [$this, 'pre_get_posts'] );
 				add_action( 'avada_after_main_content', [$this, 'render_loader'] );
@@ -382,7 +382,7 @@ class HT {
 		 * Register and enqueue scripts and styles.
 		 */
 
-		public function enqueue_styles() {
+		public function enqueue_assets() {
 				$n = self::$namespace;
 
 				wp_enqueue_style(

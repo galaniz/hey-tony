@@ -230,7 +230,7 @@ const initialize = () => {
           page = 0
         } = data
 
-        const queryArgs = query_args
+        const queryArgs = query_args // eslint-disable-line camelcase
         const params = {}
         const delStr = 'load_more_delete_param'
 
@@ -371,6 +371,6 @@ const initialize = () => {
       reduceMotion: reduceMotion
     })
   }
-} // end initialize
+} // End initialize
 
 document.addEventListener('DOMContentLoaded', initialize)
