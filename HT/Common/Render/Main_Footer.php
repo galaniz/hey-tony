@@ -33,19 +33,27 @@ class Main_Footer {
 				/* Widgets output */
 
 				$widgets = wp_get_sidebars_widgets();
-				$allowed = ['avada-footer-widget-1', 'avada-footer-widget-2', 'avada-footer-widget-3'];
+				$allowed = ['avada-footer-widget-1', 'avada-footer-widget-2', 'avada-footer-widget-3', 'ht-footer-widget-4'];
 
-				$widgets = array_filter(
-						$widgets,
-						function( $k ) use ( $allowed ) {
-								return in_array( $k, $allowed, true );
-						},
-						ARRAY_FILTER_USE_KEY
-				);
+				$widgets_ordered = $allowed;
+
+				foreach ( $widgets as $k => $v ) {
+						$a = in_array( $k, $allowed, true );
+
+						if ( $a ) {
+								$widgets_ordered[ array_search( $k, $widgets_ordered, true ) ] = [
+									'key'   => $k,
+									'value' => $v,
+								];
+						}
+				}
 
 				$widgets_output = [];
 
-				foreach ( $widgets as $k => $v ) {
+				foreach ( $widgets_ordered as $i => $wo ) {
+						$k = $wo['key'];
+						$v = $wo['value'];
+
 						$ww     = '';
 						$social = false;
 

@@ -204,6 +204,7 @@ class HT {
 				add_action( 'wp_head', [$this, 'head'] );
 				add_action( 'pre_get_posts', [$this, 'pre_get_posts'] );
 				add_action( 'avada_after_main_content', [$this, 'render_loader'] );
+				add_action( 'wp_loaded', [$this, 'widgets'] );
 
 				Ajax::ajax_actions();
 
@@ -213,6 +214,7 @@ class HT {
 				add_filter( 'language_attributes', [$this, 'html_id'], 10, 1 );
 				add_filter( 'dynamic_sidebar_params', [$this, 'widget_title'], 10, 1 );
 				add_filter( 'nav_menu_css_class', [$this, 'pt_nav_classes'], 10, 2 );
+				add_filter( 'widget_nav_menu_args', [$this, 'widget_nav_args'], 10, 4 );
 				add_filter( 'script_loader_tag', [$this, 'add_script_attributes'], 10, 2 );
 
 				/* Admin */
@@ -439,6 +441,25 @@ class HT {
 		}
 
 		/**
+		 * Register widget area.
+		 */
+
+		public function widgets() {
+				$n = self::$namespace;
+
+				register_sidebar(
+						[
+							'name'          => 'Footer Widget 4',
+							'id'            => "$n-footer-widget-4",
+							'before_widget' => '',
+							'after_widget'  => '',
+							'before_title'  => '',
+							'after_title'   => '',
+						]
+				);
+		}
+
+		/**
 		 * Add to body class.
 		 */
 
@@ -530,6 +551,16 @@ class HT {
 				}
 
 				return $classes;
+		}
+
+		/**
+		 * Add class to widget nav menu.
+		 */
+
+		public function widget_nav_args( $nav_menu_args, $nav_menu, $args, $instance ) {
+				$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="l-mb-s-all">%3$s</ul>';
+
+				return $nav_menu_args;
 		}
 
 		/**
