@@ -8,6 +8,7 @@ import { setElements, usingMouse } from 'Formation/utils'
 import Nav from './components/nav'
 import LoadMore from 'Formation/objects/load/more'
 import Tabs from 'Formation/objects/tabs'
+import Slider from 'Formation/objects/slider'
 
 /* Variables */
 
@@ -33,12 +34,28 @@ const elMeta = [
     selector: '.o-tabs',
     items: [
       {
-        prop: 'tabsTabs',
+        prop: 'tabsNav',
         selector: '[role="tab"]',
         all: true
       },
       {
         prop: 'tabsPanels',
+        selector: '[role="tabpanel"]',
+        all: true
+      }
+    ]
+  },
+  {
+    prop: 'slider',
+    selector: '.o-slider',
+    items: [
+      {
+        prop: 'sliderNav',
+        selector: '[role="tab"]',
+        all: true
+      },
+      {
+        prop: 'sliderPanels',
         selector: '[role="tabpanel"]',
         all: true
       }
@@ -110,25 +127,29 @@ const initialize = () => {
   /* Fixed Header */
 
   if (el.nav) {
-    const nav = new Nav({
-      button: el.navButton,
-      outer: el.nav,
-      inner: el.nav.firstElementChild,
-      scaleTo: [
-        {
-          width: 0,
-          scale: 0.6
-        },
-        {
-          width: 1000,
-          scale: 0.4
-        }
-      ],
-      makeFixed: true,
-      friction: 1.15,
-      maxOffset: 600,
-      reduceMotion: reduceMotion
-    })
+    const nav = () => {
+      return new Nav({
+        button: el.navButton,
+        outer: el.nav,
+        inner: el.nav.firstElementChild,
+        scaleTo: [
+          {
+            width: 0,
+            scale: 0.6
+          },
+          {
+            width: 1000,
+            scale: 0.4
+          }
+        ],
+        makeFixed: true,
+        friction: 1.15,
+        maxOffset: 600,
+        reduceMotion: reduceMotion
+      })
+    }
+
+    nav()
   }
 
   /* Get height of hero */
@@ -358,18 +379,37 @@ const initialize = () => {
       args.error = el.loadMoreError
     }
 
-    const loadMore = new LoadMore(args)
+    const loadMore = () => {
+      return new LoadMore(args)
+    }
+
+    loadMore()
   }
 
   /* Tabs */
 
   if (el.tabs) {
-    const tabs = new Tabs({
-      tabs: el.tabsTabs,
-      panels: el.tabsPanels,
-      panelsDelay: 400,
-      reduceMotion: reduceMotion
-    })
+    const tabs = () => {
+      return new Tabs({
+        tabs: el.tabsNav,
+        panels: el.tabsPanels,
+        panelsDelay: 500
+      })
+    }
+
+    tabs()
+  }
+
+  /* Slider */
+
+  if (el.slider) {
+    const slider = () => {
+      return new Slider({
+        slider: el.slider
+      })
+    }
+
+    slider()
   }
 } // End initialize
 

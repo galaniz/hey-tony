@@ -47,6 +47,10 @@
   }
 }
 
+.l-min-w {
+	min-width: func.calc-rem(400px);
+}
+
 @each $k, $v in map.get(con.$vars, "max-widths") {
   .l-mw-#{$k} {
     @extend %u-width-100;

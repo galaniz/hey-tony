@@ -9,10 +9,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
 
-/* State */
-
-const prod = true
-
 /* Namespace */
 
 const n = 'ht'
@@ -24,7 +20,7 @@ const outputPath = path.resolve(__dirname, 'assets', 'public')
 /* Asset paths */
 
 const assetsPath = path.resolve(__dirname, 'assets', 'src')
-const formationPath = prod ? '@alanizcreative/formation/src' : path.resolve(__dirname, '../../../formation/src')
+const formationPath = '@alanizcreative/formation/src'
 
 /* Resolve to root */
 

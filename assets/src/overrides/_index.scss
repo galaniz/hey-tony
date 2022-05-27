@@ -311,6 +311,7 @@
 
 /* Single content */
 
+.ht-editor,
 .ht-single__main {
   --ht-underline-w: #{func.calc-rem(1.5px)};
 
@@ -408,6 +409,7 @@
 
 /* Current page */
 
-#ht .ht #wrapper [aria-current="page"] {
+#ht .ht #wrapper [aria-current="page"],
+#ht .ht #wrapper .current-menu-item {
 	color: inherit;
 }

@@ -206,7 +206,7 @@ input[type="checkbox"]:disabled ~ span {
 
   .p-m * {
     @include mix.breakpoint-min(1200) {
-      font-size: func.calc-rem(18px);
+      font-size: func.calc-rem(19px);
     }
   }
 

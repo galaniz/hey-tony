@@ -65,7 +65,9 @@ class Main_Footer {
 										$wid = Utils::filter_social( $wid );
 										$wid = "<div class='l-pt-xxxs'>$wid</div>";
 								} else {
-										$wid = "<div class='o-accent u-d-ib-a'>$wid</div>";
+										$contact = strpos( $wid, 'mailto:' ) !== false;
+
+										$wid = "<div class='" . ( $contact ? 'o-accent' : 'o-underline' ) . " u-d-ib-a'>$wid</div>";
 								}
 
 								$ww .= $wid;

@@ -514,7 +514,7 @@ class Posts {
 						$padding = 'post' === $type ? 'l-pt-xs l-pt-l-s' : 'l-pt-r l-pt-l-l';
 
 						$output = (
-							'<div class="js-load-more-no-res o-notice" data-type="info" role="polite" style="display:' . ( $no_posts ? 'block' : 'none' ) . ';">' .
+							'<div class="js-load-more-no-res o-notice" data-type="info" aria-live="polite" style="display:' . ( $no_posts ? 'block' : 'none' ) . ';">' .
 								'<div class="l-flex u-c-i" data-gap="s" data-align="center" data-justify="def" data-wrap>' .
 									'<div>' .
 										'<p class="l-m-0 u-fw-b">Sorry looks like nothing was found.</p>' .
@@ -524,36 +524,37 @@ class Posts {
 									'</div>' .
 								'</div>' .
 							'</div>' .
-							'<div class="u-p-r" aria-live="polite">' .
+							'<div class="u-p-r">' .
 								$output .
-								"<div class='$padding'>" .
-									'<div class="l-flex" data-justify="center" data-align="center" data-gap="s">' .
-										'<div>' .
+								"<nav class='$padding' aria-label='$type pagination'>" .
+									'<ul class="l-flex" data-justify="center" data-align="center" data-gap="s">' .
+										'<li>' .
 											'<a ' . $link_attrs['prev'] . '>' .
 												'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
 													$caret .
 												'</div>' .
-												'<div class="u-v-h">Previous</div>' .
+												'<div class="u-v-h">Previous items</div>' .
 											'</a>' .
-										'</div>' .
-										'<div class="p-s u-fw-b u-ta-c">' .
-											'<p class="l-m-0">' .
+										'</li>' .
+										'<li class="p-s u-fw-b u-ta-c">' .
+											'<p class="l-m-0" aria-live="polite">' .
+												'<span class="u-v-h">Page </span>' .
 												"<span class='js-load-more-current'>$current_page</span>" .
 												'<span class="u-v-h"> of </span>' .
 												'<span aria-hidden="true"> / </span>' .
 												"<span class='js-load-more-total'>$total_pages</span>" .
 											'</p>' .
-										'</div>' .
-										'<div>' .
+										'</li>' .
+										'<li>' .
 											'<a ' . $link_attrs['next'] . '>' .
 												'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
 													$caret .
 												'</div>' .
-												'<div class="u-v-h">Next</div>' .
+												'<div class="u-v-h">Next items</div>' .
 											'</a>' .
-										'</div>' .
-									'</div>' .
-								'</div>' .
+										'</li>' .
+									'</ul>' .
+								'</nav>' .
 							'</div>' .
 							'<div class="js-load-more-err l-flex l-pt-xs" data-justify="center" role="alert" style="display:none;">' .
 								'<div class="o-notice l-mw-r u-ta-c u-c-i" data-type="error">' .

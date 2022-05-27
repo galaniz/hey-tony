@@ -149,6 +149,11 @@ class HT {
 				'layout' => 'columns',
 				'nav'    => true,
 			],
+			'service'       => [
+				'label'  => 'Services',
+				'layout' => 'cards',
+				'nav'    => true,
+			],
 		];
 
 		/**
@@ -189,8 +194,7 @@ class HT {
 				add_shortcode( 'ht-filters', ['HT\Common\Render\Filters', 'shortcode'] );
 				add_shortcode( 'ht-stat', ['HT\Common\Render\Stat', 'shortcode'] );
 				add_shortcode( 'ht-accent', ['HT\Common\Render\Accent', 'shortcode'] );
-				add_shortcode( 'ht-tablist', ['HT\Common\Render\Tabs', 'shortcode_tablist'] );
-				add_shortcode( 'ht-tab', ['HT\Common\Render\Tabs', 'shortcode_tab'] );
+				add_shortcode( 'ht-tabs', ['HT\Common\Render\Tabs', 'shortcode'] );
 				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
 				add_shortcode( 'ht-archive-title', [$this, 'archive_title'] );
@@ -432,11 +436,11 @@ class HT {
 
 		public function render_loader() {
 				echo (
-					'<div class="c-loader l-flex l-w-100-pc l-m-0-all u-p-a u-r-0 u-t-0 u-b-0 l-breakout js-load-more-loader" data-align="center" data-justify="center" data-hide>' .
+					'<aside class="c-loader l-flex l-w-100-pc l-m-0-all u-p-a u-r-0 u-t-0 u-b-0 l-breakout js-load-more-loader" data-align="center" data-justify="center" tabindex="0" aria-label="Loading" data-hide>' .
 						'<div class="l-w-r t-primary-base u-br-100-pc u-b-m">' .
 							'<div class="o-aspect-ratio"></div>' .
 						'</div>' .
-					'</div>'
+					'</aside>'
 				);
 		}
 
@@ -558,7 +562,7 @@ class HT {
 		 */
 
 		public function widget_nav_args( $nav_menu_args, $nav_menu, $args, $instance ) {
-				$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="l-mb-s-all">%3$s</ul>';
+				$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="l-mb-s-all p">%3$s</ul>';
 
 				return $nav_menu_args;
 		}
