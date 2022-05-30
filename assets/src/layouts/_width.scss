@@ -11,6 +11,10 @@
 
 /* Styles */
 
+.l-w-xs {
+  width: func.calc-rem(20px);
+}
+
 .l-w-s {
   width: func.calc-rem(36px);
 }
@@ -48,7 +52,9 @@
 }
 
 .l-min-w {
-	min-width: func.calc-rem(400px);
+	@include mix.breakpoint-min(800) {
+    min-width: func.calc-rem(400px);
+  }
 }
 
 @each $k, $v in map.get(con.$vars, "max-widths") {

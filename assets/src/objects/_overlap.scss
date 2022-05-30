@@ -15,7 +15,7 @@
 .o-overlap {
   @include mix.fluid-size(
     --ht-overlap-p,
-    func.calc-rem( 290px ) func.calc-rem( 500px ),
+    func.calc-rem(290px) func.calc-rem(500px),
     700 1200
   );
   @include mix.fluid-size(

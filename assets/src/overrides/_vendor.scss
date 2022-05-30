@@ -1,0 +1,13 @@
+/**
+ * Overrides: vendor
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/config" as con;
+
+/* Recaptcha */
+
+.grecaptcha-badge {
+  @extend %u-visibility-hidden;
+}

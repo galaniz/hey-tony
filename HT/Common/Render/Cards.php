@@ -90,19 +90,18 @@ class Cards {
 				$pretitle_output = '';
 
 				if ( $pretitle ) {
-						if ( $pretitle_link ) {
-								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
-						} else {
-								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle</p>";
-						}
-
 						if ( $pretitle_a11y ) {
 								$pretitle_a11y = "<span class='u-v-h'>$pretitle_a11y</span>";
 						}
 
+						if ( $pretitle_link ) {
+								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle_a11y$pretitle</a>";
+						} else {
+								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle_a11y$pretitle</p>";
+						}
+
 						$pretitle_output = (
 							'<div class="o-overlap-v__p o-underline-r p-' . ( $first_two ? 's' : 'xs' ) . ' u-fw-b l-pb-xxxs l-flex">' .
-								$pretitle_a11y .
 								$pretitle .
 							'</div>'
 						);
@@ -114,10 +113,12 @@ class Cards {
 
 				if ( $excerpt ) {
 						$excerpt = (
-							'<div class="p-m t-foreground-base u-p-r u-zi-2">' .
+							'<div class="p-s t-foreground-base u-p-r u-zi-2">' .
 								"<p class='l-m-0'>$excerpt</p>" .
 							'</div>'
 						);
+
+						$title_class .= ' l-mb-xs';
 				}
 
 				/* Featured image */
@@ -142,7 +143,7 @@ class Cards {
 				/* Output */
 
 				return (
-					"<li class='l-w-$width-pc'>" .
+					( $width ? "<li class='l-w-$width-pc'>" : '' ) .
 						( ! $small ? '<div class="l-pb-xxxs l-pb-xs-l">' : '' ) .
 							'<div class="o-overlap-v l-flex u-p-r u-ul-c" data-theme="' . $theme . '" data-col data-hover>' .
 								'<div class="o-overlap-v__fg u-or-2">' .
@@ -150,7 +151,7 @@ class Cards {
 									"<div class='$title_class'>" .
 										"<$heading_level class='l-m-0 o-underline-r'>$title</$heading_level>" .
 									'</div>' .
-									( $first_two && $excerpt ? $excerpt : '' ) .
+									$excerpt .
 								'</div>' .
 								'<div class="u-p-r u-zi--1">' .
 									'<div class="o-overlap-v__bg o-aspect-ratio" data-p="66" data-hover="scale">' .
@@ -159,7 +160,7 @@ class Cards {
 								'</div>' .
 							'</div>' .
 						( ! $small ? '</div>' : '' ) .
-					'</li>'
+					( $width ? '</li>' : '' )
 				);
 		}
 

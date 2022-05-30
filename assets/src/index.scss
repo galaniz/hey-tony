@@ -37,6 +37,7 @@
 /* Objects */
 
 @use "@alanizcreative/formation/src/objects/aspect-ratio";
+@use "@alanizcreative/formation/src/objects/collapsible";
 @use "objects/logo";
 @use "objects/swoop";
 @use "objects/overlap";
@@ -48,6 +49,8 @@
 @use "objects/flush";
 @use "objects/notice";
 @use "objects/tabs";
+@use "objects/slider";
+@use "objects/dot";
 
 /* Themes */
 
@@ -55,7 +58,9 @@
 
 /* Overrides */
 
-@use "overrides";
+@use "overrides/avada";
+@use "overrides/formation";
+@use "overrides/vendor";
 
 /* Remove animations */
 

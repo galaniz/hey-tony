@@ -31,6 +31,7 @@ class Tabs {
 				$atts = shortcode_atts(
 						[
 							'index' => 0,
+							'half'  => false,
 						],
 						$atts,
 						'ht-tabs'
@@ -40,9 +41,15 @@ class Tabs {
 
 				[
 					'index' => $index,
+					'half'  => $half,
 				] = $atts;
 
 				$index = (int) $index;
+				$half  = filter_var( $half, FILTER_VALIDATE_BOOLEAN );
+
+				/* Half width class */
+
+				$half_class = $half ? ' l-mw-half' : '';
 
 				/* ACF fields */
 
@@ -159,9 +166,9 @@ class Tabs {
 
 				return (
 					'<div class="o-tabs t-bg-inherit">' .
-						'<div class="l-mw-full l-mw-half t-bg-inherit">' .
-							'<div class="l-pb-xxxs l-pb-xs-l t-bg-inherit">' .
-								'<div class="u-o-xy l-flex t-bg-inherit">' .
+						"<div class='l-mw-full$half_class l-pb-xxxs l-pb-xs-l t-bg-inherit'>" .
+							'<div class="l-h-m u-o-h t-bg-inherit">' .
+								'<div class="u-o-xy l-pb-xxxs l-flex t-bg-inherit">' .
 									'<div class="l-flex-grow u-p-r t-bg-inherit">' .
 										'<ul class="l-flex u-tlrb-b t-bg-inherit u-oo-s" role="tablist" data-gap="r" data-justify="def">' .
 											implode( '', $list ) .
@@ -170,7 +177,7 @@ class Tabs {
 								'</div>' .
 							'</div>' .
 						'</div>' .
-						'<div class="l-mw-full l-mw-half">' .
+						"<div class='l-mw-full$half_class'>" .
 							implode( '', $panels ) .
 						'</div>' .
 					'</div>'

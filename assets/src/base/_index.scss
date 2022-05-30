@@ -45,6 +45,10 @@ main {
   min-height: 50vh;
 }
 
+p strong {
+	@extend %u-font-weight-bold;
+}
+
 *:disabled,
 *[aria-disabled="true"],
 input[type="radio"]:disabled ~ span,

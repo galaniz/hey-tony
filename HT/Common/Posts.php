@@ -17,6 +17,7 @@ use HT\Common\Render\Cards;
 use HT\Common\Render\Columns;
 use HT\Common\Render\Testimonial;
 use HT\Common\Render\Overlap;
+use HT\Common\Render\Slider;
 use function Formation\additional_script_data;
 
 /**
@@ -123,6 +124,7 @@ class Posts {
 						[
 							'type'               => '',
 							'posts_per_page'     => 10,
+							'category'           => '',
 							'meta_key'           => '',
 							'meta_value'         => '',
 							'meta_type'          => 'string',
@@ -130,8 +132,10 @@ class Posts {
 							'section_title'      => '',
 							'a11y_section_title' => '',
 							'heading_level'      => 'h2',
+							'slider'             => false,
 							'current_single'     => false,
 							'pagination'         => false,
+							'type_archive'       => true,
 							'return_array'       => false, // back end
 							'query_args'         => [], // back end
 							'is_home'            => false, // back end
@@ -145,6 +149,7 @@ class Posts {
 				[
 					'type'               => $type,
 					'posts_per_page'     => $posts_per_page,
+					'category'           => $category,
 					'meta_key'           => $meta_key,
 					'meta_value'         => $meta_value,
 					'meta_type'          => $meta_type,
@@ -152,8 +157,10 @@ class Posts {
 					'section_title'      => $section_title,
 					'a11y_section_title' => $a11y_section_title,
 					'heading_level'      => $heading_level,
+					'slider'             => $slider,
 					'current_single'     => $current_single,
 					'pagination'         => $pagination,
+					'type_archive'       => $type_archive,
 					'return_array'       => $return_array,
 					'query_args'         => $query_args,
 					'is_home'            => $is_home,
@@ -171,15 +178,20 @@ class Posts {
 				$overflow       = 'hidden';
 				$output         = '';
 
-				$pagination  = filter_var( $pagination, FILTER_VALIDATE_BOOLEAN );
-				$no_posts    = false;
-				$row_count   = 0;
-				$offset      = 0;
-				$total       = 0;
-				$total_pages = 0;
+				$type_archive = filter_var( $type_archive, FILTER_VALIDATE_BOOLEAN );
+				$pagination   = filter_var( $pagination, FILTER_VALIDATE_BOOLEAN );
+				$no_posts     = false;
+				$row_count    = 0;
+				$offset       = 0;
+				$total        = 0;
+				$total_pages  = 0;
 
 				$current_single = filter_var( $current_single, FILTER_VALIDATE_BOOLEAN );
 				$current_single = $current_single && 1 === $posts_per_page ? true : false;
+
+				if ( ! $type_archive ) {
+						$archive = false;
+				}
 
 				if ( $section_title || $a11y_section_title ) {
 						$heading_level = 'h3';
@@ -220,6 +232,10 @@ class Posts {
 						$layout = 'columns';
 				}
 
+				if ( 'cards' !== $layout ) {
+						$slider = false;
+				}
+
 				/* Process query */
 
 				if ( $archive ) {
@@ -244,6 +260,22 @@ class Posts {
 								$args['post__in'] = $post_ids;
 						}
 
+						if ( $category && 'post' === $type ) {
+								$args['category_name'] = $category;
+						}
+
+						if ( $category && 'work' === $type ) {
+								if ( ! isset( $args['tax_query'] ) ) {
+										$args['tax_query'] = [];
+								}
+
+								$args['tax_query'][] = [
+									'taxonomy' => $tax,
+									'field'    => 'slug',
+									'terms'    => $category,
+								];
+						}
+
 						if ( $single && ! $current_single ) {
 								$post_id = get_the_ID();
 
@@ -254,12 +286,14 @@ class Posts {
 								if ( $terms && ! is_wp_error( $terms ) ) {
 										$terms = wp_list_pluck( $terms, 'slug' );
 
-										$args['tax_query'] = [
-											[
-												'taxonomy' => $tax,
-												'field'    => 'slug',
-												'terms'    => $terms,
-											],
+										if ( ! isset( $args['tax_query'] ) ) {
+												$args['tax_query'] = [];
+										}
+
+										$args['tax_query'][] = [
+											'taxonomy' => $tax,
+											'field'    => 'slug',
+											'terms'    => $terms,
 										];
 								}
 						}
@@ -302,12 +336,12 @@ class Posts {
 				if ( $q->have_posts() ) {
 						$row_count = $q->post_count;
 						$index     = 0;
+						$slides    = [];
 
 						while ( $q->have_posts() ) {
 								$q->the_post();
 
 								$id            = get_the_ID();
-								$text          = apply_filters( 'the_content', get_the_content() );
 								$title         = get_the_title();
 								$link          = get_the_permalink( $id );
 								$media_id      = get_post_thumbnail_id( $id );
@@ -317,16 +351,18 @@ class Posts {
 								$pretitle_a11y = '';
 								$pretitle_link = '';
 
-								if ( 'work' === $type || 'post' === $type || 'search' === $type ) {
+								if ( 'work' === $type || 'post' === $type || 'service' === $type || 'search' === $type ) {
 										$excerpt = Utils::get_excerpt(
 												[
-													'post_id' => $id,
-													'content' => $text,
-													'words'   => true,
-													'length'  => 'cards' === $layout ? 15 : 20,
+													'post_id'      => $id,
+													'words'        => true,
+													'length'       => 'cards' === $layout ? 15 : 20,
+													'do_shortcode' => true,
 												]
 										);
+								}
 
+								if ( 'work' === $type || 'post' === $type || 'search' === $type ) {
 										$cat = Utils::get_first_cat( $id, $tax );
 
 										if ( $cat ) {
@@ -343,7 +379,7 @@ class Posts {
 										if ( 'testimonial' === $type ) {
 												$content = Testimonial::render(
 														[
-															'text'     => $text,
+															'text'     => do_shortcode( get_the_content() ),
 															'title'    => $title,
 															'subtitle' => get_field( 'subtitle', $id ),
 															'media_id' => $media_id,
@@ -399,7 +435,6 @@ class Posts {
 										$card_args = [
 											'title'         => $title,
 											'link'          => $link,
-											'excerpt'       => $excerpt,
 											'media_id'      => $media_id,
 											'heading_level' => $heading_level,
 											'index'         => 10,
@@ -409,6 +444,10 @@ class Posts {
 												$card_args['pretitle']      = $pretitle;
 												$card_args['pretitle_link'] = $pretitle_link;
 												$card_args['pretitle_a11y'] = $pretitle_a11y;
+
+												if ( 'service' === $type ) {
+														$card_args['excerpt'] = $excerpt;
+												}
 										} else {
 												$card_args['small'] = true;
 												$card_args['theme'] = 'background-dark';
@@ -416,9 +455,21 @@ class Posts {
 
 										if ( $is_home ) {
 												$card_args['index'] = $index;
+
+												if ( $index <= 1 ) {
+														$card_args['excerpt'] = $excerpt;
+												}
 										}
 
-										$output .= Cards::render_card( $card_args );
+										if ( $slider ) {
+												$card_args['width'] = 0;
+										}
+
+										$card_output = Cards::render_card( $card_args );
+
+										$slides[] = $card_output;
+
+										$output .= $card_output;
 								}
 
 								if ( 'overlap' === $layout ) {
@@ -455,12 +506,21 @@ class Posts {
 								}
 
 								if ( 'cards' === $layout ) {
-										$output = Cards::render(
-												[
-													'content' => $output,
-													'class'   => $pagination ? 'js-insert u-empty' : '',
-												]
-										);
+										if ( $slider ) {
+												$output = Slider::render(
+														[
+															'slides' => $slides,
+															'label'  => $type,
+														]
+												);
+										} else {
+												$output = Cards::render(
+														[
+															'content' => $output,
+															'class'   => $pagination ? 'js-insert u-empty' : '',
+														]
+												);
+										}
 								}
 
 								if ( 'overlap' === $layout ) {
@@ -511,7 +571,7 @@ class Posts {
 
 						/* Output */
 
-						$padding = 'post' === $type ? 'l-pt-xs l-pt-l-s' : 'l-pt-r l-pt-l-l';
+						$padding = 'post' === $type || 'service' === $type ? 'l-pt-xs l-pt-l-s' : 'l-pt-r l-pt-l-l';
 
 						$output = (
 							'<div class="js-load-more-no-res o-notice" data-type="info" aria-live="polite" style="display:' . ( $no_posts ? 'block' : 'none' ) . ';">' .
@@ -612,7 +672,7 @@ class Posts {
 								$padding = 'l-pt-s l-pb-s l-pt-r-l l-pb-r-l';
 
 								$section_title = (
-									'<div class="h4 u-p-r">' .
+									'<div class="h4 u-p-r' . ( $slider ? ' u-ta-c l-ph-ctn' : '' ) . '">' .
 										"<h2>$section_title</h2>" .
 									'</div>'
 								);

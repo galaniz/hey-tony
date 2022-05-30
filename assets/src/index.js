@@ -9,6 +9,7 @@ import Nav from './components/nav'
 import LoadMore from 'Formation/objects/load/more'
 import Tabs from 'Formation/objects/tabs'
 import Slider from 'Formation/objects/slider'
+import Collapsible from 'Formation/objects/collapsible'
 
 /* Variables */
 
@@ -30,36 +31,19 @@ const elMeta = [
     selector: '.fusion-page-title-bar'
   },
   {
+    prop: 'collapsibles',
+    selector: '.o-collapsible',
+    all: true
+  },
+  {
     prop: 'tabs',
     selector: '.o-tabs',
-    items: [
-      {
-        prop: 'tabsNav',
-        selector: '[role="tab"]',
-        all: true
-      },
-      {
-        prop: 'tabsPanels',
-        selector: '[role="tabpanel"]',
-        all: true
-      }
-    ]
+    all: true
   },
   {
     prop: 'slider',
-    selector: '.o-slider',
-    items: [
-      {
-        prop: 'sliderNav',
-        selector: '[role="tab"]',
-        all: true
-      },
-      {
-        prop: 'sliderPanels',
-        selector: '[role="tabpanel"]',
-        all: true
-      }
-    ]
+    selector: '.js-slider',
+    all: true
   },
   {
     prop: 'loadMore',
@@ -188,13 +172,6 @@ const initialize = () => {
     const ppp = parseInt(el.loadMore.getAttribute('data-per-page'))
     const total = parseInt(el.loadMore.getAttribute('data-total'))
     const pagination = el.loadMorePrev && el.loadMoreCurrent
-    const loaders = []
-
-    /* Loaders */
-
-    if (el.loadMoreLoader) {
-      loaders.push(el.loadMoreLoader)
-    }
 
     /* Data */
 
@@ -217,7 +194,7 @@ const initialize = () => {
       url: n.ajax_url,
       data: data,
       next: el.loadMore,
-      loaders: loaders,
+      loader: el.loadMoreLoader,
       ppp: ppp,
       total: total,
       filters: el.loadMoreFilters,
@@ -388,28 +365,161 @@ const initialize = () => {
 
   /* Tabs */
 
-  if (el.tabs) {
-    const tabs = () => {
-      return new Tabs({
-        tabs: el.tabsNav,
-        panels: el.tabsPanels,
-        panelsDelay: 500
-      })
+  if (el.tabs.length) {
+    const tabs = (args) => {
+      return new Tabs(args)
     }
 
-    tabs()
+    el.tabs.forEach(t => {
+      const meta = [
+        {
+          prop: 'nav',
+          selector: '[role="tab"]',
+          all: true
+        },
+        {
+          prop: 'panels',
+          selector: '[role="tabpanel"]',
+          all: true
+        }
+      ]
+
+      const tt = {}
+
+      setElements(t, meta, tt)
+
+      tabs({
+        tabs: tt.nav,
+        panels: tt.panels,
+        panelsDelay: 500
+      })
+    })
   }
 
   /* Slider */
 
-  if (el.slider) {
-    const slider = () => {
-      return new Slider({
-        slider: el.slider
-      })
+  if (el.slider.length) {
+    const slider = (args) => {
+      return new Slider(args)
     }
 
-    slider()
+    el.slider.forEach(s => {
+      const meta = [
+        {
+          prop: 'main',
+          selector: '.o-slider'
+        },
+        {
+          prop: 'track',
+          selector: '.o-slider__track'
+        },
+        {
+          prop: 'height',
+          selector: '.o-slider__h'
+        },
+        {
+          prop: 'panels',
+          selector: '[role="tabpanel"]',
+          all: true
+        },
+        {
+          prop: 'items',
+          selector: '.o-slider__inner',
+          all: true
+        },
+        {
+          prop: 'nav',
+          selector: '[role="tab"]',
+          all: true
+        }
+      ]
+
+      const ss = {}
+
+      setElements(s, meta, ss)
+
+      slider({
+        tabs: ss.nav,
+        panels: ss.panels,
+        panelsDelay: 800,
+        slider: ss.main,
+        sliderTrack: ss.track,
+        sliderHeight: ss.height,
+        sliderItems: ss.items,
+        sliderPerPanel: [
+          {
+            breakpoint: 0,
+            items: 1
+          },
+          {
+            breakpoint: 600,
+            items: 2
+          },
+          {
+            breakpoint: 900,
+            items: 3
+          }
+        ]
+      })
+    })
+  }
+
+  /* Collapsibles */
+
+  if (el.collapsibles.length) {
+    const collapsibles = (args) => {
+      return new Collapsible(args)
+    }
+
+    const instances = []
+    const accordianInstances = {}
+
+    el.collapsibles.forEach(c => {
+      const meta = [
+        {
+          prop: 'collapsible',
+          selector: '.o-collapsible__main'
+        },
+        {
+          prop: 'trigger',
+          selector: '.o-collapsible__toggle'
+        }
+      ]
+
+      const cc = {}
+
+      setElements(c, meta, cc)
+
+      const accordian = c.getAttribute('data-accordion')
+
+      const args = {
+        container: c,
+        collapsible: cc.collapsible,
+        trigger: cc.trigger
+      }
+
+      const instance = collapsibles(args)
+
+      if (accordian) {
+        const id = accordian
+
+        if (!Object.getOwnPropertyDescriptor(accordianInstances, id)) { accordianInstances[id] = [] }
+
+        accordianInstances[id].push(instance)
+        instance.id = id
+        instances.push(instance)
+      }
+    })
+
+    if (instances.length) {
+      instances.forEach(i => {
+        i.accordianInstances = accordianInstances[i.id].filter(a => {
+          if (a === i) { return false }
+
+          return true
+        })
+      })
+    }
   }
 } // End initialize
 

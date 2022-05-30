@@ -1,0 +1,29 @@
+/**
+ * Objects: dot
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+
+/* Styles */
+
+.o-dots {
+	margin-right: func.calc-rem(-5px);
+}
+
+.o-dot {
+	span {
+		width: func.calc-rem(12px);
+		height: func.calc-rem(12px);
+		background: currentColor;
+		opacity: 0.3;
+		transition: opacity 200ms ease, transform 200ms ease;
+	}
+
+	[role="tab"][aria-selected="true"] span {
+		@extend %u-color-primary-base;
+    opacity: 1;
+    transform: scale(1.33)
+  }
+}
