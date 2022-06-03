@@ -11,6 +11,10 @@
 
 /* Styles */
 
+.l-w-xs {
+  width: func.calc-rem(20px);
+}
+
 .l-w-s {
   width: func.calc-rem(36px);
 }
@@ -44,6 +48,12 @@
 
   @include mix.breakpoint-min(900) {
     width: 33.3333%;
+  }
+}
+
+.l-min-w {
+	@include mix.breakpoint-min(800) {
+    min-width: func.calc-rem(400px);
   }
 }
 

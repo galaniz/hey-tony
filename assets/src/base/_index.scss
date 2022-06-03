@@ -45,6 +45,10 @@ main {
   min-height: 50vh;
 }
 
+p strong {
+	@extend %u-font-weight-bold;
+}
+
 *:disabled,
 *[aria-disabled="true"],
 input[type="radio"]:disabled ~ span,
@@ -206,7 +210,7 @@ input[type="checkbox"]:disabled ~ span {
 
   .p-m * {
     @include mix.breakpoint-min(1200) {
-      font-size: func.calc-rem(18px);
+      font-size: func.calc-rem(19px);
     }
   }
 

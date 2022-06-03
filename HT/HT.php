@@ -21,6 +21,7 @@ use HT\Common\Render\Filters;
 use HT\Common\Render\Stat;
 use HT\Common\Render\Accent;
 use HT\Common\Render\Tabs;
+use HT\Common\Render\Collapsible;
 use HT\Common\Posts;
 use HT\Admin\Reading;
 use HT\Admin\User;
@@ -149,6 +150,11 @@ class HT {
 				'layout' => 'columns',
 				'nav'    => true,
 			],
+			'service'       => [
+				'label'  => 'Services',
+				'layout' => 'cards',
+				'nav'    => true,
+			],
 		];
 
 		/**
@@ -189,8 +195,8 @@ class HT {
 				add_shortcode( 'ht-filters', ['HT\Common\Render\Filters', 'shortcode'] );
 				add_shortcode( 'ht-stat', ['HT\Common\Render\Stat', 'shortcode'] );
 				add_shortcode( 'ht-accent', ['HT\Common\Render\Accent', 'shortcode'] );
-				add_shortcode( 'ht-tablist', ['HT\Common\Render\Tabs', 'shortcode_tablist'] );
-				add_shortcode( 'ht-tab', ['HT\Common\Render\Tabs', 'shortcode_tab'] );
+				add_shortcode( 'ht-tabs', ['HT\Common\Render\Tabs', 'shortcode'] );
+				add_shortcode( 'ht-collapsible', ['HT\Common\Render\Collapsible', 'shortcode'] );
 				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
 				add_shortcode( 'ht-archive-title', [$this, 'archive_title'] );
@@ -203,7 +209,7 @@ class HT {
 				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 20 );
 				add_action( 'wp_head', [$this, 'head'] );
 				add_action( 'pre_get_posts', [$this, 'pre_get_posts'] );
-				add_action( 'avada_after_main_content', [$this, 'render_loader'] );
+				add_action( 'avada_before_main_container', [$this, 'render_loader'] );
 				add_action( 'wp_loaded', [$this, 'widgets'] );
 
 				Ajax::ajax_actions();
@@ -432,7 +438,7 @@ class HT {
 
 		public function render_loader() {
 				echo (
-					'<div class="c-loader l-flex l-w-100-pc l-m-0-all u-p-a u-r-0 u-t-0 u-b-0 l-breakout js-load-more-loader" data-align="center" data-justify="center" data-hide>' .
+					'<div class="c-loader l-flex u-p-f u-t-0 u-b-0 u-l-0 u-r-0 u-oo-s js-load-more-loader" data-align="center" data-justify="center" tabindex="0" aria-label="Loading" data-hide>' .
 						'<div class="l-w-r t-primary-base u-br-100-pc u-b-m">' .
 							'<div class="o-aspect-ratio"></div>' .
 						'</div>' .
@@ -476,7 +482,11 @@ class HT {
 						$swoop_size = 'r';
 				}
 
-				if ( is_single() || is_singular( 'work' ) || is_singular( 'testimonial' ) || ( is_archive() && ! is_post_type_archive() ) || is_search() ) {
+				if ( is_single() || is_singular( 'work' ) || is_singular( 'testimonial' ) ) {
+						$swoop_size = 'xs';
+				}
+
+				if ( ( is_archive() && ! is_post_type_archive() ) || is_post_type_archive( 'service' ) || is_search() ) {
 						$swoop_size = 'xs';
 				}
 
@@ -558,7 +568,7 @@ class HT {
 		 */
 
 		public function widget_nav_args( $nav_menu_args, $nav_menu, $args, $instance ) {
-				$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="l-mb-s-all">%3$s</ul>';
+				$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="l-mb-s-all p">%3$s</ul>';
 
 				return $nav_menu_args;
 		}
@@ -588,7 +598,13 @@ class HT {
 		public static function set_meta( $id ) {
 				$hero_background_color = get_field( 'background_color', $id );
 
-				if ( ( is_single() || is_singular( 'work' ) ) && ! is_singular( 'testimonial' ) ) {
+				if ( ( is_single() || is_singular( 'work' ) || is_singular( 'service' ) ) && ! is_singular( 'testimonial' ) ) {
+						$hero_background_color = 'foreground-base';
+				}
+
+				/* Service archive */
+
+				if ( is_post_type_archive( 'service' ) ) {
 						$hero_background_color = 'foreground-base';
 				}
 

@@ -20,67 +20,93 @@ use HT\Utils;
 class Tabs {
 
 		/**
-		 * Shortcode to output tablist.
+		 * Shortcode to output tabs.
 		 *
 		 * @param array $atts
 		 * @param string $content
 		 * @return string
 		 */
 
-		public static function shortcode_tablist( $atts, $content ) {
+		public static function shortcode( $atts, $content ) {
 				$atts = shortcode_atts(
 						[
-							'ids'      => '', // Comma separated list
-							'titles'   => '', // Comma separated list
-							'tab_ids'  => '', // Comma separated list
-							'selected' => 1,
-							'steps'    => false,
+							'index' => 0,
+							'half'  => false,
 						],
 						$atts,
-						'ht-tablist'
+						'ht-tabs'
 				);
 
 				/* Destructure */
 
 				[
-					'ids'      => $ids,
-					'titles'   => $titles,
-					'tab_ids'  => $tab_ids,
-					'selected' => $selected,
-					'steps'    => $steps,
+					'index' => $index,
+					'half'  => $half,
 				] = $atts;
 
-				/* Process variables */
+				$index = (int) $index;
+				$half  = filter_var( $half, FILTER_VALIDATE_BOOLEAN );
 
-				$selected = ( (int) $selected ) - 1;
-				$ids      = explode( ',', $ids );
-				$titles   = explode( ',', $titles );
-				$tab_ids  = explode( ',', $tab_ids );
-				$steps    = filter_var( $steps, FILTER_VALIDATE_BOOLEAN );
-				$classes  = 't-bg-inherit fusion-button button-small button-outline avada-noscroll';
+				/* Half width class */
 
-				if ( $steps ) {
-						$classes = 't-foreground-base t-bg-inherit l-w-m u-d-b u-b-s u-br-100-pc u-p-r p-s u-fw-b';
-				}
+				$half_class = $half ? ' l-mw-half' : '';
 
-				/* Ids, tab_ids and titles required */
+				/* ACF fields */
 
-				if ( empty( $ids ) || empty( $tab_ids ) || empty( $titles ) ) {
+				$display_tabs = get_field( 'display_tabs' )[0] ?? false;
+
+				if ( '1' !== $display_tabs ) {
 						return '';
 				}
 
-				/* Output */
+				$step = get_field( 'tabs_step' )[0] ?? false;
+				$step = '1' === $step ? true : false;
 
-				$items = [];
+				$tabs_list   = get_field( 'tabs_list' );
+				$tabs_panels = get_field( 'tabs_panels' );
 
-				foreach ( $ids as $i => $id ) {
-						$index   = $i + 1;
-						$link    = $tab_ids[ $i ];
-						$title   = $titles[ $i ];
-						$current = $i === $selected ? 'true' : 'false';
+				if ( ! $tabs_list || ! $tabs_panels ) {
+						return '';
+				}
 
-						if ( $steps ) {
-								$title = (
+				$tabs_list   = explode( '***', $tabs_list )[ $index ] ?? false;
+				$tabs_panels = explode( '<p>***</p>', $tabs_panels )[ $index ] ?? false;
+
+				if ( ! $tabs_list || ! $tabs_panels ) {
+						return '';
+				}
+
+				$tabs_list   = explode( ',', $tabs_list );
+				$tabs_panels = explode( '<p>&nbsp;</p>', $tabs_panels );
+
+				/* Create markup */
+
+				$list   = [];
+				$panels = [];
+
+				foreach ( $tabs_list as $i => $t ) {
+						$t_items = explode( ' : ', $t );
+
+						$label    = $t_items[0] ?? '';
+						$title    = $t_items[1] ?? '';
+						$img_id   = (int) $t_items[2] ?? 0;
+						$selected = $t_items[3] ?? false;
+						$id       = str_replace( ' ', '-', strtolower( $title ) );
+						$tab_id   = "$id-label";
+						$index    = $i + 1;
+						$current  = $selected ? 'true' : 'false';
+						$tabindex = $selected ? '0' : '-1';
+
+						/* Tab list item */
+
+						$classes = 't-bg-inherit fusion-button button-small button-outline avada-noscroll';
+
+						if ( $step ) {
+								$classes = 't-foreground-base t-bg-inherit l-w-m u-d-b u-b-s u-br-100-pc u-p-r p-s u-fw-b';
+						}
+
+						if ( $step ) {
+								$label = (
 									'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
 										"<span class='u-v-h'>$title</span>" .
 										"<div class='u-p-a' aria-hidden='true'>$index</div>" .
@@ -88,104 +114,73 @@ class Tabs {
 								);
 						}
 
-						$items[] = (
+						$list[] = (
 							'<li class="l-flex t-bg-inherit u-ws-nw" role="presentation">' .
-								"<a href='#$link' role='tab' aria-selected='$current' id='$id' class='$classes'>$title</a>" .
+								"<a href='#$id' role='tab' aria-selected='$current' id='$tab_id' class='$classes' tabindex='$tabindex'>$label</a>" .
 							'</li>'
 						);
-				}
 
-				return (
-					'<div class="l-pb-xxxs l-pb-xs-l t-bg-inherit">' .
-						'<div class="u-o-xy l-flex t-bg-inherit">' .
-							'<div class="l-flex-grow u-p-r t-bg-inherit">' .
-								'<ul class="l-flex u-tlrb-b t-bg-inherit u-oo-s" role="tablist" data-gap="r" data-justify="def">' .
-									implode( '', $items ) .
-								'</ul>' .
-							'</div>' .
-						'</div>' .
-					'</div>'
-				);
-		}
+						/* Image */
 
-		/**
-		 * Shortcode to output single tab.
-		 *
-		 * @param array $atts
-		 * @param string $content
-		 * @return string
-		 */
+						$img = '';
 
-		public static function shortcode_tab( $atts, $content ) {
-				$atts = shortcode_atts(
-						[
-							'id'         => '',
-							'tablist_id' => '',
-							'title'      => '',
-							'img_id'     => 0,
-							'selected'   => false,
-						],
-						$atts,
-						'ht-tab'
-				);
+						if ( $img_id ) {
+								$image = Utils::get_image( $img_id, 'medium_large' );
 
-				/* Destructure */
+								if ( $image ) {
+										$src    = esc_url( $image['url'] );
+										$srcset = esc_attr( $image['srcset'] );
+										$sizes  = esc_attr( $image['sizes'] );
+										$wid    = esc_attr( $image['width'] );
+										$height = esc_attr( $image['height'] );
+										$alt    = esc_attr( $image['alt'] );
 
-				[
-					'id'         => $id,
-					'tablist_id' => $tablist_id,
-					'title'      => $title,
-					'img_id'     => $img_id,
-					'selected'   => $selected,
-				] = $atts;
-
-				$img_id   = (int) $img_id;
-				$selected = filter_var( $selected, FILTER_VALIDATE_BOOLEAN );
-				$hidden   = ! $selected;
-
-				$data_selected = $selected ? 'true' : 'false';
-
-				/* Id, tablist id + title required */
-
-				if ( ! $id || ! $tablist_id || ! $title ) {
-						return '';
-				}
-
-				/* Image */
-
-				$img = '';
-
-				if ( $img_id ) {
-						$image = Utils::get_image( $img_id, 'medium_large' );
-
-						if ( $image ) {
-								$src    = esc_url( $image['url'] );
-								$srcset = esc_attr( $image['srcset'] );
-								$sizes  = esc_attr( $image['sizes'] );
-								$wid    = esc_attr( $image['width'] );
-								$height = esc_attr( $image['height'] );
-								$alt    = esc_attr( $image['alt'] );
-
-								$img = "<img class='l-w-l' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>";
+										$img = (
+											'<div class="l-flex-shrink-0">' .
+												"<img class='l-w-l' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>" .
+											'</div>'
+										);
+								}
 						}
+
+						/* Tab panel */
+
+						$panels[] = (
+							"<section class='l-pt-xxxs' id='$id' tabindex='$tabindex' role='tabpanel' aria-labelledby='$tab_id' data-selected='$selected'" . ( $selected ? '' : ' hidden' ) . '>' .
+								'<div class="l-flex" data-gap="r" data-wrap>' .
+									$img .
+									'<div class="l-mb-r-all l-w-33-pc l-min-w l-flex-grow">' .
+										'<div class="h4">' .
+											"<h3 class='l-m-0'>$title</h3>" .
+										'</div>' .
+										'<div class="p-m l-mb-r-all ht-editor o-underline">' .
+											$tabs_panels[ $i ] .
+										'</div>' .
+									'</div>' .
+								'</div>' .
+							'</section>'
+						);
 				}
 
 				/* Output */
 
 				return (
-					"<section class='l-pt-xxxs' id='$id' tabindex='-1' role='tabpanel' aria-labelledby='$tablist_id' data-selected='$data_selected'" . ( $selected ? '' : ' hidden' ) . '>' .
-						'<div class="l-mb-l-all">' .
-							$img .
-							'<div class="l-mb-r-all">' .
-								'<div class="h4">' .
-									"<h3 class='l-m-0'>$title</h3>" .
-								'</div>' .
-								'<div class="p-m l-mb-r-all">' .
-									wpautop( $content ) .
+					'<div class="o-tabs t-bg-inherit">' .
+						"<div class='l-mw-full$half_class l-pb-xxxs l-pb-xs-l t-bg-inherit'>" .
+							'<div class="l-h-m u-o-h t-bg-inherit">' .
+								'<div class="u-o-xy l-pb-xxxs l-flex t-bg-inherit">' .
+									'<div class="l-flex-grow u-p-r t-bg-inherit">' .
+										'<ul class="l-flex u-tlrb-b t-bg-inherit u-oo-s" role="tablist" data-gap="r" data-justify="def">' .
+											implode( '', $list ) .
+										'</ul>' .
+									'</div>' .
 								'</div>' .
 							'</div>' .
 						'</div>' .
-					'</section>'
+						"<div class='l-mw-full$half_class'>" .
+							implode( '', $panels ) .
+						'</div>' .
+					'</div>'
 				);
 		}
 

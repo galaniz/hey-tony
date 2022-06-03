@@ -17,14 +17,11 @@
   }
 
   .u-h-i {
-    @extend %u-position-absolute;
-    @extend %u-overflow-hidden;
+		@extend %u-position-absolute;
+	  @extend %u-opacity-0;
 
-    width: 0.063rem;
-    height: 0.063rem;
-    padding: 0;
-    border: 0;
-    clip: rect(0.063rem 0.063rem 0.063rem 0.063rem);
+		width: 1em;
+		height: 1em;
   }
 
   /* Position */
@@ -175,6 +172,12 @@
 .u-o-xy {
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+/* Position */
+
+.u-p-f {
+	@extend %u-position-fixed;
 }
 
 /* Svg */

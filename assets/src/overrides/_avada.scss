@@ -1,5 +1,5 @@
 /**
- * Overrides
+ * Overrides: avada
  */
 
 /* Imports */
@@ -107,6 +107,10 @@
       font-size: func.calc-rem(18px);
       padding: func.calc-rem(14px) func.calc-rem(24px);
     }
+
+		&.button-medium-l {
+			font-size: func.calc-rem(20px);
+		}
 
     &.button-outline {
       color: inherit;
@@ -280,37 +284,9 @@
   overflow: visible;
 }
 
-/* Aspect ratio */
-
-.o-aspect-ratio {
-  &[data-type="overlap"] {
-    &::before {
-      padding-top: var(--ht-overlap-p);
-    }
-  }
-}
-
-.o-aspect-ratio__media {
-  @extend %u-transition-opacity-transform-ease;
-
-  &:not([data-bg="false"]) {
-    background-color: rgba(func.get-color("foreground-base"), 0.1);
-  }
-
-  transition-duration: 600ms;
-  transform: scale(1);
-
-  .o-aspect-ratio[data-scale="slow"] & {
-    transition-duration: 1000ms;
-  }
-
-  [data-hover]:hover .o-aspect-ratio[data-hover="scale"] & {
-    transform: scale(1.03);
-  }
-}
-
 /* Single content */
 
+.ht-editor,
 .ht-single__main {
   --ht-underline-w: #{func.calc-rem(1.5px)};
 
@@ -400,14 +376,67 @@
   }
 }
 
-/* Recaptcha */
-
-.grecaptcha-badge {
-  @extend %u-visibility-hidden;
-}
-
 /* Current page */
 
-#ht .ht #wrapper [aria-current="page"] {
+#ht .ht #wrapper [aria-current="page"],
+#ht .ht #wrapper .current-menu-item {
 	color: inherit;
+}
+
+/* Single full width */
+
+.ht-single-col .fusion-builder-row {
+	flex-direction: column;
+}
+
+.ht-single-full {
+	--width: 1;
+
+	.fusion_builder_column_1_6 {
+		--width: 0.1666;
+	}
+
+	.fusion_builder_column_1_5 {
+		--width: 0.2;
+	}
+
+	.fusion_builder_column_1_4 {
+		--width: 0.25;
+	}
+
+	.fusion_builder_column_1_3 {
+		--width: 0.3333;
+	}
+
+	.fusion_builder_column_2_5 {
+		--width: 0.4;
+	}
+
+	.fusion_builder_column_1_2 {
+		--width: 0.5;
+	}
+
+	.fusion_builder_column_3_5 {
+		--width: 0.6;
+	}
+
+	.fusion_builder_column_2_3 {
+		--width: 0.6667;
+	}
+
+	.fusion_builder_column_3_4 {
+		--width: 0.75;
+	}
+
+	.fusion_builder_column_4_5 {
+		--width: 0.8;
+	}
+
+	.fusion_builder_column_5_6 {
+		--width: 0.8333;
+	}
+
+	.fusion_builder_column {
+		max-width: calc(#{func.calc-rem(1190px)} * var(--width));
+	}
 }

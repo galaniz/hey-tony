@@ -66,19 +66,18 @@ class Columns {
 				$pretitle_output = '';
 
 				if ( $pretitle ) {
-						if ( $pretitle_link ) {
-								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
-						} else {
-								$pretitle = "<p class='u-p-r u-zi-2'>$pretitle</p>";
-						}
-
 						if ( $pretitle_a11y ) {
 								$pretitle_a11y = "<span class='u-v-h'>$pretitle_a11y</span>";
 						}
 
+						if ( $pretitle_link ) {
+								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle_a11y$pretitle</a>";
+						} else {
+								$pretitle = "<p class='u-p-r u-zi-2'>$pretitle_a11y$pretitle</p>";
+						}
+
 						$pretitle_output = (
 							'<div class="o-underline-r p-s u-fw-b l-pb-xxxs l-flex">' .
-								$pretitle_a11y .
 								$pretitle .
 							'</div>'
 						);
