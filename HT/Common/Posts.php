@@ -511,6 +511,7 @@ class Posts {
 														[
 															'slides' => $slides,
 															'label'  => $type,
+															'loop'   => true,
 														]
 												);
 										} else {

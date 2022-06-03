@@ -31,6 +31,7 @@ class Slider {
 							'slides'         => [],
 							'label'          => '',
 							'selected_index' => 0,
+							'loop'           => false,
 						],
 						$args
 				);
@@ -39,7 +40,10 @@ class Slider {
 					'slides'         => $slides,
 					'label'          => $label,
 					'selected_index' => $selected_index,
+					'loop'           => $loop,
 				] = $args;
+
+				$loop = filter_var( $loop, FILTER_VALIDATE_BOOLEAN );
 
 				/* Slides required */
 
@@ -67,17 +71,19 @@ class Slider {
 
 						$tablist .= (
 							'<li class="o-dot l-flex" role="presentation">' .
-								"<button class='o-aspect-ratio l-w-s l-mr-xxs' type='button' role='tab' tabindex='$tabindex' aria-controls='$id' aria-selected='$selected' aria-label='$tab_label'>" .
+								"<button class='o-aspect-ratio l-w-s l-mr-xxs' type='button' role='tab' tabindex='$tabindex' aria-selected='$selected' aria-label='$tab_label'>" .
 									'<span class="l-m-auto u-p-a u-t-0 u-l-0 u-r-0 u-b-0 u-d-b u-br-100-pc"></span>' .
 								'</button>' .
 							'</li>'
 						);
 
 						if ( $required_length ) {
+								$suffix = $loop ? 'item' : 'group';
+
 								$panels .= (
-									"<div class='o-slider__group l-flex-shrink-0' id='$id' role='tabpanel' tabindex='0' aria-hidden='true' aria-label='$panel_label' data-selected='false'>" .
-										'<div class="o-slider__view l-flex u-tlrb-b u-p-r" data-gap="s" data-gap-l="r">' .
-											'<div class="o-slider__inner l-flex l-flex-shrink-0" data-col>' .
+									"<div class='o-slider__$suffix l-flex-shrink-0 u-p-r' id='$id' role='tabpanel' tabindex='0' aria-hidden='true' aria-label='$panel_label' data-selected='false'>" .
+										'<div class="o-slider__view l-flex u-tlrb-b u-p-r"' . ( ! $loop ? ' data-gap="s" data-gap-l="r"' : ' data-col' ) . '>' .
+											( ! $loop ? '<div class="o-slider__inner l-flex l-flex-shrink-0" data-col>' : '<div>' ) .
 												$slide .
 											'</div>' .
 										'</div>' .
@@ -92,7 +98,7 @@ class Slider {
 						}
 				}
 
-				if ( $required_length ) {
+				if ( ! $loop && $required_length ) {
 						$panels .= '<div class="o-slider__offset l-flex-shrink-0"></div>';
 				}
 
@@ -101,7 +107,7 @@ class Slider {
 				if ( $required_length ) {
 						return (
 							'<div class="l-flex js-slider" role="group" data-col>' .
-								'<div class="o-slider u-o-h">' .
+								'<div class="o-slider u-o-h"' . ( $loop ? ' data-loop="true"' : '' ) . '>' .
 									'<div class="o-slider__track l-pb-s u-p-r ht-single-full">' .
 										'<div class="o-slider__h fusion_builder_column l-ph-ctn l-flex" data-gap="s" data-gap-l="r">' .
 											$panels .

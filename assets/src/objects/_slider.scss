@@ -32,18 +32,35 @@ $container: map.get(con.$containers, "def");
 	padding: 0 var(--ht-flex-gap);
 }
 
+.o-slider__item,
 .o-slider__group {
-  #ht .ht &:focus {
+	#ht .ht &:focus {
     outline: 0; // Move to view
   }
 
-	width: calc(100vw - (var(--ht-flex-gap) * 2));
 	scroll-snap-align: start;
+	width: calc(100vw - (var(--ht-flex-gap) * 2));
 
 	&:first-child {
 		margin-left: var(--ht-flex-gap);
 	}
+}
 
+.o-slider__item {
+  @include mix.breakpoint-min(600) {
+		width: calc(50vw - var(--ht-flex-gap));
+  }
+
+  @include mix.breakpoint-min(900) {
+    width: calc(33.3333vw - (var(--ht-flex-gap) / 1.5));
+  }
+
+	@include mix.breakpoint-min(1270) {
+		width: calc(33.3333% + (var(--ht-flex-gap) / 3));
+	}
+}
+
+.o-slider__group {
 	@include mix.breakpoint-min(1270) {
 		width: calc(100% + var(--ht-flex-gap));
 	}
@@ -57,19 +74,23 @@ $container: map.get(con.$containers, "def");
   }
 
   @include mix.breakpoint-min(900) {
-    width: 33.333%;
+    width: 33.3333%;
   }
 }
 
 .o-slider__view {
-  #ht .ht .o-slider__group:focus &::before {
+  #ht .ht .o-slider__item:focus &::before,
+	#ht .ht .o-slider__group:focus &::before {
 		border: func.calc-rem(4px) solid var(--ht-outline-c);
-		left: var(--ht-flex-gap);
-		top: var(--ht-flex-gap);
   }
 
+	#ht .ht .o-slider__group:focus &::before {
+		left: var(--ht-flex-gap);
+		top: var(--ht-flex-gap);
+	}
+
 	@include mix.breakpoint-min(1270) {
-		transform: translateX(calc(50vw - #{func.calc-rem(math.div($container, 2))} - var(--ht-flex-gap)));
+		left: calc(50vw - #{func.calc-rem(math.div($container, 2))} - var(--ht-flex-gap) - 1.92%);
 	}
 }
 

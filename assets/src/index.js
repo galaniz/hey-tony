@@ -438,15 +438,20 @@ const initialize = () => {
 
       setElements(s, meta, ss)
 
-      slider({
+      const args = {
         tabs: ss.nav,
         panels: ss.panels,
         panelsDelay: 800,
         slider: ss.main,
         sliderTrack: ss.track,
-        sliderHeight: ss.height,
-        sliderItems: ss.items,
-        sliderPerPanel: [
+        sliderHeight: ss.height
+      }
+
+      if (ss.main.getAttribute('data-loop')) {
+        args.sliderInfinite = true
+      } else {
+        args.sliderItems = ss.items
+        args.sliderPerPanel = [
           {
             breakpoint: 0,
             items: 1
@@ -460,7 +465,9 @@ const initialize = () => {
             items: 3
           }
         ]
-      })
+      }
+
+      slider(args)
     })
   }
 
