@@ -163,7 +163,7 @@
 
       background-color: currentcolor;
       border-radius: inherit;
-      mix-blend-mode: hard-light;
+      mix-blend-mode: multiply;
     }
 
     &:hover,
@@ -438,5 +438,45 @@
 
 	.fusion_builder_column {
 		max-width: calc(#{func.calc-rem(1190px)} * var(--width));
+	}
+}
+
+/* Map */
+
+.ht-map {
+	@include mix.fluid-size(
+		--ht-map-h,
+		func.calc-rem(200px) func.calc-rem(400px),
+		600 1200
+	);
+
+	&,
+	span {
+		height: var(--ht-map-h);
+	}
+
+	span {
+		max-width: func.calc-rem(1800px);
+		min-height: func.calc-rem(300px);
+		transform: translate(-50%, -50%);
+		top: 50%;
+		left: 50%;
+
+		@include mix.breakpoint-min(1800) {
+			mask-image: linear-gradient(
+				to right,
+				transparent,
+				black 25rem,
+				black calc(100% - 25rem),
+				transparent
+			);
+		}
+	}
+
+	img {
+		@extend %u-width-100;
+		@extend %u-height-100;
+
+		object-fit: cover;
 	}
 }

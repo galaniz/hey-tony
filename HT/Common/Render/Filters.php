@@ -68,13 +68,12 @@ class Filters {
 							'label_class'       => 'u-v-h',
 							'opt_buttons_class' => 'l-flex',
 							'opt_buttons_attr'  => [
-								'data-gap'     => 'xs',
-								'data-gap-l'   => 's',
-								'data-align'   => 'center',
-								'data-justify' => 'right',
-								'data-wrap'    => '',
+								'data-gap'   => 'xs',
+								'data-gap-l' => 's',
+								'data-align' => 'center',
 							],
-							'opt_button_class'  => 'fusion-button button-small button-outline',
+							'opt_button_class'  => 'fusion-button button-small button-outline u-d-b',
+							'field_class'       => 'o-overflow l-mw-full l-pb-xxxs u-o-xy',
 							'load_posts_query'  => [
 								'tax_query' => [
 									[
@@ -141,8 +140,17 @@ class Filters {
 				if ( $output ) {
 						return (
 							'<form class="o-form" data-type="filters">' .
-								'<div class="l-flex t-primary-base" data-align="center" data-justify="right" data-wrap>' .
-									$output .
+								'<div class="l-flex" data-justify="right" data-gap="xs" data-gap-l="s" data-align="center" data-justify="right" data-wrap>' .
+									'<div class="t-primary-base">' .
+										'<div class="l-h-s u-o-h">' .
+											$output .
+										'</div>' .
+									'</div>' .
+									'<div>' .
+										'<button class="fusion-button button-small t-bg-foreground-base t-background-base u-d-b" type="submit">' .
+											'<span class="fusion-button-text">Filter</span>' .
+										'</button>' .
+									'</div>' .
 								'</div>' .
 							'</form>'
 						);

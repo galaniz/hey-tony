@@ -356,7 +356,7 @@ class Posts {
 												[
 													'post_id'      => $id,
 													'words'        => true,
-													'length'       => 'cards' === $layout ? 15 : 20,
+													'length'       => 'cards' === $layout ? 14 : 20,
 													'do_shortcode' => true,
 												]
 										);

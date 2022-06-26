@@ -32,12 +32,20 @@
   @extend %u-color-primary-base;
 }
 
+.t-background-base {
+  @extend %u-color-background-base;
+}
+
 .t-foreground-base {
   @extend %u-color-foreground-base;
 }
 
 .t-bg-background-base {
   @extend %u-background-color-background-base;
+}
+
+.t-bg-foreground-base {
+	@extend %u-background-color-foreground-base;
 }
 
 .t-bg-inherit {

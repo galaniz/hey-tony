@@ -10,6 +10,7 @@ import LoadMore from 'Formation/objects/load/more'
 import Tabs from 'Formation/objects/tabs'
 import Slider from 'Formation/objects/slider'
 import Collapsible from 'Formation/objects/collapsible'
+import OverflowIndicator from 'Formation/objects/overflow-indicator'
 
 /* Variables */
 
@@ -43,6 +44,11 @@ const elMeta = [
   {
     prop: 'slider',
     selector: '.js-slider',
+    all: true
+  },
+  {
+    prop: 'overflow',
+    selector: '.o-overflow',
     all: true
   },
   {
@@ -391,7 +397,23 @@ const initialize = () => {
       tabs({
         tabs: tt.nav,
         panels: tt.panels,
-        panelsDelay: 500
+        delay: 500
+      })
+    })
+  }
+
+  /* Overflow containers */
+
+  if (el.overflow.length) {
+    const overflowIndicator = (args) => {
+      return new OverflowIndicator(args)
+    }
+
+    el.overflow.forEach(o => {
+      overflowIndicator({
+        indicator: o.parentElement,
+        scroll: o,
+        y: false
       })
     })
   }
@@ -441,17 +463,17 @@ const initialize = () => {
       const args = {
         tabs: ss.nav,
         panels: ss.panels,
-        panelsDelay: 800,
+        delay: 800,
         slider: ss.main,
-        sliderTrack: ss.track,
-        sliderHeight: ss.height
+        track: ss.track,
+        targetHeight: ss.height
       }
 
       if (ss.main.getAttribute('data-loop')) {
-        args.sliderInfinite = true
+        args.loop = true
       } else {
-        args.sliderItems = ss.items
-        args.sliderPerPanel = [
+        args.groupItems = ss.items
+        args.breakpoints = [
           {
             breakpoint: 0,
             items: 1
