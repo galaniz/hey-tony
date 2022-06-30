@@ -12,7 +12,6 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
-use HT\Utils;
 use HT\Common\Render\Swoop;
 use Formation\Pub\Nav_Walker;
 
@@ -68,7 +67,7 @@ class Main_Nav {
 				$logo             = '';
 
 				if ( $logo_info ) {
-						$image       = Utils::get_image( $logo_info['id'], 'medium' );
+						$image       = HT::get_image( $logo_info['id'], 'medium' );
 						$sticky_logo = '';
 
 						if ( $sticky_logo_info ) {

@@ -91,6 +91,10 @@ const elMeta = [
         selector: '.js-load-more-filter',
         all: true,
         array: true
+      },
+      {
+        prop: 'loadMoreFiltersForm',
+        selector: '.js-load-more-filter-form'
       }
     ]
   }
@@ -204,6 +208,7 @@ const initialize = () => {
       ppp: ppp,
       total: total,
       filters: el.loadMoreFilters,
+      filtersForm: el.loadMoreFiltersForm,
       insertInto: el.loadMoreInsert
     }
 
@@ -363,6 +368,7 @@ const initialize = () => {
     }
 
     const loadMore = () => {
+			console.log("ARGS", args);
       return new LoadMore(args)
     }
 

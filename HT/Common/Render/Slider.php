@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use HT\Utils;
+use HT\HT as HT;
 
 /**
  * Class

@@ -44,6 +44,10 @@
   @extend %u-background-color-background-base;
 }
 
+.t-bg-background-dark {
+  @extend %u-background-color-background-dark;
+}
+
 .t-bg-foreground-base {
 	@extend %u-background-color-foreground-base;
 }

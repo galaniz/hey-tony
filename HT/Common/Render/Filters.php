@@ -12,7 +12,6 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
-use HT\Utils;
 use Formation\Common\Field\Field;
 use function Formation\additional_script_data;
 
@@ -42,7 +41,7 @@ class Filters {
 						$tax = 'work_category';
 				}
 
-				$options = Utils::get_terms_as_options( $tax );
+				$options = HT::get_terms_as_options( $tax );
 
 				if ( $options ) {
 						if ( 'post' === $post_type && is_category() ) {
@@ -128,7 +127,7 @@ class Filters {
 								$output .= $field_output;
 
 								if ( $load_posts_query ) {
-										HT::$load_posts_query[ 'frm_' . $load_posts_query_id ] = $load_posts_query;
+										HT::$load_posts_query[ 'ht_' . $load_posts_query_id ] = $load_posts_query;
 								}
 						}
 
@@ -139,17 +138,15 @@ class Filters {
 
 				if ( $output ) {
 						return (
-							'<form class="o-form" data-type="filters">' .
+							'<form class="o-form js-load-more-filter-form" data-type="filters" aria-label="' . ucwords( $post_type ) . ' filters">' .
 								'<div class="l-flex" data-justify="right" data-gap="xs" data-gap-l="s" data-align="center" data-justify="right" data-wrap>' .
-									'<div class="t-primary-base">' .
+									'<div class="t-primary-base u-oo-s">' .
 										'<div class="l-h-s u-o-h">' .
 											$output .
 										'</div>' .
 									'</div>' .
 									'<div>' .
-										'<button class="fusion-button button-small t-bg-foreground-base t-background-base u-d-b" type="submit">' .
-											'<span class="fusion-button-text">Filter</span>' .
-										'</button>' .
+										'<button class="fusion-button button-small t-bg-foreground-base t-background-base u-d-b" type="submit">Filter</button>' .
 									'</div>' .
 								'</div>' .
 							'</form>'
