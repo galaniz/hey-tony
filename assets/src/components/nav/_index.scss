@@ -169,15 +169,14 @@
     func.calc-rem(con.$container-padding)
     calc(var(--ht-nav-p) * 2)
     func.calc-rem(con.$container-padding);
-
-  mask-image: linear-gradient(
-		to bottom,
-		transparent,
-		black calc(var(--ht-nav-p) * 2),
-		black calc(100% - (var(--ht-nav-p) * 2)),
-		transparent
-	);
-	
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black calc(var(--ht-nav-p) * 2),
+      black calc(100% - (var(--ht-nav-p) * 2)),
+      transparent
+    );
   mask-size: 100%;
   mask-position: 0 0;
   mask-repeat: no-repeat;

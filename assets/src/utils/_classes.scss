@@ -17,11 +17,11 @@
   }
 
   .u-h-i {
-		@extend %u-position-absolute;
-	  @extend %u-opacity-0;
+    @extend %u-position-absolute;
+    @extend %u-opacity-0;
 
-		width: 1em;
-		height: 1em;
+    width: 1em;
+    height: 1em;
   }
 
   /* Position */
@@ -177,7 +177,7 @@
 /* Position */
 
 .u-p-f {
-	@extend %u-position-fixed;
+  @extend %u-position-fixed;
 }
 
 /* Svg */

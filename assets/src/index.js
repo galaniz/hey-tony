@@ -368,7 +368,6 @@ const initialize = () => {
     }
 
     const loadMore = () => {
-			console.log("ARGS", args);
       return new LoadMore(args)
     }
 

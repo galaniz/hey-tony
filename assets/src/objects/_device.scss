@@ -10,40 +10,40 @@
 
 .o-device {
   &[data-type="mobile"] {
-		border-radius: 10% 10% 10% 10% / 6% 6% 6% 6%;
+    border-radius: 10% 10% 10% 10% / 6% 6% 6% 6%;
 
-		> div {
-			border-radius: 10% 10% 10% 10% / 5% 5% 5% 5%;
-			transform: scale(0.94, 0.967);
-		}
-	}
+    > div {
+      border-radius: 10% 10% 10% 10% / 5% 5% 5% 5%;
+      transform: scale(0.94, 0.967);
+    }
+  }
 
-	&[data-type="desktop"] {
-		> div:first-child {
-			border-radius: 2% 2% 0% 0% / 50% 50% 0% 0%;
+  &[data-type="desktop"] {
+    > div:last-child {
+      border-radius: 0% 0% 2.3% 2.3% / 0% 0% 2.5% 2.5%;
+    }
 
-			> div {
-				width: 1.3%;
-				top: 50%;
-				transform: translateY(-50%);
-				opacity: 0.15;
-			}
+    > div:first-child {
+      border-radius: 2% 2% 0% 0% / 50% 50% 0% 0%;
 
-			> div:first-child {
-				left: 2%;
-			}
+      > div {
+        width: 1.3%;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.15;
+      }
 
-			> div:nth-child(2) {
-				left: 4.5%;
-			}
+      > div:first-child {
+        left: 2%;
+      }
 
-			> div:last-child {
-				left: 7.1%;
-			}
-		}
+      > div:nth-child(2) {
+        left: 4.5%;
+      }
 
-		> div:last-child {
-			border-radius: 0% 0% 2.3% 2.3% / 0% 0% 2.5% 2.5%;
-		}
-	}
+      > div:last-child {
+        left: 7.1%;
+      }
+    }
+  }
 }
