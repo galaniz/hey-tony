@@ -353,10 +353,10 @@ class Posts {
 								if ( 'work' === $type || 'post' === $type || 'service' === $type || 'search' === $type ) {
 										$excerpt = HT::get_excerpt(
 												[
-													'post_id'      => $id,
-													'words'        => true,
-													'length'       => 'cards' === $layout ? 14 : 20,
-													'do_shortcode' => true,
+													'post_id'          => $id,
+													'words'            => true,
+													'length'           => 'cards' === $layout ? 14 : 20,
+													'remove_shortcode' => true,
 												]
 										);
 								}

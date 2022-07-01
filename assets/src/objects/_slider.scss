@@ -13,7 +13,6 @@
 /* Styles */
 
 $container: map.get(con.$containers, "def");
-$container: map.get(con.$containers, "def");
 
 .o-slider {
   --height: auto;
@@ -30,6 +29,20 @@ $container: map.get(con.$containers, "def");
 
 .o-slider__h {
   padding: 0 var(--ht-flex-gap);
+}
+
+.o-slider__item,
+.o-slider__group {
+  scroll-snap-align: start;
+  width: calc(100vw - (var(--ht-flex-gap) * 2));
+
+  &:first-child {
+    margin-left: var(--ht-flex-gap);
+  }
+
+  #ht .ht &:focus {
+    outline: 0; // Move to view
+  }
 }
 
 .o-slider__item {
@@ -49,20 +62,6 @@ $container: map.get(con.$containers, "def");
 .o-slider__group {
   @include mix.breakpoint-min(1270) {
     width: calc(100% + var(--ht-flex-gap));
-  }
-}
-
-.o-slider__item,
-.o-slider__group {
-  scroll-snap-align: start;
-  width: calc(100vw - (var(--ht-flex-gap) * 2));
-
-  &:first-child {
-    margin-left: var(--ht-flex-gap);
-  }
-
-  #ht .ht &:focus {
-    outline: 0; // Move to view
   }
 }
 
@@ -90,7 +89,7 @@ $container: map.get(con.$containers, "def");
   }
 
   @include mix.breakpoint-min(1270) {
-    left: calc(50vw - #{func.calc-rem(math.div($container, 2))} - var(--ht-flex-gap) - 1.92%);
+    left: calc(50vw - #{func.calc-rem(math.div($container, 2))} - var(--ht-flex-gap));
   }
 }
 

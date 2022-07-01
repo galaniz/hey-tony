@@ -268,9 +268,7 @@ class HT {
 		public function archive_title() {
 				if ( is_search() ) {
 						return (
-							'<div class="u-d-i u-fw-var">' .
-								_x( 'Search &ndash; ', 'search title prefix' ) .
-							'</div>' .
+							'<div class="u-d-i u-fw-var">Search &ndash;</div>' .
 							get_search_query()
 						);
 				}
