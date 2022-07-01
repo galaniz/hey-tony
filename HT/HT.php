@@ -11,7 +11,6 @@ namespace HT;
  * Imports
  */
 
-use HT\Utils;
 use HT\Common\Render\Main_Nav;
 use HT\Common\Render\Main_Footer;
 use HT\Common\Render\Hero_Image;
@@ -22,10 +21,13 @@ use HT\Common\Render\Stat;
 use HT\Common\Render\Accent;
 use HT\Common\Render\Tabs;
 use HT\Common\Render\Collapsible;
+use HT\Common\Render\Device;
 use HT\Common\Posts;
-use HT\Admin\Reading;
 use HT\Admin\User;
-use HT\Pub\Ajax;
+use Formation\Formation as FRM;
+use Formation\Pub\Ajax;
+use Formation\Admin\Settings\Reading;
+use Formation\Utils;
 
 /**
  * Class
@@ -127,10 +129,11 @@ class HT {
 		 * @var array $cpt
 		 */
 
-		public static $post_types_info = [
+		public static $pt = [
 			'post'          => [
-				'layout' => 'cards',
-				'nav'    => true,
+				'layout'  => 'cards',
+				'nav'     => true,
+				'reading' => false,
 			],
 			'blog_archives' => [
 				'label'  => 'Blog archive',
@@ -160,10 +163,10 @@ class HT {
 		/**
 		 * Store taxonomy post types.
 		 *
-		 * @var array $taxonomy_post_types
+		 * @var array $tax_pt
 		 */
 
-		public static $taxonomy_post_types = [
+		public static $tax_pt = [
 			'category'      => 'post',
 			'post_tag'      => 'post',
 			'work_category' => 'work',
@@ -185,6 +188,32 @@ class HT {
 		 */
 
 		public function __construct() {
+				/* Set variables in Formation */
+
+				FRM::$namespace         = self::$namespace;
+				FRM::$script_ver        = self::$script_ver;
+				FRM::$script_attributes = self::$script_attributes;
+				FRM::$pt                = self::$pt;
+				FRM::$tax_pt            = self::$tax_pt;
+
+				FRM::$styles = [
+					[
+						'handle' => 'style',
+						'url'    => get_stylesheet_directory_uri() . '/style.css',
+					],
+				];
+
+				FRM::$scripts = [
+					[
+						'handle' => 'script-compat',
+						'url'    => get_stylesheet_directory_uri() . '/assets/public/js/' . self::$namespace . '-compat.js',
+					],
+					[
+						'handle' => 'script',
+						'url'    => get_stylesheet_directory_uri() . '/assets/public/js/' . self::$namespace . '.js',
+					],
+				];
+
 				/* Shortcodes */
 
 				add_shortcode( 'ht-main-nav', ['HT\Common\Render\Main_Nav', 'shortcode'] );
@@ -197,6 +226,7 @@ class HT {
 				add_shortcode( 'ht-accent', ['HT\Common\Render\Accent', 'shortcode'] );
 				add_shortcode( 'ht-tabs', ['HT\Common\Render\Tabs', 'shortcode'] );
 				add_shortcode( 'ht-collapsible', ['HT\Common\Render\Collapsible', 'shortcode'] );
+				add_shortcode( 'ht-device', ['HT\Common\Render\Device', 'shortcode'] );
 				add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
 
 				add_shortcode( 'ht-archive-title', [$this, 'archive_title'] );
@@ -208,11 +238,11 @@ class HT {
 				add_action( 'wp', [$this, 'wp'] );
 				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 20 );
 				add_action( 'wp_head', [$this, 'head'] );
-				add_action( 'pre_get_posts', [$this, 'pre_get_posts'] );
+				add_action( 'pre_get_posts', [$this, 'query_vars'] );
 				add_action( 'avada_before_main_container', [$this, 'render_loader'] );
 				add_action( 'wp_loaded', [$this, 'widgets'] );
 
-				Ajax::ajax_actions();
+				static::ajax_actions();
 
 				/* Filters */
 
@@ -238,9 +268,7 @@ class HT {
 		public function archive_title() {
 				if ( is_search() ) {
 						return (
-							'<div class="u-d-i u-fw-var">' .
-								_x( 'Search &ndash; ', 'search title prefix' ) .
-							'</div>' .
+							'<div class="u-d-i u-fw-var">Search &ndash;</div>' .
 							get_search_query()
 						);
 				}
@@ -304,37 +332,15 @@ class HT {
 				<?php /* phpcs:enable */
 		}
 
-		public function pre_get_posts( $query ) {
+		public function query_vars( $query ) {
+				FRM::query_vars( $query );
+
 				if ( ! is_admin() && $query->is_main_query() ) {
 						$post_type = $query->get( 'post_type' );
 						$ppp       = 0;
 
-						/* Update posts_per_page set in Reading settings */
-
-						if ( $query->is_home ) {
-								$ppp = Utils::get_posts_per_page( 'post' );
-						} elseif ( $query->is_archive ) {
-								$ppp = Utils::get_posts_per_page( 'blog_archives' );
-						}
-
-						if ( $query->is_search ) {
-								$ppp = Utils::get_posts_per_page( 'search' );
-						}
-
-						if ( $query->is_tax ) {
-								foreach ( self::$taxonomy_post_types as $tpt => $pt ) {
-										if ( $query->is_tax( $tpt ) ) {
-												$ppp = Utils::get_posts_per_page( $pt );
-										}
-								}
-						}
-
-						if ( $query->is_post_type_archive ) {
-								$ppp = Utils::get_posts_per_page( $post_type );
-						}
-
-						if ( $ppp ) {
-								$query->set( 'posts_per_page', $ppp );
+						if ( $query->is_archive ) {
+								$ppp = static::get_posts_per_page( 'blog_archives' );
 						}
 
 						/* Check for get params that affect queries */
@@ -391,41 +397,7 @@ class HT {
 		 */
 
 		public function enqueue_assets() {
-				$n = self::$namespace;
-
-				wp_enqueue_style(
-						"$n-style",
-						get_stylesheet_directory_uri() . '/style.css',
-						[],
-						self::$script_ver
-				);
-
-				wp_register_script(
-						"$n-script-compat",
-						get_stylesheet_directory_uri() . "/assets/public/js/$n-compat.js",
-						[],
-						self::$script_ver,
-						true
-				);
-
-				wp_register_script(
-						"$n-script",
-						get_stylesheet_directory_uri() . "/assets/public/js/$n.js",
-						[],
-						self::$script_ver,
-						true
-				);
-
-				wp_localize_script(
-						"$n-script",
-						self::$namespace,
-						[
-							'ajax_url' => admin_url( 'admin-ajax.php' ),
-						]
-				);
-
-				wp_enqueue_script( "$n-script-compat" );
-				wp_enqueue_script( "$n-script" );
+				FRM::scripts();
 
 				/* Remove Gutenberg root variables */
 
@@ -438,11 +410,11 @@ class HT {
 
 		public function render_loader() {
 				echo (
-					'<div class="c-loader l-flex u-p-f u-t-0 u-b-0 u-l-0 u-r-0 u-oo-s js-load-more-loader" data-align="center" data-justify="center" tabindex="0" aria-label="Loading" data-hide>' .
+					'<aside class="c-loader l-flex u-p-f u-t-0 u-b-0 u-l-0 u-r-0 u-oo-s js-load-more-loader" data-align="center" data-justify="center" tabindex="0" aria-label="Loading" data-hide>' .
 						'<div class="l-w-r t-primary-base u-br-100-pc u-b-m">' .
 							'<div class="o-aspect-ratio"></div>' .
 						'</div>' .
-					'</div>'
+					'</aside>'
 				);
 		}
 
@@ -522,45 +494,7 @@ class HT {
 		 */
 
 		public function pt_nav_classes( $classes, $item ) {
-				$current_pt = get_queried_object()->post_type ?? false;
-
-				if ( ! $current_pt ) {
-						$current_tax = get_queried_object()->taxonomy ?? false;
-
-						if ( $current_tax ) {
-								$current_pt = self::$taxonomy_post_types[ $current_tax ] ?? false;
-						}
-				}
-
-				if ( ! $current_pt ) {
-						return $classes;
-				}
-
-				foreach ( self::$post_types_info as $pt => $info ) {
-						if ( ! isset( $info['nav'] ) ) {
-								continue;
-						}
-
-						$nav_pt = $item->object;
-
-						/* Check if blog page */
-
-						if ( 'page' === $nav_pt ) {
-								if ( (int) get_option( 'page_for_posts' ) === (int) $item->object_id ) {
-										$nav_pt = 'post';
-								}
-						}
-
-						if ( $pt !== $current_pt ) {
-								continue;
-						}
-
-						if ( $current_pt === $nav_pt ) {
-								$classes[] = 'current-menu-item';
-						}
-				}
-
-				return $classes;
+				return FRM::pt_nav_classes( $classes, $item );
 		}
 
 		/**
@@ -578,15 +512,7 @@ class HT {
 		 */
 
 		public function add_script_attributes( $tag, $handle ) {
-				foreach ( self::$script_attributes as $script => $attr ) {
-						$s = self::$namespace . '-' . $script;
-
-						if ( $s === $handle && $attr ) {
-								$tag = str_replace( ' src', " $attr src", $tag );
-						}
-				}
-
-				return $tag;
+				return FRM::add_script_attributes( $tag, $handle );
 		}
 
 		/**
@@ -618,6 +544,60 @@ class HT {
 				self::$nav_light             = 'background-dark' === self::$hero_background_color ? false : true;
 				self::$hero_grayscale        = 'foreground-base' === self::$hero_background_color ? false : true;
 				self::$hero_color            = 'background-dark' === self::$hero_background_color ? 'foreground-base' : 'background-base';
+		}
+
+		/**
+		 * Formation Utility methods.
+		 */
+
+		use Utils;
+
+		/**
+		 * Filter Avada social icons output.
+		 *
+		 * @param string $html
+		 * @return string
+		 */
+
+		public static function filter_social( $html ) {
+				$html = str_replace(
+						['class="fusion-social-networks-wrapper"', 'style=', '<a class="', 'a>'],
+						['class="fusion-social-networks-wrapper l-flex" data-gap="s"', 'data-style=', '<div><a class="l-m-0 ', 'a></div>'],
+						$html
+				);
+
+				return $html;
+		}
+
+		/**
+		 * Formation ajax callbacks.
+		 */
+
+		use Ajax;
+
+		/**
+		 * Output posts requested through ajax.
+		 *
+		 * @param string $post_type
+		 * @param array $args
+		 * @return string or array of html output
+		 */
+
+		public static function render_ajax_posts( $args = [] ) {
+				if ( isset( $args['post_type'] ) ) {
+						$args['type'] = $args['post_type'];
+				}
+
+				$q_args = $args;
+
+				if ( isset( $q_args['is_home'] ) ) {
+						unset( $q_args['is_home'] );
+				}
+
+				$args['return_array'] = true;
+				$args['query_args']   = $q_args;
+
+				return Posts::shortcode( $args, '' );
 		}
 
 } // End HT

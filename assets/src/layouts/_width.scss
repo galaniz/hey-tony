@@ -16,7 +16,7 @@
 }
 
 .l-w-s {
-  width: func.calc-rem(36px);
+  width: func.calc-rem(37px);
 }
 
 .l-w-m {
@@ -52,7 +52,7 @@
 }
 
 .l-min-w {
-	@include mix.breakpoint-min(800) {
+  @include mix.breakpoint-min(800) {
     min-width: func.calc-rem(400px);
   }
 }

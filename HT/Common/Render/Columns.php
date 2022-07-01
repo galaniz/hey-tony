@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use HT\Utils;
+use HT\HT as HT;
 
 /**
  * Class
@@ -98,7 +98,7 @@ class Columns {
 				$image_output = '';
 
 				if ( $media_id && $flush ) {
-						$image = Utils::get_image( $media_id, 'medium_large' );
+						$image = HT::get_image( $media_id, 'medium_large' );
 
 						if ( $image ) {
 								$src    = esc_url( $image['url'] );

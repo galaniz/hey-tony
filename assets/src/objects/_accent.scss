@@ -18,13 +18,14 @@
 .o-accent-m,
 .o-accent-r-m {
   @include mix.breakpoint-min(1000) {
-    --ht-accent-p: #{func.calc-rem(13px)};
     --ht-accent-h: #{func.calc-rem(15px)};
   }
 }
 
 .o-accent-l,
 .o-accent-r-l {
+	--ht-accent-p: #{func.calc-rem(8px)};
+
   @include mix.breakpoint-min(1000) {
     --ht-accent-p: #{func.calc-rem(15px)};
     --ht-accent-h: #{func.calc-rem(20px)};

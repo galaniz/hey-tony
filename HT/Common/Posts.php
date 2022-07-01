@@ -12,7 +12,6 @@ namespace HT\Common;
  */
 
 use HT\HT as HT;
-use HT\Utils;
 use HT\Common\Render\Cards;
 use HT\Common\Render\Columns;
 use HT\Common\Render\Testimonial;
@@ -106,8 +105,8 @@ class Posts {
 				}
 
 				return [
-					'prev' => Utils::get_attr_as_str( $prev ),
-					'next' => Utils::get_attr_as_str( $next ),
+					'prev' => HT::get_attr_as_str( $prev ),
+					'next' => HT::get_attr_as_str( $next ),
 				];
 		}
 
@@ -204,7 +203,7 @@ class Posts {
 								$posts_per_page_type = 'blog_archives';
 						}
 
-						$posts_per_page = Utils::get_posts_per_page( $posts_per_page_type );
+						$posts_per_page = HT::get_posts_per_page( $posts_per_page_type );
 				}
 
 				if ( 'int' === $meta_type ) {
@@ -222,7 +221,7 @@ class Posts {
 				/* Layout */
 
 				$layout         = 'columns';
-				$pre_def_layout = HT::$post_types_info[ $type ] ?? false;
+				$pre_def_layout = HT::$pt[ $type ] ?? false;
 
 				if ( $pre_def_layout ) {
 						$layout = $pre_def_layout['layout'];
@@ -352,18 +351,18 @@ class Posts {
 								$pretitle_link = '';
 
 								if ( 'work' === $type || 'post' === $type || 'service' === $type || 'search' === $type ) {
-										$excerpt = Utils::get_excerpt(
+										$excerpt = HT::get_excerpt(
 												[
-													'post_id'      => $id,
-													'words'        => true,
-													'length'       => 'cards' === $layout ? 15 : 20,
-													'do_shortcode' => true,
+													'post_id'          => $id,
+													'words'            => true,
+													'length'           => 'cards' === $layout ? 14 : 20,
+													'remove_shortcode' => true,
 												]
 										);
 								}
 
 								if ( 'work' === $type || 'post' === $type || 'search' === $type ) {
-										$cat = Utils::get_first_cat( $id, $tax );
+										$cat = HT::get_first_cat( $id, $tax );
 
 										if ( $cat ) {
 												$pretitle      = $cat[0];
@@ -587,7 +586,7 @@ class Posts {
 							'</div>' .
 							'<div class="u-p-r">' .
 								$output .
-								"<nav class='$padding' aria-label='$type pagination'>" .
+								"<nav class='$padding' aria-label='" . ucwords( $type ) . " pagination'>" .
 									'<ul class="l-flex" data-justify="center" data-align="center" data-gap="s">' .
 										'<li>' .
 											'<a ' . $link_attrs['prev'] . '>' .
@@ -618,7 +617,7 @@ class Posts {
 								'</nav>' .
 							'</div>' .
 							'<div class="js-load-more-err l-flex l-pt-xs" data-justify="center" role="alert" style="display:none;">' .
-								'<div class="o-notice l-mw-r u-ta-c u-c-i" data-type="error">' .
+								'<div class="o-notice l-mw-r l-m-auto u-ta-c u-c-i" data-type="error">' .
 									'<p class="l-m-0 u-fw-b">Oops, somewthing went wrong. Please try again later.</p>' .
 								'</div>' .
 							'</div>'

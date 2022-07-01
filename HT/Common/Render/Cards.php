@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use HT\Utils;
+use HT\HT as HT;
 
 /**
  * Class
@@ -126,7 +126,7 @@ class Cards {
 				$image = '<div class="o-aspect-ratio__media"></div>';
 
 				if ( $media_id ) {
-						$image = Utils::get_image( $media_id, $first_two ? 'large' : 'medium_large' );
+						$image = HT::get_image( $media_id, $first_two ? 'large' : 'medium_large' );
 
 						if ( $image ) {
 								$src    = esc_url( $image['url'] );

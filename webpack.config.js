@@ -212,7 +212,7 @@ Template: Avada
 Author: Graciela Alaniz
 Author URI: https://alanizcreative.com
 Version: 1.0.0
-Text Domain: Avada
+Text Domain: avada-child
 */`
 
 /* Exports */

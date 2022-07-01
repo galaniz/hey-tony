@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use HT\Utils;
+use HT\HT as HT;
 
 /**
  * Class
@@ -125,7 +125,7 @@ class Tabs {
 						$img = '';
 
 						if ( $img_id ) {
-								$image = Utils::get_image( $img_id, 'medium_large' );
+								$image = HT::get_image( $img_id, 'medium_large' );
 
 								if ( $image ) {
 										$src    = esc_url( $image['url'] );
@@ -167,8 +167,8 @@ class Tabs {
 				return (
 					'<div class="o-tabs t-bg-inherit">' .
 						"<div class='l-mw-full$half_class l-pb-xxxs l-pb-xs-l t-bg-inherit'>" .
-							'<div class="l-h-m u-o-h t-bg-inherit">' .
-								'<div class="u-o-xy l-pb-xxxs l-flex t-bg-inherit">' .
+							'<div class="l-h-' . ( $step ? 'm' : 's' ) . ' u-o-h t-bg-inherit">' .
+								'<div class="o-overflow u-o-xy l-pb-xxxs l-flex t-bg-inherit">' .
 									'<div class="l-flex-grow u-p-r t-bg-inherit">' .
 										'<ul class="l-flex u-tlrb-b t-bg-inherit u-oo-s" role="tablist" data-gap="r" data-justify="def">' .
 											implode( '', $list ) .

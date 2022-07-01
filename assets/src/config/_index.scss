@@ -47,7 +47,7 @@ $color-error: #ba3c20;
   $breakpoints: (
     660: 660px,
     768: 768px,
-		1270: 1270px,
+    1270: 1270px,
     1300: 1300px,
     1800: 1800px,
   ),
@@ -55,7 +55,7 @@ $color-error: #ba3c20;
   $z-index: (
     skip-link: 205,
     nav: 185,
-		loader: 210,
+    loader: 210,
   ),
 
   $nav: (
@@ -69,7 +69,7 @@ $color-error: #ba3c20;
     )
   ),
 
-  $aspect-ratio-padding: ( 0, 0.66 ),
+  $aspect-ratio-padding: ( 0, 0.66, 1.77, 0.042 ),
 
   $transitions: (
     (

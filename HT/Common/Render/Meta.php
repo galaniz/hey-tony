@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use HT\Utils;
+use HT\HT as HT;
 
 /**
  * Class
@@ -103,7 +103,7 @@ class Meta {
 										}
 										break;
 								case 'category':
-										$cat = Utils::get_first_cat( $id, $tax );
+										$cat = HT::get_first_cat( $id, $tax );
 
 										if ( $cat ) {
 												$output[] = '<div class="p-s u-fw-b o-underline-r l-pb-1 u-oo-s"><a class="l-flex" href="' . $cat[1] . '">' . $cat[0] . '</a></div>';

@@ -12,7 +12,6 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
-use HT\Utils;
 use HT\Common\Render\Swoop;
 use Formation\Pub\Nav_Walker;
 
@@ -62,12 +61,12 @@ class Main_Footer {
 								$wid    = wp_render_widget( $w, $k );
 
 								if ( $social ) {
-										$wid = Utils::filter_social( $wid );
+										$wid = HT::filter_social( $wid );
 										$wid = "<div class='l-pt-xxxs'>$wid</div>";
 								} else {
 										$contact = strpos( $wid, 'mailto:' ) !== false;
 
-										$wid = "<div class='" . ( $contact ? 'o-accent' : 'o-underline' ) . " u-d-ib-a'>$wid</div>";
+										$wid = "<div class='" . ( $contact ? 'o-accent' : 'o-underline u-c-i' ) . " u-d-ib-a'>$wid</div>";
 								}
 
 								$ww .= $wid;
@@ -82,7 +81,7 @@ class Main_Footer {
 				$logo      = '';
 
 				if ( $logo_info ) {
-						$image = Utils::get_image( $logo_info['id'], 'medium' );
+						$image = HT::get_image( $logo_info['id'], 'medium' );
 
 						if ( $image ) {
 								$src    = esc_url( $image['url'] );
