@@ -45,8 +45,6 @@ class Slider {
 
 				$loop = filter_var( $loop, FILTER_VALIDATE_BOOLEAN );
 
-				$loop = true;
-
 				/* Slides required */
 
 				$length = count( $slides );
