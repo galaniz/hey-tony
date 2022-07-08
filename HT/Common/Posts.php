@@ -463,6 +463,7 @@ class Posts {
 										if ( $slider ) {
 												$card_args['width']   = 0;
 												$card_args['excerpt'] = '';
+												$card_args['small']   = true;
 										}
 
 										$card_output = Cards::render_card( $card_args );

@@ -12,6 +12,7 @@
 /* Styles */
 
 :root {
+	--ht-overlap-bg: #{func.get-color("background-base")};
   --ht-hero-c: #{func.get-color("background-base")}; // color
   --ht-hero-bg-c: #{func.get-color("foreground-base")}; // background color
   --ht-hero-h: #{func.calc-rem(726px)}; // height

@@ -52,6 +52,10 @@
   @extend %u-background-color-foreground-base;
 }
 
+.t-ov-background-dark {
+	--ht-overlap-bg: #{func.get-color("background-dark")};
+}
+
 .t-bg-inherit {
   background-color: inherit;
 }
