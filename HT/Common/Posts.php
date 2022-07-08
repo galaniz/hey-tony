@@ -131,7 +131,7 @@ class Posts {
 							'section_title'      => '',
 							'a11y_section_title' => '',
 							'heading_level'      => 'h2',
-							'slider'             => false,
+							'slider'             => '',
 							'current_single'     => false,
 							'pagination'         => false,
 							'type_archive'       => true,
@@ -461,7 +461,8 @@ class Posts {
 										}
 
 										if ( $slider ) {
-												$card_args['width'] = 0;
+												$card_args['width']   = 0;
+												$card_args['excerpt'] = '';
 										}
 
 										$card_output = Cards::render_card( $card_args );
@@ -510,7 +511,7 @@ class Posts {
 														[
 															'slides' => $slides,
 															'label'  => $type,
-															'loop'   => true,
+															'loop'   => 'loop' === $slider ? true : false,
 														]
 												);
 										} else {

@@ -98,9 +98,9 @@ class Testimonial {
 						'<figcaption class="l-mt-auto">' .
 							'<div class="l-flex" data-align="center" data-gap="s">' .
 								$image .
-								'<div class="p-s">' .
-									"<p class='u-lh-130-pc " . ( $subtitle ? 'l-mb-xxs' : 'l-m-0' ) . "'>$title</p>" .
-									( $subtitle ? "<p class='u-fw-b u-lh-130-pc l-m-0'>$subtitle</p>" : '' ) .
+								'<div class="p-s' . ( ! $image ? ' u-ta-c' : '' ) . '">' .
+									"<p class='u-fw-b u-lh-130-pc " . ( $subtitle ? 'l-mb-xxs' : 'l-m-0' ) . "'>$title</p>" .
+									( $subtitle ? "<p class='u-lh-130-pc l-m-0'>$subtitle</p>" : '' ) .
 								'</div>' .
 							'</div>' .
 						'</figcaption>' .
