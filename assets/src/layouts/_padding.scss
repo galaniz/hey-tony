@@ -4,6 +4,7 @@
 
 /* Imports */
 
+@use "@alanizcreative/formation/src/config" as con;
 @use "@alanizcreative/formation/src/utils/functions" as func;
 @use "@alanizcreative/formation/src/utils/mixins" as mix;
 
@@ -16,6 +17,10 @@
 
   .l-pb-1 {
     padding-bottom: func.calc-rem(1px);
+  }
+
+  .l-ph-ctn {
+    padding: 0 func.calc-rem(con.$container-padding);
   }
 
   /* Padding top */

@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use HT\Utils;
+use HT\HT as HT;
 
 /**
  * Class
@@ -64,7 +64,7 @@ class Swoop {
 						$image    = '';
 
 						if ( $media_id ) {
-								$image = Utils::get_image( $media_id, '1536x1536' );
+								$image = HT::get_image( $media_id, '1536x1536' );
 
 								if ( $image ) {
 										$src    = esc_url( $image['url'] );

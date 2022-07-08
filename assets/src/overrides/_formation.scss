@@ -1,0 +1,68 @@
+/**
+ * Overrides: formation
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+
+/* Aspect ratio */
+
+.o-aspect-ratio {
+  &[data-type="overlap"] {
+    &::before {
+      padding-top: var(--ht-overlap-p);
+    }
+  }
+}
+
+.o-aspect-ratio__media {
+  @extend %u-transition-opacity-transform-ease;
+
+  &:not([data-bg="false"]) {
+    background-color: rgba(func.get-color("foreground-base"), 0.1);
+  }
+
+  transition-duration: 600ms;
+  transform: scale(1);
+
+  .o-aspect-ratio[data-scale="slow"] & {
+    transition-duration: 1000ms;
+  }
+
+  [data-hover]:hover .o-aspect-ratio[data-hover="scale"] & {
+    transform: scale(1.03);
+  }
+}
+
+/* Collapsible */
+
+.o-collapsible {
+  #ht .ht &:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  #ht .ht &:last-of-type {
+    padding-bottom: 0;
+  }
+}
+
+.o-collapsible__toggle {
+  font-family: inherit;
+  text-align: left;
+}
+
+.o-collapsible__icon {
+  i {
+    display: none;
+  }
+
+  [aria-expanded="true"] & i:first-child {
+    display: block;
+  }
+
+  [aria-expanded="false"] & i:last-child {
+    display: block;
+  }
+}

@@ -1,0 +1,102 @@
+/**
+ * Objects: slider
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "sass:math";
+@use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+$container: map.get(con.$containers, "def");
+
+.o-slider {
+  --height: auto;
+  --snap-type: x mandatory;
+
+  height: var(--height);
+}
+
+.o-slider__track {
+  overflow-x: auto;
+  scroll-snap-type: var(--snap-type);
+  -webkit-overflow-scrolling: touch;
+}
+
+.o-slider__h {
+  padding: 0 var(--ht-flex-gap);
+}
+
+.o-slider__item,
+.o-slider__group {
+  scroll-snap-align: start;
+  width: calc(100vw - (var(--ht-flex-gap) * 2));
+
+  &:first-child {
+    margin-left: var(--ht-flex-gap);
+  }
+
+  #ht .ht &:focus {
+    outline: 0; // Move to view
+  }
+}
+
+.o-slider__item {
+  @include mix.breakpoint-min(600) {
+    width: calc(50vw - var(--ht-flex-gap));
+  }
+
+  @include mix.breakpoint-min(900) {
+    width: calc(33.3333vw - (var(--ht-flex-gap) / 1.5));
+  }
+
+  @include mix.breakpoint-min(1270) {
+    width: calc(33.3333% + (var(--ht-flex-gap) / 3));
+  }
+}
+
+.o-slider__group {
+  @include mix.breakpoint-min(1270) {
+    width: calc(100% + var(--ht-flex-gap));
+  }
+}
+
+.o-slider__inner {
+  width: 100%;
+
+  @include mix.breakpoint-min(600) {
+    width: 50%;
+  }
+
+  @include mix.breakpoint-min(900) {
+    width: 33.3333%;
+  }
+}
+
+.o-slider__view {
+  #ht .ht:not([data-using-mouse]) .o-slider__item:focus &::before,
+  #ht .ht:not([data-using-mouse]) .o-slider__group:focus &::before {
+    border: func.calc-rem(4px) solid var(--ht-outline-c);
+  }
+
+  #ht .ht:not([data-using-mouse]) .o-slider__group:focus &::before {
+    left: var(--ht-flex-gap);
+    top: var(--ht-flex-gap);
+  }
+
+  @include mix.breakpoint-min(1270) {
+    left: calc(50vw - #{func.calc-rem(math.div($container, 2))} - var(--ht-flex-gap));
+  }
+}
+
+.o-slider__offset {
+  width: calc(var(--ht-flex-gap) * 4);
+
+  @include mix.breakpoint-min(1270) {
+    width: calc((50vw - #{func.calc-rem(math.div($container, 2))}) + (50vw - 50%));
+  }
+}

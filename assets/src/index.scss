@@ -37,6 +37,7 @@
 /* Objects */
 
 @use "@alanizcreative/formation/src/objects/aspect-ratio";
+@use "@alanizcreative/formation/src/objects/collapsible";
 @use "objects/logo";
 @use "objects/swoop";
 @use "objects/overlap";
@@ -47,6 +48,11 @@
 @use "objects/stat";
 @use "objects/flush";
 @use "objects/notice";
+@use "objects/tabs";
+@use "objects/slider";
+@use "objects/dot";
+@use "objects/overflow";
+@use "objects/device";
 
 /* Themes */
 
@@ -54,7 +60,9 @@
 
 /* Overrides */
 
-@use "overrides";
+@use "overrides/avada";
+@use "overrides/formation";
+@use "overrides/vendor";
 
 /* Remove animations */
 
@@ -75,6 +83,14 @@
       animation-duration: 0.001ms;
       animation-iteration-count: 1;
       transition-duration: 0.001ms;
+    }
+
+    .c-nav__item {
+      transition-delay: 0ms;
+    }
+
+    [role="tabpanel"] {
+      animation: none;
     }
   }
 }

@@ -23,6 +23,7 @@
 import {
   mergeObjects,
   toggleFocusability,
+  focusSelector,
   getScrollY,
   prefix
 } from 'Formation/utils'
@@ -150,20 +151,21 @@ class Nav {
 
     /* Get focusable elements */
 
-    const focusSelector = 'a, area, input, select, textarea, button, [tabindex], [data-context-inert-tabindex], iframe'
-    const outerFocusableItems = Array.from(this.outer.querySelectorAll(focusSelector))
+    window.addEventListener('load', () => {
+      const outerFocusableItems = Array.from(this.outer.querySelectorAll(focusSelector))
 
-    if (outerFocusableItems.length) {
-      this._focusableItems = Array.from(document.querySelectorAll(focusSelector))
+      if (outerFocusableItems.length) {
+        this._focusableItems = Array.from(document.querySelectorAll(focusSelector))
 
-      this._focusableItems = this._focusableItems.filter(item => {
-        if (outerFocusableItems.indexOf(item) === -1) {
-          return true
-        }
+        this._focusableItems = this._focusableItems.filter(item => {
+          if (outerFocusableItems.indexOf(item) === -1) {
+            return true
+          }
 
-        return false
-      })
-    }
+          return false
+        })
+      }
+    })
 
     /* Scroll event */
 
@@ -415,6 +417,7 @@ class Nav {
 
     if ([27, 'Escape'].indexOf(key) !== -1 && this._open) {
       this._toggle(false)
+      this.button.focus()
     }
   }
 } // End Nav

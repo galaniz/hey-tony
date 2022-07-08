@@ -1,5 +1,5 @@
 /**
- * Overrides
+ * Overrides: avada
  */
 
 /* Imports */
@@ -89,10 +89,13 @@
   }
 
   .fusion-button {
+    --blend-mode: multiply;
+
     @extend %u-font-weight-extrabold;
     @extend %u-position-relative;
 
     line-height: 1.3;
+    transition: none;
 
     .fusion-button-text {
       @extend %u-position-relative;
@@ -103,9 +106,17 @@
       transform: scale(1) translateZ(0);
     }
 
+    &.t-bg-foreground-base {
+      --blend-mode: hard-light;
+    }
+
     &.button-medium {
       font-size: func.calc-rem(18px);
       padding: func.calc-rem(14px) func.calc-rem(24px);
+    }
+
+    &.button-medium-l {
+      font-size: func.calc-rem(20px);
     }
 
     &.button-outline {
@@ -113,6 +124,10 @@
       background-color: transparent;
       border: func.calc-rem(2px) solid currentcolor;
       padding: func.calc-rem(12px) func.calc-rem(22px); // Fill 14px 24px
+
+      &.t-bg-inherit {
+        background-color: inherit;
+      }
     }
 
     &.button-small {
@@ -153,9 +168,9 @@
       @extend %u-opacity-0;
       @extend %u-transition-opacity-ease;
 
-      background-color: currentcolor;
+      background-color: currentColor;
       border-radius: inherit;
-      mix-blend-mode: hard-light;
+      mix-blend-mode: var(--blend-mode);
     }
 
     &:hover,
@@ -235,6 +250,20 @@
   }
 }
 
+#ht .ht input[type="radio"]:checked ~ .fusion-button.button-outline {
+  --ht-outline-o: #{func.calc-rem(-8px)};
+  --ht-outline-c: #{func.get-color("background-base")};
+
+  @extend %u-background-color-primary-base;
+  @extend %u-color-background-base;
+
+  border-color: var(--ht-primary-base-c);
+
+  &::before {
+    @extend %u-opacity-0;
+  }
+}
+
 /* Text */
 
 .fusion-text:empty {
@@ -265,37 +294,9 @@
   overflow: visible;
 }
 
-/* Aspect ratio */
-
-.o-aspect-ratio {
-  &[data-type="overlap"] {
-    &::before {
-      padding-top: var(--ht-overlap-p);
-    }
-  }
-}
-
-.o-aspect-ratio__media {
-  @extend %u-transition-opacity-transform-ease;
-
-  &:not([data-bg="false"]) {
-    background-color: rgba(func.get-color("foreground-base"), 0.1);
-  }
-
-  transition-duration: 600ms;
-  transform: scale(1);
-
-  .o-aspect-ratio[data-scale="slow"] & {
-    transition-duration: 1000ms;
-  }
-
-  [data-hover]:hover .o-aspect-ratio[data-hover="scale"] & {
-    transform: scale(1.03);
-  }
-}
-
 /* Single content */
 
+.ht-editor,
 .ht-single__main {
   --ht-underline-w: #{func.calc-rem(1.5px)};
 
@@ -385,12 +386,108 @@
   }
 }
 
-.table-1 {
-  max-width: calc(100vw - 2.5rem);
+/* Current page */
+
+#ht .ht #wrapper [aria-current="page"],
+#ht .ht #wrapper .current-menu-item {
+  color: inherit;
 }
 
-/* Recaptcha */
+/* Single full width */
 
-.grecaptcha-badge {
-  @extend %u-visibility-hidden;
+.ht-single-col .fusion-builder-row {
+  flex-direction: column;
+}
+
+.ht-single-full {
+  --width: 1;
+
+  .fusion_builder_column_1_6 {
+    --width: 0.1666;
+  }
+
+  .fusion_builder_column_1_5 {
+    --width: 0.2;
+  }
+
+  .fusion_builder_column_1_4 {
+    --width: 0.25;
+  }
+
+  .fusion_builder_column_1_3 {
+    --width: 0.3333;
+  }
+
+  .fusion_builder_column_2_5 {
+    --width: 0.4;
+  }
+
+  .fusion_builder_column_1_2 {
+    --width: 0.5;
+  }
+
+  .fusion_builder_column_3_5 {
+    --width: 0.6;
+  }
+
+  .fusion_builder_column_2_3 {
+    --width: 0.6667;
+  }
+
+  .fusion_builder_column_3_4 {
+    --width: 0.75;
+  }
+
+  .fusion_builder_column_4_5 {
+    --width: 0.8;
+  }
+
+  .fusion_builder_column_5_6 {
+    --width: 0.8333;
+  }
+
+  .fusion_builder_column {
+    max-width: calc(#{func.calc-rem(1190px)} * var(--width));
+  }
+}
+
+/* Map */
+
+.ht-map {
+  @include mix.fluid-size(
+    --ht-map-h,
+    func.calc-rem(200px) func.calc-rem(400px),
+    600 1200
+  );
+
+  &,
+  span {
+    height: var(--ht-map-h);
+  }
+
+  span {
+    max-width: func.calc-rem(1800px);
+    min-height: func.calc-rem(300px);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+
+    @include mix.breakpoint-min(1800) {
+      mask-image:
+        linear-gradient(
+          to right,
+          transparent,
+          black 25rem,
+          black calc(100% - 25rem),
+          transparent
+        );
+    }
+  }
+
+  img {
+    @extend %u-width-100;
+    @extend %u-height-100;
+
+    object-fit: cover;
+  }
 }

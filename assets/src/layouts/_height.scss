@@ -5,8 +5,17 @@
 /* Imports */
 
 @use "@alanizcreative/formation/src/config" as con;
+@use "@alanizcreative/formation/src/utils/functions" as func;
 
 /* Styles */
+
+.l-h-s {
+  height: func.calc-rem(37px);
+}
+
+.l-h-m {
+  height: func.calc-rem(48px);
+}
 
 .l-h-100-pc {
   @extend %u-height-100;

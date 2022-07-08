@@ -11,7 +11,7 @@ namespace HT\Common\Render;
  * Imports
  */
 
-use HT\Utils;
+use HT\HT as HT;
 
 /**
  * Class
@@ -70,19 +70,18 @@ class Overlap {
 				$pretitle_output = '';
 
 				if ( $pretitle ) {
-						if ( $pretitle_link ) {
-								$pretitle = "<a class='o-overlap__r u-p-r u-zi-2' href='$pretitle_link'>$pretitle</a>";
-						} else {
-								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle</p>";
-						}
-
 						if ( $pretitle_a11y ) {
 								$pretitle_a11y = "<span class='u-v-h'>$pretitle_a11y</span>";
 						}
 
+						if ( $pretitle_link ) {
+								$pretitle = "<a class='o-overlap__r u-p-r u-zi-2' href='$pretitle_link'>$pretitle_a11y$pretitle</a>";
+						} else {
+								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle_a11y$pretitle</p>";
+						}
+
 						$pretitle_output = (
 							'<div class="p-s u-fw-b l-pb-xxxs o-underline-r l-flex">' .
-								$pretitle_a11y .
 								$pretitle .
 							'</div>'
 						);
@@ -103,7 +102,7 @@ class Overlap {
 				$image = '<div class="o-aspect-ratio__media"></div>';
 
 				if ( $media_id ) {
-						$image = Utils::get_image( $media_id, '1536x1536' );
+						$image = HT::get_image( $media_id, '1536x1536' );
 
 						if ( $image ) {
 								$src    = esc_url( $image['url'] );

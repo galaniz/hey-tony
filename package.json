@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/galaniz/hey-tony#readme",
   "devDependencies": {
-    "@alanizcreative/formation": "^3.0.1",
+    "@alanizcreative/formation": "^3.0.4",
     "@babel/core": "^7.17.7",
     "@babel/preset-env": "^7.16.11",
     "autoprefixer": "^10.4.2",

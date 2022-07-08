@@ -15,7 +15,7 @@
 .o-overlap {
   @include mix.fluid-size(
     --ht-overlap-p,
-    func.calc-rem( 290px ) func.calc-rem( 500px ),
+    func.calc-rem(290px) func.calc-rem(500px),
     700 1200
   );
   @include mix.fluid-size(
@@ -73,13 +73,13 @@
   margin-top: calc(-1 * var(--ht-overlap-h));
 
   & > div::before {
-    @extend %u-background-color-background-base;
     @include mix.fluid-size(
       height,
       func.calc-rem(110px) func.calc-rem(240px),
       700 1200
     );
 
+		background-color: var(--ht-overlap-bg);
     height: var(--ht-overlap-h);
     bottom: auto;
     transform: scale(1.02, 1.15);
@@ -156,14 +156,6 @@
   }
 }
 
-.o-overlap-v {
-  --ht-overlap-v-theme: #{func.get-color("background-base")};
-
-  &[data-theme="background-dark"] {
-    --ht-overlap-v-theme: #{func.get-color("background-dark")};
-  }
-}
-
 .o-overlap-v__bg::after {
   @extend %u-content-empty;
   @extend %u-position-absolute;
@@ -175,7 +167,7 @@
   min-height: func.calc-rem(45px);
   height: 20%;
   border-radius: 0% 100% 100% 0% / 100% 100% 0% 0%;
-  background-color: var(--ht-overlap-v-theme);
+  background-color: var(--ht-overlap-bg);
 }
 
 .o-overlap-v__fg {

@@ -7,6 +7,10 @@
 import { setElements, usingMouse } from 'Formation/utils'
 import Nav from './components/nav'
 import LoadMore from 'Formation/objects/load/more'
+import Tabs from 'Formation/objects/tabs'
+import Slider from 'Formation/objects/slider'
+import Collapsible from 'Formation/objects/collapsible'
+import OverflowIndicator from 'Formation/objects/overflow-indicator'
 
 /* Variables */
 
@@ -26,6 +30,26 @@ const elMeta = [
   {
     prop: 'hero',
     selector: '.fusion-page-title-bar'
+  },
+  {
+    prop: 'collapsibles',
+    selector: '.o-collapsible',
+    all: true
+  },
+  {
+    prop: 'tabs',
+    selector: '.o-tabs',
+    all: true
+  },
+  {
+    prop: 'slider',
+    selector: '.js-slider',
+    all: true
+  },
+  {
+    prop: 'overflow',
+    selector: '.o-overflow',
+    all: true
   },
   {
     prop: 'loadMore',
@@ -67,6 +91,10 @@ const elMeta = [
         selector: '.js-load-more-filter',
         all: true,
         array: true
+      },
+      {
+        prop: 'loadMoreFiltersForm',
+        selector: '.js-load-more-filter-form'
       }
     ]
   }
@@ -93,25 +121,29 @@ const initialize = () => {
   /* Fixed Header */
 
   if (el.nav) {
-    const nav = new Nav({
-      button: el.navButton,
-      outer: el.nav,
-      inner: el.nav.firstElementChild,
-      scaleTo: [
-        {
-          width: 0,
-          scale: 0.6
-        },
-        {
-          width: 1000,
-          scale: 0.4
-        }
-      ],
-      makeFixed: true,
-      friction: 1.15,
-      maxOffset: 600,
-      reduceMotion: reduceMotion
-    })
+    const nav = () => {
+      return new Nav({
+        button: el.navButton,
+        outer: el.nav,
+        inner: el.nav.firstElementChild,
+        scaleTo: [
+          {
+            width: 0,
+            scale: 0.6
+          },
+          {
+            width: 1000,
+            scale: 0.4
+          }
+        ],
+        makeFixed: true,
+        friction: 1.15,
+        maxOffset: 600,
+        reduceMotion: reduceMotion
+      })
+    }
+
+    nav()
   }
 
   /* Get height of hero */
@@ -150,13 +182,6 @@ const initialize = () => {
     const ppp = parseInt(el.loadMore.getAttribute('data-per-page'))
     const total = parseInt(el.loadMore.getAttribute('data-total'))
     const pagination = el.loadMorePrev && el.loadMoreCurrent
-    const loaders = []
-
-    /* Loaders */
-
-    if (el.loadMoreLoader) {
-      loaders.push(el.loadMoreLoader)
-    }
 
     /* Data */
 
@@ -179,10 +204,11 @@ const initialize = () => {
       url: n.ajax_url,
       data: data,
       next: el.loadMore,
-      loaders: loaders,
+      loader: el.loadMoreLoader,
       ppp: ppp,
       total: total,
       filters: el.loadMoreFilters,
+      filtersForm: el.loadMoreFiltersForm,
       insertInto: el.loadMoreInsert
     }
 
@@ -213,7 +239,7 @@ const initialize = () => {
           page = 0
         } = data
 
-        const queryArgs = query_args
+        const queryArgs = query_args // eslint-disable-line camelcase
         const params = {}
         const delStr = 'load_more_delete_param'
 
@@ -341,8 +367,194 @@ const initialize = () => {
       args.error = el.loadMoreError
     }
 
-    const loadMore = new LoadMore(args)
+    const loadMore = () => {
+      return new LoadMore(args)
+    }
+
+    loadMore()
   }
-} // end initialize
+
+  /* Tabs */
+
+  if (el.tabs.length) {
+    const tabs = (args) => {
+      return new Tabs(args)
+    }
+
+    el.tabs.forEach(t => {
+      const meta = [
+        {
+          prop: 'nav',
+          selector: '[role="tab"]',
+          all: true
+        },
+        {
+          prop: 'panels',
+          selector: '[role="tabpanel"]',
+          all: true
+        }
+      ]
+
+      const tt = {}
+
+      setElements(t, meta, tt)
+
+      tabs({
+        tabs: tt.nav,
+        panels: tt.panels,
+        delay: 500
+      })
+    })
+  }
+
+  /* Overflow containers */
+
+  if (el.overflow.length) {
+    const overflowIndicator = (args) => {
+      return new OverflowIndicator(args)
+    }
+
+    el.overflow.forEach(o => {
+      overflowIndicator({
+        indicator: o.parentElement,
+        scroll: o,
+        y: false
+      })
+    })
+  }
+
+  /* Slider */
+
+  if (el.slider.length) {
+    const slider = (args) => {
+      return new Slider(args)
+    }
+
+    el.slider.forEach(s => {
+      const meta = [
+        {
+          prop: 'main',
+          selector: '.o-slider'
+        },
+        {
+          prop: 'track',
+          selector: '.o-slider__track'
+        },
+        {
+          prop: 'height',
+          selector: '.o-slider__h'
+        },
+        {
+          prop: 'panels',
+          selector: '[role="tabpanel"]',
+          all: true
+        },
+        {
+          prop: 'items',
+          selector: '.o-slider__inner',
+          all: true
+        },
+        {
+          prop: 'nav',
+          selector: '[role="tab"]',
+          all: true
+        }
+      ]
+
+      const ss = {}
+
+      setElements(s, meta, ss)
+
+      const args = {
+        tabs: ss.nav,
+        panels: ss.panels,
+        delay: 800,
+        slider: ss.main,
+        track: ss.track,
+        targetHeight: ss.height
+      }
+
+      if (ss.main.getAttribute('data-loop')) {
+        args.loop = true
+      } else {
+        args.groupItems = ss.items
+        args.breakpoints = [
+          {
+            breakpoint: 0,
+            items: 1
+          },
+          {
+            breakpoint: 600,
+            items: 2
+          },
+          {
+            breakpoint: 900,
+            items: 3
+          }
+        ]
+      }
+
+      slider(args)
+    })
+  }
+
+  /* Collapsibles */
+
+  if (el.collapsibles.length) {
+    const collapsibles = (args) => {
+      return new Collapsible(args)
+    }
+
+    const instances = []
+    const accordianInstances = {}
+
+    el.collapsibles.forEach(c => {
+      const meta = [
+        {
+          prop: 'collapsible',
+          selector: '.o-collapsible__main'
+        },
+        {
+          prop: 'trigger',
+          selector: '.o-collapsible__toggle'
+        }
+      ]
+
+      const cc = {}
+
+      setElements(c, meta, cc)
+
+      const accordian = c.getAttribute('data-accordion')
+
+      const args = {
+        container: c,
+        collapsible: cc.collapsible,
+        trigger: cc.trigger
+      }
+
+      const instance = collapsibles(args)
+
+      if (accordian) {
+        const id = accordian
+
+        if (!Object.getOwnPropertyDescriptor(accordianInstances, id)) { accordianInstances[id] = [] }
+
+        accordianInstances[id].push(instance)
+        instance.id = id
+        instances.push(instance)
+      }
+    })
+
+    if (instances.length) {
+      instances.forEach(i => {
+        i.accordianInstances = accordianInstances[i.id].filter(a => {
+          if (a === i) { return false }
+
+          return true
+        })
+      })
+    }
+  }
+} // End initialize
 
 document.addEventListener('DOMContentLoaded', initialize)

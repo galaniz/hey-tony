@@ -12,7 +12,6 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
-use HT\Utils;
 use HT\Common\Render\Swoop;
 use Formation\Pub\Nav_Walker;
 
@@ -40,8 +39,8 @@ class Main_Nav {
 							'before_output' => function( &$obj, &$output, $depth, $args ) use ( &$counter ) {
 								if ( 0 === $depth ) {
 
-										$delay        = ( 150 * $counter ) . 'ms';
-										$obj->li_attr = " style='--ht-nav-item-delay:$delay'";
+										$delay        = ( 50 * $counter ) . 'ms';
+										$obj->li_attr = " style='--ht-nav-i-d:$delay'";
 
 										$counter++;
 								} else {
@@ -68,7 +67,7 @@ class Main_Nav {
 				$logo             = '';
 
 				if ( $logo_info ) {
-						$image       = Utils::get_image( $logo_info['id'], 'medium' );
+						$image       = HT::get_image( $logo_info['id'], 'medium' );
 						$sticky_logo = '';
 
 						if ( $sticky_logo_info ) {
@@ -99,7 +98,7 @@ class Main_Nav {
 				/* Output */
 
 				return (
-					'<nav>' .
+					'<nav aria-label="Global navigation">' .
 						'<div class="c-nav__bg c-nav__toggle l-breakout l-h-100-vh u-p-a"></div>' .
 						'<div class="c-nav__swoop c-nav__toggle l-breakout l-h-100-vh u-p-a">' .
 							'<div class="l-h-100-pc u-p-r">' .
@@ -110,12 +109,12 @@ class Main_Nav {
 							$logo .
 							'<div class="l-flex">' .
 								'<button class="c-nav__button" type="button" aria-expanded="false" aria-controls="js-nav-overflow">' .
-									'<div class="c-nav-icon" data-num="1">' .
-										'<div class="c-nav-icon__top"></div>' .
-										'<div class="c-nav-icon__middle"></div>' .
-										'<div class="c-nav-icon__bottom"></div>' .
-									'</div>' .
-									'<div class="u-v-h">Menu</div>' .
+									'<span class="c-nav-icon u-d-b" data-num="1">' .
+										'<span class="c-nav-icon__top u-d-b"></span>' .
+										'<span class="c-nav-icon__middle u-d-b"></span>' .
+										'<span class="c-nav-icon__bottom u-d-b"></span>' .
+									'</span>' .
+									'<span class="u-v-h">Menu</span>' .
 								'</button>' .
 							'</div>' .
 						'</div>' .

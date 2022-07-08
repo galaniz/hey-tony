@@ -12,7 +12,6 @@ namespace HT\Common\Render;
  */
 
 use HT\HT as HT;
-use HT\Utils;
 use HT\Common\Render\Swoop;
 use Formation\Pub\Nav_Walker;
 
@@ -33,19 +32,27 @@ class Main_Footer {
 				/* Widgets output */
 
 				$widgets = wp_get_sidebars_widgets();
-				$allowed = ['avada-footer-widget-1', 'avada-footer-widget-2', 'avada-footer-widget-3'];
+				$allowed = ['avada-footer-widget-1', 'avada-footer-widget-2', 'avada-footer-widget-3', 'ht-footer-widget-4'];
 
-				$widgets = array_filter(
-						$widgets,
-						function( $k ) use ( $allowed ) {
-								return in_array( $k, $allowed, true );
-						},
-						ARRAY_FILTER_USE_KEY
-				);
+				$widgets_ordered = $allowed;
+
+				foreach ( $widgets as $k => $v ) {
+						$a = in_array( $k, $allowed, true );
+
+						if ( $a ) {
+								$widgets_ordered[ array_search( $k, $widgets_ordered, true ) ] = [
+									'key'   => $k,
+									'value' => $v,
+								];
+						}
+				}
 
 				$widgets_output = [];
 
-				foreach ( $widgets as $k => $v ) {
+				foreach ( $widgets_ordered as $i => $wo ) {
+						$k = $wo['key'];
+						$v = $wo['value'];
+
 						$ww     = '';
 						$social = false;
 
@@ -54,10 +61,12 @@ class Main_Footer {
 								$wid    = wp_render_widget( $w, $k );
 
 								if ( $social ) {
-										$wid = Utils::filter_social( $wid );
+										$wid = HT::filter_social( $wid );
 										$wid = "<div class='l-pt-xxxs'>$wid</div>";
 								} else {
-										$wid = "<div class='o-accent u-d-ib-a'>$wid</div>";
+										$contact = strpos( $wid, 'mailto:' ) !== false;
+
+										$wid = "<div class='" . ( $contact ? 'o-accent' : 'o-underline u-c-i' ) . " u-d-ib-a'>$wid</div>";
 								}
 
 								$ww .= $wid;
@@ -72,7 +81,7 @@ class Main_Footer {
 				$logo      = '';
 
 				if ( $logo_info ) {
-						$image = Utils::get_image( $logo_info['id'], 'medium' );
+						$image = HT::get_image( $logo_info['id'], 'medium' );
 
 						if ( $image ) {
 								$src    = esc_url( $image['url'] );
