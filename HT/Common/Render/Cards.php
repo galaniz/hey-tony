@@ -72,7 +72,7 @@ class Cards {
 				}
 
 				if ( $link ) {
-						$title = "<a href='$link' class='u-tlrb-b'>$title</a>";
+						$title = "<a href='$link' class='u-tlrb-b'><span class='u-p-r'>$title</span></a>";
 				}
 
 				$title_class = 't-foreground-base u-ul-w u-c-i u-ul-w';

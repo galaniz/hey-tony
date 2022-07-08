@@ -5,6 +5,7 @@
 /* Imports */
 
 @use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
 
 /* Styles */
 
@@ -15,6 +16,10 @@
     > div {
       border-radius: 10% 10% 10% 10% / 5% 5% 5% 5%;
       transform: scale(0.94, 0.967);
+    }
+
+    @include mix.breakpoint-max(700) {
+      width: 67%;
     }
   }
 

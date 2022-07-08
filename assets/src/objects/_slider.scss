@@ -78,12 +78,12 @@ $container: map.get(con.$containers, "def");
 }
 
 .o-slider__view {
-  #ht .ht .o-slider__item:focus &::before,
-  #ht .ht .o-slider__group:focus &::before {
+  #ht .ht:not([data-using-mouse]) .o-slider__item:focus &::before,
+  #ht .ht:not([data-using-mouse]) .o-slider__group:focus &::before {
     border: func.calc-rem(4px) solid var(--ht-outline-c);
   }
 
-  #ht .ht .o-slider__group:focus &::before {
+  #ht .ht:not([data-using-mouse]) .o-slider__group:focus &::before {
     left: var(--ht-flex-gap);
     top: var(--ht-flex-gap);
   }

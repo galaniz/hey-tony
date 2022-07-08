@@ -57,8 +57,11 @@ class Slider {
 
 				/* Create tablist and panels */
 
-				$tablist = '';
-				$panels  = '';
+				$tablist    = '';
+				$panels     = '';
+				$last_index = $length - 1;
+				$math       = round( 100 / $length ) . 'vw - ' . ( round( 100 / $length ) / 16 ) . 'rem';
+				$max_width  = " style='max-width:calc($math)'";
 
 				foreach ( $slides as $i => $slide ) {
 						$index    = $i + 1;
@@ -71,7 +74,7 @@ class Slider {
 
 						$tablist .= (
 							'<li class="o-dot l-flex" role="presentation">' .
-								"<button class='o-aspect-ratio l-w-s l-mr-xxs' type='button' role='tab' tabindex='$tabindex' aria-selected='$selected' aria-label='$tab_label'>" .
+								"<button class='o-aspect-ratio l-w-s" . ( $i < $last_index ? ' l-mr-xxs' : '' ) . "' type='button' role='tab' tabindex='$tabindex' aria-selected='$selected' aria-label='$tab_label'$max_width>" .
 									'<span class="l-m-auto u-p-a u-t-0 u-l-0 u-r-0 u-b-0 u-d-b u-br-100-pc"></span>' .
 								'</button>' .
 							'</li>'
