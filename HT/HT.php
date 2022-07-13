@@ -502,7 +502,15 @@ class HT {
 		 */
 
 		public function widget_nav_args( $nav_menu_args, $nav_menu, $args, $instance ) {
-				$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="l-mb-s-all p">%3$s</ul>';
+				$class = 'l-mb-s-all p';
+				$attr  = '';
+
+				if ( 'avada-footer-widget-1' === $args['id'] ) {
+						$class = 'l-flex p-m';
+						$attr  = ' data-gap="s" data-wrap';
+				}
+
+				$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="' . $class . '"' . $attr . '>%3$s</ul>';
 
 				return $nav_menu_args;
 		}
