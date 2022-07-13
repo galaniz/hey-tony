@@ -92,13 +92,13 @@ class Testimonial {
 				$quote_mark = file_get_contents( get_stylesheet_directory() . '/assets/public/svg/quote-mark.svg' ); // Ignore: local path
 
 				return (
-					'<figure class="l-flex" data-align="center"' . ( ! $center ? ' data-align-m="start"' : '' ) . ' data-col>' .
+					'<figure class="l-flex" ' . ( $center ? 'data-align="center"' : 'data-align-m="start"' ) . ' data-col>' .
 						"<div class='l-pb-xxs l-pb-xs-l t-primary-base u-lh-0'>$quote_mark</div>" .
-						"<blockquote class='l-pb-xxs l-pb-xxs-l l-m-0 l-p-0 u-ta-c" . ( ! $center ? ' u-ta-l-m' : '' ) . ' u-brd-0 u-fs-n p' . ( $large ? '-l' : '' ) . "'>$text</blockquote>" .
+						"<blockquote class='l-pb-xxs l-pb-xxs-l l-m-0 l-p-0 " . ( $center ? 'u-ta-c' : 'u-ta-l-m' ) . ' u-brd-0 u-fs-n p' . ( $large ? '-l' : '' ) . "'>$text</blockquote>" .
 						'<figcaption class="l-mt-auto">' .
 							'<div class="l-flex" data-align="center" data-gap="s">' .
 								$image .
-								'<div class="p-s' . ( ! $image ? ' u-ta-c' : '' ) . '">' .
+								'<div class="p-s' . ( ! $image && $center ? ' u-ta-c' : '' ) . '">' .
 									"<p class='u-fw-b u-lh-130-pc " . ( $subtitle ? 'l-mb-xxs' : 'l-m-0' ) . "'>$title</p>" .
 									( $subtitle ? "<p class='u-lh-130-pc l-m-0'>$subtitle</p>" : '' ) .
 								'</div>' .
