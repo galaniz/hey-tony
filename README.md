@@ -278,77 +278,77 @@ Used to override default size for semantic heading level.
 
 | Class     | Font-size (mobile → desktop) |
 | --------- | ---------------------------- |
-| `.h1`     | 48px → 96px                  |
-| `.h1-s`   | 48px → 72px                  |
-| `.h2-l`   | 38px → 60px                  |
-| `.h2`     | 36px → 48px                  |
-| `.h3-l`   | 32px → 36px                  |
-| `.h3`     | 28px → 32px                  |
-| `.h4`     | 24px → 28px                  |
-| `.h5`     | 19px → 24px                  |
-| `.h6`     | 18px → 20px                  |
+| `.h1`     | `48px → 96px`                |
+| `.h1-s`   | `48px → 72px`                |
+| `.h2-l`   | `38px → 60px`                |
+| `.h2`     | `36px → 48px`                |
+| `.h3-l`   | `32px → 36px`                |
+| `.h3`     | `28px → 32px`                |
+| `.h4`     | `24px → 28px`                |
+| `.h5`     | `19px → 24px`                |
+| `.h6`     | `18px → 20px`                |
 
 #### Paragraphs/text
 
 | Class     | Font-size (mobile → desktop) |
 | --------- | ---------------------------- |
-| `.p-l`    | 24px → 28px                  |
-| `.p`      | 19px → 24px                  |
-| `.p-m`    | 16px → 18px                  |
-| `.p-s`    | 16px                         |
-| `.p-xs`   | 14px                         |
+| `.p-l`    | `24px → 28px`                |
+| `.p`      | `19px → 24px`                |
+| `.p-m`    | `16px → 18px`                |
+| `.p-s`    | `16px`                       |
+| `.p-xs`   | `14px`                       |
 
 ### Layout
 
 #### Padding
 
-| Class     | Property        |
-| --------- | --------------- |
-| `.l-p-`   | padding         |
-| `.l-pt-`  | padding-top     |
-| `.l-pb-`  | padding-bottom  |
+| Class     | Property          |
+| --------- | ----------------- |
+| `.l-p-`   | `padding`         |
+| `.l-pt-`  | `padding-top`     |
+| `.l-pb-`  | `padding-bottom`  |
 
 | Size      | Value        |
 | --------- | ------------ |
-| `xxxs`    | 20px         |
-| `xxs`     | 30px         |
-| `xs`      | 40px         |
-| `s`       | 60px         |
-| `r`       | 80px         |
-| `m`       | 100px        |
-| `l`       | 120px        |
+| `xxxs`    | `20px`       |
+| `xxs`     | `30px`       |
+| `xs`      | `40px`       |
+| `s`       | `60px`       |
+| `r`       | `80px`       |
+| `m`       | `100px`      |
+| `l`       | `120px`      |
 
-| Breakpoint | Value        |
-| ---------- | ------------ |
-| `-l`       | min 1000px   |
+| Breakpoint | Value          |
+| ---------- | -------------- |
+| `-l`       | `min 1000px`   |
 
 #### Margin
 
 | Class     | Property        |
 | --------- | --------------- |
-| `.l-m-`   | margin          |
-| `.l-mb-`  | margin-bottom   |
+| `.l-m-`   | `margin`        |
+| `.l-mb-`  | `margin-bottom` |
 
 | Size      | Value        |
 | --------- | ------------ |
-| `xxs`     | 5px          |
-| `xs`      | 10px         |
-| `s`       | 15px         |
-| `r`       | 20px         |
-| `m`       | 25px         |
-| `l`       | 40px         |
-| `xl`      | 60px         |
+| `xxs`     | `5px`        |
+| `xs`      | `10px`       |
+| `s`       | `15px`       |
+| `r`       | `20px`       |
+| `m`       | `25px`       |
+| `l`       | `40px`       |
+| `xl`      | `60px`       |
 
 | Suffix     | Value                   |
 | ---------- | ----------------------- |
-| `-all`     | applies to all children |
+| `-all`     | Applies to all children |
 
 #### Max widths
 
 | Class          | Description                  |
 | -------------- | ---------------------------- |
-| `.l-mw-full`   | Viewport width as max for overflow possibility                   |
-| `.l-mw-half`   | Half viewport width as max for overflow possibility 2 col layout |
+| `.l-mw-full`   | Viewport width as max for overflow possibility |
+| `.l-mw-half`   | Half viewport width as max for overflow possibility in 2 column layout |
 
 ### Utilities
 

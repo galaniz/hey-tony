@@ -40,6 +40,7 @@ class Cards {
 							'width'         => 33,
 							'theme'         => 'background-base',
 							'small'         => false,
+							'li_class'      => '',
 						],
 						$args
 				);
@@ -57,12 +58,17 @@ class Cards {
 					'width'         => $width,
 					'theme'         => $theme,
 					'small'         => $small,
+					'li_class'      => $li_class,
 				] = $args;
 
 				$first_two = 0 === $index || 1 === $index;
 
-				if ( $first_two ) {
+				if ( $first_two && 33 === $width ) {
 						$width = 50;
+				}
+
+				if ( $li_class ) {
+						$li_class = " $li_class";
 				}
 
 				/* Title required */
@@ -75,7 +81,7 @@ class Cards {
 						$title = "<a href='$link' class='u-tlrb-b'><span class='u-p-r'>$title</span></a>";
 				}
 
-				$title_class = 't-foreground-base u-ul-w u-c-i u-ul-w';
+				$title_class = 't-foreground-base u-ul-w u-c-i';
 
 				if ( $first_two ) {
 						$title_class .= ' h3-l l-mb-s';
@@ -143,7 +149,7 @@ class Cards {
 				/* Output */
 
 				return (
-					( $width ? "<li class='l-w-$width-pc'>" : '' ) .
+					( $width ? "<li class='l-w-$width-pc$li_class'>" : '' ) .
 						( ! $small ? '<div class="l-pb-xxxs l-pb-xs-l">' : '' ) .
 							'<div class="o-overlap-v l-flex u-p-r u-ul-c" data-theme="' . $theme . '" data-col data-hover>' .
 								'<div class="o-overlap-v__fg u-or-2">' .
@@ -175,6 +181,7 @@ class Cards {
 						[
 							'content' => '',
 							'class'   => '',
+							'flex'    => true,
 						],
 						$args
 				);
@@ -182,6 +189,7 @@ class Cards {
 				[
 					'content' => $content,
 					'class'   => $class,
+					'flex'    => $flex,
 				] = $args;
 
 				/* Content required */
@@ -190,13 +198,14 @@ class Cards {
 						return '';
 				}
 
-				$class = 'l-flex l-w-all' . ( $class ? " $class" : '' );
+				$class = ( $flex ? 'l-flex l-w-all' : 'l-c-2' ) . ( $class ? " $class" : '' );
+				$attr  = $flex ? " data-gap='r' data-row='s' data-wrap-s data-col" : '';
 
 				/* Output */
 
 				return (
 					'<div>' .
-						"<ul class='$class' data-gap='r' data-row='s' data-wrap-s data-col>" .
+						"<ul class='$class'$attr>" .
 							$content .
 						'</ul>' .
 					'</div>'

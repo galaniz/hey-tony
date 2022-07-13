@@ -53,8 +53,13 @@ class Main_Footer {
 						$k = $wo['key'];
 						$v = $wo['value'];
 
+						if ( ! $v ) {
+								continue;
+						}
+
 						$ww     = '';
 						$social = false;
+						$first  = 0 === $i;
 
 						foreach ( $v as $w ) {
 								$social = strpos( $w, 'social' ) !== false ? true : false;
@@ -65,14 +70,19 @@ class Main_Footer {
 										$wid = "<div class='l-pt-xxxs'>$wid</div>";
 								} else {
 										$contact = strpos( $wid, 'mailto:' ) !== false;
+										$class   = ( $contact ? 'o-accent' : 'o-underline u-c-i' ) . ' u-d-ib-a';
 
-										$wid = "<div class='" . ( $contact ? 'o-accent' : 'o-underline u-c-i' ) . " u-d-ib-a'>$wid</div>";
+										if ( $first ) {
+												$class .= ' l-pb-xxxs';
+										}
+
+										$wid = "<div class='$class'>$wid</div>";
 								}
 
 								$ww .= $wid;
 						}
 
-						$widgets_output[] = "<div class='l-mb-s-all'>$ww</div>";
+						$widgets_output[] = "<div class='l-mb-s-all" . ( $first ? ' l-flex-grow l-w-100-pc' : '' ) . "'>$ww</div>";
 				}
 
 				/* Logo */
