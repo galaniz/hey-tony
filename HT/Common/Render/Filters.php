@@ -139,7 +139,7 @@ class Filters {
 				if ( $output ) {
 						return (
 							'<form class="o-form js-load-more-filter-form" data-type="filters" aria-label="' . ucwords( $post_type ) . ' filters">' .
-								'<div class="l-flex" data-justify="right" data-gap="xs" data-gap-l="s" data-align="center" data-justify="right" data-wrap>' .
+								'<div class="l-flex u-ws-nw" data-justify="right" data-gap="xs" data-gap-l="s" data-align="center" data-justify="right" data-wrap>' .
 									'<div class="t-primary-base u-oo-s">' .
 										'<div class="l-h-s u-o-h">' .
 											$output .
