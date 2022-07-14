@@ -111,6 +111,77 @@ class Posts {
 		}
 
 		/**
+		 * Simple layout for output.
+		 *
+		 * @param array $args
+		 * @return string
+		 */
+
+		private static function simple( $args ) {
+				$args = array_merge(
+						[
+							'title'         => '',
+							'link'          => '',
+							'pretitle'      => '',
+							'pretitle_link' => '',
+							'pretitle_a11y' => '',
+							'heading_level' => 'h2',
+							'index'         => 0,
+						],
+						$args
+				);
+
+				[
+					'title'         => $title,
+					'link'          => $link,
+					'pretitle'      => $pretitle,
+					'pretitle_link' => $pretitle_link,
+					'pretitle_a11y' => $pretitle_a11y,
+					'heading_level' => $heading_level,
+					'index'         => $index,
+				] = $args;
+
+				/* Pretitle */
+
+				$pretitle_output = '';
+
+				if ( $pretitle ) {
+						if ( $pretitle_a11y ) {
+								$pretitle_a11y = "<span class='u-v-h'>$pretitle_a11y</span>";
+						}
+
+						if ( $pretitle_link ) {
+								$pretitle = "<a class='u-p-r u-zi-2' href='$pretitle_link'>$pretitle_a11y$pretitle</a>";
+						} else {
+								$pretitle = "<p class='l-m-0 u-p-r u-zi-2'>$pretitle_a11y$pretitle</p>";
+						}
+
+						$pretitle_output = (
+							'<div class="o-underline-r p-xs u-fw-b l-mb-xs l-flex">' .
+								$pretitle .
+							'</div>'
+						);
+				}
+
+				/* Output */
+
+				return (
+					'<li>' .
+						'<div class="l-pb-xxxs l-pb-xs-l' . ( $index > 1 ? ' u-bt-1' : '' ) . ' u-ul-c">' .
+							'<div class="' . ( $index > 1 ? ' l-pt-xxxs l-pt-xs-l ' : ' ' ) . '">' .
+								$pretitle_output .
+								'<div class="h5 t-foreground-base u-c-i u-ul-w">' .
+									"<$heading_level class='l-m-0 o-underline-r'>" .
+										"<a href='$link'><span class='u-p-r'>$title</span></a>" .
+									"</$heading_level>" .
+								'</div>' .
+							'</div>' .
+						'</div>' .
+					'</li>'
+				);
+		}
+
+		/**
 		 * Shortcode to output different post types.
 		 *
 		 * @param array $atts
@@ -172,6 +243,7 @@ class Posts {
 				$search         = is_search();
 				$archive        = is_archive() || is_home() || $search || is_post_type_archive( $type );
 				$is_home        = filter_var( $is_home, FILTER_VALIDATE_BOOLEAN ) || is_home();
+				$is_front       = is_front_page();
 				$single         = is_singular( $type );
 				$tax            = 'category';
 				$overflow       = 'hidden';
@@ -371,6 +443,22 @@ class Posts {
 										}
 								}
 
+								if ( 'post' === $type && $is_front && $index > 0 ) {
+										$layout = 'simple';
+
+										$output .= self::simple(
+												[
+													'title'         => $title,
+													'link'          => $link,
+													'pretitle'      => $pretitle,
+													'pretitle_link' => $pretitle_link,
+													'pretitle_a11y' => $pretitle_a11y,
+													'heading_level' => $heading_level,
+													'index'         => $index,
+												]
+										);
+								}
+
 								if ( 'columns' === $layout ) {
 										$fill  = false;
 										$class = '';
@@ -460,6 +548,13 @@ class Posts {
 												}
 										}
 
+										if ( 'post' === $type && $is_front ) {
+												$card_args['index']    = $index;
+												$card_args['excerpt']  = $excerpt;
+												$card_args['li_class'] = 'u-d-ib';
+												$card_args['width']    = 100;
+										}
+
 										if ( $slider ) {
 												$card_args['width']   = 0;
 												$card_args['excerpt'] = '';
@@ -506,7 +601,7 @@ class Posts {
 										);
 								}
 
-								if ( 'cards' === $layout ) {
+								if ( 'cards' === $layout || 'simple' === $layout ) {
 										if ( $slider ) {
 												$output = Slider::render(
 														[
@@ -520,6 +615,7 @@ class Posts {
 														[
 															'content' => $output,
 															'class'   => $pagination ? 'js-insert u-empty' : '',
+															'flex'    => 'cards' === $layout ? true : false,
 														]
 												);
 										}
