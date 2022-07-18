@@ -157,6 +157,10 @@ _Description:_ post type.
 _Type:_ `int`\
 _Default:_ `10`
 
+* `category`\
+_Type:_ `string`\
+_Default:_ `''`
+
 * `meta_key`\
 _Type:_ `string`\
 _Default:_ `''`
@@ -191,81 +195,80 @@ _Default:_ `h2`\
 _Possible Values:_ `h2`, `h3`\
 _Description:_ Heading level for post titles.
 
-* `pagination`\
-_Type:_ `boolean`\
-_Default:_ `false`\
-_Description:_ Include pagination at bottom of posts. Meant for use in archive pages.
+* `slider`\
+_Type:_ `string`\
+_Default:_ `''`\
+_Possible Values:_ `''`, `group`, `loop`\
 
 * `current_single`\
 _Type:_ `boolean`\
 _Default:_ `false`\
 _Description:_ Output content for single post within single post. Used in single testimonial.
 
-_Returns:_ `string` of markup
-
-### `ht-tablist`
-Outputs list of tab links corresponding to sections below.
-
-_Parameters:_
-
-* `ids`\
-_Type:_ `string`\
-_Default:_ `''`\
-_Description:_ Expect comma separated list. Id for each tablist item.\
-_Required_
-
-* `titles`\
-_Type:_ `string`\
-_Default:_ `''`\
-_Description:_ Expect comma separated list. Title for each tablist item.\
-_Required_
-
-* `tab_ids`\
-_Type:_ `string`\
-_Default:_ `''`\
-_Description:_ Expect comma separated list. Id for each corresponding tab.\
-_Required_
-
-* `selected`\
-_Type:_ `int`\
-_Default:_ `1`\
-_Description:_ Index of selected item.
-
-* `steps`\
+* `pagination`\
 _Type:_ `boolean`\
 _Default:_ `false`\
-_Description:_ Output index in circle instead of title (but title output for screen readers).
+_Description:_ Include pagination at bottom of posts. Meant for use in archive pages.
+
+* `type_archive`\
+_Type:_ `boolean`\
+_Default:_ `true`\
+_Description:_ Set to `false` to override default archive behavior.
 
 _Returns:_ `string` of markup
 
-### `ht-tab`
-Output section linked from tablist.
+### `ht-tabs`
+Outputs tablist and tabpanels. Content is pulled from Tabs Meta custom fields on pages and service posts. For multiple tabs separate with `***` in List and Panel custom fields. In the List field, information is separated by `:` and maps out to `{label}:{title}:{image id}:{selected}`. In the Panel field, a double line break indicates a new panel and should match the number of items in the List field.
 
 _Parameters:_
 
-* `id`\
-_Type:_ `string`\
-_Default:_ `''`\
-_Required_
+* `index`\
+_Type:_ `int`\
+_Default:_ `0`\
+_Description:_ If multiple tabs, specify which one to display based on index starting at 0.
 
-* `tablist_id`\
-_Type:_ `string`\
-_Default:_ `''`\
-_Description:_ Id for corresponding tablist item.\
-_Required_
+* `half`\
+_Type:_ `boolean`\
+_Default:_ `false`\
+_Description:_ Specify if width is half of container.
+
+_Returns:_ `string` of markup
+
+### `ht-collapsible`
+Outputs collapsible and expandable section.
+
+_Parameters:_
 
 * `title`\
 _Type:_ `string`\
+_Default:_ `''`
+
+* `heading_level`\
+_Type:_ `string`\
+_Default:_ `h3`\
+_Description:_ Heading level for title.
+
+* `accordion`\
+_Type:_ `string`\
 _Default:_ `''`\
-_Required_
+_Description:_ If expect other collapsibles to close when one opens, specify a common string to group them together.
+
+_Returns:_ `string` of markup
+
+### `ht-device`
+Outputs bar with three dots to indicate desktop mockup or thick border to indicate mobile mockup.
+
+_Parameters:_
+
+* `type`\
+_Type:_ `string`\
+_Default:_ `mobile`\
+_Possible Values:_ `mobile`, `desktop`\
 
 * `img_id`\
 _Type:_ `int`\
-_Default:_ `0`
-
-* `selected`\
-_Type:_ `boolean`\
-_Default:_ `false`
+_Default:_ `0`\
+_Required_
 
 _Returns:_ `string` of markup
 
@@ -318,9 +321,9 @@ Used to override default size for semantic heading level.
 | `m`       | `100px`      |
 | `l`       | `120px`      |
 
-| Breakpoint | Value          |
-| ---------- | -------------- |
-| `-l`       | `min 1000px`   |
+| Breakpoint | Value                           |
+| ---------- | ------------------------------- |
+| `-l`       | `min 1000px` (applies to `xs`+) |
 
 #### Margin
 
@@ -399,12 +402,17 @@ Display images in wrappable row.
 
 ### Themes
 
-| Class                | Description                            |
-| -------------------- | -------------------------------------- |
-| `.t-text-light`      | Set color for all children to be theme light as well as focus outline |
-| `.t-foreground-base` | Set color to theme black               |
-| `.t-primary-base`    | Set color to theme blue                |
-| `.t-bg-inherit`      | Inherit background color from parent element |
+| Class                   | Description                                                           |
+| ----------------------- | --------------------------------------------------------------------- |
+| `.t-text-light`         | Set color for all children to be theme light as well as focus outline |
+| `.t-foreground-base`    | Set color to theme black                                              |
+| `.t-background-base`    | Set color to theme beige                                              |
+| `.t-primary-base`       | Set color to theme blue                                               |
+| `.t-bg-background-base` | Set background color to theme beige                                   |
+| `.t-bg-background-dark` | Set background color to theme beige dark                              |
+| `.t-bg-foreground-base` | Set background color to theme black                                   |
+| `.t-ov-background-dark` | Set circular overlap background in cards to theme beige dark          |
+| `.t-bg-inherit`         | Inherit background color from parent element                          |
 
 ### Overrides
 Start with `ht-`. Best to avoid removing them.
