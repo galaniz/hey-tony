@@ -52,11 +52,12 @@ class Main_Nav {
 
 				$main_nav = wp_nav_menu(
 						[
-							'menu'       => 'main-navigation',
-							'container'  => '',
-							'items_wrap' => '%3$s',
-							'echo'       => false,
-							'walker'     => $nav_walker,
+							'menu'           => 'main-navigation',
+							'theme_location' => 'main_navigation',
+							'container'      => '',
+							'items_wrap'     => '%3$s',
+							'echo'           => false,
+							'walker'         => $nav_walker,
 						]
 				);
 
