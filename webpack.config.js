@@ -206,13 +206,18 @@ entries = entries.map(e => {
 const styleBanner =
 `/*!
 Theme Name: Avada Child
-Theme URI: https://heytony.ca/
-Description: Theme for heyTony based on Avada
-Template: Avada
-Author: Graciela Alaniz
-Author URI: https://alanizcreative.com
-Version: 1.0.0
 Text Domain: avada-child
+Version: 1.0.0
+Tested up to: 6.0
+Requires at least: 5.0
+Requires PHP: 7.2.0
+Description: Theme for heyTony based on Avada
+Author: Graciela Alaniz
+Author URI: https://alanizcreative.com/
+Theme URI: https://heytony.ca/
+License: MIT License
+License URI: https://opensource.org/licenses/MIT
+Template: Avada
 */`
 
 /* Exports */

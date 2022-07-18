@@ -115,11 +115,12 @@ class Main_Footer {
 
 				$footer_nav = wp_nav_menu(
 						[
-							'menu'       => 'footer_navigation',
-							'container'  => '',
-							'items_wrap' => '%3$s',
-							'echo'       => false,
-							'depth'      => 0,
+							'menu'           => 'footer_navigation',
+							'theme_location' => 'footer_navigation',
+							'container'      => '',
+							'items_wrap'     => '%3$s',
+							'echo'           => false,
+							'depth'          => 0,
 						]
 				);
 
