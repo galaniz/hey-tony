@@ -10,8 +10,8 @@
 /* Styles */
 
 .l-c-2 {
-	@include mix.breakpoint-min(800) {
+  @include mix.breakpoint-min(800) {
     column-count: 2;
-		column-gap: func.calc-rem(60px);
+    column-gap: func.calc-rem(60px);
   }
 }

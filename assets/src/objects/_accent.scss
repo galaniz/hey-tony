@@ -24,7 +24,7 @@
 
 .o-accent-l,
 .o-accent-r-l {
-	--ht-accent-p: #{func.calc-rem(8px)};
+  --ht-accent-p: #{func.calc-rem(8px)};
 
   @include mix.breakpoint-min(1000) {
     --ht-accent-p: #{func.calc-rem(15px)};
