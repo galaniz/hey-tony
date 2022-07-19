@@ -263,22 +263,6 @@ class HT {
 				}
 		}
 
-		public function widget_before( $index, $has_widgets ) {
-				$n = self::$namespace;
-
-				if ( "$n-single-post-widget" === $index && $has_widgets ) {
-						echo '<div class="l-mb-l-all">';
-				}
-		}
-
-		public function widget_after( $index, $has_widgets ) {
-				$n = self::$namespace;
-
-				if ( "$n-single-post-widget" === $index && $has_widgets ) {
-						echo '</div>';
-				}
-		}
-
 		/**
 		 * Shortcode output for archive title.
 		 */
@@ -464,6 +448,26 @@ class HT {
 							'after_title'   => '',
 						]
 				);
+		}
+
+		/**
+		 * Before and after widget display.
+		 */
+
+		public function widget_before( $index, $has_widgets ) {
+				$n = self::$namespace;
+
+				if ( "$n-single-post-widget" === $index && $has_widgets ) {
+						echo '<div class="l-mb-l-all">';
+				}
+		}
+
+		public function widget_after( $index, $has_widgets ) {
+				$n = self::$namespace;
+
+				if ( "$n-single-post-widget" === $index && $has_widgets ) {
+						echo '</div>';
+				}
 		}
 
 		/**
