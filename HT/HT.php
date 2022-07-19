@@ -241,6 +241,8 @@ class HT {
 				add_action( 'pre_get_posts', [$this, 'query_vars'] );
 				add_action( 'avada_before_main_container', [$this, 'render_loader'] );
 				add_action( 'wp_loaded', [$this, 'widgets'] );
+				add_action( 'dynamic_sidebar_before', [$this, 'widget_before'], 10, 2 );
+				add_action( 'dynamic_sidebar_after', [$this, 'widget_after'], 10, 2 );
 
 				static::ajax_actions();
 
@@ -258,6 +260,22 @@ class HT {
 				if ( is_admin() ) {
 						$reading_settings = new Reading();
 						$user_settings    = new User();
+				}
+		}
+
+		public function widget_before( $index, $has_widgets ) {
+				$n = self::$namespace;
+
+				if ( "$n-single-post-widget" === $index && $has_widgets ) {
+						echo '<div class="l-mb-l-all">';
+				}
+		}
+
+		public function widget_after( $index, $has_widgets ) {
+				$n = self::$namespace;
+
+				if ( "$n-single-post-widget" === $index && $has_widgets ) {
+						echo '</div>';
 				}
 		}
 
@@ -435,6 +453,17 @@ class HT {
 							'after_title'   => '',
 						]
 				);
+
+				register_sidebar(
+						[
+							'name'          => 'Single Post Widget',
+							'id'            => "$n-single-post-widget",
+							'before_widget' => '',
+							'after_widget'  => '',
+							'before_title'  => '',
+							'after_title'   => '',
+						]
+				);
 		}
 
 		/**
@@ -442,10 +471,12 @@ class HT {
 		 */
 
 		public function body_class( $classes ) {
-				$classes[] = 'ht';
+				$n = self::$namespace;
+
+				$classes[] = $n;
 
 				if ( self::$hero_grayscale ) {
-						$classes[] = 'ht-hero-grayscale';
+						$classes[] = "$n-hero-grayscale";
 				}
 
 				$swoop_size = 's';
@@ -462,7 +493,7 @@ class HT {
 						$swoop_size = 'xs';
 				}
 
-				$classes[] = "ht-swoop-$swoop_size";
+				$classes[] = "$n-swoop-$swoop_size";
 
 				return $classes;
 		}
@@ -481,9 +512,17 @@ class HT {
 		 */
 
 		public function widget_title( $params ) {
+				$heading_level = 2;
+				$id            = $params[0]['id'] ?? '';
+				$n             = self::$namespace;
+
+				if ( "$n-single-post-widget" === $id ) {
+						$heading_level = 3;
+				}
+
 				$params[0]['before_widget'] = '<div>';
 				$params[0]['after_widget']  = '</div>';
-				$params[0]['before_title']  = '<div class="p-s u-fw-b l-mb-s"><p role="heading" aria-level="2">';
+				$params[0]['before_title']  = '<div class="p-s u-fw-b l-mb-s"><p role="heading" aria-level="' . $heading_level . '">';
 				$params[0]['after_title']   = '</p></div>';
 
 				return $params;
@@ -504,9 +543,16 @@ class HT {
 		public function widget_nav_args( $nav_menu_args, $nav_menu, $args, $instance ) {
 				$class = 'l-mb-s-all p';
 				$attr  = '';
+				$id    = $args['id'];
+				$n     = self::$namespace;
 
-				if ( 'avada-footer-widget-1' === $args['id'] ) {
+				if ( 'avada-footer-widget-1' === $id ) {
 						$class = 'l-flex p-m';
+						$attr  = ' data-gap="s" data-wrap';
+				}
+
+				if ( "$n-single-post-widget" === $id ) {
+						$class = 'l-flex p-s';
 						$attr  = ' data-gap="s" data-wrap';
 				}
 

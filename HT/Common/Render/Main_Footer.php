@@ -82,7 +82,7 @@ class Main_Footer {
 								$ww .= $wid;
 						}
 
-						$widgets_output[] = "<div class='l-mb-s-all" . ( $first ? ' l-flex-grow l-w-100-pc' : '' ) . "'>$ww</div>";
+						$widgets_output[] = "<div class='" . ( $first ? 'l-mb-r-all l-flex-grow l-w-100-pc' : 'l-mb-s-all' ) . "'>$ww</div>";
 				}
 
 				/* Logo */
