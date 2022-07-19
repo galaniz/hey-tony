@@ -365,6 +365,13 @@
   li {
     padding-left: 1.5%;
     margin-bottom: func.calc-rem(10px);
+		letter-spacing: 0.01em;
+
+		@include mix.fluid-size(
+      font-size,
+      func.calc-rem(19px) func.calc-rem(24px),
+      600 1200
+    );
 
     &:last-child {
       margin-bottom: 0;
