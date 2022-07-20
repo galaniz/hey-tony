@@ -125,8 +125,9 @@
 /* Decorative background swoop */
 
 .c-nav__swoop {
+  --bg: #{rgba(func.get-color("foreground-base"), 0.1)};
+
   @extend %u-opacity-0;
-  @extend %u-color-foreground-base;
 
   .c-nav[data-open] & {
     transform: translateX(-50%);
@@ -135,12 +136,11 @@
 
   transform: translateX(-55%);
   transition: visibility 0ms ease 400ms, opacity 400ms ease 10ms, transform 400ms ease 10ms;
+  color: var(--bg);
 
   > div {
-    @extend %u-background-color-foreground-base;
-
+    background: var(--bg);
     width: 60vw;
-    opacity: 0.1;
   }
 
   > div > div {
