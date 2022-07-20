@@ -31,10 +31,34 @@ $container: map.get(con.$containers, "def");
   padding: 0 var(--ht-flex-gap);
 }
 
+.o-slider__item {
+  --width: #{calc(100vw - (var(--ht-flex-gap) * 2))};
+
+  @include mix.breakpoint-min(600) {
+    --width: #{calc(50vw - var(--ht-flex-gap))};
+  }
+
+  @include mix.breakpoint-min(900) {
+    --width: #{calc(33.3333vw - (var(--ht-flex-gap) / 1.5))};
+  }
+
+  @include mix.breakpoint-min(1270) {
+    --width: #{calc(33.3333% + (var(--ht-flex-gap) / 3))};
+  }
+}
+
+.o-slider__group {
+  --width: #{calc(100vw - (var(--ht-flex-gap) * 2))};
+
+  @include mix.breakpoint-min(1270) {
+    --width: #{calc(100% + var(--ht-flex-gap))};
+  }
+}
+
 .o-slider__item,
 .o-slider__group {
   scroll-snap-align: start;
-  width: calc(100vw - (var(--ht-flex-gap) * 2));
+  width: var(--width);
 
   &:first-child {
     margin-left: var(--ht-flex-gap);
@@ -42,26 +66,6 @@ $container: map.get(con.$containers, "def");
 
   #ht .ht &:focus {
     outline: 0; // Move to view
-  }
-}
-
-.o-slider__item {
-  @include mix.breakpoint-min(600) {
-    width: calc(50vw - var(--ht-flex-gap));
-  }
-
-  @include mix.breakpoint-min(900) {
-    width: calc(33.3333vw - (var(--ht-flex-gap) / 1.5));
-  }
-
-  @include mix.breakpoint-min(1270) {
-    width: calc(33.3333% + (var(--ht-flex-gap) / 3));
-  }
-}
-
-.o-slider__group {
-  @include mix.breakpoint-min(1270) {
-    width: calc(100% + var(--ht-flex-gap));
   }
 }
 

@@ -17,7 +17,7 @@
     border-radius: func.calc-rem(20px);
   }
 
-  #ht .ht & input[type="search"],
+  .fusion-search-form-content .search-field input[type="search"],
   input[type="text"],
   input[type="email"],
   input[type="tel"],
@@ -38,11 +38,11 @@
 
   /* Fusion search */
 
-  #ht .ht & input[type="search"] {
+  &.fusion-search-element form .fusion-search-form-content .search-field input[type="search"] {
     padding-left: func.calc-rem(60px);
   }
 
-  #ht .ht & .searchsubmit {
+  form .fusion-search-form-content .fusion-search-button input[type="submit"] {
     padding: func.calc-rem(12px) func.calc-rem(24px);
   }
 
