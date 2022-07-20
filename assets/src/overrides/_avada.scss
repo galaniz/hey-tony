@@ -294,6 +294,7 @@
 .ht-editor,
 .ht-single__main {
   --ht-underline-w: #{func.calc-rem(1.5px)};
+  --margin: #{func.calc-rem(30px)};
 
   ul,
   ol {
@@ -323,15 +324,17 @@
   }
 
   li {
+    --margin: #{func.calc-rem(10px)};
+
     padding-left: 1.5%;
-    margin-bottom: func.calc-rem(10px);
     letter-spacing: 0.01em;
+    margin-top: var(--margin);
 
     @include mix.fluid-size(
       font-size,
       func.calc-rem(19px) func.calc-rem(24px),
       600 1200
-		);
+    );
   }
 
   h2,
@@ -349,24 +352,11 @@
   p,
   ul,
   ol,
-  blockquote,
-  .fusion-text > div {
-    margin-bottom: func.calc-rem(30px);
-  }
-
-  ul ul,
-  ol ol {
-    margin-top: func.calc-rem(10px);
-  }
-
-  p,
-  ul,
-  ol,
   li,
-  ul ul,
-  ol ol,
   blockquote,
   .fusion-text > div {
+    margin-bottom: var(--margin);
+
     &:last-child {
       margin-bottom: 0;
     }
