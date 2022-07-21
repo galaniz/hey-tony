@@ -326,7 +326,7 @@ class HT {
 		public function head() {
 				/* phpcs:disable */ ?>
 					<style id="ht-vars">
-						:root {
+						#ht:root {
 							--ht-hero-c: <?php echo self::$colors[self::$hero_color] ?>;
 							--ht-hero-bg-c: <?php echo self::$colors[self::$hero_background_color] ?>;
 						}
