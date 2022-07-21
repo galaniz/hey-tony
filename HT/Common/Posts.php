@@ -168,7 +168,7 @@ class Posts {
 				return (
 					'<li>' .
 						'<div class="l-pb-xxxs l-pb-xs-l' . ( $index > 1 ? ' u-bt-1' : '' ) . ' u-ul-c">' .
-							'<div class="' . ( $index > 1 ? ' l-pt-xxxs l-pt-xs-l ' : ' ' ) . '">' .
+							'<div' . ( $index > 1 ? ' class="l-pt-xxxs l-pt-xs-l"' : '' ) . '>' .
 								$pretitle_output .
 								'<div class="h5 t-foreground-base u-c-i u-ul-w">' .
 									"<$heading_level class='l-m-0 o-underline-r'>" .
