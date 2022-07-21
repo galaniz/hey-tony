@@ -50,6 +50,15 @@ p strong {
   @extend %u-font-weight-bold;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin-bottom: func.calc-rem(30px);
+}
+
 *:disabled,
 *[aria-disabled="true"],
 input[type="radio"]:disabled ~ span,
