@@ -237,7 +237,6 @@ class HT {
 				add_action( 'after_setup_theme', [$this, 'init'] );
 				add_action( 'wp', [$this, 'wp'] );
 				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 20 );
-				add_action( 'wp_head', [$this, 'head'] );
 				add_action( 'pre_get_posts', [$this, 'query_vars'] );
 				add_action( 'avada_before_main_container', [$this, 'render_loader'] );
 				add_action( 'wp_loaded', [$this, 'widgets'] );
@@ -320,19 +319,8 @@ class HT {
 		}
 
 		/**
-		 * Output in head tag.
+		 * Alter query vars for posts.
 		 */
-
-		public function head() {
-				/* phpcs:disable */ ?>
-					<style id="ht-vars">
-						#ht:root {
-							--ht-hero-c: <?php echo self::$colors[self::$hero_color] ?>;
-							--ht-hero-bg-c: <?php echo self::$colors[self::$hero_background_color] ?>;
-						}
-					</style>
-				<?php /* phpcs:enable */
-		}
 
 		public function query_vars( $query ) {
 				FRM::query_vars( $query );
@@ -503,11 +491,17 @@ class HT {
 		}
 
 		/**
-		 * Add id to html element.
+		 * Add id and styles to html element.
 		 */
 
 		public function html_id( $output ) {
 				$output .= ' id="ht"';
+
+				$c  = self::$colors[ self::$hero_color ];
+				$bg = self::$colors[ self::$hero_background_color ];
+
+				$output .= " style='--ht-hero-c:$c;--ht-hero-bg-c:$bg'";
+
 				return $output;
 		}
 
