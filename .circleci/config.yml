@@ -18,7 +18,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt-get install rsync
       - run:
-          rsync -r -a -v -e "ssh -p $SSH_PORT" --delete --exclude .gitattributes --exclude .gitignore --exclude phpcs.xml.dist --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
+          rsync -avzr --rsh="ssh -p $SSH_PORT" --delete --exclude .gitattributes --exclude .gitignore --exclude phpcs.xml.dist --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
   build-and-deploy-production:
     docker:
       - image: cimg/php:7.4-node
