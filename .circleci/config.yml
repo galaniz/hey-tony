@@ -13,12 +13,12 @@ jobs:
       - run: npm run build
       - add_ssh_keys:
           fingerprints:
-            - "a7:82:56:b6:47:bd:44:45:98:83:35:2f:1f:c9:c1:16"
+            - "9f:49:99:61:a7:da:d7:4f:51:cd:e7:1f:e1:dd:e6:b6"
       - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
       - run: sudo apt update
       - run: sudo apt install rsync
       - run:
-          rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ --rsh="ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
+          rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude phpcs.xml.dist --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ --rsh="ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
   build-and-deploy-production:
     docker:
       - image: cimg/php:7.4-node
@@ -30,12 +30,12 @@ jobs:
       - run: npm run build
       - add_ssh_keys:
           fingerprints:
-            - "a7:82:56:b6:47:bd:44:45:98:83:35:2f:1f:c9:c1:16"
+            - "9f:49:99:61:a7:da:d7:4f:51:cd:e7:1f:e1:dd:e6:b6"
       - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
       - run: sudo apt update
       - run: sudo apt install rsync
       - run:
-          rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ --rsh="ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/public_html/wp-content/themes/avada-child
+          rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude phpcs.xml.dist --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ --rsh="ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/public_html/wp-content/themes/avada-child
 
 workflows:
   version: 2.1
