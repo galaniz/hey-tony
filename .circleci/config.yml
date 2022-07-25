@@ -13,7 +13,7 @@ jobs:
       - run: npm run build
       - add_ssh_keys:
           fingerprints:
-            - "9f:49:99:61:a7:da:d7:4f:51:cd:e7:1f:e1:dd:e6:b6"
+            - "a7:82:56:b6:47:bd:44:45:98:83:35:2f:1f:c9:c1:16"
       - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
       - run: sudo apt update
       - run: sudo apt install rsync
@@ -30,10 +30,10 @@ jobs:
       - run: npm run build
       - add_ssh_keys:
           fingerprints:
-            - "9f:49:99:61:a7:da:d7:4f:51:cd:e7:1f:e1:dd:e6:b6"
+            - "a7:82:56:b6:47:bd:44:45:98:83:35:2f:1f:c9:c1:16"
       - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
       - run: sudo apt update
-      - run: sudo apt install rsync
+      - run: sudo apt-get install -y rsync
       - run:
           rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude phpcs.xml.dist --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ --rsh="ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/public_html/wp-content/themes/avada-child
 
