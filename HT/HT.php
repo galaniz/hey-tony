@@ -24,6 +24,7 @@ use HT\Common\Render\Collapsible;
 use HT\Common\Render\Device;
 use HT\Common\Posts;
 use HT\Admin\User;
+use HT\Admin\General;
 use Formation\Formation as FRM;
 use Formation\Pub\Ajax;
 use Formation\Admin\Settings\Reading;
@@ -239,6 +240,7 @@ class HT {
 				add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 20 );
 				add_action( 'pre_get_posts', [$this, 'query_vars'] );
 				add_action( 'avada_before_main_container', [$this, 'render_loader'] );
+				add_action( 'avada_before_wrapper_container_close', [$this, 'render_cookie_notice'] );
 				add_action( 'wp_loaded', [$this, 'widgets'] );
 				add_action( 'dynamic_sidebar_before', [$this, 'widget_before'], 10, 2 );
 				add_action( 'dynamic_sidebar_after', [$this, 'widget_after'], 10, 2 );
@@ -257,8 +259,9 @@ class HT {
 				/* Admin */
 
 				if ( is_admin() ) {
-						$reading_settings = new Reading();
 						$user_settings    = new User();
+						$reading_settings = new Reading();
+						$general_settings = new General();
 				}
 		}
 
@@ -406,6 +409,33 @@ class HT {
 						'</div>' .
 					'</aside>'
 				);
+		}
+
+		/**
+		 * Output cookie notice before end of #wrapper.
+		 */
+
+		public function render_cookie_notice() {
+				$cookie_text = get_option(
+						self::$namespace . '_cookie_text',
+						'We use cookies to give you the best experience. By continuing to use this site, you consent to the use of cookies.'
+				);
+
+				/* phpcs:disable */
+				echo (
+					'<aside class="c-notice l-mw-r l-ph-ctn l-pb-xxxs o-underline u-p-f u-b-0 u-r-0 u-d-n">' .
+						'<div class="t-bg-background-base p-xs u-p-r u-o-h u-tlrb-b u-fw-b">' .
+							"<p class='u-p-r'>$cookie_text</p>" .
+							'<button class="t-foreground-base l-w-s l-h-s u-p-a u-t-0 u-r-0 u-oo-s" type="button">' .
+								'<span class="u-v-h">Close cookie notice</span>' .
+								'<svg role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14">' .
+									'<path fill="currentColor" d="M8.12133 6.70724L13.4144 1.41421L12.0002 0L6.70712 5.29303L1.41421 0.00012402L0 1.41434L5.29291 6.70724L0.000151038 12L1.41436 13.4142L6.70712 8.12146L12 13.4143L13.4142 12.0001L8.12133 6.70724Z" />' .
+								'</svg>' .
+							'</button>' .
+						'</div>' .
+					'</aside>'
+				);
+				/* phpcs:enable */
 		}
 
 		/**

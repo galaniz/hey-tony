@@ -11,6 +11,7 @@ import Tabs from 'Formation/objects/tabs'
 import Slider from 'Formation/objects/slider'
 import Collapsible from 'Formation/objects/collapsible'
 import OverflowIndicator from 'Formation/objects/overflow-indicator'
+import Remove from 'Formation/objects/remove'
 
 /* Variables */
 
@@ -30,6 +31,10 @@ const elMeta = [
   {
     prop: 'hero',
     selector: '.fusion-page-title-bar'
+  },
+  {
+    prop: 'notice',
+    selector: '.c-notice'
   },
   {
     prop: 'collapsibles',
@@ -103,6 +108,8 @@ const elMeta = [
 /* DOM loaded */
 
 const initialize = () => {
+  const ns = 'ht'
+
   /* Check if reduce motion */
 
   let reduceMotion = false
@@ -168,12 +175,33 @@ const initialize = () => {
     window.addEventListener('resize', resizeHandler)
   }
 
+  /* Handle display of notice based on cookie */
+
+  if (el.notice) {
+    const close = el.notice.querySelector('button')
+
+    const notice = new Remove({
+      item: el.notice,
+      trigger: close,
+      cookie: {
+        name: `${ns}-notice`,
+        value: 'close',
+        expirationDays: 365
+      }
+    })
+
+    const hide = notice.getHide()
+
+    if (!hide) {
+      el.notice.style.display = 'block'
+    }
+  }
+
   /* Load posts */
 
   if (el.loadMore) {
     /* Global variables */
 
-    const ns = 'ht'
     const n = window[ns]
 
     const baseLink = el.loadMore.getAttribute('data-base-link')
