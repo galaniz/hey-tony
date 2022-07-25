@@ -122,7 +122,7 @@ class Overlap {
 					'<li class="o-overlap">' .
 						'<div class="l-flex u-p-r" data-col data-hover>' .
 							'<div class="o-overlap__fg u-or-2">' .
-								'<div class="l-mw-r l-pt-s l-pt-r-l u-p-r u-tlrb-b u-zi-1">' .
+								'<div class="l-mw-m l-pt-s l-pt-r-l u-p-r u-tlrb-b u-zi-1">' .
 									$pretitle_output .
 									'<div class="h2-l l-pb-xxxs t-foreground-base u-c-i">' .
 										"<$heading_level class='o-overlap__h l-m-0'>$title</$heading_level>" .

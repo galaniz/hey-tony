@@ -715,7 +715,7 @@ class Posts {
 								'</nav>' .
 							'</div>' .
 							'<div class="js-load-more-err l-flex l-pt-xs" data-justify="center" role="alert" style="display:none;">' .
-								'<div class="o-notice l-mw-r l-m-auto u-ta-c u-c-i" data-type="error">' .
+								'<div class="o-notice l-mw-m l-m-auto u-ta-c u-c-i" data-type="error">' .
 									'<p class="l-m-0 u-fw-b">Oops, somewthing went wrong. Please try again later.</p>' .
 								'</div>' .
 							'</div>'
@@ -759,33 +759,35 @@ class Posts {
 				/* Return */
 
 				if ( ! $return_array ) {
-						if ( $a11y_section_title ) {
-								$output = (
-									'<section>' .
-										"<h2 class='u-v-h'>$section_title</h2>" .
-										$output .
-									'</section>'
-								);
-						} elseif ( $section_title ) {
-								$padding = 'l-pt-s l-pb-s l-pt-r-l l-pb-r-l';
+						if ( $output ) {
+								if ( $a11y_section_title ) {
+										$output = (
+											'<section>' .
+												"<h2 class='u-v-h'>$section_title</h2>" .
+												$output .
+											'</section>'
+										);
+								} elseif ( $section_title ) {
+										$padding = 'l-pt-s l-pb-s l-pt-r-l l-pb-r-l';
 
-								$section_title = (
-									'<div class="h4 u-p-r' . ( $slider ? ' u-ta-c l-ph-ctn' : '' ) . '">' .
-										"<h2>$section_title</h2>" .
-									'</div>'
-								);
+										$section_title = (
+											'<div class="h4 u-p-r' . ( $slider ? ' u-ta-c l-ph-ctn' : '' ) . '">' .
+												"<h2>$section_title</h2>" .
+											'</div>'
+										);
 
-								if ( 'work' === $type ) {
-										$padding        = 'l-pt-s';
-										$section_title .= '<div class="l-m-full u-b-op u-bt-1"></div>';
+										if ( 'work' === $type ) {
+												$padding        = 'l-pt-s';
+												$section_title .= '<div class="l-m-full u-b-op u-bt-1"></div>';
+										}
+
+										$output = (
+											"<section class='$padding'>" .
+												$section_title .
+												$output .
+											'</section>'
+										);
 								}
-
-								$output = (
-									"<section class='$padding'>" .
-										$section_title .
-										$output .
-									'</section>'
-								);
 						}
 
 						return $output;
