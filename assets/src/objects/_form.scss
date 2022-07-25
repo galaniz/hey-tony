@@ -17,9 +17,9 @@
     border-radius: func.calc-rem(20px);
   }
 
-	select {
-		border-radius: var(--form_border_radius);
-	}
+  select {
+    border-radius: var(--form_border_radius);
+  }
 
   .fusion-search-form-content .search-field input[type="search"],
   input[type="text"],
