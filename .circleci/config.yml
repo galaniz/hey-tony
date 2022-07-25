@@ -16,7 +16,7 @@ jobs:
             - "a7:82:56:b6:47:bd:44:45:98:83:35:2f:1f:c9:c1:16"
       - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
       - run: sudo apt update
-      - run: sudo apt install rsync
+      - run: sudo apt-get install -y rsync
       - run:
           rsync -avzr --delete --exclude .gitattributes --exclude .gitignore --exclude phpcs.xml.dist --exclude /.circleci/ --exclude /.git/ --exclude /node_modules/ --rsh="ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
   build-and-deploy-production:
