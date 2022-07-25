@@ -18,7 +18,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install rsync
       - run:
-          rsync -avz --delete ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
+          rsync -avzr --delete --rsh="ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
   build-and-deploy-production:
     docker:
       - image: cimg/php:7.4-node
