@@ -15,10 +15,12 @@ jobs:
           fingerprints:
             - "a7:82:56:b6:47:bd:44:45:98:83:35:2f:1f:c9:c1:16"
       - run: ssh-keyscan -p $SSH_PORT $SSH_HOST >> ~/.ssh/known_hosts
-      - run: rm -rf $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child/
-      - run: mkdir -p $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
-      - run: scp -r -p -P $SSH_PORT ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
-      - run: ~.
+      - run: sudo apt update
+      - run: sudo apt install rsync
+      - run: sudo apt install sshfs
+      - run: sshfs $SSH_USER@$SSH_HOST
+      - run:
+          rsync -avzr --delete --exclude=.gitattributes,.gitignore,phpcs.xml.dist,/.circleci/,/.git/,/node_modules/ -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child/
   build-and-deploy-production:
     docker:
       - image: cimg/php:7.4-node
