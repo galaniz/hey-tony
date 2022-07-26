@@ -7,6 +7,8 @@ jobs:
       - image: cimg/php:7.4-node
     steps:
       - checkout
+      - run: mkdir –p /ht-staging
+      - run: cd /ht-staging
       - run: composer install
       - run: composer dump-autoload
       - run: npm install
@@ -18,10 +20,9 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install rsync
       - run: sudo apt install sshfs
-      - run: sudo modprobe fuse
-      - run: sshfs -p $SSH_PORT $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child ./ -o nonempty
+      - run: sshfs -p $SSH_PORT $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child /ht-staging
       - run:
-          rsync -avzr --delete --exclude=.gitattributes,.gitignore,phpcs.xml.dist,/.circleci/,/.git/,/node_modules/ -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
+          rsync -avzr --delete --exclude=.gitattributes,.gitignore,phpcs.xml.dist,/.circleci/,/.git/,/node_modules/ -e "ssh -p $SSH_PORT" /ht-staging $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
   build-and-deploy-production:
     docker:
       - image: cimg/php:7.4-node
