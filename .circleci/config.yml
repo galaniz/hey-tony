@@ -18,9 +18,9 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install rsync
       - run: sudo apt install sshfs
-      - run: sshfs $SSH_USER@$SSH_HOST
+      - run: sshfs $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
       - run:
-          rsync -avzr --delete --exclude=.gitattributes,.gitignore,phpcs.xml.dist,/.circleci/,/.git/,/node_modules/ -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child/
+          rsync -avzr --delete --exclude=.gitattributes,.gitignore,phpcs.xml.dist,/.circleci/,/.git/,/node_modules/ -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
   build-and-deploy-production:
     docker:
       - image: cimg/php:7.4-node
