@@ -18,7 +18,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install rsync
       - run:
-          rsync -avzr --delete --exclude=.gitattributes,.gitignore,phpcs.xml.dist,/.circleci/,/.git/,/node_modules/ -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
+          rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/staging.heytony.ca/wp-content/themes/avada-child
 
   build-and-deploy-production:
     docker:
@@ -36,7 +36,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install rsync
       - run:
-          rsync -avzr --delete --exclude=.gitattributes,.gitignore,phpcs.xml.dist,/.circleci/,/.git/,/node_modules/ -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/public_html/wp-content/themes/avada-child
+          rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:/home/heyton/public_html/wp-content/themes/avada-child
 
 workflows:
   version: 2.1
