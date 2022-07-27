@@ -1,0 +1,5 @@
+.gitattributes
+.gitignore,phpcs.xml.dist
+/.circleci/
+/.git/
+/node_modules/
