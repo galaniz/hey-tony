@@ -79,7 +79,7 @@ class Device {
 
 				if ( 'mobile' === $type ) {
 						return (
-							'<div class="o-device o-aspect-ratio l-mw-s l-m-auto t-bg-background-dark" data-p="177" data-type="mobile">' .
+							'<div class="o-device o-aspect-ratio l-mw-s l-ml-auto l-mr-auto t-bg-background-dark" data-p="177" data-type="mobile">' .
 								'<div class="u-p-a u-t-0 u-l-0 u-r-0 u-b-0 u-o-h">' .
 									$img .
 								'</div>' .
