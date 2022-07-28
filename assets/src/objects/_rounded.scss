@@ -17,4 +17,5 @@
   );
 
   border-radius: var(--border);
+  border: func.calc-rem(1.5px) solid func.get-color("background-dark");
 }
