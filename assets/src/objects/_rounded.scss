@@ -1,0 +1,20 @@
+/**
+ * Objects: rounded border radius
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/src/utils/functions" as func;
+@use "@alanizcreative/formation/src/utils/mixins" as mix;
+
+/* Styles */
+
+.o-rounded {
+	@include mix.fluid-size(
+    --border,
+    func.calc-rem(8px) func.calc-rem(20px),
+    400 1200
+  );
+
+  border-radius: var(--border);
+}
