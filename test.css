@@ -2,3 +2,7 @@
 	display: block;
 	position: relative;
 }
+
+.what {
+	display: flex;
+}
