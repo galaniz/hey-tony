@@ -585,4 +585,4 @@ const initialize = () => {
   }
 } // End initialize
 
-document.addEventListener('DOMContentLoaded', initialize)
+initialize()

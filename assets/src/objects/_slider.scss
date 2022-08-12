@@ -60,10 +60,6 @@ $container: map.get(con.$containers, "def");
   scroll-snap-align: start;
   width: var(--width);
 
-  &:first-child {
-    margin-left: var(--ht-flex-gap);
-  }
-
   #ht .ht &:focus {
     outline: 0; // Move to view
   }
@@ -98,9 +94,9 @@ $container: map.get(con.$containers, "def");
 }
 
 .o-slider__offset {
-  width: calc(var(--ht-flex-gap) * 4);
+  width: calc(var(--ht-flex-gap) * 2);
 
   @include mix.breakpoint-min(1270) {
-    width: calc((50vw - #{func.calc-rem(math.div($container, 2))}) + (50vw - 50%));
+    width: calc((50vw - #{func.calc-rem(math.div(1230px, 2))}) + (50vw - 50%));
   }
 }
