@@ -496,7 +496,7 @@ const initialize = () => {
       const args = {
         tabs: ss.nav,
         panels: ss.panels,
-        delay: 800,
+        delay: 600,
         slider: ss.main,
         track: ss.track,
         targetHeight: ss.height
