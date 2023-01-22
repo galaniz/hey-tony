@@ -105,6 +105,22 @@ const elMeta = [
   }
 ]
 
+/* Resize helper */
+
+const onResize = (callback = () => {}, delay = 100) => {
+  let resizeTimer
+
+  const resizeHandler = () => {
+    clearTimeout(resizeTimer)
+
+    resizeTimer = setTimeout(() => {
+      callback()
+    }, delay)
+  }
+
+  window.addEventListener('resize', resizeHandler)
+}
+
 /* DOM loaded */
 
 const initialize = () => {
@@ -156,24 +172,31 @@ const initialize = () => {
   /* Get height of hero */
 
   if (el.hero) {
-    let resizeTimer
-
     const set = () => {
       document.documentElement.style.setProperty('--ht-hero-h', (el.hero.clientHeight / 16) + 'rem')
     }
 
-    const resizeHandler = () => {
-      clearTimeout(resizeTimer)
-
-      resizeTimer = setTimeout(() => {
-        set()
-      }, 100)
-    }
+    onResize(() => {
+      set()
+    })
 
     set()
-
-    window.addEventListener('resize', resizeHandler)
   }
+
+  /* Get scrollbar width */
+
+  const getScrollbarWidth = () => {
+    const html = document.documentElement
+    const w = window.innerWidth - html.clientWidth
+
+    html.style.setProperty('--ht-scrollbar-w', `${w}px`)
+  }
+
+  onResize(() => {
+    getScrollbarWidth()
+  }, 800)
+
+  getScrollbarWidth()
 
   /* Handle display of notice based on cookie */
 
@@ -496,7 +519,7 @@ const initialize = () => {
       const args = {
         tabs: ss.nav,
         panels: ss.panels,
-        delay: 800,
+        delay: 600,
         slider: ss.main,
         track: ss.track,
         targetHeight: ss.height
@@ -585,4 +608,4 @@ const initialize = () => {
   }
 } // End initialize
 
-document.addEventListener('DOMContentLoaded', initialize)
+initialize()

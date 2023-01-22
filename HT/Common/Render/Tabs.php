@@ -19,169 +19,169 @@ use HT\HT as HT;
 
 class Tabs {
 
-		/**
-		 * Shortcode to output tabs.
-		 *
-		 * @param array $atts
-		 * @param string $content
-		 * @return string
-		 */
+	/**
+	 * Shortcode to output tabs.
+	 *
+	 * @param array $atts
+	 * @param string $content
+	 * @return string
+	 */
 
-		public static function shortcode( $atts, $content ) {
-				$atts = shortcode_atts(
-						[
-							'index' => 0,
-							'half'  => false,
-						],
-						$atts,
-						'ht-tabs'
-				);
+	public static function shortcode( $atts, $content ) {
+		$atts = shortcode_atts(
+			[
+				'index' => 0,
+				'half'  => false,
+			],
+			$atts,
+			'ht-tabs'
+		);
 
-				/* Destructure */
+		/* Destructure */
 
-				[
-					'index' => $index,
-					'half'  => $half,
-				] = $atts;
+		[
+			'index' => $index,
+			'half'  => $half,
+		] = $atts;
 
-				$index = (int) $index;
-				$half  = filter_var( $half, FILTER_VALIDATE_BOOLEAN );
+		$index = (int) $index;
+		$half  = filter_var( $half, FILTER_VALIDATE_BOOLEAN );
 
-				/* Half width class */
+		/* Half width class */
 
-				$half_class = $half ? ' l-mw-half' : '';
+		$half_class = $half ? ' l-mw-half' : '';
 
-				/* ACF fields */
+		/* ACF fields */
 
-				$display_tabs = get_field( 'display_tabs' )[0] ?? false;
+		$display_tabs = get_field( 'display_tabs' )[0] ?? false;
 
-				if ( '1' !== $display_tabs ) {
-						return '';
-				}
+		if ( '1' !== $display_tabs ) {
+			return '';
+		}
 
-				$step = get_field( 'tabs_step' )[0] ?? false;
-				$step = '1' === $step ? true : false;
+		$step = get_field( 'tabs_step' )[0] ?? false;
+		$step = '1' === $step ? true : false;
 
-				$tabs_list   = get_field( 'tabs_list' );
-				$tabs_panels = get_field( 'tabs_panels' );
+		$tabs_list   = get_field( 'tabs_list' );
+		$tabs_panels = get_field( 'tabs_panels' );
 
-				if ( ! $tabs_list || ! $tabs_panels ) {
-						return '';
-				}
+		if ( ! $tabs_list || ! $tabs_panels ) {
+			return '';
+		}
 
-				$tabs_list   = explode( '***', $tabs_list )[ $index ] ?? false;
-				$tabs_panels = explode( '<p>***</p>', $tabs_panels )[ $index ] ?? false;
+		$tabs_list   = explode( '***', $tabs_list )[ $index ] ?? false;
+		$tabs_panels = explode( '<p>***</p>', $tabs_panels )[ $index ] ?? false;
 
-				if ( ! $tabs_list || ! $tabs_panels ) {
-						return '';
-				}
+		if ( ! $tabs_list || ! $tabs_panels ) {
+			return '';
+		}
 
-				$tabs_list   = explode( ',', $tabs_list );
-				$tabs_panels = explode( '<p>&nbsp;</p>', $tabs_panels );
+		$tabs_list   = explode( ',', $tabs_list );
+		$tabs_panels = explode( '<p>&nbsp;</p>', $tabs_panels );
 
-				/* Create markup */
+		/* Create markup */
 
-				$list   = [];
-				$panels = [];
+		$list   = [];
+		$panels = [];
 
-				foreach ( $tabs_list as $i => $t ) {
-						$t_items = explode( ' : ', $t );
+		foreach ( $tabs_list as $i => $t ) {
+			$t_items = explode( ' : ', $t );
 
-						$label    = $t_items[0] ?? '';
-						$title    = $t_items[1] ?? '';
-						$img_id   = (int) $t_items[2] ?? 0;
-						$selected = $t_items[3] ?? false;
-						$id       = str_replace( ' ', '-', strtolower( $title ) );
-						$tab_id   = "$id-label";
-						$index    = $i + 1;
-						$current  = $selected ? 'true' : 'false';
-						$tabindex = $selected ? '0' : '-1';
+			$label    = $t_items[0] ?? '';
+			$title    = $t_items[1] ?? '';
+			$img_id   = (int) $t_items[2] ?? 0;
+			$selected = $t_items[3] ?? false;
+			$id       = str_replace( ' ', '-', strtolower( $title ) );
+			$tab_id   = "$id-label";
+			$index    = $i + 1;
+			$current  = $selected ? 'true' : 'false';
+			$tabindex = $selected ? '0' : '-1';
 
-						/* Tab list item */
+			/* Tab list item */
 
-						$classes = 't-bg-inherit fusion-button button-small button-outline avada-noscroll';
+			$classes = 't-bg-inherit fusion-button button-small button-outline avada-noscroll';
 
-						if ( $step ) {
-								$classes = 't-foreground-base t-bg-inherit l-w-m u-d-b u-b-s u-br-100-pc u-p-r p-s u-fw-b';
-						}
+			if ( $step ) {
+				$classes = 't-foreground-base t-bg-inherit l-w-m u-d-b u-b-s u-br-100-pc u-p-r p-s u-fw-b';
+			}
 
-						if ( $step ) {
-								$label = (
-									'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
-										"<span class='u-v-h'>$title</span>" .
-										"<div class='u-p-a' aria-hidden='true'>$index</div>" .
-									'</div>'
-								);
-						}
-
-						$list[] = (
-							'<li class="l-flex t-bg-inherit u-ws-nw" role="presentation">' .
-								"<a href='#$id' role='tab' aria-selected='$current' id='$tab_id' class='$classes' tabindex='$tabindex'>$label</a>" .
-							'</li>'
-						);
-
-						/* Image */
-
-						$img = '';
-
-						if ( $img_id ) {
-								$image = HT::get_image( $img_id, 'medium_large' );
-
-								if ( $image ) {
-										$src    = esc_url( $image['url'] );
-										$srcset = esc_attr( $image['srcset'] );
-										$sizes  = esc_attr( $image['sizes'] );
-										$wid    = esc_attr( $image['width'] );
-										$height = esc_attr( $image['height'] );
-										$alt    = esc_attr( $image['alt'] );
-
-										$img = (
-											'<div class="l-flex-shrink-0">' .
-												"<img class='l-w-l' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>" .
-											'</div>'
-										);
-								}
-						}
-
-						/* Tab panel */
-
-						$panels[] = (
-							"<section class='l-pt-xxxs' id='$id' tabindex='$tabindex' role='tabpanel' aria-labelledby='$tab_id' data-selected='$selected'" . ( $selected ? '' : ' hidden' ) . '>' .
-								'<div class="l-flex" data-gap="r" data-wrap>' .
-									$img .
-									'<div class="l-mb-r-all l-w-33-pc l-min-w l-flex-grow">' .
-										'<div class="h4">' .
-											"<h3 class='l-m-0'>$title</h3>" .
-										'</div>' .
-										'<div class="p-m l-mb-r-all ht-editor o-underline">' .
-											$tabs_panels[ $i ] .
-										'</div>' .
-									'</div>' .
-								'</div>' .
-							'</section>'
-						);
-				}
-
-				/* Output */
-
-				return (
-					'<div class="o-tabs t-bg-inherit">' .
-						"<div class='l-mw-full$half_class l-pb-xxxs l-pb-xs-l t-bg-inherit'>" .
-							'<div class="l-h-' . ( $step ? 'm' : 's' ) . ' u-o-h t-bg-inherit">' .
-								'<div class="o-overflow u-o-xy l-pb-xxxs l-flex t-bg-inherit">' .
-									'<div class="l-flex-grow u-p-r t-bg-inherit">' .
-										'<ul class="l-flex u-tlrb-b t-bg-inherit u-oo-s" role="tablist" data-gap="r" data-justify="def">' .
-											implode( '', $list ) .
-										'</ul>' .
-									'</div>' .
-								'</div>' .
-							'</div>' .
-						'</div>' .
-						"<div class='l-mw-full$half_class'>" .
-							implode( '', $panels ) .
-						'</div>' .
+			if ( $step ) {
+				$label = (
+					'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
+						"<span class='u-v-h'>$title</span>" .
+						"<div class='u-p-a' aria-hidden='true'>$index</div>" .
 					'</div>'
 				);
+			}
+
+			$list[] = (
+				'<li class="l-flex t-bg-inherit u-ws-nw" role="presentation">' .
+					"<a href='#$id' role='tab' aria-selected='$current' id='$tab_id' class='$classes' tabindex='$tabindex'>$label</a>" .
+				'</li>'
+			);
+
+			/* Image */
+
+			$img = '';
+
+			if ( $img_id ) {
+				$image = HT::get_image( $img_id, 'medium_large' );
+
+				if ( $image ) {
+					$src    = esc_url( $image['url'] );
+					$srcset = esc_attr( $image['srcset'] );
+					$sizes  = esc_attr( $image['sizes'] );
+					$wid    = esc_attr( $image['width'] );
+					$height = esc_attr( $image['height'] );
+					$alt    = esc_attr( $image['alt'] );
+
+					$img = (
+						'<div class="l-flex-shrink-0">' .
+							"<img class='l-w-l' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>" .
+						'</div>'
+					);
+				}
+			}
+
+			/* Tab panel */
+
+			$panels[] = (
+				"<section class='l-pt-xxxs' id='$id' tabindex='$tabindex' role='tabpanel' aria-labelledby='$tab_id' data-selected='$selected'" . ( $selected ? '' : ' hidden' ) . '>' .
+					'<div class="l-flex" data-gap="r" data-wrap>' .
+						$img .
+						'<div class="l-mb-r-all l-w-33-pc l-min-w l-flex-grow">' .
+							'<div class="h4">' .
+								"<h3 class='l-m-0'>$title</h3>" .
+							'</div>' .
+							'<div class="p-m l-mb-r-all ht-editor o-underline">' .
+								$tabs_panels[ $i ] .
+							'</div>' .
+						'</div>' .
+					'</div>' .
+				'</section>'
+			);
 		}
+
+		/* Output */
+
+		return (
+			'<div class="o-tabs t-bg-inherit">' .
+				"<div class='l-mw-full$half_class l-pb-xxxs l-pb-xs-l t-bg-inherit'>" .
+					'<div class="l-h-' . ( $step ? 'm' : 's' ) . ' u-o-h t-bg-inherit">' .
+						'<div class="o-overflow u-o-xy l-pb-xxxs l-flex t-bg-inherit">' .
+							'<div class="l-flex-grow u-p-r t-bg-inherit">' .
+								'<ul class="l-flex u-tlrb-b t-bg-inherit u-oo-s" role="tablist" data-gap="r" data-justify="def">' .
+									implode( '', $list ) .
+								'</ul>' .
+							'</div>' .
+						'</div>' .
+					'</div>' .
+				'</div>' .
+				"<div class='l-mw-full$half_class'>" .
+					implode( '', $panels ) .
+				'</div>' .
+			'</div>'
+		);
+	}
 
 } // End Tabs
