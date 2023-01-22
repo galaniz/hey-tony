@@ -12,46 +12,59 @@
 
 /* Styles */
 
-$container: map.get(con.$containers, "def");
+$container: func.calc-rem(map.get(con.$containers, "def"));
 
 .o-slider {
   --height: auto;
   --snap-type: x mandatory;
+  --container-p: 1.25rem;
+  --slide-gap: 1.25rem;
 
   height: var(--height);
+
+  @include mix.breakpoint-min(1000) {
+    --slide-gap: 2.5rem;
+  }
 }
 
 .o-slider__track {
   overflow-x: auto;
   scroll-snap-type: var(--snap-type);
   -webkit-overflow-scrolling: touch;
+  padding-left: var(--slide-gap);
+
+  @include mix.breakpoint-min(1270) {
+    margin-right: calc(var(--slide-gap) * -1);
+  }
 }
 
 .o-slider__h {
-  padding: 0 var(--ht-flex-gap);
+  @include mix.breakpoint-min(1190) {
+    max-width: func.calc-rem(1190px);
+  }
 }
 
 .o-slider__item {
-  --width: #{calc(100vw - (var(--ht-flex-gap) * 2))};
+  --width: calc(96.16% - var(--container-p) * 2); // Account for 1.92% margin
 
   @include mix.breakpoint-min(600) {
-    --width: #{calc(50vw - var(--ht-flex-gap))};
+    --width: #{calc(50% - 1.92% - var(--container-p))}; // Account for 1.92% margin
   }
 
   @include mix.breakpoint-min(900) {
-    --width: #{calc(33.3333vw - (var(--ht-flex-gap) / 1.5))};
+    --width: #{calc(33.3333% - 0.64% - var(--container-p))}; // Account for 1.92% margin
   }
 
   @include mix.breakpoint-min(1270) {
-    --width: #{calc(33.3333% + (var(--ht-flex-gap) / 3))};
+    --width: 33.3333%;
   }
 }
 
 .o-slider__group {
-  --width: #{calc(100vw - (var(--ht-flex-gap) * 2))};
+  --width: calc(96.16% - var(--container-p) * 2); // Account for 1.92% margin
 
   @include mix.breakpoint-min(1270) {
-    --width: #{calc(100% + var(--ht-flex-gap))};
+    --width: 100%;
   }
 }
 
@@ -78,6 +91,10 @@ $container: map.get(con.$containers, "def");
 }
 
 .o-slider__view {
+  --x: var(--container-p) - var(--ht-flex-gap);
+
+  left: calc(var(--x));
+
   #ht .ht:not([data-using-mouse]) .o-slider__item:focus &::before,
   #ht .ht:not([data-using-mouse]) .o-slider__group:focus &::before {
     border: func.calc-rem(4px) solid var(--ht-outline-c);
@@ -88,15 +105,17 @@ $container: map.get(con.$containers, "def");
     top: var(--ht-flex-gap);
   }
 
-  @include mix.breakpoint-min(1270) {
-    left: calc(50vw - #{func.calc-rem(math.div($container, 2))} - var(--ht-flex-gap));
+  @include mix.breakpoint-min(1190) {
+    --x: ((100vw - var(--ht-scrollbar-w)) / 2) - #{math.div($container, 2)} - var(--ht-flex-gap);
   }
 }
 
 .o-slider__offset {
-  width: calc(var(--ht-flex-gap) * 2);
+  #ht #main & {
+    padding: 0 0 0 calc(var(--container-p) + var(--container-p) - var(--ht-flex-gap) + 3.84%); // Account for 1.92% margin
 
-  @include mix.breakpoint-min(1270) {
-    width: calc((50vw - #{func.calc-rem(math.div(1230px, 2))}) + (50vw - 50%));
+    @include mix.breakpoint-min(1190) {
+      padding: 0 0 0 calc((((100vw - var(--ht-scrollbar-w)) / 2) - #{math.div($container, 2)}) * 2);
+    }
   }
 }

@@ -111,8 +111,8 @@ class Slider {
 			return (
 				'<div class="l-flex js-slider" role="group" data-col>' .
 					'<div class="o-slider u-o-h"' . ( $loop ? ' data-loop="true"' : '' ) . '>' .
-						'<div class="o-slider__track l-pb-s u-p-r ht-single-full">' .
-							'<div class="o-slider__h fusion_builder_column l-ph-ctn l-flex" data-gap="s" data-gap-l="r">' .
+						'<div class="o-slider__track l-pb-s u-p-r">' .
+							'<div class="o-slider__h l-flex" data-gap="s" data-gap-l="r">' .
 								$panels .
 							'</div>' .
 						'</div>' .
@@ -126,7 +126,7 @@ class Slider {
 			return (
 				'<div class="ht-single-full">' .
 					'<div class="fusion_builder_column l-ph-ctn l-m-auto">' .
-						"<ul class='l-flex' data-gap='r' data-row='s' data-wrap-s data-col>" .
+						"<ul class='l-flex' data-gap='s' data-row='s' data-wrap-s data-col>" .
 							$panels .
 						'</ul>' .
 					'</div>' .
