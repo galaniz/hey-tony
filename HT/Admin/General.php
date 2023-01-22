@@ -20,40 +20,40 @@ use Formation\Admin\Settings\Settings;
 
 class General {
 
-		/*
-		 * Constructor
-		 */
+	/**
+	 * Constructor
+	 */
 
-		public function __construct() {
-				/* Register settings */
+	public function __construct() {
+		/* Register settings */
 
-				add_action( 'admin_init', [$this, 'setup'] );
-		}
+		add_action( 'admin_init', [$this, 'setup'] );
+	}
 
-		/**
-		 * Register settings
-		 */
+	/**
+	 * Register settings
+	 */
 
-		public function setup() {
-				$fields = [
-					[
-						'name'    => HT::$namespace . '_cookie_text',
-						'label'   => 'Cookie Notice Text',
-						'section' => 'default',
-						'type'    => 'richtext',
-						'wpautop' => true,
-						'on_save' => function( $value ) {
-								return wp_kses( $value, 'post' );
-						},
-					],
-				];
+	public function setup() {
+		$fields = [
+			[
+				'name'    => HT::$namespace . '_cookie_text',
+				'label'   => 'Cookie Notice Text',
+				'section' => 'default',
+				'type'    => 'richtext',
+				'wpautop' => true,
+				'on_save' => function( $value ) {
+					return wp_kses( $value, 'post' );
+				},
+			],
+		];
 
-				$general_settings = new Settings(
-						[
-							'fields' => $fields,
-							'page'   => 'general',
-						]
-				);
-		}
+		$general_settings = new Settings(
+			[
+				'fields' => $fields,
+				'page'   => 'general',
+			]
+		);
+	}
 
 } // End General
