@@ -196,15 +196,7 @@ class HT {
 		FRM::$script_attributes = self::$script_attributes;
 		FRM::$pt                = self::$pt;
 		FRM::$tax_pt            = self::$tax_pt;
-
-		FRM::$styles = [
-			[
-				'handle' => 'style',
-				'url'    => get_stylesheet_directory_uri() . '/style.css',
-			],
-		];
-
-		FRM::$scripts = [
+		FRM::$scripts           = [
 			[
 				'handle' => 'script-compat',
 				'url'    => get_stylesheet_directory_uri() . '/assets/public/js/' . self::$namespace . '-compat.js',
@@ -238,6 +230,7 @@ class HT {
 		add_action( 'after_setup_theme', [$this, 'init'] );
 		add_action( 'wp', [$this, 'wp'] );
 		add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 20 );
+		add_action( 'wp_head', [$this, 'enqueue_style'], 4000000 );
 		add_action( 'pre_get_posts', [$this, 'query_vars'] );
 		add_action( 'avada_before_main_container', [$this, 'render_loader'] );
 		add_action( 'avada_before_wrapper_container_close', [$this, 'render_cookie_notice'] );
@@ -395,6 +388,21 @@ class HT {
 		/* Remove Gutenberg root variables */
 
 		wp_dequeue_style( 'global-styles' );
+	}
+
+	/**
+	 * Output child styles.
+	 */
+
+	public function enqueue_style() {
+		$id  = self::$namespace . '-style-css';
+		$url = get_stylesheet_directory_uri() . '/style.css';
+
+		/* phpcs:disable */
+		$link = "<link rel='stylesheet' id='$id' href='$url' type='text/css' media='all'>";
+
+		echo $link;
+		/* phpcs:enable */
 	}
 
 	/**
