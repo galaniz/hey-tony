@@ -47,7 +47,8 @@ main {
   min-height: 50vh;
 }
 
-p strong {
+p strong,
+p b {
   @extend %u-font-weight-bold;
 }
 
@@ -240,7 +241,7 @@ input[type="checkbox"]:disabled ~ span {
   }
 }
 
-#ht .ht #wrapper .post-content .ht-single__main {
+#ht .ht #wrapper .post-content .ht-single > div:first-child {
   h2,
   .h2 * {
     @include mix.fluid-size(

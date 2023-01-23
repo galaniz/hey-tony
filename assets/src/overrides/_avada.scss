@@ -292,7 +292,7 @@
 /* Single content */
 
 .ht-editor,
-.ht-single__main {
+.ht-single > div:first-child {
   --ht-underline-w: #{func.calc-rem(1.5px)};
   --margin: #{func.calc-rem(30px)};
 
@@ -315,6 +315,7 @@
   }
 
   hr {
+    border: 0;
     border-top: func.calc-rem(1px) solid rgba(func.get-color("foreground-base"), var(--ht-border-op));
     margin: func.calc-rem(40px) 0;
 
@@ -367,7 +368,7 @@
   --ht-single-m: #{func.calc-rem(-40px)};
   --ht-single-p: #{func.calc-rem(40px)};
 
-  #ht .ht #wrapper & .ht-single__main {
+  #ht .ht #wrapper & > div:first-child {
     margin: var(--ht-single-m) 0 0 calc(0.375 * var(--ht-single-m));
   }
 
