@@ -291,8 +291,7 @@
 
 /* Single content */
 
-.ht-editor,
-.ht-single > div:first-child {
+.ht-editor {
   --ht-underline-w: #{func.calc-rem(1.5px)};
   --margin: #{func.calc-rem(30px)};
 
