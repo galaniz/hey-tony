@@ -55,6 +55,10 @@ class Slider {
 
 		$required_length = $length > 3;
 
+		/* Label */
+
+		$capital_label = ucfirst( $label );
+
 		/* Create tablist and panels */
 
 		$tablist    = '';
@@ -69,8 +73,8 @@ class Slider {
 			$tabindex = $i === $selected_index ? 0 : -1;
 			$id       = uniqid();
 
-			$tab_label   = "Go to $label group $index";
-			$panel_label = ucfirst( $label ) . " group $index";
+			$tab_label   = "$capital_label group $index";
+			$panel_label = "$capital_label group $index";
 
 			$tablist .= (
 				'<li class="o-dot l-flex" role="presentation">' .
@@ -111,13 +115,13 @@ class Slider {
 			return (
 				'<div class="l-flex js-slider" role="group" data-col>' .
 					'<div class="o-slider u-o-h"' . ( $loop ? ' data-loop="true"' : '' ) . '>' .
-						'<div class="o-slider__track l-pb-s u-p-r">' .
+						'<div class="o-slider__track l-pb-s u-p-r" tabindex="-1">' .
 							'<div class="o-slider__h l-flex" data-gap="s" data-gap-l="r">' .
 								$panels .
 							'</div>' .
 						'</div>' .
 					'</div>' .
-					"<ul class='o-dots l-flex' data-justify='center' role='tablist' aria-label='Select $label group to show'>" .
+					"<ul class='o-dots l-flex' data-justify='center' role='tablist' aria-label='$capital_label controls'>" .
 						$tablist .
 					'</ul>' .
 				'</div>'
