@@ -291,8 +291,7 @@
 
 /* Single content */
 
-.ht-editor,
-.ht-single > div:first-child {
+.ht-editor {
   --ht-underline-w: #{func.calc-rem(1.5px)};
   --margin: #{func.calc-rem(30px)};
 
@@ -370,6 +369,7 @@
 
   #ht .ht #wrapper & > div:first-child {
     margin: var(--ht-single-m) 0 0 calc(0.375 * var(--ht-single-m));
+    padding: 0;
   }
 
   .fusion-builder-row {
