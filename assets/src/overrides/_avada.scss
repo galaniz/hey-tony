@@ -370,6 +370,7 @@
 
   #ht .ht #wrapper & > div:first-child {
     margin: var(--ht-single-m) 0 0 calc(0.375 * var(--ht-single-m));
+    padding: 0;
   }
 
   .fusion-builder-row {
