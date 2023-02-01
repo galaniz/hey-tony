@@ -11,22 +11,25 @@
 .o-underline a,
 .o-underline-r a,
 a.o-underline-r span {
-  transition: box-shadow 300ms ease;
+  transition: text-decoration-color 300ms ease;
+  text-decoration: underline;
+  text-decoration-thickness: var(--ht-underline-w);
+  text-underline-offset: 0.3125rem;
 }
 
 .o-underline a {
-  box-shadow: 0 var(--ht-underline-w) 0 0 var(--ht-underline-c);
+  text-decoration-color: var(--ht-underline-c);
 }
 
 .o-underline-r a,
 a.o-underline-r span {
-  box-shadow: 0 var(--ht-underline-w) 0 0 transparent;
+  text-decoration-color: transparent;
 }
 
 .o-underline a:hover,
 .o-underline a:active,
 .o-underline a:focus {
-  box-shadow: 0 var(--ht-underline-w) 0 0 transparent;
+  text-decoration-color: transparent;
 }
 
 .o-underline-r a:hover,
@@ -35,5 +38,5 @@ a.o-underline-r span {
 a.o-underline-r:hover span,
 a.o-underline-r:active span,
 a.o-underline-r:focus span {
-  box-shadow: 0 var(--ht-underline-w) 0 0 var(--ht-underline-c);
+  text-decoration-color: var(--ht-underline-c);
 }
