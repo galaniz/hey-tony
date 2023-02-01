@@ -186,7 +186,7 @@ _Description:_ Add heading above output of posts.
 
 * `section_title_heading_level`\
 _Type:_ `string`\
-_Default:_ `'h2'`\
+_Default:_ `'h2'`
 
 * `a11y_section_title`\
 _Type:_ `string`\
