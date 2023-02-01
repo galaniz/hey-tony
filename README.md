@@ -182,12 +182,16 @@ _Description:_ Comma separated list of post ids to include.
 * `section_title`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Description:_ Add `h2` above output of posts.
+_Description:_ Add heading above output of posts.
+
+* `section_title_heading_level`\
+_Type:_ `string`\
+_Default:_ `'h2'`\
 
 * `a11y_section_title`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Description:_ Add visually hidden `h2` above output of posts for screen readers.
+_Description:_ Add visually hidden heading above output of posts for screen readers.
 
 * `heading_level`\
 _Type:_ `string`\
