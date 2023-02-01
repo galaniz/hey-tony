@@ -202,7 +202,7 @@ _Description:_ Heading level for post titles.
 * `slider`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Possible Values:_ `''`, `group`, `loop`\
+_Possible Values:_ `''`, `group`, `loop`
 
 * `current_single`\
 _Type:_ `boolean`\
@@ -267,7 +267,7 @@ _Parameters:_
 * `type`\
 _Type:_ `string`\
 _Default:_ `mobile`\
-_Possible Values:_ `mobile`, `desktop`\
+_Possible Values:_ `mobile`, `desktop`
 
 * `img_id`\
 _Type:_ `int`\
