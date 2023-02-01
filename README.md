@@ -182,12 +182,16 @@ _Description:_ Comma separated list of post ids to include.
 * `section_title`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Description:_ Add `h2` above output of posts.
+_Description:_ Add heading above output of posts.
+
+* `section_title_heading_level`\
+_Type:_ `string`\
+_Default:_ `'h2'`
 
 * `a11y_section_title`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Description:_ Add visually hidden `h2` above output of posts for screen readers.
+_Description:_ Add visually hidden heading above output of posts for screen readers.
 
 * `heading_level`\
 _Type:_ `string`\
@@ -198,7 +202,7 @@ _Description:_ Heading level for post titles.
 * `slider`\
 _Type:_ `string`\
 _Default:_ `''`\
-_Possible Values:_ `''`, `group`, `loop`\
+_Possible Values:_ `''`, `group`, `loop`
 
 * `current_single`\
 _Type:_ `boolean`\
@@ -263,7 +267,7 @@ _Parameters:_
 * `type`\
 _Type:_ `string`\
 _Default:_ `mobile`\
-_Possible Values:_ `mobile`, `desktop`\
+_Possible Values:_ `mobile`, `desktop`
 
 * `img_id`\
 _Type:_ `int`\
