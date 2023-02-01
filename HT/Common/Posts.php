@@ -166,8 +166,8 @@ class Posts {
 		/* Output */
 
 		return (
-			'<li>' .
-				'<div class="l-pb-xxxs l-pb-xs-l' . ( $index > 1 ? ' u-bt-1' : '' ) . ' u-ul-c">' .
+			'<li' . ( 1 === $index ? ' class="u-d-b"' : '' ) . '>' .
+				'<div class="l-pb-xxxs l-pb-xs-l ' . ( $index > 1 ? 'u-bt-1' : 'u-d-ib' ) . ' u-ul-c">' .
 					'<div' . ( $index > 1 ? ' class="l-pt-xxxs l-pt-xs-l"' : '' ) . '>' .
 						$pretitle_output .
 						'<div class="h5 t-foreground-base u-c-i u-ul-w">' .
@@ -192,23 +192,24 @@ class Posts {
 	public static function shortcode( $atts, $content ) {
 		$atts = shortcode_atts(
 			[
-				'type'               => '',
-				'posts_per_page'     => 10,
-				'category'           => '',
-				'meta_key'           => '',
-				'meta_value'         => '',
-				'meta_type'          => 'string',
-				'ids'                => '',
-				'section_title'      => '',
-				'a11y_section_title' => '',
-				'heading_level'      => 'h2',
-				'slider'             => '',
-				'current_single'     => false,
-				'pagination'         => false,
-				'type_archive'       => true,
-				'return_array'       => false, // back end
-				'query_args'         => [], // back end
-				'is_home'            => false, // back end
+				'type'                        => '',
+				'posts_per_page'              => 10,
+				'category'                    => '',
+				'meta_key'                    => '',
+				'meta_value'                  => '',
+				'meta_type'                   => 'string',
+				'ids'                         => '',
+				'section_title'               => '',
+				'section_title_heading_level' => 'h2',
+				'a11y_section_title'          => '',
+				'heading_level'               => 'h2',
+				'slider'                      => '',
+				'current_single'              => false,
+				'pagination'                  => false,
+				'type_archive'                => true,
+				'return_array'                => false, // back end
+				'query_args'                  => [], // back end
+				'is_home'                     => false, // back end
 			],
 			$atts,
 			'ht-posts'
@@ -217,23 +218,24 @@ class Posts {
 		/* Destructure */
 
 		[
-			'type'               => $type,
-			'posts_per_page'     => $posts_per_page,
-			'category'           => $category,
-			'meta_key'           => $meta_key,
-			'meta_value'         => $meta_value,
-			'meta_type'          => $meta_type,
-			'ids'                => $ids,
-			'section_title'      => $section_title,
-			'a11y_section_title' => $a11y_section_title,
-			'heading_level'      => $heading_level,
-			'slider'             => $slider,
-			'current_single'     => $current_single,
-			'pagination'         => $pagination,
-			'type_archive'       => $type_archive,
-			'return_array'       => $return_array,
-			'query_args'         => $query_args,
-			'is_home'            => $is_home,
+			'type'                        => $type,
+			'posts_per_page'              => $posts_per_page,
+			'category'                    => $category,
+			'meta_key'                    => $meta_key,
+			'meta_value'                  => $meta_value,
+			'meta_type'                   => $meta_type,
+			'ids'                         => $ids,
+			'section_title'               => $section_title,
+			'section_title_heading_level' => $section_title_heading_level,
+			'a11y_section_title'          => $a11y_section_title,
+			'heading_level'               => $heading_level,
+			'slider'                      => $slider,
+			'current_single'              => $current_single,
+			'pagination'                  => $pagination,
+			'type_archive'                => $type_archive,
+			'return_array'                => $return_array,
+			'query_args'                  => $query_args,
+			'is_home'                     => $is_home,
 		] = $atts;
 
 		/* Process args + more variables */
@@ -262,10 +264,6 @@ class Posts {
 
 		if ( ! $type_archive ) {
 			$archive = false;
-		}
-
-		if ( $section_title || $a11y_section_title ) {
-			$heading_level = 'h3';
 		}
 
 		if ( -1 !== $posts_per_page && $pagination && $archive ) {
@@ -763,7 +761,7 @@ class Posts {
 				if ( $a11y_section_title ) {
 					$output = (
 						'<section>' .
-							"<h2 class='u-v-h'>$section_title</h2>" .
+							"<$section_title_heading_level class='u-v-h'>$section_title</$section_title_heading_level>" .
 							$output .
 						'</section>'
 					);
@@ -772,7 +770,7 @@ class Posts {
 
 					$section_title = (
 						'<div class="h4 u-p-r' . ( $slider ? ' u-ta-c l-ph-ctn' : '' ) . '">' .
-							"<h2>$section_title</h2>" .
+							"<$section_title_heading_level>$section_title</$section_title_heading_level>" .
 						'</div>'
 					);
 
