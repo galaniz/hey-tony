@@ -17,7 +17,7 @@
 
 .o-accent-m,
 .o-accent-r-m {
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     --ht-accent-h: #{func.calc-rem(15px)};
   }
 }
@@ -26,7 +26,7 @@
 .o-accent-r-l {
   --ht-accent-p: #{func.calc-rem(8px)};
 
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     --ht-accent-p: #{func.calc-rem(15px)};
     --ht-accent-h: #{func.calc-rem(20px)};
   }
@@ -67,28 +67,28 @@
 
 .o-accent a {
   &::after {
-    @extend %u-transition-opacity-ease;
+    @extend %u-transition-opacity-ease !optional;
     @extend %u-opacity-1;
   }
 }
 
 .o-accent-r a {
   &::after {
-    @extend %u-transition-opacity-ease;
+    @extend %u-transition-opacity-ease !optional;
     @extend %u-opacity-0;
   }
 }
 
 a.o-accent span {
   &::after {
-    @extend %u-transition-opacity-ease;
+    @extend %u-transition-opacity-ease !optional;
     @extend %u-opacity-1;
   }
 }
 
 a.o-accent-r span {
   &::after {
-    @extend %u-transition-opacity-ease;
+    @extend %u-transition-opacity-ease !optional;
     @extend %u-opacity-0;
   }
 }

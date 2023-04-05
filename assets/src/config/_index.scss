@@ -2,10 +2,6 @@
  * Config
  */
 
-/* Imports */
-
-@use "@alanizcreative/formation/src/config/mixins" as mix;
-
 /* Internal variables */
 
 $color-error: #ba3c20;
@@ -30,12 +26,10 @@ $color-error: #ba3c20;
     ),
   ),
 
-  $fonts: (
-    weight: (
-      extrabold: 800,
-      bold: 700,
-      normal: 300,
-    )
+  $font-weights: (
+    extrabold: 800,
+    bold: 700,
+    normal: 300,
   ),
 
   $container-padding: 20px,
@@ -45,12 +39,19 @@ $color-error: #ba3c20;
   ),
 
   $breakpoints: (
-    660: 660px,
-    768: 768px,
-    1150: 1150px,
-    1190: 1210px,
-    1300: 1300px,
-    1800: 1800px,
+    "400": 400px,
+    "600": 600px,
+    "660": 660px,
+    "700": 700px,
+    "768": 768px,
+    "800": 800px,
+    "900": 900px,
+    "1000": 1000px,
+    "1150": 1150px,
+    "1190": 1210px,
+    "1200": 1200px,
+    "1300": 1300px,
+    "1800": 1800px,
   ),
 
   $z-index: (
@@ -71,7 +72,12 @@ $color-error: #ba3c20;
     )
   ),
 
-  $aspect-ratio-padding: ( 0, 0.66, 1.77, 0.042 ),
+  $aspect-ratio-padding: (
+    "0": 0%,
+    "042": 4.2%,
+    "66": 66.667%,
+    "177": 177%,
+  ),
 
   $transitions: (
     (
@@ -99,44 +105,40 @@ $color-error: #ba3c20;
 
   $placeholders: (
     (
-      custom: (
-        name: "border-radius-5",
-        prop: (
-          border-radius: 0.3125rem
-        )
-      )
+      "name": "border-radius-5",
+      "prop": (
+        border-radius: 0.3125rem
+      ),
     ),
     (
-      custom: (
-        name: "color-error",
-        prop: (
-          color: var(--ht-error-c)
-        )
-      )
+      "name": "color-error",
+      "prop": (
+        color: var(--ht-error-c)
+      ),
     ),
     (
-      custom: (
-        name: "background-color-error",
-        prop: (
-          background-color: rgba($color-error, 0.2)
-        )
-      )
+      "name": "background-color-error",
+      "prop": (
+        background-color: rgba($color-error, 0.2)
+      ),
     ),
     (
-      custom: (
-        name: "error-padding",
-        prop: (
-          padding: 0.3125rem 0.625rem
-        )
-      )
+      "name": "error-padding",
+      "prop": (
+        padding: 0.3125rem 0.625rem
+      ),
     ),
     (
-      custom: (
-        name: "notice-padding",
-        prop: (
-          padding: 1rem 1.25rem
-        )
-      )
+      "name": "notice-padding",
+      "prop": (
+        padding: 1rem 1.25rem
+      ),
+    ),
+    (
+      "name": "grayscale",
+      "prop": (
+        filter: grayscale(100%)
+      ),
     ),
   ),
 

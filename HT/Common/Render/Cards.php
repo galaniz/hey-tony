@@ -129,7 +129,7 @@ class Cards {
 
 		/* Featured image */
 
-		$image = '<div class="o-aspect-ratio__media"></div>';
+		$image = '<div class="l-aspect-ratio__media"></div>';
 
 		if ( $media_id ) {
 			$image = HT::get_image( $media_id, $first_two ? 'large' : 'medium_large' );
@@ -142,7 +142,7 @@ class Cards {
 				$height = esc_attr( $image['height'] );
 				$alt    = esc_attr( $image['alt'] );
 
-				$image = "<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>";
+				$image = "<img class='l-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>";
 			}
 		}
 
@@ -160,7 +160,7 @@ class Cards {
 							$excerpt .
 						'</div>' .
 						'<div class="u-p-r u-zi--1">' .
-							'<div class="o-overlap-v__bg o-aspect-ratio" data-p="66" data-hover="scale">' .
+							'<div class="o-overlap-v__bg l-aspect-ratio-66" data-hover="scale">' .
 								$image .
 							'</div>' .
 						'</div>' .

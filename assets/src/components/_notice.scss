@@ -29,7 +29,7 @@
     }
   }
 
-  @include mix.breakpoint-min(1200) {
+  @include mix.breakpoint-min("1200") {
     #ht .ht #wrapper & * {
       font-size: func.calc-rem(16px);
     }

@@ -37,7 +37,7 @@
   @include mix.fluid-size(
     --ht-nav-h,
     func.calc-rem(84px) func.calc-rem(157px),
-    600 1200
+    "600" "1200"
   );
 }
 
@@ -74,7 +74,7 @@ input[type="checkbox"]:disabled ~ span {
   @include mix.fluid-size(
     --ht-hero-s-h,
     func.calc-rem(85px) func.calc-rem(250px),
-    600 1300
+    "600" "1300"
   );
 }
 
@@ -82,7 +82,7 @@ input[type="checkbox"]:disabled ~ span {
   @include mix.fluid-size(
     --ht-hero-s-h,
     func.calc-rem(50px) func.calc-rem(140px),
-    600 1300
+    "600" "1300"
   );
 }
 
@@ -90,7 +90,7 @@ input[type="checkbox"]:disabled ~ span {
   @include mix.fluid-size(
     --ht-hero-s-h,
     func.calc-rem(40px) func.calc-rem(100px),
-    600 1300
+    "600" "1300"
   );
 }
 
@@ -121,7 +121,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(48px) func.calc-rem(96px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -129,7 +129,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(48px) func.calc-rem(72px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -138,7 +138,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(36px) func.calc-rem(48px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -146,7 +146,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(38px) func.calc-rem(60px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -161,7 +161,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(28px) func.calc-rem(32px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -169,7 +169,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(32px) func.calc-rem(36px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -179,7 +179,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(24px) func.calc-rem(28px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -190,7 +190,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(19px) func.calc-rem(24px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -198,7 +198,7 @@ input[type="checkbox"]:disabled ~ span {
   .h6 * {
     font-size: func.calc-rem(18px);
 
-    @include mix.breakpoint-min(1200) {
+    @include mix.breakpoint-min("1200") {
       font-size: func.calc-rem(20px);
     }
   }
@@ -221,7 +221,7 @@ input[type="checkbox"]:disabled ~ span {
   }
 
   .p-m * {
-    @include mix.breakpoint-min(1200) {
+    @include mix.breakpoint-min("1200") {
       font-size: func.calc-rem(19px);
     }
   }
@@ -247,7 +247,7 @@ input[type="checkbox"]:disabled ~ span {
     @include mix.fluid-size(
       font-size,
       func.calc-rem(36px) func.calc-rem(48px),
-      600 1200
+      "600" "1200"
     );
   }
 }

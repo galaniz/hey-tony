@@ -95,7 +95,7 @@
     .fusion-button-text {
       @extend %u-position-relative;
       @extend %u-display-block;
-      @extend %u-transition-transform-ease;
+      @extend %u-transition-transform-ease !optional;
 
       color: inherit;
       transform: scale(1) translateZ(0);
@@ -161,7 +161,7 @@
       @extend %u-left-0;
       @extend %u-bottom-0;
       @extend %u-opacity-0;
-      @extend %u-transition-opacity-ease;
+      @extend %u-transition-opacity-ease !optional;
 
       background-color: currentcolor;
       border-radius: inherit;
@@ -198,7 +198,7 @@
 
   .fusion-social-networks a {
     @extend %u-position-relative;
-    @extend %u-border-radius-100;
+    @extend %u-border-radius-100-pc;
 
     background-color: rgba(func.get-color("primary-base"), 0.2);
     transition: color 400ms ease, background-color 400ms ease;
@@ -333,7 +333,7 @@
     @include mix.fluid-size(
       font-size,
       func.calc-rem(19px) func.calc-rem(24px),
-      600 1200
+      "600" "1200"
     );
   }
 
@@ -387,9 +387,13 @@
     }
   }
 
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     --ht-single-m: #{func.calc-rem(-60px)};
     --ht-single-p: #{func.calc-rem(60px)};
+
+    h2 {
+      padding-top: func.calc-rem(30px);
+    }
   }
 }
 
@@ -488,7 +492,7 @@
   @include mix.fluid-size(
     --ht-map-h,
     func.calc-rem(200px) func.calc-rem(400px),
-    600 1200
+    "600" "1200"
   );
 
   &,
@@ -503,7 +507,7 @@
     top: 50%;
     left: 50%;
 
-    @include mix.breakpoint-min(1800) {
+    @include mix.breakpoint-min("1800") {
       mask-image:
         linear-gradient(
           to right,
@@ -516,8 +520,8 @@
   }
 
   img {
-    @extend %u-width-100;
-    @extend %u-height-100;
+    @extend %u-width-100-pc;
+    @extend %u-height-100-pc;
 
     object-fit: cover;
   }

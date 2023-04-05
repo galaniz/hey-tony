@@ -32,34 +32,34 @@
 }
 
 .l-w-100-pc {
-  @extend %u-width-100;
+  @extend %u-width-100-pc;
 }
 
 .l-w-50-pc {
-  @include mix.breakpoint-min(800) {
+  @include mix.breakpoint-min("800") {
     width: 50%;
   }
 }
 
 .l-w-33-pc {
-  @include mix.breakpoint-min(600) {
+  @include mix.breakpoint-min("600") {
     width: 50%;
   }
 
-  @include mix.breakpoint-min(900) {
+  @include mix.breakpoint-min("900") {
     width: 33.3333%;
   }
 }
 
 .l-min-w {
-  @include mix.breakpoint-min(800) {
+  @include mix.breakpoint-min("800") {
     min-width: func.calc-rem(400px);
   }
 }
 
 @each $k, $v in map.get(con.$vars, "max-widths") {
   .l-mw-#{$k} {
-    @extend %u-width-100;
+    @extend %u-width-100-pc;
 
     max-width: func.calc-rem($v);
   }
@@ -72,7 +72,7 @@
 }
 
 .l-mw-half {
-  @include mix.breakpoint-min(768) {
+  @include mix.breakpoint-min("768") {
     max-width: calc(50vw - (var(--ht-scrollbar-w) / 2) - 3.75rem);
   }
 }

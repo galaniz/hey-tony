@@ -109,8 +109,8 @@ class Columns {
 				$alt    = esc_attr( $image['alt'] );
 
 				$image_output = (
-					'<div class="o-flush__media o-aspect-ratio u-zi--1 u-p-a u-l-0 u-t-0 u-r-0 u-b-0" data-p="0" data-hover="scale" aria-hidden="true">' .
-						"<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>" .
+					'<div class="o-flush__media l-aspect-ratio-0 u-zi--1 u-p-a u-l-0 u-t-0 u-r-0 u-b-0" data-hover="scale" aria-hidden="true">' .
+						"<img class='l-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>" .
 					'</div>'
 				);
 			}

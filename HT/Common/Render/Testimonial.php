@@ -75,8 +75,8 @@ class Testimonial {
 				$image = (
 					'<div class="l-flex-shrink-0">' .
 						'<div class="l-w-r">' .
-							'<div class="o-aspect-ratio" data-circle>' .
-								"<img class='o-aspect-ratio__media' src='$src' alt='$alt' width='$width' height='$height' loading='lazy'>" .
+							'<div class="l-aspect-ratio" data-circle>' .
+								"<img class='l-aspect-ratio__media' src='$src' alt='$alt' width='$width' height='$height' loading='lazy'>" .
 							'</div>' .
 						'</div>' .
 					'</div>'

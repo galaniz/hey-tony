@@ -19,7 +19,9 @@
 
 /* Layouts */
 
+@use "@alanizcreative/formation/src/layouts/display";
 @use "@alanizcreative/formation/src/layouts/flex" as f;
+@use "@alanizcreative/formation/src/layouts/aspect-ratio";
 @use "layouts/flex";
 @use "layouts/padding";
 @use "layouts/margin";
@@ -38,7 +40,6 @@
 
 /* Objects */
 
-@use "@alanizcreative/formation/src/objects/aspect-ratio";
 @use "@alanizcreative/formation/src/objects/collapsible";
 @use "objects/logo";
 @use "objects/swoop";

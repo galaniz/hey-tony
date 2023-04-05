@@ -8,7 +8,7 @@
 
 /* Aspect ratio */
 
-.o-aspect-ratio {
+.l-aspect-ratio {
   &[data-type="overlap"] {
     &::before {
       padding-top: var(--ht-overlap-p);
@@ -16,8 +16,8 @@
   }
 }
 
-.o-aspect-ratio__media {
-  @extend %u-transition-opacity-transform-ease;
+.l-aspect-ratio__media {
+  @extend %u-transition-opacity-transform-ease !optional;
 
   &:not([data-bg="false"]) {
     background-color: rgba(func.get-color("foreground-base"), 0.1);
@@ -26,11 +26,11 @@
   transition-duration: 600ms;
   transform: scale(1);
 
-  .o-aspect-ratio[data-scale="slow"] & {
+  .l-aspect-ratio[data-scale="slow"] & {
     transition-duration: 1000ms;
   }
 
-  [data-hover]:hover .o-aspect-ratio[data-hover="scale"] & {
+  [data-hover]:hover .l-aspect-ratio[data-hover="scale"] & {
     transform: scale(1.03);
   }
 }

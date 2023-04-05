@@ -686,7 +686,7 @@ class Posts {
 						'<ul class="l-flex" data-justify="center" data-align="center" data-gap="s">' .
 							'<li>' .
 								'<a ' . $link_attrs['prev'] . '>' .
-									'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
+									'<div class="l-aspect-ratio l-flex" data-justify="center" data-align="center">' .
 										$caret .
 									'</div>' .
 									'<div class="u-v-h">Previous items</div>' .
@@ -703,7 +703,7 @@ class Posts {
 							'</li>' .
 							'<li>' .
 								'<a ' . $link_attrs['next'] . '>' .
-									'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
+									'<div class="l-aspect-ratio l-flex" data-justify="center" data-align="center">' .
 										$caret .
 									'</div>' .
 									'<div class="u-v-h">Next items</div>' .
@@ -750,7 +750,14 @@ class Posts {
 			}
 
 			if ( ! empty( $query_static ) ) {
-				additional_script_data( HT::$namespace . '_load_posts_query_static', $query_static );
+				$output .= additional_script_data(
+					[
+						'name'   => HT::$namespace . '_load_posts_query_static',
+						'data'   => $query_static,
+						'admin'  => false,
+						'action' => false,
+					]
+				);
 			}
 		}
 

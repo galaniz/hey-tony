@@ -18,7 +18,7 @@
       transform: scale(0.94, 0.967);
     }
 
-    @include mix.breakpoint-max(700) {
+    @include mix.breakpoint-max("700") {
       width: 67%;
     }
   }

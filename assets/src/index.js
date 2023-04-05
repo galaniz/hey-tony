@@ -15,6 +15,8 @@ import Remove from 'Formation/objects/remove'
 
 /* Variables */
 
+const ns = 'ht'
+
 const el = {}
 
 const elMeta = [
@@ -124,8 +126,6 @@ const onResize = (callback = () => {}, delay = 100) => {
 /* DOM loaded */
 
 const initialize = () => {
-  const ns = 'ht'
-
   /* Check if reduce motion */
 
   let reduceMotion = false
@@ -162,7 +162,7 @@ const initialize = () => {
         makeFixed: true,
         friction: 1.15,
         maxOffset: 600,
-        reduceMotion: reduceMotion
+        reduceMotion
       })
     }
 
@@ -238,26 +238,26 @@ const initialize = () => {
 
     const data = {
       action: type === 'comments' ? 'get_comments' : 'get_posts',
-      type: type
+      type
     }
 
-    if (Object.getOwnPropertyDescriptor(window, ns + '_load_posts_query')) {
-      data.query_args = window[ns + '_load_posts_query']
+    if (Object.getOwnPropertyDescriptor(window, `${ns}_load_posts_query`)) {
+      data.query_args = window[`${ns}_load_posts_query`]
     }
 
-    if (Object.getOwnPropertyDescriptor(window, ns + '_load_posts_query_static')) {
-      data.query_args_static = window[ns + '_load_posts_query_static']
+    if (Object.getOwnPropertyDescriptor(window, `${ns}_load_posts_query_static`)) {
+      data.query_args_static = window[`${ns}_load_posts_query_static`]
     }
 
     /* Arguments */
 
     const args = {
       url: n.ajax_url,
-      data: data,
+      data,
       next: el.loadMore,
       loader: el.loadMoreLoader,
-      ppp: ppp,
-      total: total,
+      ppp,
+      total,
       filters: el.loadMoreFilters,
       filtersForm: el.loadMoreFiltersForm,
       insertInto: el.loadMoreInsert
@@ -285,7 +285,7 @@ const initialize = () => {
 
       args.filterPushUrlParams = function (state, data) {
         const {
-          query_args = false,
+          query_args = false, // eslint-disable-line camelcase
           filters = false,
           page = 0
         } = data
@@ -390,8 +390,8 @@ const initialize = () => {
         }
 
         return {
-          prev: prev,
-          next: next
+          prev,
+          next
         }
       }
     }
@@ -409,8 +409,8 @@ const initialize = () => {
       })
 
       args.noResults = {
-        containers: containers,
-        buttons: buttons
+        containers,
+        buttons
       }
     }
 

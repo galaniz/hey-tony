@@ -29,11 +29,11 @@
     width: auto;
   }
 
-  @include mix.breakpoint-min(600) {
+  @include mix.breakpoint-min("600") {
     justify-content: flex-end;
   }
 
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     flex-grow: 0;
 
     > div > div {
@@ -52,7 +52,7 @@
     max-height: func.calc-rem(40px);
   }
 
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     img {
       max-height: func.calc-rem(55px);
     }
@@ -64,7 +64,7 @@
     max-height: func.calc-rem(30px);
   }
 
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     img {
       max-height: func.calc-rem(40px);
     }

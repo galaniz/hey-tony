@@ -13,13 +13,13 @@
   .l-flex {
     /* Row */
 
-    @include mix.breakpoint-min(600) {
+    @include mix.breakpoint-min("600") {
       &[data-row="s"] {
         flex-direction: row;
       }
     }
 
-    @include mix.breakpoint-min(800) {
+    @include mix.breakpoint-min("800") {
       &[data-row="m"] {
         flex-direction: row;
       }
@@ -27,13 +27,13 @@
 
     /* Wrap */
 
-    @include mix.breakpoint-min(600) {
+    @include mix.breakpoint-min("600") {
       &[data-wrap-s] {
         flex-wrap: wrap;
       }
     }
 
-    @include mix.breakpoint-min(800) {
+    @include mix.breakpoint-min("800") {
       &[data-wrap-m] {
         flex-wrap: wrap;
       }
@@ -41,7 +41,7 @@
 
     /* Align */
 
-    @include mix.breakpoint-min(800) {
+    @include mix.breakpoint-min("800") {
       &[data-align-m="start"] {
         align-items: flex-start;
       }
@@ -81,7 +81,7 @@
       }
     }
 
-    @include mix.breakpoint-min(1000) {
+    @include mix.breakpoint-min("1000") {
       &[data-gap-l="s"] {
         --ht-flex-gap: #{func.calc-rem(20px)};
       }

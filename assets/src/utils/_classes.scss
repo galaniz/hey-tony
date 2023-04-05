@@ -118,7 +118,7 @@
   }
 
   .u-ta-l-m {
-    @include mix.breakpoint-min(800) {
+    @include mix.breakpoint-min("800") {
       text-align: left;
     }
   }
@@ -126,7 +126,7 @@
   /* Border */
 
   .u-br-100-pc {
-    @extend %u-border-radius-100;
+    @extend %u-border-radius-100-pc;
   }
 
   .u-brd-0 {
@@ -184,8 +184,8 @@
 
 .u-svg-100-pc {
   svg {
-    @extend %u-width-100;
-    @extend %u-height-100;
+    @extend %u-width-100-pc;
+    @extend %u-height-100-pc;
   }
 }
 
@@ -223,7 +223,7 @@
 
 .u-img-100-pc {
   img {
-    @extend %u-width-100;
+    @extend %u-width-100-pc;
   }
 }
 

@@ -107,7 +107,7 @@ class Tabs {
 
 			if ( $step ) {
 				$label = (
-					'<div class="o-aspect-ratio l-flex" data-justify="center" data-align="center">' .
+					'<div class="l-aspect-ratio l-flex" data-justify="center" data-align="center">' .
 						"<span class='u-v-h'>$title</span>" .
 						"<div class='u-p-a' aria-hidden='true'>$index</div>" .
 					'</div>'

@@ -24,7 +24,6 @@ import {
   mergeObjects,
   toggleFocusability,
   focusSelector,
-  getScrollY,
   prefix
 } from 'Formation/utils'
 
@@ -144,7 +143,7 @@ class Nav {
 
     /* Scroll position on load */
 
-    if (getScrollY() >= this._ogOuterHeight + this._offsetY) {
+    if (window.scrollY >= this._ogOuterHeight + this._offsetY) {
       this._scaledDown = true
       this._setTransformValues(this._currentScaleTo)
     }
@@ -343,7 +342,7 @@ class Nav {
       /* Reset offset */
 
       this._setOffset()
-      this._setFixed(getScrollY())
+      this._setFixed(window.scrollY)
 
       /* Have to reset this because could be different on resize */
 
@@ -354,7 +353,7 @@ class Nav {
 
       this._setBufferHeight()
 
-      if (getScrollY() >= this._ogOuterHeight + this._offsetY) {
+      if (window.scrollY >= this._ogOuterHeight + this._offsetY) {
         this._scaledDown = true
         this._setTransformValues(this._currentScaleTo)
       } else {
@@ -364,7 +363,7 @@ class Nav {
   }
 
   _scroll () {
-    const y = getScrollY()
+    const y = window.scrollY
 
     this._setFixed(y)
 

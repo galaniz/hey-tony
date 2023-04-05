@@ -413,7 +413,7 @@ class HT {
 		echo (
 			'<aside class="c-loader l-flex u-p-f u-t-0 u-b-0 u-l-0 u-r-0 u-oo-s js-load-more-loader" data-align="center" data-justify="center" tabindex="0" aria-label="Loading" data-hide>' .
 				'<div class="l-w-r t-primary-base u-br-100-pc u-b-m">' .
-					'<div class="o-aspect-ratio"></div>' .
+					'<div class="l-aspect-ratio"></div>' .
 				'</div>' .
 			'</aside>'
 		);

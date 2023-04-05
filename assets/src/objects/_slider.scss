@@ -23,7 +23,7 @@ $container: func.calc-rem(map.get(con.$containers, "def"));
   height: var(--height);
   width: 100vw;
 
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     --slide-gap: 2.5rem;
   }
 }
@@ -34,13 +34,13 @@ $container: func.calc-rem(map.get(con.$containers, "def"));
   -webkit-overflow-scrolling: touch;
   padding-left: var(--slide-gap);
 
-  @include mix.breakpoint-min(1190) {
+  @include mix.breakpoint-min("1190") {
     margin-right: calc(var(--slide-gap) * -1);
   }
 }
 
 .o-slider__h {
-  @include mix.breakpoint-min(1190) {
+  @include mix.breakpoint-min("1190") {
     max-width: func.calc-rem(1190px);
   }
 }
@@ -48,15 +48,15 @@ $container: func.calc-rem(map.get(con.$containers, "def"));
 .o-slider__item {
   --width: calc(100% - var(--ht-scrollbar-w) - var(--container-p) * 2);
 
-  @include mix.breakpoint-min(600) {
+  @include mix.breakpoint-min("600") {
     --width: calc(50vw - (var(--ht-scrollbar-w) / 2) - var(--container-p));
   }
 
-  @include mix.breakpoint-min(900) {
+  @include mix.breakpoint-min("900") {
     --width: calc(33.3333vw - (var(--ht-scrollbar-w) / 3) - (var(--container-p) * 0.6667));
   }
 
-  @include mix.breakpoint-min(1190) {
+  @include mix.breakpoint-min("1190") {
     --width: 33.3333%;
   }
 }
@@ -64,7 +64,7 @@ $container: func.calc-rem(map.get(con.$containers, "def"));
 .o-slider__group {
   --width: calc(100vw - var(--ht-scrollbar-w) - var(--container-p) * 2);
 
-  @include mix.breakpoint-min(1190) {
+  @include mix.breakpoint-min("1190") {
     --width: 100%;
   }
 }
@@ -82,11 +82,11 @@ $container: func.calc-rem(map.get(con.$containers, "def"));
 .o-slider__inner {
   width: 100%;
 
-  @include mix.breakpoint-min(600) {
+  @include mix.breakpoint-min("600") {
     width: 50%;
   }
 
-  @include mix.breakpoint-min(900) {
+  @include mix.breakpoint-min("900") {
     width: 33.3333%;
   }
 }
@@ -106,7 +106,7 @@ $container: func.calc-rem(map.get(con.$containers, "def"));
     top: var(--ht-flex-gap);
   }
 
-  @include mix.breakpoint-min(1190) {
+  @include mix.breakpoint-min("1190") {
     --x: ((100vw - var(--ht-scrollbar-w)) / 2) - #{math.div($container, 2)} - var(--ht-flex-gap);
   }
 }
@@ -115,7 +115,7 @@ $container: func.calc-rem(map.get(con.$containers, "def"));
   #ht #main & {
     padding: 0 0 0 calc(var(--container-p) + var(--container-p) - var(--ht-flex-gap) + var(--ht-scrollbar-w));
 
-    @include mix.breakpoint-min(1190) {
+    @include mix.breakpoint-min("1190") {
       padding: 0 0 0 calc((50vw - #{math.div($container, 2)}) * 2);
     }
   }

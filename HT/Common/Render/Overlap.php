@@ -99,7 +99,7 @@ class Overlap {
 
 		/* Featured image */
 
-		$image = '<div class="o-aspect-ratio__media"></div>';
+		$image = '<div class="l-aspect-ratio__media"></div>';
 
 		if ( $media_id ) {
 			$image = HT::get_image( $media_id, '1536x1536' );
@@ -112,7 +112,7 @@ class Overlap {
 				$height = esc_attr( $image['height'] );
 				$alt    = esc_attr( $image['alt'] );
 
-				$image = "<img class='o-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$width' height='$height' loading='lazy'>";
+				$image = "<img class='l-aspect-ratio__media' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$width' height='$height' loading='lazy'>";
 			}
 		}
 
@@ -131,7 +131,7 @@ class Overlap {
 						'</div>' .
 					'</div>' .
 					"<div class='o-overlap__bg l-mw-l u-p-r u-zi--1'>" .
-						'<div class="o-aspect-ratio" data-type="overlap" data-hover="scale" data-scale="slow">' .
+						'<div class="l-aspect-ratio" data-type="overlap" data-hover="scale" data-scale="slow">' .
 							$image .
 						'</div>' .
 					'</div>' .

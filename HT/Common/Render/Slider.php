@@ -78,7 +78,7 @@ class Slider {
 
 			$tablist .= (
 				'<li class="o-dot l-flex" role="presentation">' .
-					"<button class='o-aspect-ratio l-w-s" . ( $i < $last_index ? ' l-mr-xxs' : '' ) . "' type='button' role='tab' tabindex='$tabindex' aria-selected='$selected' aria-label='$tab_label'$max_width>" .
+					"<button class='l-aspect-ratio l-w-s" . ( $i < $last_index ? ' l-mr-xxs' : '' ) . "' type='button' role='tab' tabindex='$tabindex' aria-selected='$selected' aria-label='$tab_label'$max_width>" .
 						'<span class="l-m-auto u-p-a u-t-0 u-l-0 u-r-0 u-b-0 u-d-b u-br-100-pc"></span>' .
 					'</button>' .
 				'</li>'

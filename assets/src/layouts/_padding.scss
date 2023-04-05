@@ -85,7 +85,7 @@
 
   /* Padding 1000px breakpoint */
 
-  @include mix.breakpoint-min(1000) {
+  @include mix.breakpoint-min("1000") {
     .l-pt-xs-l {
       padding-top: func.calc-rem(40px);
     }

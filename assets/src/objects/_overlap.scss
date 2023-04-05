@@ -16,12 +16,12 @@
   @include mix.fluid-size(
     --ht-overlap-p,
     func.calc-rem(290px) func.calc-rem(500px),
-    700 1200
+    "700" "1200"
   );
   @include mix.fluid-size(
     --ht-overlap-h,
     func.calc-rem(110px) func.calc-rem(240px),
-    700 1200
+    "700" "1200"
   );
 }
 
@@ -34,7 +34,7 @@
     margin-left: -8%;
   }
 
-  @include mix.breakpoint-min(700) {
+  @include mix.breakpoint-min("700") {
     .o-overlap:nth-child(odd) & {
       margin-left: 12%;
     }
@@ -44,7 +44,7 @@
     }
   }
 
-  @include mix.breakpoint-min(1300) {
+  @include mix.breakpoint-min("1300") {
     $container: map.get(con.$containers, "def");
     $max: map.get(con.$vars, "max-widths", "l");
 
@@ -57,7 +57,7 @@
     }
   }
 
-  @include mix.breakpoint-min(1800) {
+  @include mix.breakpoint-min("1800") {
     .o-overlap:nth-child(odd) & {
       margin-left: func.calc-rem(240px);
     }
@@ -76,7 +76,7 @@
     @include mix.fluid-size(
       height,
       func.calc-rem(110px) func.calc-rem(240px),
-      700 1200
+      "700" "1200"
     );
 
     background-color: var(--ht-overlap-bg);
@@ -120,7 +120,7 @@
     }
   }
 
-  @include mix.breakpoint-min(700) {
+  @include mix.breakpoint-min("700") {
     .o-overlap:nth-child(odd) & > div {
       padding-right: func.calc-rem(60px);
 
@@ -149,7 +149,7 @@
   margin-top: calc(-1 * (var(--ht-overlap-p) - var(--ht-overlap-h)));
   width: 100vw;
 
-  @include mix.breakpoint-min(660) {
+  @include mix.breakpoint-min("660") {
     .o-overlap:nth-child(even) & {
       margin-left: calc((100vw - #{func.calc-rem(660px)}) * -1);
     }

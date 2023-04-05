@@ -72,14 +72,14 @@ class Device {
 				$bottom = ( $wid / $height ) * ( $base / 2 );
 			}
 
-			$img = "<img class='" . ( 'mobile' === $type ? ' o-aspect-ratio__media' : ' l-w-100-pc' ) . "' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>";
+			$img = "<img class='" . ( 'mobile' === $type ? ' l-aspect-ratio__media' : ' l-w-100-pc' ) . "' src='$src' alt='$alt' srcset='$srcset' sizes='$sizes' width='$wid' height='$height' loading='lazy'>";
 		}
 
 		/* Output */
 
 		if ( 'mobile' === $type ) {
 			return (
-				'<div class="o-device o-aspect-ratio l-mw-s l-ml-auto l-mr-auto t-bg-background-dark" data-p="177" data-type="mobile">' .
+				'<div class="o-device l-aspect-ratio-177 l-mw-s l-ml-auto l-mr-auto t-bg-background-dark" data-type="mobile">' .
 					'<div class="u-p-a u-t-0 u-l-0 u-r-0 u-b-0 u-o-h">' .
 						$img .
 					'</div>' .
@@ -88,15 +88,15 @@ class Device {
 		} else {
 			return (
 				'<div class="o-device" data-type="desktop">' .
-					'<div class="o-aspect-ratio t-bg-background-dark" data-p="4.2">' .
+					'<div class="l-aspect-ratio-042 t-bg-background-dark">' .
 						'<div class="u-p-a">' .
-							'<div class="o-aspect-ratio t-bg-foreground-base u-br-100-pc"></div>' .
+							'<div class="l-aspect-ratio t-bg-foreground-base u-br-100-pc"></div>' .
 						'</div>' .
 						'<div class="u-p-a">' .
-							'<div class="o-aspect-ratio t-bg-foreground-base u-br-100-pc"></div>' .
+							'<div class="l-aspect-ratio t-bg-foreground-base u-br-100-pc"></div>' .
 						'</div>' .
 						'<div class="u-p-a">' .
-							'<div class="o-aspect-ratio t-bg-foreground-base u-br-100-pc"></div>' .
+							'<div class="l-aspect-ratio t-bg-foreground-base u-br-100-pc"></div>' .
 						'</div>' .
 					'</div>' .
 					'<div class="u-o-h" style="border-radius: 0% 0% ' . $left . '% ' . $left . '% / 0% 0% ' . $bottom . '% ' . $bottom . '%;">' .

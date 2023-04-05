@@ -13,7 +13,7 @@
 	@include mix.fluid-size(
     --border,
     func.calc-rem(8px) func.calc-rem(20px),
-    400 1200
+    "400" "1200"
   );
 
   border-radius: var(--border);

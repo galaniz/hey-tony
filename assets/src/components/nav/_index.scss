@@ -24,7 +24,7 @@
   }
 
   &::before {
-    @extend %u-transition-opacity-ease;
+    @extend %u-transition-opacity-ease !optional;
 
     background-color: func.get-color("foreground-base");
     opacity: 0;
@@ -95,7 +95,7 @@
     padding-top: var(--ht-nav-p);
     padding-bottom: var(--ht-nav-p);
 
-    @include mix.breakpoint-min(1000) {
+    @include mix.breakpoint-min("1000") {
       --ht-nav-p: #{func.calc-rem(50px)};
     }
   }
@@ -183,7 +183,7 @@
 }
 
 .c-nav__item {
-  @extend %u-transition-opacity-transform-ease;
+  @extend %u-transition-opacity-transform-ease !optional;
   @extend %u-opacity-0;
 
   transform: translateX(#{func.calc-rem(-20px)});
@@ -211,7 +211,7 @@
 /* Hamburger icon */
 
 .c-nav-icon {
-  @include mix.breakpoint-max(1000) {
+  @include mix.breakpoint-max("1000") {
     transform: scale(0.8);
     transform-origin: 100% 50%;
   }
