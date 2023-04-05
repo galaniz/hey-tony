@@ -27,7 +27,6 @@
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.7.1",
     "cssnano": "^5.1.4",
-    "fibers": "^5.0.1",
     "mini-css-extract-plugin": "^2.6.0",
     "postcss": "^8.4.8",
     "postcss-combine-duplicated-selectors": "^10.0.3",

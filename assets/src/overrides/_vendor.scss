@@ -6,8 +6,15 @@
 
 @use "@alanizcreative/formation/src/config" as con;
 
-/* Recaptcha */
+/* Active campaign */
 
-.grecaptcha-badge {
-  @extend %u-visibility-hidden;
+._form {
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 1rem;
+    height: 1rem;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    appearance: auto;
+  }
 }
