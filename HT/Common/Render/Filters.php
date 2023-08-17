@@ -131,7 +131,14 @@ class Filters {
 				}
 			}
 
-			additional_script_data( HT::$namespace . '_load_posts_query', HT::$load_posts_query );
+			$output .= additional_script_data(
+				[
+					'name'   => HT::$namespace . '_load_posts_query',
+					'data'   => HT::$load_posts_query,
+					'admin'  => false,
+					'action' => false,
+				]
+			);
 		}
 
 		/* Outupt */
@@ -140,7 +147,7 @@ class Filters {
 			return (
 				'<form class="o-form js-load-more-filter-form" data-type="filters" aria-label="' . ucwords( $post_type ) . ' filters">' .
 					'<div class="l-flex u-ws-nw" data-justify="right" data-gap="xs" data-gap-l="s" data-align="center" data-justify="right" data-wrap>' .
-						'<div class="t-primary-base u-oo-s">' .
+						'<div class="t-primary-base u-oo-s" style="max-width:100%;">' .
 							'<div class="l-h-s u-o-h">' .
 								$output .
 							'</div>' .
