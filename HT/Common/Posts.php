@@ -750,10 +750,12 @@ class Posts {
 			}
 
 			if ( ! empty( $query_static ) ) {
-				additional_script_data(
+				$output .= additional_script_data(
 					[
-						'name' => HT::$namespace . '_load_posts_query_static',
-						'data' => $query_static,
+						'name'   => HT::$namespace . '_load_posts_query_static',
+						'data'   => $query_static,
+						'admin'  => false,
+						'action' => false,
 					]
 				);
 			}

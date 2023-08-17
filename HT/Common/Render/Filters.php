@@ -131,10 +131,12 @@ class Filters {
 				}
 			}
 
-			additional_script_data(
+			$output .= additional_script_data(
 				[
-					'name' => HT::$namespace . '_load_posts_query',
-					'data' => HT::$load_posts_query,
+					'name'   => HT::$namespace . '_load_posts_query',
+					'data'   => HT::$load_posts_query,
+					'admin'  => false,
+					'action' => false,
 				]
 			);
 		}
