@@ -131,7 +131,12 @@ class Filters {
 				}
 			}
 
-			additional_script_data( HT::$namespace . '_load_posts_query', HT::$load_posts_query );
+			additional_script_data(
+				[
+					'name' => HT::$namespace . '_load_posts_query',
+					'data' => HT::$load_posts_query,
+				]
+			);
 		}
 
 		/* Outupt */
