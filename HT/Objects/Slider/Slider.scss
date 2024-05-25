@@ -1,0 +1,117 @@
+/**
+ * Objects - Slider Styles
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "sass:math";
+@use "@alanizcreative/formation/lib/config/config" as con;
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+$container: util.calc-rem(map.get(con.$containers, "default"));
+
+.o-slider {
+  --height: auto;
+  --snap-type: x mandatory;
+  --slide-gap: var(--ht-2xs);
+
+  height: var(--height);
+  width: 100vw;
+
+  @include util.breakpoint-batch-add("m", (
+    --slide-gap: var(--ht-s),
+  ));
+}
+
+.o-slider__track {
+  overflow-x: auto;
+  scroll-snap-type: var(--snap-type);
+  -webkit-overflow-scrolling: touch;
+  padding-left: var(--slide-gap);
+
+  @include util.breakpoint-batch-add("slider", (
+    margin-right: calc(var(--slide-gap) * -1),
+  ));
+}
+
+.o-slider__h {
+  @include util.breakpoint-batch-add("slider", (
+    max-width: util.calc-rem(1190px),
+  ));
+}
+
+.o-slider__item {
+  --width: calc(100% - var(--ht-scrollbar-width) - var(--ht-container-padding) * 2);
+
+  @include util.breakpoint-batch-add("s", (
+    --width: calc(50vw - (var(--ht-scrollbar-width) / 2) - var(--ht-container-padding)),
+  ));
+  @include util.breakpoint-batch-add("m", (
+    --width: calc(33.3333vw - (var(--ht-scrollbar-width) / 3) - (var(--ht-container-padding) * 0.6667)),
+  ));
+  @include util.breakpoint-batch-add("slider", (
+    --width: 33.3333%,
+  ));
+}
+
+.o-slider__group {
+  --width: calc(100vw - var(--ht-scrollbar-width) - var(--ht-container-padding) * 2);
+
+  @include util.breakpoint-batch-add("slider", (
+    --width: 100%,
+  ));
+}
+
+.o-slider__item,
+.o-slider__group {
+  scroll-snap-align: start;
+  width: var(--width);
+
+  #ht .ht &:focus {
+    outline: 0; // Move to view
+  }
+}
+
+.o-slider__inner {
+  width: 100%;
+
+  @include util.breakpoint-batch-add("s", (
+    width: 50%,
+  ));
+  @include util.breakpoint-batch-add("m", (
+    width: 33.3333%,
+  ));
+}
+
+.o-slider__view {
+  --x: var(--ht-container-padding) - var(--ht-gap-margin);
+
+  left: calc(var(--x));
+
+  .o-slider__item:focus-visible &::before,
+  .o-slider__group:focus-visible &::before {
+    border: util.calc-rem(4px) solid var(--ht-outline-color);
+  }
+
+  .o-slider__group:focus-visible &::before {
+    left: var(--ht-gap-margin);
+    top: var(--ht-gap-margin);
+  }
+
+  @include util.breakpoint-batch-add("slider", (
+    --x: ((100vw - var(--ht-scrollbar-width)) / 2) - #{math.div($container, 2)} - var(--ht-gap-margin),
+  ));
+}
+
+.o-slider__offset {
+  #ht #main & {
+    padding: 0 0 0 calc(var(--ht-container-padding) + var(--ht-container-padding) - var(--ht-gap-margin) + var(--ht-scrollbar-width));
+
+    @include util.breakpoint-batch-add("slider", (
+      padding: 0 0 0 calc((50vw - #{math.div($container, 2)}) * 2),
+    ));
+  }
+}

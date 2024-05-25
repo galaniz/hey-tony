@@ -1,0 +1,12 @@
+/**
+ * Objects - Swoop Styles
+ */
+
+.o-swoop {
+  transform: translate(-50%, 100%);
+  height: var(--ht-swoop-height);
+
+  &[data-flip] {
+    transform: translate(-50%, -100%) rotate(180deg);
+  }
+}

@@ -1,0 +1,160 @@
+/**
+ * Config - Styles
+ */
+
+/* Gaps */
+
+$gaps: (
+  "3xs",
+  "2xs",
+  "s",
+  "m",
+  "l",
+  "4xl",
+);
+
+/* Config variables */
+
+@use "@alanizcreative/formation/lib/config/config" with (
+  /* Namespace */
+
+  $var-namespace: "ht",
+
+  /* Root */
+
+  $root: (
+    "colors",
+    "font-weights",
+    "spacing",
+    "gap",
+    "containers",
+    "container-padding",
+    "aspect-ratio-padding",
+    "transitions",
+    "outline",
+  ),
+
+  /* Colors */
+
+  $colors: (
+    "primary": (
+      "base": #1b4ecc,
+      "light": #4b7fff,
+      "dark": #0734a1,
+    ),
+    "foreground": (
+      "base": #202020,
+      "light": "#333333",
+    ),
+    "background": (
+      "base": #f8f3f0,
+      "light": #ffffff,
+      "dark": #ebe6e4,
+    ),
+    "negative": (
+      "base": #ba3c20,
+    )
+  ),
+
+  /* Fonts */
+
+  $font-weights: (
+    "extrabold": 800,
+    "bold": 700,
+    "normal": 400,
+  ),
+
+  /* Breakpoints */
+
+  $breakpoints: (
+    "0": 0px,
+    "xs": 300px,
+    "s": 600px,
+    "tablet": 768px,
+    "m": 900px,
+    "l": 1200px,
+    "slider": 1210px,
+    "xl": 1800px,
+  ),
+
+  /* Spacing */
+
+  $spacing: (
+    "5xs": 5px,
+    "4xs": 10px,
+    "3xs": 15px,
+    "2xs": 20px,
+    "xs": 30px,
+    "s": 45px,
+    "m": 60px,
+    "l": 75px,
+    "xl": 90px,
+    "2xl": 105px,
+    "3xl": 120px,
+    "4xl": 150px,
+    "5xl": 180px,
+  ),
+
+  /* Containers */
+
+  $container-padding: 20px,
+  $containers: (
+    "default": 1150px,
+  ),
+
+  /* Gaps */
+
+  $gaps: $gaps,
+  $gap-breakpoints: ("m"),
+
+  /* Aspect ratios */
+
+  $aspect-ratio-padding: (
+    "3-2": 66%,
+    "9-16": 177%,
+    "4-100": 4%
+  ),
+
+  /* Nav icon */
+
+  $nav-icon: (
+    "width": 60px,
+    "line-width": 2px,
+    "margin": 13px,
+  ),
+
+  /* Z index */
+
+  $z-index: (
+    "skip-link": 205,
+    "nav": 185,
+    "loader": 210,
+    "notice": 200,
+  ),
+
+  /* Transitions */
+
+  $transitions: (
+    "default": (
+      "prop": (color, background, border-color, opacity, transform),
+      "duration": 400ms,
+      "easing": "ease",
+      "delay": 0ms,
+    ),
+  ),
+
+  /* Outline */
+
+  $outline: (
+    "widths": (
+      "default": 4px,
+    ),
+    "colors": (
+      "default": "var(--ht-primary-base)",
+    ),
+    "offsets": (
+      "default": 4px,
+      "snug": -4px,
+    ),
+  ),
+);

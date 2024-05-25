@@ -1,0 +1,34 @@
+/**
+ * Components - Notice Styles
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "@alanizcreative/formation/lib/config/config" as con;
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.c-notice {
+  --ht-underline-color: var(--ht-primary-dark);
+  --link_color: var(--ht-primary-dark);
+  --primary_color: var(--ht-primary-dark);
+
+  z-index: map.get(con.$z-index, "notice");
+  max-width: util.calc-rem(450px);
+
+  > div {
+    padding: var(--ht-3xs) var(--ht-xs) var(--ht-3xs) var(--ht-2xs);
+    border-radius: var(--ht-4xs);
+
+    &::before {
+      background: var(--ht-background-primary-light);
+      opacity: 0.5;
+    }
+  }
+
+  @include util.breakpoint-batch-add("l", (
+    --ht-t-xs: var(--ht-t-s),
+  ));
+}

@@ -1,0 +1,150 @@
+/**
+ * Base - Root Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/config/config" as con;
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+@use "@alanizcreative/formation/lib/base/Root/Root" as root;
+
+/* Root */
+
+:root {
+  @include root.set-root;
+
+  /* Overlap */
+
+  --overlap-bg: var(--ht-background-base);
+
+  /* Hero */
+
+  --ht-hero-color: var(--ht-background-base);
+  --ht-hero-bg: var(--ht-foreground-base);
+  --ht-hero-height: #{util.calc-rem(720px)};
+
+  /* Swoop */
+
+  --ht-swoop-height: var(--ht-l);
+
+  @include util.fluid-size(
+    --ht-swoop-height-l,
+    util.calc-rem(75px) util.calc-rem(240px),
+    "s" "l"
+  );
+  @include util.fluid-size(
+    --ht-swoop-height-m,
+    util.calc-rem(45px) util.calc-rem(120px),
+    "s" "l"
+  );
+  @include util.fluid-size(
+    --ht-swoop-height-s,
+    util.calc-rem(30px) util.calc-rem(75px),
+    "s" "l"
+  );
+
+  /* Nav */
+
+  @include util.fluid-size(
+    --ht-nav-height,
+    util.calc-rem(75px) util.calc-rem(150px),
+    "s" "l"
+  );
+
+  --ht-nav-scale: 1;
+  --ht-nav-y: 0rem;
+  --ht-nav-item-delay: 0ms;
+
+  /* Heading one */
+
+  @include util.fluid-size(
+    --ht-h1,
+    util.calc-rem(48px) util.calc-rem(96px),
+    "s" "l"
+  );
+
+  /* Heading two large */
+
+  @include util.fluid-size(
+    --ht-h2-l,
+    util.calc-rem(38px) util.calc-rem(60px),
+    "s" "l"
+  );
+
+  /* Heading two */
+
+  @include util.fluid-size(
+    --ht-h2,
+    util.calc-rem(36px) util.calc-rem(48px),
+    "s" "l"
+  );
+
+  /* Heading three large */
+
+  @include util.fluid-size(
+    --ht-h3-l,
+    util.calc-rem(32px) util.calc-rem(36px),
+    "s" "l"
+  );
+
+  /* Heading three */
+
+  @include util.fluid-size(
+    --ht-h3,
+    util.calc-rem(28px) util.calc-rem(32px),
+    "s" "l"
+  );
+
+  /* Heading four */
+
+  @include util.fluid-size(
+    --ht-h4,
+    util.calc-rem(24px) util.calc-rem(28px),
+    "s" "l"
+  );
+
+  /* Heading five */
+
+  @include util.fluid-size(
+    --ht-h5,
+    util.calc-rem(19px) util.calc-rem(24px),
+    "s" "l"
+  );
+
+  /* Headings and text */
+
+  --ht-h6: #{util.calc-rem(18px)};
+  --ht-t-m: #{util.calc-rem(16px)};
+  --ht-t-s: #{util.calc-rem(16px)};
+  --ht-t-xs: #{util.calc-rem(14px)};
+
+  @include util.breakpoint-batch-add("l", (
+    --ht-h6: util.calc-rem(20px),
+    --ht-t-m: util.calc-rem(19px),
+  ));
+
+  /* Line height */
+
+  --ht-line-height-snug: 1.25;
+
+  /* Underline */
+
+  --ht-underline-width: #{util.calc-rem(1px)};
+  --ht-underline-color: currentcolor;
+
+  /* Border */
+
+  --ht-border-width: #{util.calc-rem(2px)};
+
+  /* Color */
+
+  --ht-primary-fade: #{rgba(util.get-color("primary-base"), 0.2)};
+  --ht-negative-fade: #{rgba(util.get-color("negative-base"), 0.2)};
+  --ht-background-fade: #{rgba(util.get-color("background-base"), 0.2)};
+  --ht-foreground-fade: #{rgba(util.get-color("foreground-base"), 0.3)};
+  --ht-foreground-muted: #{rgba(util.get-color("foreground-base"), 0.15)};
+
+  /* Scrollbar */
+
+  --ht-scrollbar-width: 0rem;
+}

@@ -286,7 +286,6 @@ Used to override default size for semantic heading level.
 | Class     | Font-size (mobile → desktop) |
 | --------- | ---------------------------- |
 | `.h1`     | `48px → 96px`                |
-| `.h1-s`   | `48px → 72px`                |
 | `.h2-l`   | `38px → 60px`                |
 | `.h2`     | `36px → 48px`                |
 | `.h3-l`   | `32px → 36px`                |
@@ -361,29 +360,29 @@ Used to override default size for semantic heading level.
 
 | Class       | Description                          |
 | ----------- | ------------------------------------ |
-| `.u-v-h`    | Visually hide for screen readers     |
-| `.u-c-i`    | Set all children to `color: inherit` |
-| `.u-bt-1`   | Border top black at 30% opacity      |
-| `.u-o-h`    | `overflow: hidden`                   |
-| `.u-d-n`    | `display: none`                      |
-| `.u-d-b`    | `display: block`                     |
-| `.u-d-i`    | `display: inline`                    |
-| `.u-d-ib`   | `display: inline-block`              |
-| `.u-p-r`    | `position: relative`                 |
-| `.u-p-a`    | `position: absolute`                 |
-| `.u-l-0`    | `left: 0`                            |
-| `.u-r-0`    | `right: 0`                           |
-| `.u-b-0`    | `bottom: 0`                          |
-| `.u-t-0`    | `top: 0`                             |
-| `.u-tlrb-b` | Pseudo element positioned absolutely to fill up container |
+| `.a-hide-vis`    | Visually hide for screen readers     |
+| `.t-inherit`    | Set all children to `color: inherit` |
+| `.b-top`   | Border top black at 30% opacity      |
+| `.l-overflow-hidden`    | `overflow: hidden`                   |
+| `.l-none`    | `display: none`                      |
+| `.l-block`    | `display: block`                     |
+| `.l-inline`    | `display: inline`                    |
+| `.l-inline-block`   | `display: inline-block`              |
+| `.l-relative`    | `position: relative`                 |
+| `.l-absolute`    | `position: absolute`                 |
+| `.l-left-0`    | `left: 0`                            |
+| `.l-right-0`    | `right: 0`                           |
+| `.l-bottom-0`    | `bottom: 0`                          |
+| `.l-top-0`    | `top: 0`                             |
+| `.l-before` | Pseudo element positioned absolutely to fill up container |
 
 ### Objects
 
 | Class          | Description                             |
 | -------------- | --------------------------------------- |
 | `.o-form`      | Wrapper class to style various form elements (inputs, textarea, select, ninja form overrides etc.) |
-| `.o-underline` | Underline for links                     |
-| `.o-accent`    | Curved line for links and text in spans |
+| `.e-underline` | Underline for links                     |
+| `.e-accent`    | Curved line for links and text in spans |
 | `.o-tabs`      | Wrapper class for tablist and tabs      |
 
 ### Components

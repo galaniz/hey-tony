@@ -1,47 +1,41 @@
 <?php
 /**
- * HT Avada child theme class
+ * HT
  *
  * @package hey-tony
  */
-
 namespace HT;
 
-/**
- * Imports
- */
+/* Imports */
 
-use HT\Common\Render\Main_Nav;
-use HT\Common\Render\Main_Footer;
-use HT\Common\Render\Hero_Image;
-use HT\Common\Render\Swoop;
-use HT\Common\Render\Meta;
-use HT\Common\Render\Filters;
-use HT\Common\Render\Stat;
-use HT\Common\Render\Accent;
-use HT\Common\Render\Tabs;
-use HT\Common\Render\Collapsible;
-use HT\Common\Render\Device;
-use HT\Common\Posts;
-use HT\Admin\User;
-use HT\Admin\General;
+use HT\Components\Navigation\Navigation;
+use HT\Components\Footer\Footer;
+use HT\Components\Hero\HeroImage;
+use HT\Objects\Swoop\Swoop;
+use HT\Objects\Meta\Meta;
+use HT\Objects\Form\FormFilters;
+use HT\Objects\Stat\Stat;
+use HT\Objects\Tabs\Tabs;
+use HT\Objects\Collapsible\Collapsible;
+use HT\Objects\Device\Device;
+use HT\Objects\Posts\Posts;
+use HT\Effects\Accent\Accent;
+use HT\Admin\User\User;
+use HT\Admin\Settings\Settings;
 use Formation\Formation as FRM;
 use Formation\Pub\Ajax;
 use Formation\Admin\Settings\Reading;
 use Formation\Utils;
 
 /**
- * Class
+ * Class - avada child theme class
  */
-
 class HT {
-
 	/**
 	 * Namespace for handles.
 	 *
 	 * @var string $namespace
 	 */
-
 	public static $namespace = 'ht';
 
 	/**
@@ -49,7 +43,6 @@ class HT {
 	 *
 	 * @var string $script_ver
 	 */
-
 	public static $script_ver = '1.0.0';
 
 	/**
@@ -57,7 +50,6 @@ class HT {
 	 *
 	 * @var string $hero_background_color
 	 */
-
 	public static $hero_background_color = 'foreground-base';
 
 	/**
@@ -65,7 +57,6 @@ class HT {
 	 *
 	 * @var string $hero_color
 	 */
-
 	public static $hero_color = 'background-base';
 
 	/**
@@ -73,7 +64,6 @@ class HT {
 	 *
 	 * @var string $hero_grayscale
 	 */
-
 	public static $hero_grayscale = false;
 
 	/**
@@ -81,7 +71,6 @@ class HT {
 	 *
 	 * @var boolean $nav_light
 	 */
-
 	public static $nav_light = true;
 
 	/**
@@ -89,7 +78,6 @@ class HT {
 	 *
 	 * @var array $colors
 	 */
-
 	public static $colors = [
 		'primary-base'    => '#1B4ECC',
 		'primary-light'   => '#4B7FFF',
@@ -104,7 +92,6 @@ class HT {
 	 *
 	 * @var array $load_posts_query
 	 */
-
 	public static $load_posts_query        = [];
 	public static $load_posts_query_static = [];
 
@@ -113,7 +100,6 @@ class HT {
 	 *
 	 * @var array $get_query_args
 	 */
-
 	public static $get_query_args = [];
 
 	/**
@@ -121,7 +107,6 @@ class HT {
 	 *
 	 * @var array $query_url
 	 */
-
 	public static $get_query_url_params = [];
 
 	/**
@@ -129,7 +114,6 @@ class HT {
 	 *
 	 * @var array $cpt
 	 */
-
 	public static $pt = [
 		'post'          => [
 			'layout'  => 'cards',
@@ -142,7 +126,7 @@ class HT {
 		],
 		'search'        => [
 			'label'  => 'Search',
-			'layout' => 'columns',
+			'layout' => 'flush',
 		],
 		'work'          => [
 			'label'  => 'Work',
@@ -151,7 +135,7 @@ class HT {
 		],
 		'testimonial'   => [
 			'label'  => 'Testimonials',
-			'layout' => 'columns',
+			'layout' => 'flush',
 			'nav'    => true,
 		],
 		'service'       => [
@@ -166,7 +150,6 @@ class HT {
 	 *
 	 * @var array $tax_pt
 	 */
-
 	public static $tax_pt = [
 		'category'      => 'post',
 		'post_tag'      => 'post',
@@ -178,7 +161,6 @@ class HT {
 	 *
 	 * @var array $script_attributes
 	 */
-
 	public static $script_attributes = [
 		'script-compat' => 'nomodule',
 		'script'        => 'type="module"',
@@ -187,7 +169,6 @@ class HT {
 	/**
 	 * Constructor
 	 */
-
 	public function __construct() {
 		/* Set variables in Formation */
 
@@ -199,28 +180,28 @@ class HT {
 		FRM::$scripts           = [
 			[
 				'handle' => 'script-compat',
-				'url'    => get_stylesheet_directory_uri() . '/assets/public/js/' . self::$namespace . '-compat.js',
+				'url'    => get_stylesheet_directory_uri() . '/assets/js/' . self::$namespace . '-compat.js',
 			],
 			[
 				'handle' => 'script',
-				'url'    => get_stylesheet_directory_uri() . '/assets/public/js/' . self::$namespace . '.js',
+				'url'    => get_stylesheet_directory_uri() . '/assets/js/' . self::$namespace . '.js',
 			],
 		];
 
 		/* Shortcodes */
 
-		add_shortcode( 'ht-main-nav', ['HT\Common\Render\Main_Nav', 'shortcode'] );
-		add_shortcode( 'ht-main-footer', ['HT\Common\Render\Main_Footer', 'shortcode'] );
-		add_shortcode( 'ht-hero-image', ['HT\Common\Render\Hero_Image', 'shortcode'] );
-		add_shortcode( 'ht-swoop', ['HT\Common\Render\Swoop', 'shortcode'] );
-		add_shortcode( 'ht-meta', ['HT\Common\Render\Meta', 'shortcode'] );
-		add_shortcode( 'ht-filters', ['HT\Common\Render\Filters', 'shortcode'] );
-		add_shortcode( 'ht-stat', ['HT\Common\Render\Stat', 'shortcode'] );
-		add_shortcode( 'ht-accent', ['HT\Common\Render\Accent', 'shortcode'] );
-		add_shortcode( 'ht-tabs', ['HT\Common\Render\Tabs', 'shortcode'] );
-		add_shortcode( 'ht-collapsible', ['HT\Common\Render\Collapsible', 'shortcode'] );
-		add_shortcode( 'ht-device', ['HT\Common\Render\Device', 'shortcode'] );
-		add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
+		add_shortcode( 'ht-main-nav', ['HT\Components\Navigation\Navigation', 'shortcode'] );
+		add_shortcode( 'ht-main-footer', ['HT\Components\Footer\Footer', 'shortcode'] );
+		add_shortcode( 'ht-hero-image', ['HT\Components\Hero\HeroImage', 'shortcode'] );
+		add_shortcode( 'ht-swoop', ['HT\Objects\Swoop\Swoop', 'shortcode'] );
+		add_shortcode( 'ht-meta', ['HT\Objects\Meta\Meta', 'shortcode'] );
+		add_shortcode( 'ht-filters', ['HT\Objects\Form\FormFilters', 'shortcode'] );
+		add_shortcode( 'ht-stat', ['HT\Objects\Stat\Stat', 'shortcode'] );
+		add_shortcode( 'ht-accent', ['HT\Effects\Accent\Accent', 'shortcode'] );
+		add_shortcode( 'ht-tabs', ['HT\Objects\Tabs\Tabs', 'shortcode'] );
+		add_shortcode( 'ht-collapsible', ['HT\Objects\Collapsible\Collapsible', 'shortcode'] );
+		add_shortcode( 'ht-device', ['HT\Objects\Device\Device', 'shortcode'] );
+		add_shortcode( 'ht-posts', ['HT\Objects\Posts\Posts', 'shortcode'] );
 
 		add_shortcode( 'ht-archive-title', [$this, 'archive_title'] );
 		add_filter( 'get_the_archive_title_prefix', [$this, 'filter_archive_prefix'], 10, 1 );
@@ -254,18 +235,17 @@ class HT {
 		if ( is_admin() ) {
 			$user_settings    = new User();
 			$reading_settings = new Reading();
-			$general_settings = new General();
+			$general_settings = new Settings();
 		}
 	}
 
 	/**
 	 * Shortcode output for archive title.
 	 */
-
 	public function archive_title() {
 		if ( is_search() ) {
 			return (
-				'<div class="u-d-i u-fw-var">Search &ndash;</div>' .
+				'<div class="l-inline t-wt-thin">Search &ndash;</div>' .
 				get_search_query()
 			);
 		}
@@ -276,16 +256,14 @@ class HT {
 	/**
 	 * Filter archive title prefix.
 	 */
-
 	public function filter_archive_prefix( $prefix ) {
 		$prefix = str_replace( ':', ' &ndash; ', $prefix );
-		return "<div class='u-d-i u-fw-var'>$prefix</div>";
+		return "<div class='l-inline t-wt-thin'>$prefix</div>";
 	}
 
 	/**
 	 * Initalize theme.
 	 */
-
 	public function init() {
 		register_nav_menus(
 			[
@@ -297,7 +275,6 @@ class HT {
 	/**
 	 * After WP object is set up.
 	 */
-
 	public function wp() {
 		global $post;
 
@@ -317,7 +294,6 @@ class HT {
 	/**
 	 * Alter query vars for posts.
 	 */
-
 	public function query_vars( $query ) {
 		FRM::query_vars( $query );
 
@@ -381,7 +357,6 @@ class HT {
 	/**
 	 * Register and enqueue scripts and styles.
 	 */
-
 	public function enqueue_assets() {
 		FRM::scripts();
 
@@ -393,7 +368,6 @@ class HT {
 	/**
 	 * Output child styles.
 	 */
-
 	public function enqueue_style() {
 		$id  = self::$namespace . '-style-css';
 		$url = get_stylesheet_directory_uri() . '/style.css';
@@ -408,12 +382,11 @@ class HT {
 	/**
 	 * Output loader for pagination.
 	 */
-
 	public function render_loader() {
 		echo (
-			'<aside class="c-loader l-flex u-p-f u-t-0 u-b-0 u-l-0 u-r-0 u-oo-s js-load-more-loader" data-align="center" data-justify="center" tabindex="0" aria-label="Loading" data-hide>' .
-				'<div class="l-w-r t-primary-base u-br-100-pc u-b-m">' .
-					'<div class="o-aspect-ratio"></div>' .
+			'<aside class="c-loader l-flex l-align-center l-justify-center l-fixed l-top-0 l-bottom-0 l-left-0 l-right-0 outline-snug js-load-more-loader" tabindex="0" aria-label="Loading" data-hide>' .
+				'<div class="l-wd-l t-primary-base b-radius-full b-all b-wd-thick">' .
+					'<div class="l-relative l-overflow-hidden l-ar-1-1"></div>' .
 				'</div>' .
 			'</aside>'
 		);
@@ -422,7 +395,6 @@ class HT {
 	/**
 	 * Output cookie notice before end of #wrapper.
 	 */
-
 	public function render_cookie_notice() {
 		$cookie_text = get_option(
 			self::$namespace . '_cookie_text',
@@ -431,11 +403,11 @@ class HT {
 
 		/* phpcs:disable */
 		echo (
-			'<aside class="c-notice l-mw-r l-ph-ctn l-pb-xxxs o-underline u-p-f u-b-0 u-r-0 u-d-n">' .
-				'<div class="t-bg-background-base p-xs u-p-r u-o-h u-tlrb-b u-fw-b">' .
-					"<p class='u-p-r'>$cookie_text</p>" .
-					'<button class="t-foreground-base l-w-s l-h-s u-p-a u-t-0 u-r-0 u-oo-s" type="button">' .
-						'<span class="u-v-h">Close cookie notice</span>' .
+			'<aside class="c-notice l-wd-full l-px-container l-pb-2xs e-underline l-fixed l-bottom-0 l-right-0 l-none">' .
+				'<div class="t-bg-background-base p-xs l-relative l-overflow-hidden l-before t-wt-bold">' .
+					"<p class='l-relative'>$cookie_text</p>" .
+					'<button class="t-foreground-base l-wd-xs l-ht-xs l-absolute l-top-0 l-right-0 outline-snug" type="button">' .
+						'<span class="a-hide-vis">Close cookie notice</span>' .
 						'<svg role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14">' .
 							'<path fill="currentColor" d="M8.12133 6.70724L13.4144 1.41421L12.0002 0L6.70712 5.29303L1.41421 0.00012402L0 1.41434L5.29291 6.70724L0.000151038 12L1.41436 13.4142L6.70712 8.12146L12 13.4143L13.4142 12.0001L8.12133 6.70724Z" />' .
 						'</svg>' .
@@ -449,7 +421,6 @@ class HT {
 	/**
 	 * Register widget area.
 	 */
-
 	public function widgets() {
 		$n = self::$namespace;
 
@@ -479,12 +450,11 @@ class HT {
 	/**
 	 * Before and after widget display.
 	 */
-
 	public function widget_before( $index, $has_widgets ) {
 		$n = self::$namespace;
 
 		if ( "$n-single-post-widget" === $index && $has_widgets ) {
-			echo '<div class="l-mb-l-all">';
+			echo '<div class="l-mb-s-all">';
 		}
 	}
 
@@ -499,28 +469,27 @@ class HT {
 	/**
 	 * Add to body class.
 	 */
-
 	public function body_class( $classes ) {
 		$n = self::$namespace;
 
 		$classes[] = $n;
 
 		if ( self::$hero_grayscale ) {
-			$classes[] = "$n-hero-grayscale";
+			$classes[] = "$n-hero-gray";
 		}
 
-		$swoop_size = 's';
+		$swoop_size = 'm';
 
 		if ( is_front_page() ) {
-			$swoop_size = 'r';
+			$swoop_size = 'l';
 		}
 
 		if ( is_single() || is_singular( 'work' ) || is_singular( 'testimonial' ) ) {
-			$swoop_size = 'xs';
+			$swoop_size = 's';
 		}
 
 		if ( ( is_archive() && ! is_post_type_archive() ) || is_post_type_archive( 'service' ) || is_search() ) {
-			$swoop_size = 'xs';
+			$swoop_size = 's';
 		}
 
 		$classes[] = "$n-swoop-$swoop_size";
@@ -531,14 +500,13 @@ class HT {
 	/**
 	 * Add id and styles to html element.
 	 */
-
 	public function html_id( $output ) {
 		$output .= ' id="ht"';
 
 		$c  = self::$colors[ self::$hero_color ];
 		$bg = self::$colors[ self::$hero_background_color ];
 
-		$output .= " style='--ht-hero-c:$c;--ht-hero-bg-c:$bg'";
+		$output .= " style='--ht-hero-color:$c;--ht-hero-bg:$bg'";
 
 		return $output;
 	}
@@ -546,7 +514,6 @@ class HT {
 	/**
 	 * Filter widget title.
 	 */
-
 	public function widget_title( $params ) {
 		$heading_level = 2;
 		$id            = $params[0]['id'] ?? '';
@@ -558,7 +525,7 @@ class HT {
 
 		$params[0]['before_widget'] = '<div>';
 		$params[0]['after_widget']  = '</div>';
-		$params[0]['before_title']  = '<div class="p-s u-fw-b l-mb-s"><p role="heading" aria-level="' . $heading_level . '">';
+		$params[0]['before_title']  = '<div class="p-s t-wt-bold l-mb-3xs"><p role="heading" aria-level="' . $heading_level . '">';
 		$params[0]['after_title']   = '</p></div>';
 
 		return $params;
@@ -567,7 +534,6 @@ class HT {
 	/**
 	 * Add current class to nav for custom post type.
 	 */
-
 	public function pt_nav_classes( $classes, $item ) {
 		return FRM::pt_nav_classes( $classes, $item );
 	}
@@ -575,24 +541,20 @@ class HT {
 	/**
 	 * Add class to widget nav menu.
 	 */
-
 	public function widget_nav_args( $nav_menu_args, $nav_menu, $args, $instance ) {
-		$class = 'l-mb-s-all p';
-		$attr  = '';
+		$class = 'l-mb-3xs-all p';
 		$id    = $args['id'];
 		$n     = self::$namespace;
 
 		if ( 'avada-footer-widget-1' === $id ) {
-			$class = 'l-flex p-m';
-			$attr  = ' data-gap="s" data-wrap';
+			$class = 'l-flex l-wrap l-gm-2xs p-m';
 		}
 
 		if ( "$n-single-post-widget" === $id ) {
-			$class = 'l-flex p-s';
-			$attr  = ' data-gap="s" data-wrap';
+			$class = 'l-flex l-wrap l-gm-2xs p-s';
 		}
 
-		$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="' . $class . '"' . $attr . '>%3$s</ul>';
+		$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="' . $class . ' t-ls-none" role="list">%3$s</ul>';
 
 		return $nav_menu_args;
 	}
@@ -600,7 +562,6 @@ class HT {
 	/**
 	 * Add attributes to scripts.
 	 */
-
 	public function add_script_attributes( $tag, $handle ) {
 		return FRM::add_script_attributes( $tag, $handle );
 	}
@@ -610,7 +571,6 @@ class HT {
 	 *
 	 * @param int $id
 	 */
-
 	public static function set_meta( $id ) {
 		$hero_background_color = get_field( 'background_color', $id );
 
@@ -639,7 +599,6 @@ class HT {
 	/**
 	 * Formation Utility methods.
 	 */
-
 	use Utils;
 
 	/**
@@ -648,11 +607,10 @@ class HT {
 	 * @param string $html
 	 * @return string
 	 */
-
 	public static function filter_social( $html ) {
 		$html = str_replace(
 			['class="fusion-social-networks-wrapper"', 'style=', '<a class="', 'a>'],
-			['class="fusion-social-networks-wrapper l-flex" data-gap="s"', 'data-style=', '<div><a class="l-m-0 ', 'a></div>'],
+			['class="fusion-social-networks-wrapper l-flex l-gm-3xs"', 'data-style=', '<div><a class="l-m-0 ', 'a></div>'],
 			$html
 		);
 
@@ -662,7 +620,6 @@ class HT {
 	/**
 	 * Formation ajax callbacks.
 	 */
-
 	use Ajax;
 
 	/**
@@ -672,7 +629,6 @@ class HT {
 	 * @param array $args
 	 * @return string or array of html output
 	 */
-
 	public static function render_ajax_posts( $args = [] ) {
 		if ( isset( $args['post_type'] ) ) {
 			$args['type'] = $args['post_type'];
@@ -689,5 +645,4 @@ class HT {
 
 		return Posts::shortcode( $args, '' );
 	}
-
-} // End HT
+}

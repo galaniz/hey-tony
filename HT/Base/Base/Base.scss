@@ -1,0 +1,47 @@
+/**
+ * Base - Base Styles
+ */
+
+main {
+  position: relative;
+  min-height: 50vh;
+}
+
+b,
+strong {
+  font-weight: var(--ht-font-weight-bold);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: var(--ht-xs);
+}
+
+*:disabled,
+*[aria-disabled="true"],
+input[type="radio"]:disabled ~ label,
+input[type="checkbox"]:disabled ~ label {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.ht-swoop-l {
+  --ht-swoop-height: var(--ht-swoop-height-l);
+}
+
+.ht-swoop-m {
+  --ht-swoop-height: var(--ht-swoop-height-m);
+}
+
+.ht-swoop-s {
+  --ht-swoop-height: var(--ht-swoop-height-s);
+}
+
+.ht-hero-gray {
+  --ht-hero-gray: grayscale(1);
+}

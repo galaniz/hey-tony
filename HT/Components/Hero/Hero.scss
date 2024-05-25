@@ -1,0 +1,30 @@
+/**
+ * Components - Hero Styles
+ */
+
+.c-hero {
+  &::before {
+    background-color: var(--ht-hero-bg);
+  }
+}
+
+.c-hero__media {
+  height: calc(100% + var(--ht-swoop-height));
+  object-position: 50% 0;
+}
+
+.c-hero__swoop img {
+  height: calc(var(--ht-swoop-height) + var(--ht-hero-height));
+  object-position: 50% calc(-1 * var(--ht-hero-height));
+}
+
+.c-hero__media,
+.c-hero__swoop img {
+  object-fit: cover;
+}
+
+.c-hero__media,
+.c-hero__swoop {
+  opacity: 0.25;
+  filter: var(--ht-hero-gray, none);
+}

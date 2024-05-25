@@ -1,0 +1,39 @@
+/**
+ * Objects - Collapsible Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/objects/Collapsible/Collapsible";
+
+/* Styles */
+
+.o-collapsible {
+  #ht .ht &:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  #ht .ht &:last-of-type {
+    padding-bottom: 0;
+  }
+}
+
+.o-collapsible__toggle {
+  font-family: inherit;
+  text-align: left;
+}
+
+.o-collapsible__icon {
+  i {
+    display: none;
+  }
+
+  [aria-expanded="true"] & i:first-child {
+    display: block;
+  }
+
+  [aria-expanded="false"] & i:last-child {
+    display: block;
+  }
+}

@@ -1,0 +1,21 @@
+/**
+ * Text - Align
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+#ht .ht {
+  .t-align-center {
+    text-align: center;
+  }
+
+  .t-align-left-m {
+    @include util.breakpoint-batch-add("m", (
+      text-align: left,
+    ));
+  }
+}

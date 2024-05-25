@@ -1,0 +1,56 @@
+/**
+ * Objects - Flush Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-flush {
+  --left: calc(-1 * var(--ht-container-padding));
+  --right: 0;
+  --width: 100vw;
+  --x: 0;
+
+  img {
+    filter: grayscale(1);
+    opacity: var(--opacity);
+  }
+
+  &:last-child > div {
+    &::before,
+    &::after {
+      content: none;
+    }
+  }
+
+  @include util.breakpoint-batch-add("m", (
+    --width: 50vw,
+  ));
+
+  &:nth-child(odd) {
+    @include util.breakpoint-batch-add("m", (
+      --left: 0,
+      --right: calc((var(--ht-gap-margin) / 2) * -1),
+      --x: auto,
+    ));
+  }
+
+  &:nth-child(even) {
+    @include util.breakpoint-batch-add("m", (
+      --left: calc((var(--ht-gap-margin) / 2) * -1),
+    ));
+  }
+}
+
+.o-flush__media,
+.o-flush__link::before {
+  height: calc(100% + var(--ht-gap-margin));
+  margin-top: calc(-1 * var(--ht-gap-margin) / 2);
+  margin-left: var(--left);
+  margin-right: var(--right);
+  width: var(--width);
+  left: var(--x);
+}

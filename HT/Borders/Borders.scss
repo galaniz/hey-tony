@@ -1,0 +1,27 @@
+/**
+ * Borders - Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+#ht .ht {
+  .b-radius-full {
+    border-radius: 100%;
+  }
+
+  .b-all {
+    border: var(--ht-border-width) solid currentcolor;
+  }
+
+  .b-wd-thick {
+    --ht-border-width: var(--ht-5xs);
+  }
+
+  .b-top {
+    border-top: util.calc-rem(1px) solid var(--ht-foreground-fade);
+  }
+}

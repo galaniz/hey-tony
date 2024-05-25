@@ -1,0 +1,163 @@
+/**
+ * Objects - Overlap Styles
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "sass:math";
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-overlap {
+  --bg-x-odd: 8%;
+  --bg-max-width: #{util.calc-rem(1100px)};
+  --bg-x: var(--bg-x-odd);
+  --fg-left: 0;
+  --fg-right: 0;
+  --text-align: left;
+  --text-margin: 0;
+  --text-right: 0;
+  --text-left: 0;
+  --text-before-radius: 0% 100% 100% 0% / 100% 100% 0% 0%;
+  --text-before-left: 0;
+  --text-before-right: 0;
+  --heading-dir: ltr;
+  --heading-right: 0;
+  --heading-left: 0;
+  --link-left: 0;
+
+  &:nth-child(odd) {
+    --text-right: var(--ht-s);
+    --text-before-right: #{util.calc-rem(-30px)};
+    --fg-right: #{util.calc-rem(-20px)};
+
+    @include util.breakpoint-batch-add("s", (
+      --text-right: var(--ht-m),
+      --heading-right: var(--ht-m),
+    ));
+  }
+
+  &:nth-child(even) {
+    --bg-x: (var(--bg-x-odd) * -1);
+    --fg-left: #{util.calc-rem(-20px)};
+    --text-align: right;
+    --text-margin: auto;
+    --text-left: var(--ht-s);
+    --text-before-radius: 100% 0% 100% 0% / 100% 100% 0% 0%;
+    --text-before-left: #{util.calc-rem(-30px)};
+    --heading-dir: rtl;
+
+    @include util.breakpoint-batch-add("s", (
+      --text-left: var(--ht-m),
+      --heading-left: var(--ht-m),
+      --link-left: calc((100vw - #{util.calc-rem(660px)}) * -1),
+    ));
+  }
+
+  @include util.fluid-size(
+    --overlap-padding,
+    util.calc-rem(288px) util.calc-rem(498px),
+    "s" "l"
+  );
+  @include util.fluid-size(
+    --overlap-height,
+    util.calc-rem(105px) util.calc-rem(240px),
+    "s" "l"
+  );
+  @include util.breakpoint-batch-add("s", (
+    --bg-x-odd: 12%,
+  ));
+  @include util.breakpoint-batch-add("l", (
+    --bg-x-odd: #{unquote('(50vw - (var(--bg-max-width) - (var(--ht-container) / 2)))')}, // Parentheses stripping
+  ));
+  @include util.breakpoint-batch-add("xl", (
+    --bg-x-odd: #{util.calc-rem(240px)},
+  ));
+}
+
+.o-overlap__bg {
+  margin-left: calc(var(--bg-x));
+  max-width: var(--bg-max-width);
+}
+
+.o-overlap__fg {
+  min-height: var(--overlap-height);
+  margin-top: calc(-1 * var(--overlap-height));
+  margin-right: var(--fg-right);
+  margin-left: var(--fg-left);
+}
+
+.o-overlap__text {
+  max-width: util.calc-rem(660px);
+  padding-right: var(--text-right);
+  padding-left: var(--text-left);
+  text-align: var(--text-align);
+  margin-left: var(--text-margin);
+
+  &::before {
+    border-radius: var(--text-before-radius);
+    background-color: var(--overlap-bg);
+    height: var(--overlap-height);
+    margin-left: var(--text-before-left);
+    margin-right: var(--text-left-right);
+    transform: scale(1.02, 1.15);
+    transform-origin: 0 0;
+    z-index: -1;
+    bottom: auto;
+  }
+}
+
+.o-overlap__heading {
+  direction: var(--heading-dir);
+  padding-right: var(--heading-right);
+  padding-left: var(--heading-left);
+}
+
+.o-overlap__pre {
+  margin-left: var(--text-margin);
+}
+
+.o-overlap__ar {
+  --ht-aspect-ratio-padding: var(--overlap-padding);
+}
+
+.o-overlap__link::before {
+  margin-top: calc(-1 * (var(--overlap-padding) - var(--overlap-height)));
+  margin-left: var(--link-left);
+  width: 100vw;
+}
+
+.o-overlap-v {
+  --fg-top: #{util.calc-rem(-20px)};
+
+  &[data-size="l"] {
+    --fg-top: #{util.calc-rem(-25px)};
+  }
+}
+
+.o-overlap-v__bg {
+  background: var(--ht-foreground-muted);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: util.calc-rem(-1px);
+    right: util.calc-rem(-10px);
+    max-height: var(--ht-m);
+    min-height: var(--ht-s);
+    height: 20%;
+    border-radius: 0% 100% 100% 0% / 100% 100% 0% 0%;
+    background-color: var(--overlap-bg);
+  }
+}
+
+.o-overlap-v__fg {
+  margin-top: var(--fg-top);
+}
+
+.o-overlap-v__p {
+  padding-right: var(--ht-l);
+}

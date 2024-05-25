@@ -1,0 +1,22 @@
+/**
+ * Base - A11y Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/config/config";
+
+/* Styles */
+
+#ht .ht {
+  .a-hide-vis {
+    @extend %u-hide-visually;
+  }
+
+  .a-hide-input {
+    position: absolute;
+    opacity: 0;
+    width: 1em;
+    height: 1em;
+  }
+}

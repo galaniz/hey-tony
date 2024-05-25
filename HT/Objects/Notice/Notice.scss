@@ -1,0 +1,24 @@
+/**
+ * Objects - Notice Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-notice {
+  padding: var(--ht-3xs) var(--ht-2xs);
+  border-radius: var(--ht-5xs);
+  max-width: util.calc-rem(660px);
+
+  &[data-type="error"] {
+    background-color: var(--ht-negative-fade);
+    color: var(--ht-negative-base);
+  }
+
+  &[data-type="info"] {
+    background-color: var(--ht-background-dark);
+  }
+}

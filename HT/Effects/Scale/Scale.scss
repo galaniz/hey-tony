@@ -1,0 +1,23 @@
+/**
+ * Effects - Scale Styles
+ */
+
+.e-scale {
+  --scale: 1;
+  --duration: 600ms;
+
+  &[data-scale="slow"] {
+    --duration: 1000ms;
+  }
+
+  &:hover {
+    --scale: 1.03;
+  }
+}
+
+.e-scale__item {
+  transition-property: opacity, transform;
+  transition-duration: var(--duration);
+  transform: scale(var(--scale));
+  object-fit: cover;
+}

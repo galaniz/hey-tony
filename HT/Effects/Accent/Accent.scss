@@ -1,0 +1,92 @@
+/**
+ * Effects - Accent Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.e-accent,
+.e-accent-r {
+  --opacity: 1;
+  --svg: url("./assets/svg/underline.svg");
+  --accent-padding: #{util.calc-rem(12px)};
+  --accent-height: #{util.calc-rem(12px)};
+
+  &[data-theme="primary-base"] {
+    --svg: url("./assets/svg/underline-primary-base.svg");
+  }
+}
+
+.e-accent-r {
+  --opacity: 0;
+}
+
+a.e-accent:hover,
+a.e-accent:active,
+a.e-accent:focus,
+.e-accent a:hover,
+.e-accent a:active,
+.e-accent a:focus {
+  --opacity: 0;
+}
+
+a.e-accent-r:hover,
+a.e-accent-r:active,
+.e-accent-r a:hover,
+.e-accent-r a:active {
+  --opacity: 1;
+}
+
+.e-accent-m,
+.e-accent-r-m {
+  @include util.breakpoint-batch-add("m", (
+    --accent-height: var(--ht-3xs),
+  ));
+}
+
+.e-accent-l,
+.e-accent-r-l {
+  --accent-padding: #{util.calc-rem(9px)};
+
+  @include util.breakpoint-batch-add("m", (
+    --accent-padding: var(--ht-3xs),
+    --accent-height: var(--ht-2xs),
+  ));
+}
+
+.e-accent span,
+.e-accent a,
+.e-accent-r span,
+.e-accent-r a,
+.e-accent__d {
+  padding-bottom: var(--accent-padding);
+}
+
+.ht .e-accent__f {
+  padding-bottom: util.calc-rem(12px);
+}
+
+.e-accent span,
+.e-accent a,
+.e-accent-r span,
+.e-accent-r a {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: opacity var(--ht-duration) ease;
+    background-image: var(--svg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: var(--accent-height);
+    opacity: var(--opacity);
+    z-index: -1;
+  }
+}

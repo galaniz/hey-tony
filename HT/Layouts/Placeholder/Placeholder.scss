@@ -1,0 +1,23 @@
+/**
+ * Layouts - Placeholder Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+%l-gap-margin-s {
+  --ht-gap-margin: var(--ht-xs);
+
+  margin: calc(var(--ht-gap-margin) * -1) 0 0 calc(var(--ht-gap-margin) * -1);
+
+  & > * {
+    padding: var(--ht-gap-margin) 0 0 var(--ht-gap-margin);
+  }
+
+  @include util.breakpoint-min("m") {
+    --ht-gap-margin: var(--ht-s);
+  }
+}

@@ -1,0 +1,38 @@
+/**
+ * Objects - Border Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-border {
+  &::before,
+  &::after {
+    content: "";
+    border-color: var(--ht-foreground-base);
+    opacity: 0.3;
+  }
+
+  &::before {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: translateY(calc(var(--ht-gap-margin) / 2));
+    border-bottom: util.calc-rem(1px) solid;
+    margin-bottom: util.calc-rem(-1px);
+  }
+
+  &::after {
+    transform: translateX(calc(var(--ht-gap-margin) / 2));
+    border-right: util.calc-rem(1px) solid;
+  }
+}
+
+.o-border-s::before {
+  width: util.calc-rem(1px);
+  background: currentcolor;
+  transform: translateX(calc(-1 * var(--ht-gap-margin) / 2));
+}

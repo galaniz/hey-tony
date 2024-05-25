@@ -1,0 +1,217 @@
+/**
+ * Objects - Form Styles
+ */
+
+/* Imports */
+
+@use "sass:map";
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+@use "../../Layouts/Placeholder/Placeholder";
+
+/* Styles */
+
+.o-form {
+  textarea {
+    border-radius: var(--ht-2xs);
+  }
+
+  select {
+    border-radius: var(--form_border_radius);
+  }
+
+  label {
+    line-height: 1.5;
+  }
+
+  .fusion-search-form-content .search-field input[type="search"],
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="checkbox"],
+  select,
+  textarea {
+    --border-color: currentcolor;
+
+    border: var(--ht-border-width) solid var(--border-color);
+    font-size: inherit;
+    line-height: inherit;
+    transition: all 300ms ease;
+
+    &:focus {
+      --border-color: var(--ht-primary-base);
+
+      box-shadow: inset 0 0 0 util.calc-rem(1px) var(--ht-primary-base);
+    }
+  }
+
+  .fusion-search-form-content .search-field input[type="search"],
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    padding: var(--ht-3xs) var(--ht-xs);
+  }
+
+  input[type="checkbox"] {
+    --checkbox-bg: transparent;
+
+    height: var(--ht-xs);
+    margin-top: var(--ht-4xs);
+    border-radius: var(--ht-5xs);
+    position: relative;
+
+    &:checked {
+      --border-color: var(--ht-primary-base);
+      --checkbox-bg: var(--ht-primary-base);
+      --checkbox-icon: url("./assets/svg/caret-down.svg");
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--checkbox-bg) var(--checkbox-icon) no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+
+  /* Fusion search */
+
+  &.fusion-search-element form .fusion-search-form-content .search-field input[type="search"] {
+    padding-left: var(--ht-m);
+  }
+
+  form .fusion-search-form-content .fusion-search-button input[type="submit"] {
+    padding: var(--ht-3xs) var(--ht-xs);
+  }
+
+  /* Ninja forms overrides */
+
+  nf-fields-wrap {
+    display: flex;
+    flex-wrap: wrap;
+
+    @extend %l-gap-margin-s;
+  }
+
+  nf-field {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+
+    @include util.breakpoint-batch-add("m", (
+      flex: 1 0 50%,
+    ));
+  }
+
+  .nf-field-container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .nf-field-container,
+  .nf-field-element {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .list-select-wrap .nf-field-element {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      bottom: auto;
+      background: url("./assets/svg/caret-down.svg") no-repeat;
+      background-size: 100% 100%;
+      width: var(--ht-3xs);
+      height: var(--ht-3xs);
+      right: 1.5rem;
+    }
+  }
+
+  .label-right .checkbox-wrap .nf-field-element {
+    width: auto;
+  }
+
+  .label-right .nf-field-label {
+    padding-left: var(--ht-2xs);
+  }
+
+  .field-wrap input[type="button"] {
+    width: 100%;
+  }
+
+  .field-wrap input[type="checkbox"] {
+    width: var(--ht-xs);
+  }
+
+  .nf-field {
+    width: 100%;
+  }
+
+  .nf-input-limit {
+    margin-top: 0;
+  }
+
+  .nf-error-msg,
+  .ninja-forms-req-symbol {
+    color: var(--ht-negative-base);
+  }
+
+  .nf-error-msg,
+  .nf-response-msg {
+    font-weight: var(--ht-font-weight-bold);
+    border-radius: var(--ht-5xs);
+  }
+
+  .nf-error-msg {
+    background-color: var(--ht-negative-fade);
+    padding: var(--ht-5xs) var(--ht-4xs);
+    font-size: var(--ht-t-m);
+    margin-top: 1rem;
+  }
+
+  .nf-error-field-errors,
+  .nf-response-msg {
+    padding: var(--ht-3xs) var(--ht-2xs);
+  }
+
+  .nf-response-msg {
+    color: var(--ht-primary-base);
+    background-color: var(--ht-primary-fade);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .nf-error-field-errors {
+    margin-top: 2rem;
+  }
+
+  .nf-response-msg,
+  .nf-before-form-content {
+    margin-bottom: 2rem;
+  }
+
+  .nf-error .ninja-forms-field {
+    border-width: var(--ht-border-width);
+    border-color: var(--ht-negative-base);
+    box-shadow: inset 0 0 0 util.calc-rem(1px) var(--ht-negative-base);
+  }
+}
+
+.ht-field-full {
+  @include util.breakpoint-batch-add("m", (
+    min-width: util.calc-rem(600px),
+  ));
+}

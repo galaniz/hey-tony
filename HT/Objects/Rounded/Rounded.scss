@@ -1,0 +1,20 @@
+/**
+ * Objects - Rounded Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-rounded {
+	@include util.fluid-size(
+    --border,
+    util.calc-rem(10px) util.calc-rem(20px),
+    "xs" "l"
+  );
+
+  border-radius: var(--border);
+  border: util.calc-rem(1.5px) solid var(--ht-background-dark);
+}
