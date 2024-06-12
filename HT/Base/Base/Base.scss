@@ -1,0 +1,89 @@
+/**
+ * Base - Base Styles
+ */
+
+/* Text */
+
+b,
+strong {
+  font-weight: var(--ht-font-weight-bold);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: var(--ht-xs);
+}
+
+.fusion-text:empty {
+  display: none;
+}
+
+/* Main */
+
+main {
+  position: relative;
+  min-height: 50vh;
+}
+
+main :target {
+  scroll-margin-top: calc(var(--ht-scroll-margin));
+}
+
+/* Inputs */
+
+*:disabled,
+*[aria-disabled="true"],
+input[type="radio"]:disabled ~ label,
+input[type="checkbox"]:disabled ~ label {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Swoop */
+
+.ht-swoop-l {
+  --ht-swoop-height: var(--ht-swoop-height-l);
+}
+
+.ht-swoop-m {
+  --ht-swoop-height: var(--ht-swoop-height-m);
+}
+
+.ht-swoop-s {
+  --ht-swoop-height: var(--ht-swoop-height-s);
+}
+
+/* Hero */
+
+.ht-hero-gray {
+  --ht-hero-gray: grayscale(1);
+}
+
+/* Table */
+
+#ht .ht table {
+  background: var(--ht-foreground-muted);
+
+  &,
+  tr td,
+  th {
+    border: 0;
+  }
+
+  th,
+  tr:nth-child(2n) {
+    background-color: var(--ht-background-dark);
+  }
+}
+
+/* Current page */
+
+#ht .ht #wrapper [aria-current="page"],
+#ht .ht #wrapper .current-menu-item {
+  color: inherit;
+}

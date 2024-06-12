@@ -1,0 +1,66 @@
+/**
+ * Layouts - Width Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Fixed */
+
+.l-wd-3xs {
+  width: var(--ht-3xs);
+}
+
+.l-wd-xs {
+  width: var(--ht-xs);
+}
+
+.l-wd-s {
+  width: var(--ht-s);
+}
+
+.l-wd-l {
+  width: var(--ht-l);
+}
+
+.l-wd-2xl {
+  width: var(--ht-2xl);
+}
+
+/* Percentage */
+
+.l-wd-full {
+  width: 100%;
+}
+
+.l-wd-1-2 {
+  @include util.breakpoint-batch-add("m", (
+    width: 50%,
+  ));
+}
+
+.l-wd-1-3 {
+  @include util.breakpoint-batch-add("s", (
+    width: 50%,
+  ));
+  @include util.breakpoint-batch-add("m", (
+    width: 33.3333%,
+  ));
+}
+
+.l-img-full img {
+  width: 100%;
+}
+
+/* Max (overflow possibility) */
+
+.l-mw-full {
+  max-width: calc(100vw - var(--ht-scrollbar-width) - 2.5rem);
+}
+
+.l-mw-half {
+  @include util.breakpoint-batch-add("tablet", (
+    max-width: calc(50vw - (var(--ht-scrollbar-width) / 2) - 3.75rem),
+  ));
+}

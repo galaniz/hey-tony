@@ -1,0 +1,41 @@
+/**
+ * Text - Color
+ */
+
+#ht .ht {
+  #wrapper .t-inherit * {
+    color: inherit;
+  }
+
+  .t-light {
+    --ht-outline-color: var(--ht-background-base);
+    --ht-logo-color: var(--ht-logo-light);
+    --nav-accent: var(--ht-nav-accent-light);
+
+    &,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    a,
+    p {
+      color: var(--ht-background-base);
+    }
+  }
+}
+
+.t-primary-base {
+  color: var(--ht-primary-base);
+}
+
+.t-background-base {
+  color: var(--ht-background-base);
+}
+
+.t-foreground-base {
+  color: var(--ht-foreground-base);
+}
+

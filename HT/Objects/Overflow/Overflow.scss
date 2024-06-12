@@ -1,0 +1,31 @@
+/**
+ * Objects - Overflow Styles
+ */
+
+.o-overflow {
+  --left: 0;
+  --right: 100%;
+
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-left="true"] & {
+    --left: 3rem;
+  }
+
+  [data-right="true"] & {
+    --right: calc(100% - 3rem);
+  }
+
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      black var(--left),
+      black var(--right),
+      transparent
+    );
+}

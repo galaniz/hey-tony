@@ -1,0 +1,112 @@
+/**
+ * Layouts - Padding Styles
+ */
+
+/* Imports */
+
+@use "sass:string";
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Variables */
+
+$padding-responsive: (
+  "s",
+  "m",
+  "l",
+  "xl",
+  "3xl",
+  "4xl",
+  "5xl"
+);
+
+/* Styles */
+
+#ht .ht {
+  /* Horizontal */
+
+  .l-px-container {
+    padding: 0 var(--ht-container-padding);
+  }
+
+  /* Top */
+
+  .l-pt-2xs {
+    padding-top: var(--ht-2xs);
+  }
+
+  .l-pt-xs {
+    padding-top: var(--ht-xs);
+  }
+
+  .l-pt-s {
+    padding-top: var(--ht-s);
+  }
+
+  .l-pt-m {
+    padding-top: var(--ht-m);
+  }
+
+  .l-pt-l {
+    padding-top: var(--ht-l);
+  }
+
+  .l-pt-xl {
+    padding-top: var(--ht-xl);
+  }
+
+  .l-pt-3xl {
+    padding-top: var(--ht-3xl);
+  }
+
+  /* Bottom */
+
+  .l-pb-2xs {
+    padding-bottom: var(--ht-2xs);
+  }
+
+  .l-pb-xs {
+    padding-bottom: var(--ht-xs);
+  }
+
+  .l-pb-s {
+    padding-bottom: var(--ht-s);
+  }
+
+  .l-pb-m {
+    padding-bottom: var(--ht-m);
+  }
+
+  .l-pb-l {
+    padding-bottom: var(--ht-l);
+  }
+
+  .l-pb-xl {
+    padding-bottom: var(--ht-xl);
+  }
+
+  .l-pb-3xl {
+    padding-bottom: var(--ht-3xl);
+  }
+
+  /* Responsive */
+
+  @each $p in $padding-responsive {
+    $selector: ".l-pt-#{$p}-m";
+
+    #{string.quote($selector)} {
+      @include util.breakpoint-batch-add("m", (
+        padding-top: var(--ht-#{$p}),
+      ));
+    }
+  }
+
+  @each $p in $padding-responsive {
+    $selector: ".l-pb-#{$p}-m";
+
+    #{string.quote($selector)} {
+      @include util.breakpoint-batch-add("m", (
+        padding-bottom: var(--ht-#{$p}),
+      ));
+    }
+  }
+}

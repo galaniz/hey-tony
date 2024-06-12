@@ -1,0 +1,40 @@
+/**
+ * Objects - Tabs Styles
+ */
+
+/* Imports */
+
+@forward "../../Config/Config";
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-tabs {
+  #ht .ht #main & [role="tab"][aria-selected="true"] {
+    --ht-outline-offset: #{util.calc-rem(-10px)};
+    --ht-outline-color: var(--ht-background-base);
+
+    background-color: var(--ht-primary-base);
+    border-color: var(--ht-primary-base);
+    color: var(--ht-background-base);
+
+    &::before {
+      opacity: 0;
+    }
+  }
+}
+
+.o-tabs__list::before {
+  height: 75%;
+  border-bottom: var(--ht-border-width) solid var(--ht-foreground-fade);
+}
+
+.o-tabs__panel {
+  opacity: 0;
+  transition-behavior: allow-discrete;
+
+  &:target,
+  &[data-selected="true"] {
+    opacity: 1;
+  }
+}

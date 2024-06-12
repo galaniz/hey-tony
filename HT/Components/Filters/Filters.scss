@@ -1,0 +1,21 @@
+/**
+ * Objects - Form Radio Styles
+ */
+
+.o-radio__input:focus-visible ~ .fusion-button {
+  outline: var(--ht-outline-width) solid var(--ht-outline-color);
+  outline-offset: var(--ht-outline-offset);
+}
+
+#ht .ht .o-radio__input:checked ~ .fusion-button {
+  --ht-outline-offset: -0.4rem;
+  --ht-outline-color: var(--ht-background-base);
+
+  background-color: var(--ht-primary-base);
+  border-color: var(--ht-primary-base);
+  color: var(--ht-background-base);
+
+  &::before {
+    opacity: 0;
+  }
+}

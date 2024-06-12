@@ -1,0 +1,17 @@
+/**
+ * Objects - Notice Styles
+ */
+
+.o-notice {
+  padding: var(--ht-3xs) var(--ht-2xs);
+  border-radius: var(--ht-5xs);
+
+  &[data-type="error"] {
+    background-color: var(--ht-negative-fade);
+    color: var(--ht-negative-base);
+  }
+
+  &[data-type="info"] {
+    background-color: var(--ht-background-dark);
+  }
+}

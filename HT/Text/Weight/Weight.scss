@@ -1,0 +1,17 @@
+/**
+ * Text - Weight Styles
+ */
+
+#ht .ht {
+  .t-wt-extrabold {
+    font-weight: var(--ht-font-weight-extrabold);
+  }
+
+  .t-wt-bold {
+    font-weight: var(--ht-font-weight-bold);
+  }
+
+  .t-wt-thin {
+    font-variation-settings: "wght" 200;
+  }
+}

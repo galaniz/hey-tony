@@ -1,135 +1,96 @@
 <?php
 /**
- * HT Avada child theme class
+ * HT
  *
  * @package hey-tony
  */
-
 namespace HT;
 
-/**
- * Imports
- */
+/* Imports */
 
-use HT\Common\Render\Main_Nav;
-use HT\Common\Render\Main_Footer;
-use HT\Common\Render\Hero_Image;
-use HT\Common\Render\Swoop;
-use HT\Common\Render\Meta;
-use HT\Common\Render\Filters;
-use HT\Common\Render\Stat;
-use HT\Common\Render\Accent;
-use HT\Common\Render\Tabs;
-use HT\Common\Render\Collapsible;
-use HT\Common\Render\Device;
-use HT\Common\Posts;
-use HT\Admin\User;
-use HT\Admin\General;
+use HT\Components\Navigation\Navigation;
+use HT\Components\Filters\Filters;
+use HT\Components\Footer\Footer;
+use HT\Components\Hero\Hero;
+use HT\Components\Notice\Notice;
+use HT\Components\Loader\Loader;
+use HT\Components\TableOfContents\TableOfContents;
+use HT\Objects\Swoop\Swoop;
+use HT\Objects\Meta\Meta;
+use HT\Objects\Stat\Stat;
+use HT\Objects\Tabs\Tabs;
+use HT\Objects\Collapsible\Collapsible;
+use HT\Objects\Device\Device;
+use HT\Objects\Posts\Posts;
+use HT\Objects\Slider\Slider;
+use HT\Objects\LinkList\LinkList;
+use HT\Effects\Accent\Accent;
+use HT\Svg\Sprites\Sprites;
+use HT\Admin\User\User;
+use HT\Admin\Settings\Settings;
 use Formation\Formation as FRM;
 use Formation\Pub\Ajax;
 use Formation\Admin\Settings\Reading;
 use Formation\Utils;
 
 /**
- * Class
+ * Class - avada child theme class.
  */
-
 class HT {
-
 	/**
-	 * Namespace for handles.
+	 * Namespace to avoid collisions.
 	 *
-	 * @var string $namespace
+	 * @var string
 	 */
-
 	public static $namespace = 'ht';
-
-	/**
-	 * Script version for wp_enqueue.
-	 *
-	 * @var string $script_ver
-	 */
-
-	public static $script_ver = '1.0.0';
-
-	/**
-	 * Hero background color (ACF).
-	 *
-	 * @var string $hero_background_color
-	 */
-
-	public static $hero_background_color = 'foreground-base';
-
-	/**
-	 * Hero color based on $hero_background_color.
-	 *
-	 * @var string $hero_color
-	 */
-
-	public static $hero_color = 'background-base';
-
-	/**
-	 * Hero grayscale based on $hero_background_color.
-	 *
-	 * @var string $hero_grayscale
-	 */
-
-	public static $hero_grayscale = false;
-
-	/**
-	 * Nav color based on $hero_background_color.
-	 *
-	 * @var boolean $nav_light
-	 */
-
-	public static $nav_light = true;
 
 	/**
 	 * Theme colors.
 	 *
-	 * @var array $colors
+	 * @var array
 	 */
-
 	public static $colors = [
-		'primary-base'    => '#1B4ECC',
-		'primary-light'   => '#4B7FFF',
-		'primary-dark'    => '#0734A1',
+		'primary-base'    => '#1b4ecc',
+		'primary-light'   => '#4b7fff',
+		'primary-dark'    => '#0734a1',
 		'foreground-base' => '#202020',
-		'background-base' => '#F8F3F0',
-		'background-dark' => '#EDE8E6',
+		'background-base' => '#f8f3f0',
+		'background-dark' => '#ede8e6',
 	];
 
 	/**
-	 * For filtering posts.
+	 * Query params to filter posts.
 	 *
-	 * @var array $load_posts_query
+	 * @var array
 	 */
+	public static $load_posts_query = [];
 
-	public static $load_posts_query        = [];
+	/**
+	 * Persistent query params to filter posts.
+	 *
+	 * @var array
+	 */
 	public static $load_posts_query_static = [];
 
 	/**
-	 * Check for query args in get params - for pagination.
+	 * Query args in get params for pagination.
 	 *
-	 * @var array $get_query_args
+	 * @var array
 	 */
-
 	public static $get_query_args = [];
 
 	/**
-	 * Url params based on $get_query_args - for pagination.
+	 * Url params based on $get_query_args for pagination.
 	 *
-	 * @var array $query_url
+	 * @var array
 	 */
-
 	public static $get_query_url_params = [];
 
 	/**
 	 * Store post type slug and layout.
 	 *
-	 * @var array $cpt
+	 * @var array
 	 */
-
 	public static $pt = [
 		'post'          => [
 			'layout'  => 'cards',
@@ -142,7 +103,7 @@ class HT {
 		],
 		'search'        => [
 			'label'  => 'Search',
-			'layout' => 'columns',
+			'layout' => 'flush',
 		],
 		'work'          => [
 			'label'  => 'Work',
@@ -151,7 +112,7 @@ class HT {
 		],
 		'testimonial'   => [
 			'label'  => 'Testimonials',
-			'layout' => 'columns',
+			'layout' => 'flush',
 			'nav'    => true,
 		],
 		'service'       => [
@@ -164,9 +125,8 @@ class HT {
 	/**
 	 * Store taxonomy post types.
 	 *
-	 * @var array $tax_pt
+	 * @var array
 	 */
-
 	public static $tax_pt = [
 		'category'      => 'post',
 		'post_tag'      => 'post',
@@ -174,505 +134,534 @@ class HT {
 	];
 
 	/**
-	 * Script attributes to add in filter.
+	 * Global script and style handle.
 	 *
-	 * @var array $script_attributes
+	 * @var string
 	 */
-
-	public static $script_attributes = [
-		'script-compat' => 'nomodule',
-		'script'        => 'type="module"',
-	];
+	public static $global_handle = 'ht-global';
 
 	/**
-	 * Constructor
+	 * Script version for enqueue.
+	 *
+	 * @var string
 	 */
+	public static $script_version = '1.0.0';
 
+	/**
+	 * Store conditional functions to load styles and scripts.
+	 *
+	 * @var array
+	 */
+	public static $scripts_styles = [];
+
+	/**
+	 * Store scripts that need module attribute.
+	 *
+	 * @var string[]
+	 */
+	public static $scripts_modules = [];
+
+	/**
+	 * Store theme shortcode handles for asset loading.
+	 *
+	 * @var string[]
+	 */
+	public static $shortcode_handles = [];
+
+	/**
+	 * Store theme shortcode asset dependency handles.
+	 *
+	 * @var string[]
+	 */
+	public static $dependency_handles = [];
+
+	/**
+	 * Check slider from shortcode in content.
+	 *
+	 * @var bool
+	 */
+	public static $has_slider = false;
+
+	/**
+	 * Store theme handles in contents for asset loading.
+	 *
+	 * @var string[]
+	 */
+	public static $content_handles = [];
+
+	/**
+	 * Set properties and init shortcodes, actions and filters.
+	 *
+	 * @return void
+	 */
 	public function __construct() {
-		/* Set variables in Formation */
+		/* Set Formation props */
 
-		FRM::$namespace         = self::$namespace;
-		FRM::$script_ver        = self::$script_ver;
-		FRM::$script_attributes = self::$script_attributes;
-		FRM::$pt                = self::$pt;
-		FRM::$tax_pt            = self::$tax_pt;
-		FRM::$scripts           = [
-			[
-				'handle' => 'script-compat',
-				'url'    => get_stylesheet_directory_uri() . '/assets/public/js/' . self::$namespace . '-compat.js',
-			],
-			[
-				'handle' => 'script',
-				'url'    => get_stylesheet_directory_uri() . '/assets/public/js/' . self::$namespace . '.js',
-			],
+		FRM::$namespace = self::$namespace;
+		FRM::$pt        = self::$pt;
+		FRM::$tax_pt    = self::$tax_pt;
+
+		/* Global script/style */
+
+		self::$scripts_styles[ self::$global_handle ] = [
+			'style'  => 'Global/Global',
+			'script' => 'Global/Global',
 		];
 
 		/* Shortcodes */
 
-		add_shortcode( 'ht-main-nav', ['HT\Common\Render\Main_Nav', 'shortcode'] );
-		add_shortcode( 'ht-main-footer', ['HT\Common\Render\Main_Footer', 'shortcode'] );
-		add_shortcode( 'ht-hero-image', ['HT\Common\Render\Hero_Image', 'shortcode'] );
-		add_shortcode( 'ht-swoop', ['HT\Common\Render\Swoop', 'shortcode'] );
-		add_shortcode( 'ht-meta', ['HT\Common\Render\Meta', 'shortcode'] );
-		add_shortcode( 'ht-filters', ['HT\Common\Render\Filters', 'shortcode'] );
-		add_shortcode( 'ht-stat', ['HT\Common\Render\Stat', 'shortcode'] );
-		add_shortcode( 'ht-accent', ['HT\Common\Render\Accent', 'shortcode'] );
-		add_shortcode( 'ht-tabs', ['HT\Common\Render\Tabs', 'shortcode'] );
-		add_shortcode( 'ht-collapsible', ['HT\Common\Render\Collapsible', 'shortcode'] );
-		add_shortcode( 'ht-device', ['HT\Common\Render\Device', 'shortcode'] );
-		add_shortcode( 'ht-posts', ['HT\Common\Posts', 'shortcode'] );
+		new Hero();
+		new Navigation();
+		new Footer();
+		new Swoop();
+		new Meta();
+		new Filters();
+		new Stat();
+		new Accent();
+		new Tabs();
+		new Collapsible();
+		new TableOfContents();
+		new Device();
+		new Posts();
+		new Slider();
+		new LinkList();
+		new Notice();
+		new Loader();
 
-		add_shortcode( 'ht-archive-title', [$this, 'archive_title'] );
-		add_filter( 'get_the_archive_title_prefix', [$this, 'filter_archive_prefix'], 10, 1 );
+		/* Sprites */
+
+		new Sprites();
 
 		/* Actions */
 
-		add_action( 'after_setup_theme', [$this, 'init'] );
-		add_action( 'wp', [$this, 'wp'] );
-		add_action( 'wp_enqueue_scripts', [$this, 'enqueue_assets'], 20 );
-		add_action( 'wp_head', [$this, 'enqueue_style'], 4000000 );
-		add_action( 'pre_get_posts', [$this, 'query_vars'] );
-		add_action( 'avada_before_main_container', [$this, 'render_loader'] );
-		add_action( 'avada_before_wrapper_container_close', [$this, 'render_cookie_notice'] );
-		add_action( 'wp_loaded', [$this, 'widgets'] );
-		add_action( 'dynamic_sidebar_before', [$this, 'widget_before'], 10, 2 );
-		add_action( 'dynamic_sidebar_after', [$this, 'widget_after'], 10, 2 );
+		add_action( 'wp_enqueue_scripts', [$this, 'add_assets'] );
+		add_action( 'pre_get_posts', [$this, 'on_query_vars'] );
+		add_action( 'wp_head', [$this, 'add_styles'] );
 
 		static::ajax_actions();
 
+		/* Unused assets check */
+
+		add_action( 'wp_footer', [$this, 'archive_dequeue'] );
+		add_action( 'get_header', [$this, 'single_shortcodes' ] );
+		add_filter( 'the_content', [$this, 'archive_shortcodes'] );
+
 		/* Filters */
 
-		add_filter( 'body_class', [$this, 'body_class'], 10, 1 );
-		add_filter( 'language_attributes', [$this, 'html_id'], 10, 1 );
-		add_filter( 'dynamic_sidebar_params', [$this, 'widget_title'], 10, 1 );
-		add_filter( 'nav_menu_css_class', [$this, 'pt_nav_classes'], 10, 2 );
-		add_filter( 'widget_nav_menu_args', [$this, 'widget_nav_args'], 10, 4 );
-		add_filter( 'script_loader_tag', [$this, 'add_script_attributes'], 10, 2 );
+		add_filter( 'nav_menu_css_class', [$this, 'filter_nav_classes'], 10, 2 );
+		add_filter( 'wp_script_attributes', [$this, 'filter_script_attributes'], 10, 2 );
 
 		/* Admin */
 
 		if ( is_admin() ) {
 			$user_settings    = new User();
 			$reading_settings = new Reading();
-			$general_settings = new General();
+			$general_settings = new Settings();
 		}
 	}
 
 	/**
-	 * Shortcode output for archive title.
+	 * Check for shortcodes in content and add to $content_shortcodes
+	 *
+	 * @param string $content
+	 * @return void
 	 */
+	public function set_content_shortcodes( $content ) {
+		/* Handles check */
 
-	public function archive_title() {
-		if ( is_search() ) {
-			return (
-				'<div class="u-d-i u-fw-var">Search &ndash;</div>' .
-				get_search_query()
-			);
+		foreach ( self::$shortcode_handles as $handle ) {
+			if ( ! has_shortcode( $content, $handle ) ) {
+				continue;
+			}
+
+			self::$content_handles[] = $handle;
+
+			/* Add dependencies (avoid loading unnecessarily) */
+
+			$dependencies = self::$scripts_styles[ $handle ]['dependencies'] ?? [];
+			$merged       = array_merge( self::$content_handles, array_keys( $dependencies ) );
+
+			self::$content_handles = array_unique( $merged );
 		}
 
-		return get_the_archive_title();
-	}
+		/* Slider check */
 
-	/**
-	 * Filter archive title prefix.
-	 */
-
-	public function filter_archive_prefix( $prefix ) {
-		$prefix = str_replace( ':', ' &ndash; ', $prefix );
-		return "<div class='u-d-i u-fw-var'>$prefix</div>";
-	}
-
-	/**
-	 * Initalize theme.
-	 */
-
-	public function init() {
-		register_nav_menus(
-			[
-				'footer_navigation' => 'Footer Navigation',
-			]
-		);
-	}
-
-	/**
-	 * After WP object is set up.
-	 */
-
-	public function wp() {
-		global $post;
-
-		if ( ! is_object( $post ) || ! isset( $post->ID ) ) {
+		if ( self::$has_slider ) {
 			return;
 		}
 
-		$id = $post->ID;
+		/* Hack for single service */
 
-		if ( is_home() ) {
-			$id = (int) get_option( 'page_for_posts' );
+		if ( is_singular( 'service' ) ) {
+			self::$has_slider = true;
+
+			return;
 		}
 
-		self::set_meta( $id );
+		/* Check for ht-posts shortcode */
+
+		preg_match_all( '/\[ht-posts(.*?)\]/', $content, $matches );
+
+		if ( ! is_array( $matches ) || count( $matches ) < 2 ) {
+			return;
+		}
+
+		$has_slider = false;
+
+		/* Check slider attribute */
+
+		foreach ( $matches[1] as $match ) {
+			if ( strpos( $match, 'slider' ) !== false ) {
+				$has_slider = true;
+				break;
+			}
+		}
+
+		self::$has_slider = $has_slider;
 	}
 
 	/**
-	 * Alter query vars for posts.
+	 * Dequeue scripts and styles not in $content_shortcodes.
+	 *
+	 * @return void
 	 */
+	public function dequeue_unused_shortcode_assets() {
+		$all_handles = array_unique( array_merge( self::$shortcode_handles, self::$dependency_handles ) );
 
-	public function query_vars( $query ) {
-		FRM::query_vars( $query );
-
-		if ( ! is_admin() && $query->is_main_query() ) {
-			$post_type = $query->get( 'post_type' );
-			$ppp       = 0;
-
-			if ( $query->is_archive ) {
-				$ppp = static::get_posts_per_page( 'blog_archives' );
+		foreach ( $all_handles as $handle ) {
+			if ( in_array( $handle, self::$content_handles, true ) ) {
+				continue;
 			}
 
-			/* Check for get params that affect queries */
-
-			$get_taxonomy = '';
-			$get_terms    = '';
-			$get_paged    = '';
-			$url_query    = [];
-
-			/* phpcs:disable */
-			if ( isset( $_GET['pg'] ) ) {
-				$get_paged = (int) sanitize_text_field( $_GET['pg'] );
-				$url_query['pg'] = $get_taxonomy;
-			}
-
-			if ( isset( $_GET['taxonomy'] ) ) {
-				$get_taxonomy = sanitize_text_field( $_GET['taxonomy'] );
-				$url_query['taxonomy'] = $get_taxonomy;
-			}
-
-			if ( isset( $_GET['terms'] ) ) {
-				$get_terms = sanitize_text_field( $_GET['terms'] );
-				$url_query['terms'] = (int) $get_terms;
-			}
-			/* phpcs:enable */
-
-			if ( ! empty( $url_query ) ) {
-				self::$get_query_url_params = $url_query;
-			}
-
-			if ( $get_taxonomy && $get_terms ) {
-				self::$get_query_args['tax_query'] = [
-					[
-						'taxonomy' => $get_taxonomy,
-						'terms'    => $get_terms,
-					],
-				];
-			}
-
-			if ( $get_paged ) {
-				self::$get_query_args['paged'] = $get_paged;
-			}
-
-			if ( is_array( self::$get_query_args ) && count( self::$get_query_args ) > 0 ) {
-				foreach ( self::$get_query_args as $q => $a ) {
-					$query->set( $q, $a );
-				}
-			}
+			wp_dequeue_style( $handle );
+			wp_dequeue_script( $handle );
 		}
+
+		if ( ! self::$has_slider ) {
+			wp_dequeue_style( Slider::$handle );
+			wp_dequeue_script( Slider::$handle );
+		}
+	}
+
+	/**
+	 * Check single content for shortcodes.
+	 *
+	 * @return void
+	 */
+	public function single_shortcodes() {
+		if ( ! is_singular() ) {
+			return;
+		}
+
+		$this->set_content_shortcodes( get_the_content() );
+	}
+
+	/**
+	 * Dequeue unused styles and scripts on archive.
+	 *
+	 * @return void
+	 */
+	public function archive_dequeue() {
+		if ( is_singular() ) {
+			return;
+		}
+
+		$this->dequeue_unused_shortcode_assets();
+	}
+
+	/**
+	 * Check if archive content contains shortcodes.
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function archive_shortcodes( $content ) {
+		if ( is_singular() ) {
+			return $content;
+		}
+
+		$this->set_content_shortcodes( $content );
+
+		return $content;
+	}
+
+	/**
+	 * Add no js, admin styles and check shortcodes on singular content.
+	 *
+	 * @return void
+	 */
+	public function add_styles() {
+		if ( is_admin_bar_showing() ) {
+			echo '<style>.admin-bar .c-nav.fusion-flex-container.fusion-builder-row-1 { margin-top: var(--adminbar-height); }</style>';
+		}
+
+		$theme_url = get_stylesheet_directory_uri();
+
+		/* phpcs:disable */
+		echo "<noscript><link rel='stylesheet' href='$theme_url/assets/css/Global/GlobalNoJs.css' media='all'></noscript>";
+		/* phpcs:enable */
 	}
 
 	/**
 	 * Register and enqueue scripts and styles.
+	 *
+	 * @return void
 	 */
+	public function add_assets() {
+		/* Urls */
 
-	public function enqueue_assets() {
-		FRM::scripts();
+		$theme_url = get_stylesheet_directory_uri();
+		$css_url   = "$theme_url/assets/css/";
+		$js_url    = "$theme_url/assets/js/";
 
-		/* Remove Gutenberg root variables */
+		/* Global is dependency */
 
-		wp_dequeue_style( 'global-styles' );
-	}
+		$global_dep = [ self::$global_handle ];
 
-	/**
-	 * Output child styles.
-	 */
+		/* Get styles and scripts to load */
 
-	public function enqueue_style() {
-		$id  = self::$namespace . '-style-css';
-		$url = get_stylesheet_directory_uri() . '/style.css';
+		foreach ( self::$scripts_styles as $handle => $props ) {
+			$condition = $props['condition'] ?? null;
+			$enqueue   = true;
 
-		/* phpcs:disable */
-		$link = "<link rel='stylesheet' id='$id' href='$url' type='text/css' media='all'>";
+			if ( is_callable( $condition ) ) {
+				$enqueue = $condition();
+			}
 
-		echo $link;
-		/* phpcs:enable */
-	}
+			if ( ! $enqueue ) {
+				continue;
+			}
 
-	/**
-	 * Output loader for pagination.
-	 */
+			$style        = $props['style'] ?? '';
+			$script       = $props['script'] ?? '';
+			$style_dep    = $handle === self::$global_handle ? [] : $global_dep;
+			$script_dep   = $handle === self::$global_handle ? [] : $global_dep;
+			$dependencies = $props['dependencies'] ?? [];
+			$is_shortcode = in_array( $handle, self::$shortcode_handles, true );
 
-	public function render_loader() {
-		echo (
-			'<aside class="c-loader l-flex u-p-f u-t-0 u-b-0 u-l-0 u-r-0 u-oo-s js-load-more-loader" data-align="center" data-justify="center" tabindex="0" aria-label="Loading" data-hide>' .
-				'<div class="l-w-r t-primary-base u-br-100-pc u-b-m">' .
-					'<div class="o-aspect-ratio"></div>' .
-				'</div>' .
-			'</aside>'
-		);
-	}
+			foreach ( $dependencies as $dep_handle => $dep_props ) {
+				$dep_style  = $dep_props['style'] ?? '';
+				$dep_script = $dep_props['script'] ?? '';
 
-	/**
-	 * Output cookie notice before end of #wrapper.
-	 */
+				if ( ! empty( $dep_style ) ) {
+					wp_register_style(
+						$dep_handle,
+						"$css_url$dep_style.css",
+						$style_dep,
+						self::$script_version,
+						'all'
+					);
 
-	public function render_cookie_notice() {
-		$cookie_text = get_option(
-			self::$namespace . '_cookie_text',
-			'We use cookies to give you the best experience. By continuing to use this site, you consent to the use of cookies.'
-		);
+					wp_enqueue_style( $dep_handle );
 
-		/* phpcs:disable */
-		echo (
-			'<aside class="c-notice l-mw-r l-ph-ctn l-pb-xxxs o-underline u-p-f u-b-0 u-r-0 u-d-n">' .
-				'<div class="t-bg-background-base p-xs u-p-r u-o-h u-tlrb-b u-fw-b">' .
-					"<p class='u-p-r'>$cookie_text</p>" .
-					'<button class="t-foreground-base l-w-s l-h-s u-p-a u-t-0 u-r-0 u-oo-s" type="button">' .
-						'<span class="u-v-h">Close cookie notice</span>' .
-						'<svg role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14">' .
-							'<path fill="currentColor" d="M8.12133 6.70724L13.4144 1.41421L12.0002 0L6.70712 5.29303L1.41421 0.00012402L0 1.41434L5.29291 6.70724L0.000151038 12L1.41436 13.4142L6.70712 8.12146L12 13.4143L13.4142 12.0001L8.12133 6.70724Z" />' .
-						'</svg>' .
-					'</button>' .
-				'</div>' .
-			'</aside>'
-		);
-		/* phpcs:enable */
-	}
+					$style_dep[] = $dep_handle;
+				}
 
-	/**
-	 * Register widget area.
-	 */
+				if ( ! empty( $dep_script ) ) {
+					self::$scripts_modules[] = "$dep_handle-js";
 
-	public function widgets() {
-		$n = self::$namespace;
+					wp_register_script(
+						$dep_handle,
+						"$js_url$dep_script.js",
+						$script_dep,
+						self::$script_version,
+						true
+					);
 
-		register_sidebar(
+					wp_enqueue_script( $dep_handle );
+
+					$script_dep[] = $dep_handle;
+				}
+
+				if ( $is_shortcode ) {
+					self::$dependency_handles[] = $dep_handle;
+				}
+			}
+
+			if ( ! empty( $style ) ) {
+				wp_register_style(
+					$handle,
+					"$css_url$style.css",
+					$handle === self::$global_handle ? ['fusion-dynamic-css'] : $style_dep,
+					self::$script_version,
+					'all'
+				);
+
+				wp_enqueue_style( $handle );
+			}
+
+			if ( ! empty( $script ) ) {
+				self::$scripts_modules[] = "$handle-js";
+
+				wp_register_script(
+					$handle,
+					"$js_url$script.js",
+					$script_dep,
+					self::$script_version,
+					true
+				);
+
+				wp_enqueue_script( $handle );
+			}
+		}
+
+		/* Localize scripts */
+
+		wp_localize_script(
+			self::$global_handle,
+			self::$namespace,
 			[
-				'name'          => 'Footer Widget 4',
-				'id'            => "$n-footer-widget-4",
-				'before_widget' => '',
-				'after_widget'  => '',
-				'before_title'  => '',
-				'after_title'   => '',
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
 			]
 		);
 
-		register_sidebar(
-			[
-				'name'          => 'Single Post Widget',
-				'id'            => "$n-single-post-widget",
-				'before_widget' => '',
-				'after_widget'  => '',
-				'before_title'  => '',
-				'after_title'   => '',
-			]
-		);
-	}
+		/* Remove Gutenberg assets */
 
-	/**
-	 * Before and after widget display.
-	 */
+		wp_dequeue_style( 'wp-block-library' );
+		wp_dequeue_style( 'wp-block-library-theme' );
+		wp_dequeue_style( 'wc-block-style' ); // Removes woocommerce block css
+		wp_dequeue_style( 'global-styles' ); // Removes theme.json
+		remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
+		remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
 
-	public function widget_before( $index, $has_widgets ) {
-		$n = self::$namespace;
+		/* Remove embed script */
 
-		if ( "$n-single-post-widget" === $index && $has_widgets ) {
-			echo '<div class="l-mb-l-all">';
+		wp_deregister_script( 'wp-embed' );
+
+		/* Single dequeue unused */
+
+		if ( is_singular() ) {
+			$this->dequeue_unused_shortcode_assets();
 		}
-	}
-
-	public function widget_after( $index, $has_widgets ) {
-		$n = self::$namespace;
-
-		if ( "$n-single-post-widget" === $index && $has_widgets ) {
-			echo '</div>';
-		}
-	}
-
-	/**
-	 * Add to body class.
-	 */
-
-	public function body_class( $classes ) {
-		$n = self::$namespace;
-
-		$classes[] = $n;
-
-		if ( self::$hero_grayscale ) {
-			$classes[] = "$n-hero-grayscale";
-		}
-
-		$swoop_size = 's';
-
-		if ( is_front_page() ) {
-			$swoop_size = 'r';
-		}
-
-		if ( is_single() || is_singular( 'work' ) || is_singular( 'testimonial' ) ) {
-			$swoop_size = 'xs';
-		}
-
-		if ( ( is_archive() && ! is_post_type_archive() ) || is_post_type_archive( 'service' ) || is_search() ) {
-			$swoop_size = 'xs';
-		}
-
-		$classes[] = "$n-swoop-$swoop_size";
-
-		return $classes;
-	}
-
-	/**
-	 * Add id and styles to html element.
-	 */
-
-	public function html_id( $output ) {
-		$output .= ' id="ht"';
-
-		$c  = self::$colors[ self::$hero_color ];
-		$bg = self::$colors[ self::$hero_background_color ];
-
-		$output .= " style='--ht-hero-c:$c;--ht-hero-bg-c:$bg'";
-
-		return $output;
-	}
-
-	/**
-	 * Filter widget title.
-	 */
-
-	public function widget_title( $params ) {
-		$heading_level = 2;
-		$id            = $params[0]['id'] ?? '';
-		$n             = self::$namespace;
-
-		if ( "$n-single-post-widget" === $id ) {
-			$heading_level = 3;
-		}
-
-		$params[0]['before_widget'] = '<div>';
-		$params[0]['after_widget']  = '</div>';
-		$params[0]['before_title']  = '<div class="p-s u-fw-b l-mb-s"><p role="heading" aria-level="' . $heading_level . '">';
-		$params[0]['after_title']   = '</p></div>';
-
-		return $params;
-	}
-
-	/**
-	 * Add current class to nav for custom post type.
-	 */
-
-	public function pt_nav_classes( $classes, $item ) {
-		return FRM::pt_nav_classes( $classes, $item );
-	}
-
-	/**
-	 * Add class to widget nav menu.
-	 */
-
-	public function widget_nav_args( $nav_menu_args, $nav_menu, $args, $instance ) {
-		$class = 'l-mb-s-all p';
-		$attr  = '';
-		$id    = $args['id'];
-		$n     = self::$namespace;
-
-		if ( 'avada-footer-widget-1' === $id ) {
-			$class = 'l-flex p-m';
-			$attr  = ' data-gap="s" data-wrap';
-		}
-
-		if ( "$n-single-post-widget" === $id ) {
-			$class = 'l-flex p-s';
-			$attr  = ' data-gap="s" data-wrap';
-		}
-
-		$nav_menu_args['items_wrap'] = '<ul id="%1$s" class="' . $class . '"' . $attr . '>%3$s</ul>';
-
-		return $nav_menu_args;
 	}
 
 	/**
 	 * Add attributes to scripts.
-	 */
-
-	public function add_script_attributes( $tag, $handle ) {
-		return FRM::add_script_attributes( $tag, $handle );
-	}
-
-	/**
-	 * Set values of meta.
 	 *
-	 * @param int $id
+	 * @param  array $attr
+	 * @return array
 	 */
+	public function filter_script_attributes( $attr ) {
+		$id = $attr['id'] ?? '';
 
-	public static function set_meta( $id ) {
-		$hero_background_color = get_field( 'background_color', $id );
-
-		if ( ( is_single() || is_singular( 'work' ) || is_singular( 'service' ) ) && ! is_singular( 'testimonial' ) ) {
-			$hero_background_color = 'foreground-base';
+		if ( empty( $id ) || empty( $attr['src'] ) ) {
+			return $attr;
 		}
 
-		/* Service archive */
-
-		if ( is_post_type_archive( 'service' ) ) {
-			$hero_background_color = 'foreground-base';
+		if ( in_array( $id, self::$scripts_modules, true ) ) {
+			$attr['type'] = 'module';
 		}
 
-		/* Blog related archives */
-
-		if ( is_archive() && ! is_post_type_archive() && ! is_tax() ) {
-			$hero_background_color = get_field( 'background_color', (int) get_option( 'page_for_posts' ) );
-		}
-
-		self::$hero_background_color = $hero_background_color ? $hero_background_color : 'background-dark';
-		self::$nav_light             = 'background-dark' === self::$hero_background_color ? false : true;
-		self::$hero_grayscale        = 'foreground-base' === self::$hero_background_color ? false : true;
-		self::$hero_color            = 'background-dark' === self::$hero_background_color ? 'foreground-base' : 'background-base';
+		return $attr;
 	}
 
 	/**
-	 * Formation Utility methods.
+	 * Add current class to nav for custom post types.
+	 *
+	 * @param string[] $classes
+	 * @param WP_Post  $item
+	 * @return string[]
 	 */
+	public function filter_nav_classes( $classes, $item ) {
+		return FRM::pt_nav_classes( $classes, $item );
+	}
 
+	/**
+	 * Alter query vars for posts.
+	 *
+	 * @param WP_Query $query
+	 * @return void
+	 */
+	public function on_query_vars( $query ) {
+		FRM::query_vars( $query );
+
+		/* Only run on front end and main query */
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		if ( ! $query->is_main_query() ) {
+			return;
+		}
+
+		/* Posts per page */
+
+		$post_type = $query->get( 'post_type' );
+		$ppp       = 0;
+
+		if ( $query->is_archive ) {
+			$ppp = static::get_posts_per_page( 'blog_archives' );
+		}
+
+		/* Check get params that affect queries */
+
+		$get_taxonomy = '';
+		$get_terms    = '';
+		$get_paged    = '';
+		$url_query    = [];
+
+		/* phpcs:disable */
+		if ( isset( $_GET['pg'] ) ) {
+			$get_paged = (int) sanitize_text_field( $_GET['pg'] );
+			$url_query['pg'] = $get_taxonomy;
+		}
+
+		if ( isset( $_GET['taxonomy'] ) ) {
+			$get_taxonomy = sanitize_text_field( $_GET['taxonomy'] );
+			$url_query['taxonomy'] = $get_taxonomy;
+		}
+
+		if ( isset( $_GET['terms'] ) ) {
+			$get_terms = sanitize_text_field( $_GET['terms'] );
+			$url_query['terms'] = (int) $get_terms;
+		}
+		/* phpcs:enable */
+
+		/* Store params and additional args */
+
+		if ( ! empty( $url_query ) ) {
+			self::$get_query_url_params = $url_query;
+		}
+
+		if ( $get_taxonomy && $get_terms ) {
+			self::$get_query_args['tax_query'] = [
+				[
+					'taxonomy' => $get_taxonomy,
+					'terms'    => $get_terms,
+				],
+			];
+		}
+
+		if ( $get_paged ) {
+			self::$get_query_args['paged'] = $get_paged;
+		}
+
+		/* Update query */
+
+		if ( is_array( self::$get_query_args ) && count( self::$get_query_args ) > 0 ) {
+			foreach ( self::$get_query_args as $q => $a ) {
+				$query->set( $q, $a );
+			}
+		}
+	}
+
+	/**
+	 * Formation utility methods.
+	 */
 	use Utils;
-
-	/**
-	 * Filter Avada social icons output.
-	 *
-	 * @param string $html
-	 * @return string
-	 */
-
-	public static function filter_social( $html ) {
-		$html = str_replace(
-			['class="fusion-social-networks-wrapper"', 'style=', '<a class="', 'a>'],
-			['class="fusion-social-networks-wrapper l-flex" data-gap="s"', 'data-style=', '<div><a class="l-m-0 ', 'a></div>'],
-			$html
-		);
-
-		return $html;
-	}
 
 	/**
 	 * Formation ajax callbacks.
 	 */
-
 	use Ajax;
 
 	/**
 	 * Output posts requested through ajax.
 	 *
-	 * @param string $post_type
 	 * @param array $args
-	 * @return string or array of html output
+	 * @return string|array
 	 */
-
 	public static function render_ajax_posts( $args = [] ) {
 		if ( isset( $args['post_type'] ) ) {
 			$args['type'] = $args['post_type'];
@@ -689,5 +678,4 @@ class HT {
 
 		return Posts::shortcode( $args, '' );
 	}
-
-} // End HT
+}

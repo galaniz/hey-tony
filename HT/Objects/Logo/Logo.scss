@@ -1,0 +1,29 @@
+/**
+ * Objects - Logo Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-logo {
+  @include util.fluid-size(
+    width,
+    util.calc-rem(130px) util.calc-rem(150px),
+    "s" "l"
+  );
+
+  &[data-size="l"] {
+    @include util.fluid-size(
+      width,
+      util.calc-rem(140px) util.calc-rem(180px),
+      "s" "l"
+    );
+  }
+
+  img {
+    filter: var(--ht-logo-color);
+  }
+}
