@@ -9,17 +9,28 @@ namespace HT\Objects\Testimonial;
 /* Imports */
 
 use HT\HT as HT;
+use HT\Svg\Quote\QuoteSvg;
 
 /**
- * Class - render swoop shape
+ * Class - render swoop shape.
  */
 class Testimonial {
 	/**
-	 * Output testimonial
+	 * Output testimonial.
 	 *
+	 * @param array $args {
+	 *  @type string $text
+	 *  @type string $title
+	 *  @type string $subtitle
+	 *  @type int    $media_id
+	 *  @type bool   $center
+	 *  @type bool   $large
+	 * }
 	 * @return string
 	 */
 	public static function render( $args = [] ) {
+		/* Defaults */
+
 		$args = array_merge(
 			[
 				'text'     => '',
@@ -80,19 +91,20 @@ class Testimonial {
 			}
 		}
 
-		/* Output */
+		/* Icon */
 
-		/* phpcs:ignore */
-		$quote_mark = file_get_contents( get_stylesheet_directory() . '/assets/svg/quote-mark.svg' ); // Ignore: local path
+		$quote_mark = QuoteSvg::render( 'l-flex l-ht-xs l-wd-s' );
+
+		/* Output */
 
 		return (
 			'<figure class="l-flex l-col ' . ( $center ? 'l-align-center' : 'l-align-start-m' ) . '">' .
 				"<div class='l-pb-xs l-pb-s-m t-primary-base t-ht-tight'>$quote_mark</div>" .
-				"<blockquote class='l-pb-xs l-pb-xs-l l-m-0 " . ( $center ? 't-align-center' : 't-align-left-m' ) . ' p' . ( $large ? '-l' : '' ) . "'>$text</blockquote>" .
+				"<blockquote class='o-testimonial l-pb-xs l-pb-xs-l l-m-0 " . ( $center ? 't-align-center' : 't-align-left-m' ) . ' t' . ( $large ? '-l' : '' ) . "'>$text</blockquote>" .
 				'<figcaption class="l-mt-auto">' .
 					'<div class="l-flex l-align-center l-gm-2xs">' .
 						$image .
-						'<div class="p-s' . ( ! $image && $center ? ' t-align-center' : '' ) . '">' .
+						'<div class="t-s' . ( ! $image && $center ? ' t-align-center' : '' ) . '">' .
 							"<p class='t-wt-bold t-ht-snug " . ( $subtitle ? 'l-mb-5xs' : 'l-m-0' ) . "'>$title</p>" .
 							( $subtitle ? "<p class='t-ht-snug l-m-0'>$subtitle</p>" : '' ) .
 						'</div>' .

@@ -1,0 +1,11 @@
+/**
+ * Components - Skip Link Styles
+ */
+
+#ht .ht .skip-link {
+  font-weight: var(--ht-font-weight-extrabold);
+  border-radius: var(--ht-2xl);
+  margin: var(--ht-4xs);
+  outline-offset: -0.5rem;
+  box-shadow: none;
+}

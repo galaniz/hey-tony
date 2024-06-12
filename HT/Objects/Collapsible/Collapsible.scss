@@ -4,11 +4,18 @@
 
 /* Imports */
 
+@forward "../../Config/Config";
 @use "@alanizcreative/formation/lib/objects/Collapsible/Collapsible";
 
 /* Styles */
 
 .o-collapsible {
+  --icon-margin: var(--ht-2xs);
+
+  &[data-size="s"] {
+    --icon-margin: var(--ht-4xs);
+  }
+
   #ht .ht &:first-child {
     border-top: 0;
     padding-top: 0;
@@ -20,20 +27,29 @@
 }
 
 .o-collapsible__toggle {
-  font-family: inherit;
+  --plus-display: none;
+  --minus-display: none;
+
   text-align: left;
+
+  &[aria-expanded="true"] {
+    --minus-display: block;
+  }
+
+  &[aria-expanded="false"] {
+    --plus-display: block;
+  }
 }
 
 .o-collapsible__icon {
-  i {
-    display: none;
-  }
+  margin-right: var(--icon-margin);
+  width: var(--ht-2xs);
+}
 
-  [aria-expanded="true"] & i:first-child {
-    display: block;
-  }
+.o-collapsible__plus {
+  display: var(--plus-display);
+}
 
-  [aria-expanded="false"] & i:last-child {
-    display: block;
-  }
+.o-collapsible__minus {
+  display: var(--minus-display);
 }

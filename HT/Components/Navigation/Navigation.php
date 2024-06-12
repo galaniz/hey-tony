@@ -10,14 +10,24 @@ namespace HT\Components\Navigation;
 
 use HT\HT as HT;
 use HT\Objects\Swoop\Swoop;
+use HT\Components\Hero\Hero;
 use Formation\Pub\Nav_Walker;
 
 /**
- * Class - render main navigation
+ * Class - render main navigation.
  */
 class Navigation {
 	/**
-	 * Output main navigation
+	 * Set shortcode action.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		add_shortcode( 'ht-main-nav', [$this, 'shortcode'] );
+	}
+
+	/**
+	 * Output main navigation.
 	 *
 	 * @return string
 	 */
@@ -29,6 +39,7 @@ class Navigation {
 		$nav_walker = new Nav_Walker(
 			[
 				'li_class'      => 'c-nav__item',
+				'a_class'       => 'c-nav__link',
 				'before_output' => function( &$obj, &$output, $depth, $args ) use ( &$counter ) {
 					if ( 0 === $depth ) {
 						$delay        = ( 50 * $counter ) . 'ms';
@@ -53,6 +64,11 @@ class Navigation {
 			]
 		);
 
+		/* Home */
+
+		$home_link = esc_url( home_url( '/' ) );
+		$home_name = get_bloginfo( 'name' ) . ' home';
+
 		/* Logo */
 
 		$logo_info        = Avada()->settings->get( 'logo' );
@@ -64,7 +80,9 @@ class Navigation {
 			$sticky_logo = '';
 
 			if ( $sticky_logo_info ) {
-				$sticky_logo = '<img class="l-absolute l-left-0 l-ht-full" src="' . $sticky_logo_info['url'] . '" alt="">';
+				$sticky_logo = (
+					'<img class="l-absolute l-left-0 l-ht-full e-trans" src="' . $sticky_logo_info['url'] . '" alt="">'
+				);
 			}
 
 			if ( $image ) {
@@ -75,45 +93,63 @@ class Navigation {
 				$height = esc_attr( $image['height'] );
 
 				$logo = (
-					'<div>' .
-						'<a class="outline-snug l-block" href="' . esc_url( home_url( '/' ) ) . '">' .
-							'<span class="a-hide-vis">' . get_bloginfo( 'name' ) . ' home</span>' .
-							'<div class="o-logo l-flex l-align-center l-relative" data-size="l">' .
-								"<img class='l-block' src='$src' alt='' srcset='$srcset' sizes='$sizes' width='$width' height='$height'>" .
-								$sticky_logo .
-							'</div>' .
-						'</a>' .
-					'</div>'
+					"<a class='c-nav__logo l-relative l-zi-1 l-block e-trans' href='$home_link'>" .
+						"<span class='a-hide-vis'>$home_name</span>" .
+						'<div class="o-logo l-flex l-align-center l-relative" data-size="l">' .
+							"<img class='l-block e-trans' src='$src' alt='' srcset='$srcset' sizes='$sizes' width='$width' height='$height'>" .
+							$sticky_logo .
+						'</div>' .
+					'</a>'
 				);
 			}
 		}
 
+		/* Classes */
+
+		$classes = 'l-flex l-align-center l-justify-between l-relative l-zi-1';
+
+		if ( 'background-dark' !== Hero::$background_color ) {
+			$classes .= ' t-light';
+		}
+
+		/* Id */
+
+		$id = 'n-' . uniqid();
+
 		/* Output */
 
 		return (
-			'<nav aria-label="Main" data-nav-overflow="false" data-nav-overflow-all="false" data-nav-open="false">' .
-				'<div class="c-nav__bg c-nav__toggle l-breakout l-ht-full-vh l-absolute"></div>' .
-				'<div class="c-nav__swoop c-nav__toggle l-breakout l-ht-full-vh l-absolute">' .
-					'<div class="l-ht-full l-relative">' .
-						Swoop::render( ['nav' => true] ) .
-					'</div>' .
-				'</div>' .
-				'<div class="l-flex l-align-center l-justify-between l-gm-s l-relative l-zi-1' . ( HT::$nav_light ? ' t-text-light' : '' ) . '">' .
+			'<nav aria-label="Main">' .
+				"<div class='$classes'>" .
 					$logo .
-					'<div class="l-flex">' .
-						'<button class="c-nav__button" type="button" aria-expanded="false" aria-controls="js-nav-overflow">' .
-							'<span class="c-nav-icon l-block" data-num="1">' .
+					"<ul class='c-nav__list l-flex l-align-center l-gm-s l-overflow-x-auto t-ls-none t-ws-nowrap e-accent-r' role='list'>$main_nav</ul>" .
+					'<div class="c-nav__hide no-js-none">' .
+						"<button class='c-nav__button c-nav__open l-flex l-relative l-zi-1' type='button' aria-haspopup='true' aria-controls='$id' aria-label='Open menu'>" .
+							'<span class="c-nav-icon l-block" data-nav-icon="1">' .
 								'<span class="c-nav-icon__top l-block"></span>' .
 								'<span class="c-nav-icon__middle l-block"></span>' .
-								'<span class="c-nav-icon__bottom l-block"></span>' .
+								'<span class="c-nav-icon__bottom l-block e-trans"></span>' .
 							'</span>' .
-							'<span class="a-hide-vis">Menu</span>' .
 						'</button>' .
 					'</div>' .
-				'</div>' .
-				'<div class="c-nav__overflow c-nav__toggle t-text-light l-flex l-breakout l-ht-full-vh l-absolute" id="js-nav-overflow">' .
-					'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
-						"<ul class='l-mb-xs-all t-ls-none e-accent-r e-accent-r-l l-inline-block-a' role='list'>$main_nav</ul>" .
+					"<div class='c-nav__overflow t-light l-flex l-breakout l-ht-full-vh l-fixed' role='dialog' aria-modal='true' aria-label='Main menu' id='$id'>" .
+						'<div class="c-nav__overlay l-wd-full l-ht-full l-absolute"></div>' .
+						'<div class="c-nav__swoop l-wd-full l-ht-full l-absolute">' .
+							'<div class="l-ht-full l-relative">' .
+								Swoop::render( ['location' => 'nav'] ) .
+							'</div>' .
+						'</div>' .
+						'<div class="c-nav__hide">' .
+							"<a class='c-nav__home o-logo l-absolute l-top-0' data-size='l' href='$home_link' aria-label='$home_name'></a>" .
+						'</div>' .
+						'<div class="c-nav__scroll l-wd-full">' .
+							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
+								"<ul class='c-nav__column l-mb-xs-all t-ls-none e-accent-r' role='list'></ul>" .
+							'</div>' .
+						'</div>' .
+						'<div class="c-nav__hide">' .
+							'<button class="c-nav__button c-nav__close l-absolute l-top-0" type="button" aria-label="Close menu"></button>' .
+						'</div>' .
 					'</div>' .
 				'</div>' .
 			'</nav>'
@@ -121,13 +157,11 @@ class Navigation {
 	}
 
 	/**
-	 * Shortcode to output main navigation
+	 * Shortcode to output main navigation.
 	 *
-	 * @param array $atts
-	 * @param string $content
 	 * @return string
 	 */
-	public static function shortcode( $atts, $content ) {
+	public function shortcode() {
 		return self::render();
 	}
 }

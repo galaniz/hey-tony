@@ -4,6 +4,7 @@
 
 /* Imports */
 
+@forward "../../Config/Config";
 @use "@alanizcreative/formation/lib/utils/utils" as util;
 
 /* Styles */
@@ -33,8 +34,8 @@
 }
 
 .o-stat--wide {
-  @include util.breakpoint-batch-add("tablet", (
-    --top: 7.5%,
-    --x: 7.5%,
-  ));
+  @include util.breakpoint-min("tablet") {
+    --top: 7.5%;
+    --x: 7.5%;
+  }
 }

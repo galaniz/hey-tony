@@ -46,10 +46,10 @@ _Type:_ `string`\
 _Default:_ `bottom`\
 _Possible Values:_ `bottom`, `top`
 
-* `featured_image`\
-_Type:_ `boolean`\
-_Default:_ `false`\
-_Note:_ Doesn't apply to archive pages.
+* `location`\
+_Type:_ `string`\
+_Default:_ `'hero'`\
+_Possible Values:_ `nav`, `hero`, `footer`
 
 _Returns:_ `string` of markup
 
@@ -252,11 +252,6 @@ _Type:_ `string`\
 _Default:_ `h3`\
 _Description:_ Heading level for title.
 
-* `accordion`\
-_Type:_ `string`\
-_Default:_ `''`\
-_Description:_ If expect other collapsibles to close when one opens, specify a common string to group them together.
-
 _Returns:_ `string` of markup
 
 ### `ht-device`
@@ -294,15 +289,15 @@ Used to override default size for semantic heading level.
 | `.h5`     | `19px → 24px`                |
 | `.h6`     | `18px → 20px`                |
 
-#### Paragraphs/text
+#### Text
 
 | Class     | Font-size (mobile → desktop) |
 | --------- | ---------------------------- |
-| `.p-l`    | `24px → 28px`                |
-| `.p`      | `19px → 24px`                |
-| `.p-m`    | `16px → 18px`                |
-| `.p-s`    | `16px`                       |
-| `.p-xs`   | `14px`                       |
+| `.t-l` | `24px → 28px`                |
+| `.t`   | `19px → 24px`                |
+| `.t-m` | `16px → 18px`                |
+| `.t-s` | `16px`                       |
+| `.t-xs`| `14px`                       |
 
 ### Layout
 
@@ -407,7 +402,7 @@ Display images in wrappable row.
 
 | Class                   | Description                                                           |
 | ----------------------- | --------------------------------------------------------------------- |
-| `.t-text-light`         | Set color for all children to be theme light as well as focus outline |
+| `.t-light`         | Set color for all children to be theme light as well as focus outline |
 | `.t-foreground-base`    | Set color to theme black                                              |
 | `.t-background-base`    | Set color to theme beige                                              |
 | `.t-primary-base`       | Set color to theme blue                                               |

@@ -2,10 +2,7 @@
  * Base - Base Styles
  */
 
-main {
-  position: relative;
-  min-height: 50vh;
-}
+/* Text */
 
 b,
 strong {
@@ -21,6 +18,23 @@ h6 {
   margin-bottom: var(--ht-xs);
 }
 
+.fusion-text:empty {
+  display: none;
+}
+
+/* Main */
+
+main {
+  position: relative;
+  min-height: 50vh;
+}
+
+main :target {
+  scroll-margin-top: calc(var(--ht-scroll-margin));
+}
+
+/* Inputs */
+
 *:disabled,
 *[aria-disabled="true"],
 input[type="radio"]:disabled ~ label,
@@ -29,6 +43,8 @@ input[type="checkbox"]:disabled ~ label {
   pointer-events: none;
   cursor: not-allowed;
 }
+
+/* Swoop */
 
 .ht-swoop-l {
   --ht-swoop-height: var(--ht-swoop-height-l);
@@ -42,6 +58,32 @@ input[type="checkbox"]:disabled ~ label {
   --ht-swoop-height: var(--ht-swoop-height-s);
 }
 
+/* Hero */
+
 .ht-hero-gray {
   --ht-hero-gray: grayscale(1);
+}
+
+/* Table */
+
+#ht .ht table {
+  background: var(--ht-foreground-muted);
+
+  &,
+  tr td,
+  th {
+    border: 0;
+  }
+
+  th,
+  tr:nth-child(2n) {
+    background-color: var(--ht-background-dark);
+  }
+}
+
+/* Current page */
+
+#ht .ht #wrapper [aria-current="page"],
+#ht .ht #wrapper .current-menu-item {
+  color: inherit;
 }

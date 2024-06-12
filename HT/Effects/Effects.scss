@@ -6,6 +6,7 @@
 
 @use "./Accent/Accent";
 @use "./Underline/Underline";
+@use "./Transition/Transition";
 @use "./Color/Color";
 @use "./Scale/Scale";
 @use "./Fade/Fade";
@@ -22,8 +23,7 @@
     .ht .e-color,
     .ht .fusion-wrapper *,
     .ht .fusion-button::before,
-    .ht .fusion-button .fusion-button-text,
-    .ht .fusion-social-networks a i::before {
+    .ht .fusion-button .fusion-button-text {
       --ht-duration: 0.001ms;
       --ht-easing: linear;
 

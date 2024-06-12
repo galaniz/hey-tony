@@ -6,12 +6,15 @@
 
 @use "sass:map";
 @use "sass:math";
+@forward "../../Config/Config";
 @use "@alanizcreative/formation/lib/config/config" as con;
 @use "@alanizcreative/formation/lib/utils/utils" as util;
 
-/* Styles */
+/* Container */
 
 $container: util.calc-rem(map.get(con.$containers, "default"));
+
+/* Styles */
 
 .o-slider {
   --height: auto;
@@ -39,7 +42,7 @@ $container: util.calc-rem(map.get(con.$containers, "default"));
 
 .o-slider__h {
   @include util.breakpoint-batch-add("slider", (
-    max-width: util.calc-rem(1190px),
+    max-width: util.calc-rem(1195px), // Container width + --slide-gap
   ));
 }
 
@@ -93,7 +96,7 @@ $container: util.calc-rem(map.get(con.$containers, "default"));
 
   .o-slider__item:focus-visible &::before,
   .o-slider__group:focus-visible &::before {
-    border: util.calc-rem(4px) solid var(--ht-outline-color);
+    border: util.calc-rem(3px) solid var(--ht-outline-color);
   }
 
   .o-slider__group:focus-visible &::before {
@@ -102,7 +105,7 @@ $container: util.calc-rem(map.get(con.$containers, "default"));
   }
 
   @include util.breakpoint-batch-add("slider", (
-    --x: ((100vw - var(--ht-scrollbar-width)) / 2) - #{math.div($container, 2)} - var(--ht-gap-margin),
+    --x: #{unquote("((100vw - var(--ht-scrollbar-width)) / 2) - #{math.div($container, 2)} - var(--ht-gap-margin)")}, // Parentheses stripping
   ));
 }
 
@@ -115,3 +118,26 @@ $container: util.calc-rem(map.get(con.$containers, "default"));
     ));
   }
 }
+
+.o-slider__dots {
+  max-width: 100vw;
+}
+
+.o-slider__dot {
+  --ht-duration: 200ms;
+
+  width: util.calc-rem(12px);
+  height: util.calc-rem(12px);
+  background: currentcolor;
+  opacity: 0.3;
+
+  [role="tab"][aria-selected="true"] & {
+    color: var(--ht-primary-base);
+    opacity: 1;
+    transform: scale(1.33);
+  }
+}
+
+/* Breakpoints */
+
+@include util.breakpoint-batch;

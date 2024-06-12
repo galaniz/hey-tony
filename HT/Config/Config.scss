@@ -10,6 +10,7 @@ $gaps: (
   "s",
   "m",
   "l",
+  "xl",
   "4xl",
 );
 
@@ -72,6 +73,7 @@ $gaps: (
     "s": 600px,
     "tablet": 768px,
     "m": 900px,
+    "desktop": 1025px,
     "l": 1200px,
     "slider": 1210px,
     "xl": 1800px,
@@ -127,7 +129,7 @@ $gaps: (
 
   $z-index: (
     "skip-link": 205,
-    "nav": 185,
+    "nav": 201,
     "loader": 210,
     "notice": 200,
   ),
@@ -136,7 +138,9 @@ $gaps: (
 
   $transitions: (
     "default": (
-      "prop": (color, background, border-color, opacity, transform),
+      "prop": (
+        color, background, border-color, opacity, transform
+      ),
       "duration": 400ms,
       "easing": "ease",
       "delay": 0ms,
@@ -147,14 +151,14 @@ $gaps: (
 
   $outline: (
     "widths": (
-      "default": 4px,
+      "default": 3px,
     ),
     "colors": (
       "default": "var(--ht-primary-base)",
     ),
     "offsets": (
-      "default": 4px,
-      "snug": -4px,
+      "default": 3px,
+      "snug": -3px,
     ),
   ),
 );

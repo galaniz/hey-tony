@@ -9,29 +9,69 @@ namespace HT\Objects\Tabs;
 /* Imports */
 
 use HT\HT as HT;
+use HT\Objects\Overflow\Overflow;
 
 /**
- * Class - render tabs
+ * Class - render tabs.
  */
 class Tabs {
 	/**
-	 * Shortcode to output tabs
+	 * Shortcode handle.
 	 *
-	 * @param array $atts
+	 * @var string
+	 */
+	public static $handle = 'ht-tabs';
+
+	/**
+	 * Path in assets folder for css and js.
+	 *
+	 * @var string
+	 */
+	public static $asset_path = 'Objects/Tabs/Tabs';
+
+	/**
+	 * Set shortcode action, styles and scripts.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		add_shortcode( self::$handle, [$this, 'shortcode'] );
+
+		HT::$shortcode_handles[] = self::$handle;
+
+		HT::$scripts_styles[ self::$handle ] = [
+			'style'        => self::$asset_path,
+			'script'       => self::$asset_path,
+			'dependencies' => [
+				'ht-overflow' => [
+					'style'  => Overflow::$asset_path,
+					'script' => Overflow::$asset_path,
+				],
+			],
+		];
+	}
+
+	/**
+	 * Shortcode to output tabs.
+	 *
+	 * @param array $atts {
+	 *  @type int  $index
+	 *  @type bool $half
+	 * }
 	 * @param string $content
 	 * @return string
 	 */
 	public static function shortcode( $atts, $content ) {
+		/* Defaults */
+
 		$atts = shortcode_atts(
 			[
 				'index' => 0,
 				'half'  => false,
 			],
 			$atts,
-			'ht-tabs'
+			self::$handle
 		);
-
-		/* Destructure */
 
 		[
 			'index' => $index,
@@ -96,7 +136,7 @@ class Tabs {
 			$classes = 't-bg-inherit fusion-button button-small button-outline avada-noscroll';
 
 			if ( $step ) {
-				$classes = 't-foreground-base t-bg-inherit l-wd-s l-block b-all b-radius-full l-relative p-s t-wt-bold';
+				$classes = 't-foreground-base t-bg-inherit l-wd-s l-block b-all b-radius-full l-relative t-s t-wt-bold';
 			}
 
 			if ( $step ) {
@@ -140,14 +180,14 @@ class Tabs {
 			/* Tab panel */
 
 			$panels[] = (
-				"<section class='l-pt-2xs' id='$id' tabindex='$tabindex' role='tabpanel' aria-labelledby='$tab_id' data-selected='$selected'" . ( $selected ? '' : ' hidden' ) . '>' .
+				"<section class='o-tabs__panel l-pt-2xs no-js-panel e-trans' id='$id' tabindex='$tabindex' role='tabpanel' aria-labelledby='$tab_id' data-selected='$current'" . ( $selected ? '' : ' hidden' ) . '>' .
 					'<div class="l-flex l-wrap l-gm-s">' .
 						$img .
 						'<div class="l-mb-2xs-all l-wd-1-3 l-grow-1">' .
 							'<div class="h4">' .
 								"<h3 class='l-m-0'>$title</h3>" .
 							'</div>' .
-							'<div class="p-m l-mb-2xs-all ht-rich-text e-underline">' .
+							'<div class="t-m l-mb-2xs-all ht-rich-text e-underline">' .
 								$tabs_panels[ $i ] .
 							'</div>' .
 						'</div>' .
@@ -159,12 +199,12 @@ class Tabs {
 		/* Output */
 
 		return (
-			'<div class="o-tabs t-bg-inherit">' .
+			'<div class="o-tabs t-bg-inherit js-tabs">' .
 				"<div class='l-mw-full$half_class l-pb-2xs l-pb-s-m t-bg-inherit'>" .
-					'<div class="l-ht-' . ( $step ? 's' : 'xs' ) . ' l-overflow-hidden t-bg-inherit">' .
-						'<div class="o-overflow l-overflow-x-auto l-pb-2xs l-flex t-bg-inherit">' .
+					'<div class="l-overflow-hidden t-bg-inherit">' .
+						'<div class="o-overflow l-overflow-x-auto l-flex t-bg-inherit">' .
 							'<div class="l-grow-1 l-relative t-bg-inherit">' .
-								'<ul class="l-flex l-justify-between l-gm-s l-relative l-before t-bg-inherit t-ls-none outline-snug" role="tablist">' .
+								'<ul class="o-tabs__list l-flex l-justify-between l-gm-s l-relative l-before t-bg-inherit t-ls-none outline-snug" role="tablist">' .
 									implode( '', $list ) .
 								'</ul>' .
 							'</div>' .

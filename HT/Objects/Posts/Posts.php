@@ -9,24 +9,43 @@ namespace HT\Objects\Posts;
 /* Imports */
 
 use HT\HT as HT;
-use HT\Objects\Cards\Cards;
-use HT\Objects\Cards\CardsFlush;
 use HT\Objects\Testimonial\Testimonial;
 use HT\Objects\Overlap\Overlap;
+use HT\Objects\Overlap\OverlapVertical;
+use HT\Objects\Flush\Flush;
 use HT\Objects\Slider\Slider;
+use HT\Svg\Caret\CaretSvg;
 use function Formation\additional_script_data;
 
 /**
- * Class - render posts shortcode
+ * Class - render posts shortcode.
  */
 class Posts {
 	/**
-	 * Pagination link attributes
+	 * Set shortcode action.
 	 *
-	 * @param array $args
-	 * @return string
+	 * @return void
+	 */
+	public function __construct() {
+		add_shortcode( 'ht-posts', [$this, 'shortcode'] );
+	}
+
+	/**
+	 * Pagination link attributes.
+	 *
+	 * @param array $args {
+	 *  @type string $base_link
+	 *  @type string $type
+	 *  @type int    $current_page
+	 *  @type int    $ppp
+	 *  @type int    $total
+	 *  @type int    $total_pages
+	 * }
+	 * @return array
 	 */
 	private static function get_link_attrs( $args = [] ) {
+		/* Defaults */
+
 		$args = array_merge(
 			[
 				'base_link'    => '',
@@ -48,7 +67,11 @@ class Posts {
 			'total_pages'  => $total_pages,
 		] = $args;
 
-		$link_classes = 't-foreground-base l-wd-xs l-block b-all e-color b-radius-full l-relative';
+		/* Common classes */
+
+		$link_classes = 't-foreground-base l-wd-xs l-ht-xs l-flex b-all e-color b-radius-full l-relative';
+
+		/* Attributes */
 
 		$prev = [
 			'class' => "$link_classes js-load-more-prev",
@@ -98,6 +121,8 @@ class Posts {
 			$next['href'] = $next_link;
 		}
 
+		/* Output */
+
 		return [
 			'prev' => HT::get_attr_as_str( $prev ),
 			'next' => HT::get_attr_as_str( $next ),
@@ -105,12 +130,22 @@ class Posts {
 	}
 
 	/**
-	 * Simple layout for output
+	 * Simple layout for output.
 	 *
-	 * @param array $args
+	 * @param array $args {
+	 *  @type string $title
+	 *  @type string $link
+	 *  @type string $pretitle
+	 *  @type string $pretitle_link
+	 *  @type string $pretitle_a11y
+	 *  @type string $heading_level
+	 *  @type int    $index
+	 * }
 	 * @return string
 	 */
 	private static function simple( $args ) {
+		/* Defaults */
+
 		$args = array_merge(
 			[
 				'title'         => '',
@@ -150,7 +185,7 @@ class Posts {
 			}
 
 			$pretitle_output = (
-				'<div class="e-underline-r p-xs t-wt-bold l-mb-4xs l-flex">' .
+				'<div class="e-underline-r t-xs t-wt-bold l-mb-4xs l-flex">' .
 					$pretitle .
 				'</div>'
 			);
@@ -175,13 +210,34 @@ class Posts {
 	}
 
 	/**
-	 * Shortcode to output different post types
+	 * Shortcode to output different post types.
 	 *
-	 * @param array $atts
+	 * @param array $atts {
+	 *  @type string $type
+	 *  @type int    $posts_per_page
+	 *  @type string $category
+	 *  @type string $meta_key
+	 *  @type string $meta_value
+	 *  @type string $meta_type
+	 *  @type string $ids
+	 *  @type string $section_title
+	 *  @type string $section_title_heading_level
+	 *  @type string $a11y_section_title
+	 *  @type string $heading_level
+	 *  @type string $slider
+	 *  @type bool   $current_single
+	 *  @type bool   $pagination
+	 *  @type bool   $type_archive
+	 *  @type bool   $return_array - Back end
+	 *  @type array  $query_args - Back end
+	 *  @type bool   $is_home - Back end
+	 * }
 	 * @param string $content
 	 * @return string
 	 */
 	public static function shortcode( $atts, $content ) {
+		/* Defaults */
+
 		$atts = shortcode_atts(
 			[
 				'type'                        => '',
@@ -199,15 +255,13 @@ class Posts {
 				'current_single'              => false,
 				'pagination'                  => false,
 				'type_archive'                => true,
-				'return_array'                => false, // back end
-				'query_args'                  => [], // back end
-				'is_home'                     => false, // back end
+				'return_array'                => false,
+				'query_args'                  => [],
+				'is_home'                     => false,
 			],
 			$atts,
 			'ht-posts'
 		);
-
-		/* Destructure */
 
 		[
 			'type'                        => $type,
@@ -451,7 +505,6 @@ class Posts {
 
 				if ( 'flush' === $layout ) {
 					$fill  = false;
-					$class = '';
 
 					if ( 'testimonial' === $type ) {
 						$content = Testimonial::render(
@@ -468,10 +521,9 @@ class Posts {
 
 					if ( 'work' === $type ) {
 						$fill     = true;
-						$class    = 'o-flush';
 						$overflow = '';
 
-						$content = CardsFlush::render_content(
+						$content = Flush::render_content(
 							[
 								'title'         => $title,
 								'link'          => $link,
@@ -486,7 +538,7 @@ class Posts {
 					}
 
 					if ( 'search' === $type ) {
-						$content = CardsFlush::render_content(
+						$content = Flush::render_content(
 							[
 								'title'         => $title,
 								'link'          => $link,
@@ -498,12 +550,12 @@ class Posts {
 						);
 					}
 
-					$output .= CardsFlush::render_item(
+					$output .= Flush::render_item(
 						[
 							'content' => $content,
 							'width'   => ( $archive || $return_array || $single ) && ! $current_single ? 50 : 100,
 							'fill'    => $fill,
-							'class'   => $class,
+							'type'    => $type,
 						]
 					);
 				}
@@ -551,7 +603,7 @@ class Posts {
 						$card_args['small']   = true;
 					}
 
-					$card_output = Cards::render_card( $card_args );
+					$card_output = OverlapVertical::render_item( $card_args );
 
 					$slides[] = $card_output;
 
@@ -582,11 +634,12 @@ class Posts {
 				if ( 'flush' === $layout ) {
 					$cards_class = 'work' === $type ? 'l-pt-s l-pb-s l-pt-l-m l-pb-l-m' : '';
 
-					$output = CardsFlush::render(
+					$output = Flush::render(
 						[
 							'content'  => $output,
 							'class'    => $pagination ? 'js-insert l-empty' : $cards_class,
 							'overflow' => $overflow,
+							'type'     => $type,
 						]
 					);
 				}
@@ -601,7 +654,7 @@ class Posts {
 							]
 						);
 					} else {
-						$output = Cards::render(
+						$output = OverlapVertical::render(
 							[
 								'content' => $output,
 								'class'   => $pagination ? 'js-insert l-empty' : '',
@@ -628,7 +681,8 @@ class Posts {
 
 		if ( -1 !== $posts_per_page && $pagination && $archive ) {
 			if ( ! $total ) {
-				$total = wp_count_posts( $post_type )->publish;
+				$count_posts = wp_count_posts();
+				$total       = $count_posts ? $count_posts->publish : 0;
 			}
 
 			$current_page = HT::$get_query_args['paged'] ?? 1;
@@ -654,8 +708,8 @@ class Posts {
 				]
 			);
 
-			/* phpcs:ignore */
-			$caret = file_get_contents( get_stylesheet_directory() . '/assets/svg/caret-right.svg' ); // Ignore: local path
+			$caret_left  = CaretSvg::render( 'left', 'l-flex l-m-auto l-ht-3xs l-wd-3xs' );
+			$caret_right = CaretSvg::render( 'right', 'l-flex l-m-auto l-ht-3xs l-wd-3xs' );
 
 			/* Output */
 
@@ -678,13 +732,11 @@ class Posts {
 						'<ul class="l-flex l-align-center l-justify-center l-gm-2xs t-ls-none" role="list">' .
 							'<li>' .
 								'<a ' . $link_attrs['prev'] . '>' .
-									'<div class="l-relative l-overflow-hidden l-ar-1-1 l-flex l-align-center l-justify-center">' .
-										$caret .
-									'</div>' .
+									$caret_left .
 									'<div class="a-hide-vis">Previous items</div>' .
 								'</a>' .
 							'</li>' .
-							'<li class="p-s t-wt-bold t-align-center">' .
+							'<li class="t-s t-wt-bold t-align-center">' .
 								'<p class="l-m-0" aria-live="polite">' .
 									'<span class="a-hide-vis">Page </span>' .
 									"<span class='js-load-more-current'>$current_page</span>" .
@@ -695,9 +747,7 @@ class Posts {
 							'</li>' .
 							'<li>' .
 								'<a ' . $link_attrs['next'] . '>' .
-									'<div class="l-relative l-overflow-hidden l-ar-1-1 l-flex l-align-center l-justify-center">' .
-										$caret .
-									'</div>' .
+									$caret_right .
 									'<div class="a-hide-vis">Next items</div>' .
 								'</a>' .
 							'</li>' .

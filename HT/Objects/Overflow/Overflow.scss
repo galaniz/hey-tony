@@ -6,6 +6,12 @@
   --left: 0;
   --right: 100%;
 
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   [data-left="true"] & {
     --left: 3rem;
   }

@@ -10,45 +10,27 @@
 
 .e-accent,
 .e-accent-r {
-  --opacity: 1;
-  --svg: url("./assets/svg/underline.svg");
+  --accent-svg: url("../../svg/underline-thick-primary-light.svg");
   --accent-padding: #{util.calc-rem(12px)};
   --accent-height: #{util.calc-rem(12px)};
+  --accent-opacity: 1;
 
   &[data-theme="primary-base"] {
-    --svg: url("./assets/svg/underline-primary-base.svg");
+    --accent-svg: url("../../svg/underline-thick-primary-base.svg");
   }
 }
 
 .e-accent-r {
-  --opacity: 0;
+  --accent-opacity: 0;
 }
 
-a.e-accent:hover,
-a.e-accent:active,
-a.e-accent:focus,
-.e-accent a:hover,
-.e-accent a:active,
-.e-accent a:focus {
-  --opacity: 0;
-}
-
-a.e-accent-r:hover,
-a.e-accent-r:active,
-.e-accent-r a:hover,
-.e-accent-r a:active {
-  --opacity: 1;
-}
-
-.e-accent-m,
-.e-accent-r-m {
+.e-accent-m {
   @include util.breakpoint-batch-add("m", (
     --accent-height: var(--ht-3xs),
   ));
 }
 
-.e-accent-l,
-.e-accent-r-l {
+.e-accent-l {
   --accent-padding: #{util.calc-rem(9px)};
 
   @include util.breakpoint-batch-add("m", (
@@ -61,12 +43,9 @@ a.e-accent-r:active,
 .e-accent a,
 .e-accent-r span,
 .e-accent-r a,
-.e-accent__d {
+.e-accent__d,
+.e-accent__f {
   padding-bottom: var(--accent-padding);
-}
-
-.ht .e-accent__f {
-  padding-bottom: util.calc-rem(12px);
 }
 
 .e-accent span,
@@ -82,11 +61,26 @@ a.e-accent-r:active,
     right: 0;
     bottom: 0;
     transition: opacity var(--ht-duration) ease;
-    background-image: var(--svg);
-    background-repeat: no-repeat;
+    background: var(--accent-svg) no-repeat;
     background-size: 100% 100%;
     height: var(--accent-height);
-    opacity: var(--opacity);
+    opacity: var(--accent-opacity);
     z-index: -1;
   }
+}
+
+a.e-accent:hover,
+a.e-accent:active,
+a.e-accent:focus,
+.e-accent a:hover,
+.e-accent a:active,
+.e-accent a:focus {
+  --accent-opacity: 0;
+}
+
+a.e-accent-r:hover,
+a.e-accent-r:active,
+.e-accent-r a:hover,
+.e-accent-r a:active {
+  --accent-opacity: 1;
 }

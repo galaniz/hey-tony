@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "node build/esbuild.js",
-    "watch": "node build/esbuild.js --watch"
+    "watch": "node build/esbuild.js --watch",
+    "lint": "npx ts-standard 'HT/**/*.ts' && npx stylelint 'HT/**/*.scss'"
   },
   "repository": {
     "type": "git",
@@ -19,17 +20,18 @@
   },
   "homepage": "https://github.com/galaniz/hey-tony#readme",
   "devDependencies": {
-    "@alanizcreative/formation": "^5.1.0-beta.7",
+    "@alanizcreative/formation": "^5.1.0-beta.8",
     "autoprefixer": "^10.4.18",
     "esbuild": "^0.20.1",
     "esbuild-sass-plugin": "^3.2.0",
     "postcss": "^8.4.35",
     "sass": "^1.72.0",
-    "standard": "^17.1.0",
     "stylelint": "^16.2.1",
-    "stylelint-config-standard-scss": "^13.0.0"
+    "stylelint-config-standard-scss": "^13.0.0",
+    "ts-standard": "^12.0.2",
+    "typescript": "^5.4.5"
   },
-	"browserslist": [
-		"> 0.5%"
-	]
+  "browserslist": [
+    "> 0.5%"
+  ]
 }

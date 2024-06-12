@@ -10,14 +10,70 @@ namespace HT\Components\Footer;
 
 use HT\HT as HT;
 use HT\Objects\Swoop\Swoop;
+use HT\Objects\LinkList\LinkList;
 use Formation\Pub\Nav_Walker;
 
 /**
- * Class - render main footer
+ * Class - render main footer.
  */
 class Footer {
 	/**
-	 * Output main footer
+	 * Set shortcode and setup actions.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		add_shortcode( 'ht-main-footer', [$this, 'shortcode'] );
+		add_action( 'after_setup_theme', [$this, 'add_nav_menu'] );
+
+		LinkList::$widgets[] = [
+			'name' => 'Footer Widget 4',
+			'id'   => 'footer-widget-4',
+			'type' => 'footer',
+		];
+	}
+
+	/**
+	 * Add footer nav menu.
+	 *
+	 * @return void
+	 */
+	public function add_nav_menu() {
+		register_nav_menus(
+			[
+				'footer_navigation' => 'Footer Navigation',
+			]
+		);
+	}
+
+	/**
+	 * Filter social icons output.
+	 *
+	 * @param string $html
+	 * @return string
+	 */
+	public static function filter_social( $html ) {
+		$html = str_replace(
+			[
+				'class="fusion-social-networks-wrapper"',
+				'style=',
+				'<a class="',
+				'a>',
+			],
+			[
+				'class="fusion-social-networks-wrapper l-flex l-gm-3xs"',
+				'data-style=',
+				'<div><a class="l-m-0 ',
+				'a></div>',
+			],
+			$html
+		);
+
+		return $html;
+	}
+
+	/**
+	 * Output main footer.
 	 *
 	 * @return string
 	 */
@@ -64,7 +120,7 @@ class Footer {
 				$wid    = wp_render_widget( $w, $k );
 
 				if ( $social ) {
-					$wid = HT::filter_social( $wid );
+					$wid = self::filter_social( $wid );
 					$wid = "<div class='l-pt-2xs'>$wid</div>";
 				} else {
 					$contact = strpos( $wid, 'mailto:' ) !== false;
@@ -136,8 +192,8 @@ class Footer {
 
 		return (
 			'<div class="l-relative">' .
-				Swoop::render( ['flip' => true, 'position' => 'top'] ) .
-				'<div class="l-pt-l l-pb-m l-pt-3xl-m l-pb-l-m t-text-light">' .
+				Swoop::render( ['flip' => true, 'position' => 'top', 'location' => 'footer'] ) .
+				'<div class="l-pt-l l-pb-m l-pt-3xl-m l-pb-l-m t-light">' .
 					'<div class="l-flex l-pb-m">' .
 						$logo .
 					'</div>' .
@@ -146,7 +202,7 @@ class Footer {
 							implode( '', $widgets_output ) .
 						'</div>' .
 					'</div>' .
-					'<div class="l-flex l-align-center l-justify-between l-wrap l-gm-2xs l-gm-s-m p-xs">' .
+					'<div class="l-flex l-align-center l-justify-between l-wrap l-gm-2xs l-gm-s-m t-xs">' .
 						'<div>' .
 							'<p>&copy; ' . get_bloginfo( 'name' ) . ' ' . gmdate( 'Y' ) . '</p>' .
 						'</div>' .
@@ -158,13 +214,11 @@ class Footer {
 	}
 
 	/**
-	 * Shortcode to output main footer
+	 * Shortcode to output main footer.
 	 *
-	 * @param array $atts
-	 * @param string $content
 	 * @return string
 	 */
-	public static function shortcode( $atts, $content ) {
+	public function shortcode() {
 		return self::render();
 	}
 }

@@ -11,31 +11,61 @@ namespace HT\Objects\Stat;
 use HT\HT as HT;
 
 /**
- * Class - render overlapping stat
+ * Class - render overlapping stat.
  */
 class Stat {
 	/**
-	 * Output stat
+	 * Shortcode handle.
 	 *
+	 * @var string
+	 */
+	public static $handle = 'ht-stat';
+
+	/**
+	 * Default shortcode and render attributes.
+	 *
+	 * @var array {
+	 *  @type string $large_text
+	 *  @type string $small_text
+	 *  @type string $align
+	 *  @type bool   $wide
+	 * }
+	 */
+	public static $default_atts = [
+		'large_text' => '',
+		'small_text' => '',
+		'align'      => 'left',
+		'wide'       => false,
+	];
+
+	/**
+	 * Set shortcode action and styles.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		add_shortcode( self::$handle, [$this, 'shortcode'] );
+	}
+
+	/**
+	 * Output stat.
+	 *
+	 * @param array $atts - $default_atts
 	 * @return string
 	 */
-	public static function render( $args ) {
-		$args = array_merge(
-			[
-				'large_text' => '',
-				'small_text' => '',
-				'align'      => 'left',
-				'wide'       => false,
-			],
-			$args
-		);
+	public static function render( $atts ) {
+		/* Defaults */
+
+		$atts = array_merge( self::$default_atts, $atts );
 
 		[
 			'large_text' => $large_text,
 			'small_text' => $small_text,
 			'align'      => $align,
 			'wide'       => $wide,
-		] = $args;
+		] = $atts;
+
+		/* Classes */
 
 		$classes = "o-stat o-stat--$align";
 
@@ -52,7 +82,7 @@ class Stat {
 						"<span class='l-inline-block'>$large_text</span>" .
 					'</p>' .
 				'</div>' .
-				'<div class="p-m t-wt-bold">' .
+				'<div class="t-m t-wt-bold">' .
 					"<p class='l-m-0 t-ht-snug'>$small_text</p>" .
 				'</div>' .
 			'</div>'
@@ -60,23 +90,13 @@ class Stat {
 	}
 
 	/**
-	 * Shortcode to output stat
+	 * Shortcode to output stat.
 	 *
-	 * @param array $atts
-	 * @param string $content
+	 * @param array $atts - $default_atts
 	 * @return string
 	 */
-	public static function shortcode( $atts, $content ) {
-		$atts = shortcode_atts(
-			[
-				'large_text' => '',
-				'small_text' => '',
-				'align'      => 'left',
-				'wide'       => false,
-			],
-			$atts,
-			'ht-stat'
-		);
+	public static function shortcode( $atts ) {
+		$atts = shortcode_atts( self::$default_atts, $atts, self::$handle );
 
 		return self::render( $atts );
 	}

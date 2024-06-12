@@ -54,12 +54,21 @@
   --ht-nav-scale: 1;
   --ht-nav-y: 0rem;
   --ht-nav-item-delay: 0ms;
+  --ht-nav-accent-light: url("../../svg/underline-thin-light.svg");
 
   /* Heading one */
 
   @include util.fluid-size(
     --ht-h1,
     util.calc-rem(48px) util.calc-rem(96px),
+    "s" "l"
+  );
+
+  /* Heading one small */
+
+  @include util.fluid-size(
+    --ht-h1-s,
+    util.calc-rem(48px) util.calc-rem(72px),
     "s" "l"
   );
 
@@ -144,7 +153,13 @@
   --ht-foreground-fade: #{rgba(util.get-color("foreground-base"), 0.3)};
   --ht-foreground-muted: #{rgba(util.get-color("foreground-base"), 0.15)};
 
-  /* Scrollbar */
+  /* Scroll */
 
   --ht-scrollbar-width: 0rem;
+  --ht-scroll-margin: (var(--ht-nav-height) * var(--ht-nav-scale)) + var(--ht-xs);
+
+  /* Logo */
+
+  --ht-logo-color: none;
+  --ht-logo-light: invert(1) brightness(110%);
 }

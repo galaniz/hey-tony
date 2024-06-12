@@ -11,9 +11,48 @@ import { sassPlugin } from 'esbuild-sass-plugin'
 
 /* Entry points */
 
-const entryPoints = {
-  style: 'HT/Global/Global.scss'
-  // 'assets/js/ht': 'assets/src/index.js',
+const styleScript = {
+  style: true,
+  script: true
+}
+
+const scriptOnly = {
+  script: true
+}
+
+const styleOnly = {
+  style: true
+}
+
+const assets = {
+  'Global/Global': styleScript,
+  'Global/GlobalNoJs': styleOnly,
+  'Components/Hero/Hero': scriptOnly,
+  'Components/Filters/Filters': styleScript,
+  'Components/Loader/Loader': styleOnly,
+  'Components/Notice/Notice': styleScript,
+  'Components/TableOfContents/TableOfContents': styleScript,
+  'Objects/Collapsible/Collapsible': styleScript,
+  'Objects/Overflow/Overflow': styleScript,
+  'Objects/Slider/Slider': styleScript,
+  'Objects/Tabs/Tabs': styleScript
+}
+
+const entryPoints = {}
+
+for (const a in assets) {
+  const {
+    style = false,
+    script = false
+  } = assets[a]
+
+  if (style) {
+    entryPoints[`css/${a}`] = `HT/${a}.scss`
+  }
+
+  if (script) {
+    entryPoints[`js/${a}`] = `HT/${a}.ts`
+  }
 }
 
 /* Args */
@@ -21,10 +60,10 @@ const entryPoints = {
 const args = {
   entryPoints,
   logLevel: 'info',
-  outdir: './',
+  outdir: './assets',
   minify: true,
   bundle: true,
-  sourcemap: false,
+  // sourcemap: true,
   splitting: true,
   format: 'esm',
   target: 'es6',

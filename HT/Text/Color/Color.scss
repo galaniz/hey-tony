@@ -7,8 +7,10 @@
     color: inherit;
   }
 
-  .t-text-light {
+  .t-light {
     --ht-outline-color: var(--ht-background-base);
+    --ht-logo-color: var(--ht-logo-light);
+    --nav-accent: var(--ht-nav-accent-light);
 
     &,
     h1,

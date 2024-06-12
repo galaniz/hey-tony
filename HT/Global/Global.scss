@@ -2,22 +2,6 @@
  * Global - Styles
  */
 
-/*!
-Theme Name: Avada Child
-Text Domain: avada-child
-Version: 1.0.0
-Tested up to: 6.0
-Requires at least: 5.0
-Requires PHP: 8.0.0
-Description: Theme for Hey Tony based on Avada
-Author: Graciela Alaniz
-Author URI: https://alanizcreative.com/
-Theme URI: https://heytony.ca/
-License: MIT License
-License URI: https://opensource.org/licenses/MIT
-Template: Avada
-*/
-
 /* Config */
 
 @forward "../Config/Config";
@@ -38,14 +22,6 @@ Template: Avada
 
 @use "../Layouts/Layouts";
 
-/* Components */
-
-@use "../Components/Navigation/Navigation";
-@use "../Components/Hero/Hero";
-@use "../Components/Logos/Logos";
-@use "../Components/Loader/Loader";
-@use "../Components/Notice/Notice";
-
 /* Effects */
 
 @use "../Effects/Effects";
@@ -54,27 +30,29 @@ Template: Avada
 
 @use "../Borders/Borders";
 
-/* Objects */
+/* Objects and components */
 
-@use "../Objects/Collapsible/Collapsible";
 @use "../Objects/Logo/Logo";
 @use "../Objects/Swoop/Swoop";
-@use "../Objects/Overlap/Overlap";
+@use "../Objects/Button/Button";
+@use "../Components/SkipLink/SkipLink";
+@use "../Components/Navigation/Navigation";
+@use "../Components/Hero/Hero";
 @use "../Objects/Border/Border";
-@use "../Objects/Form/Form";
-@use "../Objects/Stat/Stat";
+@use "../Components/Logos/Logos";
+@use "../Objects/Overlap/Overlap";
+@use "../Objects/Overlap/OverlapVertical";
 @use "../Objects/Flush/Flush";
-@use "../Objects/Notice/Notice" as n;
-@use "../Objects/Tabs/Tabs";
-@use "../Objects/Slider/Slider";
-@use "../Objects/Dot/Dot";
-@use "../Objects/Overflow/Overflow";
-@use "../Objects/Device/Device";
+@use "../Components/Single/Single";
+@use "../Objects/Form/Form";
+@use "../Objects/Testimonial/Testimonial";
+@use "../Objects/Social/Social";
 @use "../Objects/Rounded/Rounded";
-
-/* Avada */
-
-@use "../Avada/Avada";
+@use "../Objects/Notice/Notice";
+@use "../Objects/Device/Device";
+@use "../Objects/Stat/Stat";
+@use "../Components/Map/Map";
+@use "../Components/Footer/Footer";
 
 /* Breakpoints */
 

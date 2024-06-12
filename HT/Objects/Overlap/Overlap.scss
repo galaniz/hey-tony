@@ -6,7 +6,12 @@
 
 @use "sass:map";
 @use "sass:math";
+@use "@alanizcreative/formation/lib/config/config" as con;
 @use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Container */
+
+$container: util.calc-rem(map.get(con.$containers, "default"));
 
 /* Styles */
 
@@ -70,7 +75,7 @@
     --bg-x-odd: 12%,
   ));
   @include util.breakpoint-batch-add("l", (
-    --bg-x-odd: #{unquote('(50vw - (var(--bg-max-width) - (var(--ht-container) / 2)))')}, // Parentheses stripping
+    --bg-x-odd: #{unquote("(50vw - (var(--bg-max-width) - #{math.div($container, 2)}))")}, // Parentheses stripping
   ));
   @include util.breakpoint-batch-add("xl", (
     --bg-x-odd: #{util.calc-rem(240px)},
@@ -127,37 +132,4 @@
   margin-top: calc(-1 * (var(--overlap-padding) - var(--overlap-height)));
   margin-left: var(--link-left);
   width: 100vw;
-}
-
-.o-overlap-v {
-  --fg-top: #{util.calc-rem(-20px)};
-
-  &[data-size="l"] {
-    --fg-top: #{util.calc-rem(-25px)};
-  }
-}
-
-.o-overlap-v__bg {
-  background: var(--ht-foreground-muted);
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: util.calc-rem(-1px);
-    right: util.calc-rem(-10px);
-    max-height: var(--ht-m);
-    min-height: var(--ht-s);
-    height: 20%;
-    border-radius: 0% 100% 100% 0% / 100% 100% 0% 0%;
-    background-color: var(--overlap-bg);
-  }
-}
-
-.o-overlap-v__fg {
-  margin-top: var(--fg-top);
-}
-
-.o-overlap-v__p {
-  padding-right: var(--ht-l);
 }

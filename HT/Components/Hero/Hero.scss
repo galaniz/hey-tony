@@ -2,10 +2,14 @@
  * Components - Hero Styles
  */
 
-.c-hero {
-  &::before {
-    background-color: var(--ht-hero-bg);
-  }
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.c-hero::before {
+  background: var(--ht-hero-bg);
 }
 
 .c-hero__media {
@@ -13,18 +17,39 @@
   object-position: 50% 0;
 }
 
-.c-hero__swoop img {
+.c-hero__foreign {
   height: calc(var(--ht-swoop-height) + var(--ht-hero-height));
   object-position: 50% calc(-1 * var(--ht-hero-height));
-}
-
-.c-hero__media,
-.c-hero__swoop img {
-  object-fit: cover;
 }
 
 .c-hero__media,
 .c-hero__swoop {
   opacity: 0.25;
   filter: var(--ht-hero-gray, none);
+}
+
+.c-hero__thumb {
+  --margin: var(--ht-s);
+
+  margin-top: var(--margin);
+
+  @include util.breakpoint-batch-add("tablet", (
+    --margin: 0,
+    order: -1,
+  ));
+}
+
+.c-hero__rounded {
+  border-radius: var(--ht-2xs);
+}
+
+.fusion-page-title-bar {
+  position: relative;
+  color: var(--ht-hero-color);
+  padding-top: var(--ht-nav-height);
+}
+
+#ht .ht .c-hero,
+#ht .ht .c-hero div {
+  position: static;
 }

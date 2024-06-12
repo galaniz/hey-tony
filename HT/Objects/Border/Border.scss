@@ -34,5 +34,5 @@
 .o-border-s::before {
   width: util.calc-rem(1px);
   background: currentcolor;
-  transform: translateX(calc(-1 * var(--ht-gap-margin) / 2));
+  transform: translateX(calc(var(--ht-gap-margin) / 2));
 }

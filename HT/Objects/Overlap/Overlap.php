@@ -11,15 +11,27 @@ namespace HT\Objects\Overlap;
 use HT\HT as HT;
 
 /**
- * Class - render overlap image text layout
+ * Class - render overlap image text card.
  */
 class Overlap {
 	/**
-	 * Output overlap layout item
+	 * Output overlap layout item.
 	 *
+	 * @param array $args {
+	 *  @type string $title
+	 *  @type string $link
+	 *  @type string $excerpt
+	 *  @type string $media_id
+	 *  @type string $pretitle
+	 *  @type string $pretitle_link
+	 *  @type string $pretitle_a11y
+	 *  @type string $heading_level
+	 * }
 	 * @return string
 	 */
 	public static function render_item( $args = [] ) {
+		/* Defaults */
+
 		$args = array_merge(
 			[
 				'title'         => '',
@@ -53,7 +65,7 @@ class Overlap {
 
 		if ( $title ) {
 			$title = (
-				"<a href='$link' class='o-overlap__link l-before e-accent-r e-accent-r-m' data-theme='primary-base'>" .
+				"<a href='$link' class='o-overlap__link l-before e-accent-r e-accent-m' data-theme='primary-base'>" .
 					"<span class='l-zi-1'>$title</span>" .
 				'</a>'
 			);
@@ -75,7 +87,7 @@ class Overlap {
 			}
 
 			$pretitle_output = (
-				'<div class="p-s t-wt-bold l-pb-2xs e-underline-r l-flex">' .
+				'<div class="t-s t-wt-bold l-pb-2xs e-underline-r l-flex">' .
 					$pretitle .
 				'</div>'
 			);
@@ -85,7 +97,7 @@ class Overlap {
 
 		if ( $excerpt ) {
 			$excerpt = (
-				'<div class="p-m t-foreground-base l-relative l-zi-2">' .
+				'<div class="t-m t-foreground-base l-relative l-zi-2">' .
 					"<p class='l-m-0'>$excerpt</p>" .
 				'</div>'
 			);
@@ -135,11 +147,17 @@ class Overlap {
 	}
 
 	/**
-	 * Output overlap layout
+	 * Output overlap layout.
 	 *
+	 * @param array $args {
+	 *  @type string $content
+	 *  @type string $class
+	 * }
 	 * @return string
 	 */
 	public static function render( $args = [] ) {
+		/* Defaults */
+
 		$args = array_merge(
 			[
 				'content' => '',

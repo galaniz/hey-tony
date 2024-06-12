@@ -1,6 +1,7 @@
 node_modules/
 vendor/
-style.css
+assets/
+!assets/svg
 composer.lock
 package-lock.json
 .DS_Store

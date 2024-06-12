@@ -1,5 +1,5 @@
 /**
- * Objects - Flush Styles
+ * Objects - Cards Flush Styles
  */
 
 /* Imports */
@@ -12,6 +12,7 @@
   --left: calc(-1 * var(--ht-container-padding));
   --right: 0;
   --width: 100vw;
+  --main: "";
   --x: 0;
 
   img {
@@ -19,11 +20,8 @@
     opacity: var(--opacity);
   }
 
-  &:last-child > div {
-    &::before,
-    &::after {
-      content: none;
-    }
+  &:last-child {
+    --main: none;
   }
 
   @include util.breakpoint-batch-add("m", (
@@ -42,6 +40,13 @@
     @include util.breakpoint-batch-add("m", (
       --left: calc((var(--ht-gap-margin) / 2) * -1),
     ));
+  }
+}
+
+.o-flush__main {
+  &::before,
+  &::after {
+    content: var(--main);
   }
 }
 

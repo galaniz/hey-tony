@@ -12,24 +12,24 @@ use HT\HT as HT;
 use Formation\Admin\Settings\Settings as FRMSettings;
 
 /**
- * Class - add fields to general settings
+ * Class - add fields to general settings.
  */
 class Settings {
 	/**
-	 * Set admin action
+	 * Set admin action.
 	 *
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'admin_init', [$this, 'init'] );
+		add_action( 'admin_init', [$this, 'on_init'] );
 	}
 
 	/**
-	 * Add cookie text field to general settings
+	 * Add cookie text field to general settings.
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function on_init() {
 		$fields = [
 			[
 				'name'    => HT::$namespace . '_cookie_text',

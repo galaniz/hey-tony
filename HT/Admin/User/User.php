@@ -12,18 +12,19 @@ use HT\HT as HT;
 use Formation\Common\Field\Field;
 
 /**
- * Class - add field to user admin page
+ * Class - add field to user admin page.
  */
 class User {
 	/**
-	 * Store form ids and names
+	 * Store form ids and names.
 	 *
-	 * @var array $form
-	 * @type string $name
-	 * @type string $id
-	 * @type string $description_id
-	 * @type string $nonce_action
-	 * @type string $nonce_name
+	 * @var array {
+	 *  @type string $name
+	 *  @type string $id
+	 *  @type string $description_id
+	 *  @type string $nonce_action
+	 *  @type string $nonce_name
+	 * }
 	 */
 	public static $form = [
 		'name'           => 'nicename',
@@ -34,23 +35,23 @@ class User {
 	];
 
 	/**
-	 * Set user admin actions
+	 * Set user admin actions.
 	 *
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'show_user_profile', [$this, 'edit_user'], 10, 1 );
-		add_action( 'edit_user_profile', [$this, 'edit_user'], 10, 1 );
-		add_action( 'profile_update', [$this, 'save_user'], 10, 1 );
+		add_action( 'show_user_profile', [$this, 'on_edit_user'], 10, 1 );
+		add_action( 'edit_user_profile', [$this, 'on_edit_user'], 10, 1 );
+		add_action( 'profile_update', [$this, 'on_save_user'], 10, 1 );
 	}
 
 	/**
-	 * Edit custom user fields
+	 * Edit custom user fields.
 	 *
 	 * @param  object $user WP_User object
 	 * @return void
 	 */
-	public function edit_user( $user ) {
+	public function on_edit_user( $user ) {
 		$form = [];
 
 		foreach ( self::$form as $k => $v ) {
@@ -76,12 +77,12 @@ class User {
 	}
 
 	/**
-	 * Save custom user fields
+	 * Save custom user fields.
 	 *
 	 * @param  string $user_id
 	 * @return void
 	 */
-	public function save_user( $user_id ) {
+	public function on_save_user( $user_id ) {
 		$nonce_name   = HT::$namespace . '_' . self::$form['nonce_name'];
 		$nonce_action = HT::$namespace . '_' . self::$form['nonce_action'];
 
@@ -101,7 +102,7 @@ class User {
 
 		/* Prevent endless loop */
 
-		remove_action( 'profile_update', [$this, 'save_user'], 10, 1 );
+		remove_action( 'profile_update', [$this, 'on_save_user'], 10, 1 );
 
 		/* Update user */
 

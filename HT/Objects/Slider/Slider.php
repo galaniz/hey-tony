@@ -11,15 +11,43 @@ namespace HT\Objects\Slider;
 use HT\HT as HT;
 
 /**
- * Class - render slider
+ * Class - render slider.
  */
 class Slider {
 	/**
-	 * Output slider
+	 * Enqueue handle.
+	 *
+	 * @var string
+	 */
+	public static $handle = 'ht-slider';
+
+	/**
+	 * Path in assets folder for css and js.
+	 *
+	 * @var string
+	 */
+	public static $asset_path = 'Objects/Slider/Slider';
+
+	/**
+	 * Set styles and scripts.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		HT::$scripts_styles[ self::$handle ] = [
+			'style'  => self::$asset_path,
+			'script' => self::$asset_path,
+		];
+	}
+
+	/**
+	 * Output slider.
 	 *
 	 * @return string
 	 */
 	public static function render( $args = [] ) {
+		/* Defaults */
+
 		$args = array_merge(
 			[
 				'slides'         => [],
@@ -71,9 +99,9 @@ class Slider {
 			$panel_label = "$capital_label group $index";
 
 			$tablist .= (
-				'<li class="o-dot l-flex" role="presentation">' .
+				'<li class="l-flex" role="presentation">' .
 					"<button class='l-relative l-overflow-hidden l-ar-1-1 l-wd-xs" . ( $i < $last_index ? ' l-mr-5xs' : '' ) . "' type='button' role='tab' tabindex='$tabindex' aria-selected='$selected' aria-label='$tab_label'$max_width>" .
-						'<span class="l-m-auto l-absolute l-top-0 l-left-0 l-right-0 l-bottom-0 l-block b-radius-full"></span>' .
+						'<span class="o-slider__dot l-m-auto l-absolute l-top-0 l-left-0 l-right-0 l-bottom-0 l-block b-radius-full e-trans"></span>' .
 					'</button>' .
 				'</li>'
 			);
@@ -117,21 +145,21 @@ class Slider {
 							'</div>' .
 						'</div>' .
 					'</div>' .
-					"<ul class='o-dots l-flex l-justify-center t-ls-none' role='tablist' aria-label='$capital_label controls'>" .
+					"<ul class='o-slider__dots l-flex l-justify-center t-ls-none no-js-none' role='tablist' aria-label='$capital_label controls'>" .
 						$tablist .
 					'</ul>' .
 				'</div>'
 			);
-		} else {
-			return (
-				'<div class="ht-single-full">' .
-					'<div class="fusion_builder_column l-px-container l-m-auto">' .
-						"<ul class='l-flex l-col l-row-s l-wrap-s l-gm-2xs t-ls-none' role='list'>" .
-							$panels .
-						'</ul>' .
-					'</div>' .
-				'</div>'
-			);
 		}
+
+		return (
+			'<div class="ht-single-full">' .
+				'<div class="fusion_builder_column l-px-container l-m-auto">' .
+					"<ul class='l-flex l-col l-row-s l-wrap-s l-gm-2xs t-ls-none' role='list'>" .
+						$panels .
+					'</ul>' .
+				'</div>' .
+			'</div>'
+		);
 	}
 }

@@ -4,41 +4,10 @@
 
 /* Imports */
 
+@forward "../../Config/Config";
 @use "@alanizcreative/formation/lib/utils/utils" as util;
 
 /* Styles */
-
-@keyframes e-fade-in {
-  0% {
-    display: none;
-    opacity: 0;
-  }
-
-  1% {
-    display: block;
-  }
-
-  100% {
-    display: block;
-    opacity: 1;
-  }
-}
-
-@keyframes e-fade-out {
-  0% {
-    display: block;
-    opacity: 1;
-  }
-
-  99% {
-    display: block;
-  }
-
-  100% {
-    display: none;
-    opacity: 0;
-  }
-}
 
 .o-tabs {
   #ht .ht #main & [role="tab"][aria-selected="true"] {
@@ -53,17 +22,19 @@
       opacity: 0;
     }
   }
+}
 
-  [role="tablist"]::before {
-    height: 75%;
-    border-bottom: var(--ht-border-width) solid var(--ht-foreground-fade);
-  }
+.o-tabs__list::before {
+  height: 75%;
+  border-bottom: var(--ht-border-width) solid var(--ht-foreground-fade);
+}
 
-  [role="tabpanel"][data-selected="true"] {
-    animation: e-fade-in 400ms ease-in-out forwards;
-  }
+.o-tabs__panel {
+  opacity: 0;
+  transition-behavior: allow-discrete;
 
-  [role="tabpanel"][data-selected="false"] {
-    animation: e-fade-out 400ms ease-in-out forwards;
+  &:target,
+  &[data-selected="true"] {
+    opacity: 1;
   }
 }

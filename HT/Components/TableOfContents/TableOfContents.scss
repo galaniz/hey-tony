@@ -1,0 +1,42 @@
+/**
+ * Objects - Table Of Contents Styles
+ */
+
+/* Imports */
+
+@forward "../../Config/Config";
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.o-toc {
+  --link_color: var(--ht-foreground-base);
+
+  @include util.breakpoint-min("desktop") {
+    padding-bottom: var(--ht-2xs);
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 
+      calc(100vh - ((var(--ht-nav-height) * var(--ht-nav-scale)) + var(--ht-xs) + var(--ht-5xl)));
+
+    [data-collapsible-source=""] [data-collapsible-main] {
+      --ht-delay: 0ms;
+      --ht-duration: 0ms;
+    }
+  }
+}
+
+.o-toc__list {
+  margin-left: var(--ht-4xs);
+}
+
+.o-toc__item {
+  margin-top: var(--ht-4xs);
+}
+
+.o-toc__link {
+  &[aria-current="true"] {
+    font-weight: var(--ht-font-weight-bold);
+    text-decoration-color: currentcolor;
+  }
+}

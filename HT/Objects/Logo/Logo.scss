@@ -9,8 +9,6 @@
 /* Styles */
 
 .o-logo {
-  transition: transform var(--ht-duration) var(--ht-easing);
-
   @include util.fluid-size(
     width,
     util.calc-rem(130px) util.calc-rem(150px),
@@ -26,14 +24,6 @@
   }
 
   img {
-    transition: opacity var(--ht-duration) var(--ht-easing);
-  }
-
-  [data-scale="down"] &,
-  .t-text-light &,
-  .c-nav[data-open] & {
-    img {
-      filter: invert(1) brightness(110%);
-    }
+    filter: var(--ht-logo-color);
   }
 }

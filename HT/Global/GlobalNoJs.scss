@@ -1,0 +1,28 @@
+/**
+ * Global - No Js Styles
+ */
+
+body {
+  --ht-hero-over-bg: var(--ht-hero-bg);
+}
+
+.no-js-none {
+  display: none;
+}
+
+.no-js-collapsible {
+  --h: auto;
+  --visibility: visible;
+}
+
+.no-js-panel {
+  &:target,
+  &[data-selected="true"] {
+    display: block;
+  }
+
+  &[data-selected="true"]:has(~ .no-js-panel:target),
+  &[data-selected="true"]:has(+ .no-js-panel:target) {
+    display: none;
+  }
+}

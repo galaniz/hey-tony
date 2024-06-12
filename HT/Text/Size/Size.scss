@@ -4,6 +4,7 @@
 
 #ht .ht #wrapper {
   .h1 *,
+  .h1-s *,
   .h2 *,
   .h2-l *,
   .h3 *,
@@ -16,6 +17,7 @@
 
   h1,
   .h1 *,
+  .h1-s *,
   h2,
   .h2 *,
   .h2-l * {
@@ -25,6 +27,10 @@
   h1,
   .h1 * {
     font-size: var(--ht-h1);
+  }
+
+  .h1-s * {
+    font-size: var(--ht-h1-s);
   }
 
   .h2-l * {
@@ -53,13 +59,13 @@
 
   h4,
   .h4 *,
-  .p-l * {
+  .t-l * {
     font-size: var(--ht-h4);
   }
 
   h5,
   .h5 *,
-  .p *,
+  .t *,
   p {
     font-size: var(--ht-h5);
   }
@@ -69,27 +75,27 @@
     font-size: var(--ht-h6);
   }
 
-  .p-l *,
-  .p-m *,
-  .p *,
+  .t-l *,
+  .t-m *,
+  .t *,
   p {
     letter-spacing: 0.01em;
   }
 
-  .p-m *,
-  .p-xs * {
+  .t-m *,
+  .t-xs * {
     letter-spacing: 0.02em;
   }
 
-  .p-m * {
+  .t-m * {
     font-size: var(--ht-t-m);
   }
 
-  .p-s * {
+  .t-s * {
     font-size: var(--ht-t-s);
   }
 
-  .p-xs * {
+  .t-xs * {
     font-size: var(--ht-t-xs);
   }
 
@@ -104,7 +110,7 @@
   }
 }
 
-#ht .ht #wrapper .post-content .ht-single > div:first-child {
+#ht .ht #wrapper .post-content .ht-single {
   h2,
   .h2 * {
     font-size: var(--ht-h2);

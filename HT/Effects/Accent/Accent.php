@@ -7,27 +7,46 @@
 namespace HT\Effects\Accent;
 
 /**
- * Class - render text with styled underline
+ * Class - render text with styled underline.
  */
 class Accent {
 	/**
-	 * Output text with accent
+	 * Default shortcode and render attributes.
 	 *
+	 * @var array {
+	 *  @type string $text
+	 *  @type string $accent
+	 * }
+	 */
+	public static $default_atts = [
+		'text'   => '',
+		'accent' => '',
+	];
+
+	/**
+	 * Set shortcode action.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		add_shortcode( 'ht-accent', [$this, 'shortcode'] );
+	}
+
+	/**
+	 * Output text with accent.
+	 *
+	 * @param array $atts - $default_atts
 	 * @return string
 	 */
-	public static function render( $args ) {
-		$args = array_merge(
-			[
-				'text'   => '',
-				'accent' => '',
-			],
-			$args
-		);
+	public static function render( $atts ) {
+		/* Defaults */
+
+		$atts = array_merge( self::$default_atts, $atts );
 
 		[
 			'text'   => $text,
 			'accent' => $accent,
-		] = $args;
+		] = $atts;
 
 		/* Accent required */
 
@@ -68,21 +87,13 @@ class Accent {
 	}
 
 	/**
-	 * Shortcode to output text with accent
+	 * Shortcode to output text with accent.
 	 *
-	 * @param array $atts
-	 * @param string $content
+	 * @param array $atts - $default_atts
 	 * @return string
 	 */
-	public static function shortcode( $atts, $content ) {
-		$atts = shortcode_atts(
-			[
-				'text'   => '',
-				'accent' => '',
-			],
-			$atts,
-			'ht-accent'
-		);
+	public static function shortcode( $atts ) {
+		$atts = shortcode_atts( self::$default_atts, $atts, 'ht-accent' );
 
 		return self::render( $atts );
 	}

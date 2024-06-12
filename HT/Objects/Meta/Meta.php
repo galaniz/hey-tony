@@ -9,34 +9,60 @@ namespace HT\Objects\Meta;
 /* Imports */
 
 use HT\HT as HT;
+use HT\Svg\Caret\CaretSvg;
 
 /**
- * Class - render single post meta
+ * Class - render single post meta.
  */
 class Meta {
 	/**
-	 * Output meta
+	 * Default shortcode and render attributes.
 	 *
+	 * @var array {
+	 *  @type string $archive_label
+	 *  @type string $categories_label
+	 *  @type string $tags_label
+	 *  @type string $date_label
+	 *  @type string $up_date_label
+	 *  @type string $author_label
+	 *  @type bool   $inline
+	 *  @type bool   $border
+	 *  @type string $items - Comma separated list
+	 *  @type string $justify
+	 * }
+	 */
+	public static $default_atts = [
+		'archive_label'    => '',
+		'categories_label' => '',
+		'tags_label'       => '',
+		'date_label'       => '',
+		'up_date_label'    => '',
+		'author_label'     => '',
+		'inline'           => true,
+		'border'           => false,
+		'items'            => '',
+		'justify'          => 'start',
+	];
+
+	/**
+	 * Set shortcode action.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		add_shortcode( 'ht-meta', [$this, 'shortcode'] );
+	}
+
+	/**
+	 * Output meta.
+	 *
+	 * @param array $atts - $default_atts
 	 * @return string
 	 */
-	public static function render( $args = [] ) {
-		$args = array_merge(
-			[
-				'archive_label'    => '',
-				'categories_label' => '',
-				'tags_label'       => '',
-				'date_label'       => '',
-				'up_date_label'    => '',
-				'author_label'     => '',
-				'inline'           => true,
-				'border'           => false,
-				'items'            => '', // comma separated list
-				'justify'          => 'center',
-			],
-			$args
-		);
+	public static function render( $atts ) {
+		/* Defaults */
 
-		/* Destructure */
+		$atts = array_merge( self::$default_atts, $atts );
 
 		[
 			'archive_label'    => $archive_label,
@@ -49,7 +75,7 @@ class Meta {
 			'border'           => $border,
 			'items'            => $items,
 			'justify'          => $justify,
-		] = $args;
+		] = $atts;
 
 		$inline = filter_var( $inline, FILTER_VALIDATE_BOOLEAN );
 		$border = filter_var( $border, FILTER_VALIDATE_BOOLEAN );
@@ -82,17 +108,15 @@ class Meta {
 					$archive_link = get_post_type_archive_link( $post_type );
 
 					if ( $archive_link && $archive_label ) {
-						/* phpcs:ignore */
-						$caret = file_get_contents( get_stylesheet_directory() . '/assets/svg/caret-right.svg' ); // Ignore: local path
+						$caret = CaretSvg::render( 'left', 'l-flex l-ht-3xs l-wd-3xs' );
 
 						$output[] = (
-							'<div class="p-s t-wt-bold e-underline-r outline-snug">' .
+							'<p class="t-wt-bold e-underline-r outline-snug">' .
 								"<a class='l-flex l-align-center' href='$archive_link'>" .
-									"<div class='l-flex l-mr-5xs'>$caret</div>" .
-									'<span class="a-hide-vis">Back to </span>' .
+									"<span class='l-flex l-mr-5xs'>$caret</span>" .
 									$archive_label .
 								'</a>' .
-							'</div>'
+							'</p>'
 						);
 					}
 					break;
@@ -100,7 +124,11 @@ class Meta {
 					$cat = HT::get_first_cat( $id, $tax );
 
 					if ( $cat ) {
-						$output[] = '<div class="p-s t-wt-bold e-underline-r outline-snug"><a class="l-flex" href="' . $cat[1] . '">' . $cat[0] . '</a></div>';
+						$output[] = (
+							'<p class="t-wt-bold e-underline-r outline-snug">' .
+								'<a class="l-flex" href="' . $cat[1] . '">' . $cat[0] . '</a>' .
+							'</p>'
+						);
 					}
 
 					break;
@@ -119,11 +147,13 @@ class Meta {
 						}
 
 						$output[] = (
-							"<div class='l-flex l-align-center l-justify-$justify l-wrap l-gm-3xs'>" .
-								( $categories_label ? "<div class='p-s t-wt-bold'><p class='l-m-0'>$categories_label</p></div>" : '' ) .
-								'<div>' .
-									"<div class='l-flex l-align-center l-justify-$justify l-wrap l-gm- 3xs t-primary-base'>" .
-										$terms_output .
+							'<div>' .
+								"<div class='l-flex l-align-center l-justify-$justify l-wrap l-gm-3xs'>" .
+									( $categories_label ? "<p class='t-wt-bold l-m-0'>$categories_label</p>" : '' ) .
+									'<div>' .
+										"<div class='l-flex l-align-center l-justify-$justify l-wrap l-gm-3xs t-primary-base'>" .
+											$terms_output .
+										'</div>' .
 									'</div>' .
 								'</div>' .
 							'</div>'
@@ -139,7 +169,7 @@ class Meta {
 
 						foreach ( $post_tags as $tag ) {
 							$tags_output .= (
-								'<div class="p-s t-wt-bold">' .
+								'<div class="t-wt-bold">' .
 									'<a class="l-flex" href="' . get_tag_link( $tag->term_id ) . '">' . $tag->name . '</a>' .
 								'</div>'
 							);
@@ -147,7 +177,7 @@ class Meta {
 
 						$output[] = (
 							"<div class='l-flex l-align-center l-justify-$justify l-wrap l-gm-3xs e-underline'>" .
-								( $tags_label ? "<div class='p-s t-wt-bold'><p class='l-m-0'>$tags_label</p></div>" : '' ) .
+								( $tags_label ? "<p class='t-wt-bold l-m-0'>$tags_label</p>" : '' ) .
 								'<div>' .
 									"<div class='l-flex l-align-center l-justify-$justify l-wrap l-gm-3xs t-primary-base'>" .
 										$tags_output .
@@ -159,12 +189,12 @@ class Meta {
 
 					break;
 				case 'date':
-					$og_date   = get_the_date();
+					$og_date   = get_the_date( 'M j, Y' );
 					$og_date_c = get_the_date( 'c' );
 					$up_date   = '';
 
 					if ( $up_date_label ) {
-						$up_date   = get_the_modified_date();
+						$up_date   = get_the_modified_date( 'M j, Y' );
 						$up_date_c = get_the_modified_date( 'c' );
 
 						$up_date = ". $up_date_label <time class='l-inline' datetime='$up_date_c'>$up_date</time>.";
@@ -177,13 +207,24 @@ class Meta {
 					}
 
 					$output[] = (
-						'<div class="p-xs">' .
-							'<p class="l-m-0">' .
-								$og_date .
-								$up_date .
-							'</p>' .
-						'</div>'
+						'<p class="l-m-0">' .
+							$og_date .
+							$up_date .
+						'</p>'
 					);
+
+					break;
+				case 'read':
+					$content    = wp_strip_all_tags( do_shortcode( get_the_content() ), true );
+					$word_count = count( explode( ' ', $content ) );
+
+					if ( $word_count > 183 ) {
+						$min = round( $word_count / 183 );
+
+						$output[] = (
+							"<p class='l-m-0'>$min min read</p>"
+						);
+					}
 
 					break;
 				case 'author':
@@ -198,12 +239,10 @@ class Meta {
 						}
 
 						$output[] = (
-							'<div class="p-s e-underline-r l-pt-2xs outline-snug">' .
-								'<p>' .
-									( $author_label ? "$author_label " : '' ) .
-									$author_name .
-								'</p>' .
-							'</div>'
+							'<p class="e-underline-r outline-snug">' .
+								( $author_label ? "$author_label " : '' ) .
+								$author_name .
+							'</p>'
 						);
 					}
 
@@ -217,7 +256,8 @@ class Meta {
 			return '';
 		}
 
-		$classes = "l-flex l-align-center l-justify-$justify l-gm-2xs";
+		$align   = $inline ? $justify : 'start';
+		$classes = "l-flex l-align-$align l-justify-$justify l-gm-2xs";
 
 		if ( $inline ) {
 			$classes .= ' l-gm-s-m l-wrap';
@@ -229,14 +269,12 @@ class Meta {
 			function( $o ) use ( $inline ) {
 				if ( $inline ) {
 					return (
-						'<div class="l-grow-1 t-align-center">' .
-							'<div class="o-border-s l-relative l-before">' .
-								$o .
-							'</div>' .
-						'</div>'
+						'<span class="o-border-s l-relative l-before l-block">' .
+							$o .
+						'</span>'
 					);
 				} else {
-					return "<div class='t-align-center'>$o</div>";
+					return $o;
 				}
 			},
 			$output
@@ -244,41 +282,25 @@ class Meta {
 
 		return (
 			( $border ? '<div class="l-pt-s l-pt-m-m"><div class="l-pt-s l-pt-m-m b-top">' : '' ) .
-			"<div class='l-flex l-justify-$justify'>" .
-				'<div class="l-inline-block' . ( $inline ? ' l-overflow-hidden' : '' ) . '">' .
+			"<div class='l-flex l-justify-$justify t-s'>" .
+				( $inline ? '<div class="l-inline-block l-overflow-hidden">' : '' ) .
 					"<div class='$classes'>" .
 						implode( '', $output ) .
 					'</div>' .
-				'</div>' .
+				( $inline ? '</div>' : '' ) .
 			'</div>' .
 			( $border ? '</div></div>' : '' )
 		);
 	}
 
 	/**
-	 * Shortcode to output meta
+	 * Shortcode to output meta.
 	 *
-	 * @param array $atts
-	 * @param string $content
+	 * @param array $atts - $default_atts
 	 * @return string
 	 */
-	public static function shortcode( $atts, $content ) {
-		$atts = shortcode_atts(
-			[
-				'archive_label'    => '',
-				'categories_label' => '',
-				'tags_label'       => '',
-				'date_label'       => '',
-				'up_date_label'    => '',
-				'author_label'     => '',
-				'inline'           => true,
-				'border'           => false,
-				'items'            => '', // comma separated list
-				'justify'          => 'center',
-			],
-			$atts,
-			'ht-meta'
-		);
+	public static function shortcode( $atts ) {
+		$atts = shortcode_atts( self::$default_atts, $atts, 'ht-meta' );
 
 		return self::render( $atts );
 	}
