@@ -44,6 +44,10 @@ input[type="checkbox"]:disabled ~ label {
   cursor: not-allowed;
 }
 
+button {
+  color: inherit; /* Remove after FRM release */
+}
+
 /* Swoop */
 
 .ht-swoop-l {
@@ -62,6 +66,12 @@ input[type="checkbox"]:disabled ~ label {
 
 .ht-hero-gray {
   --ht-hero-gray: grayscale(1);
+}
+
+/* Content */
+
+#ht .ht #content {
+  margin-bottom: 0;
 }
 
 /* Table */

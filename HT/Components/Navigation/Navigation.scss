@@ -158,11 +158,10 @@
 
 .c-nav__close,
 .c-nav__home {
-  height: var(--ht-nav-height);
+  top: calc(((var(--ht-nav-height) * var(--ht-nav-scale)) - var(--ht-s)) / 2);
 }
 
 .c-nav__close {
-  width: var(--ht-m);
   right: var(--x-offset);
 }
 
@@ -172,10 +171,7 @@
 }
 
 .c-nav-icon {
-  @include util.breakpoint-max("m") {
-    transform: scale(0.8);
-    transform-origin: 100% 50%;
-  }
+  transform-origin: 100% 50%;
 }
 
 .c-nav-icon__top,
@@ -203,6 +199,10 @@
 
 .c-nav__home {
   left: var(--x-offset);
+
+  [data-nav-scale="down"] & {
+    width: var(--ht-s);
+  }
 }
 
 /* Overflow - scroll */

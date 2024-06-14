@@ -140,7 +140,7 @@ class Navigation {
 							'</div>' .
 						'</div>' .
 						'<div class="c-nav__hide">' .
-							"<a class='c-nav__home o-logo l-absolute l-top-0' data-size='l' href='$home_link' aria-label='$home_name'></a>" .
+							"<a class='c-nav__home o-logo l-absolute l-ht-s outline-snug' data-size='l' href='$home_link' aria-label='$home_name'></a>" .
 						'</div>' .
 						'<div class="c-nav__scroll l-wd-full">' .
 							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
@@ -148,7 +148,7 @@ class Navigation {
 							'</div>' .
 						'</div>' .
 						'<div class="c-nav__hide">' .
-							'<button class="c-nav__button c-nav__close l-absolute l-top-0" type="button" aria-label="Close menu"></button>' .
+							'<button class="c-nav__button c-nav__close l-absolute l-wd-s l-ht-s outline-snug" type="button" aria-label="Close menu"></button>' .
 						'</div>' .
 					'</div>' .
 				'</div>' .

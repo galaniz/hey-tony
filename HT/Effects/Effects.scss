@@ -33,13 +33,5 @@
       animation-duration: var(--ht-easing);
       animation-iteration-count: 1;
     }
-
-    .c-nav__item {
-      transition-delay: 0ms;
-    }
-
-    [role="tabpanel"] {
-      animation: none;
-    }
   }
 }
