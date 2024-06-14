@@ -27,7 +27,7 @@
     top: 50%;
     left: 50%;
 
-    @include util.breakpoint-min("xl") {
+    @include util.breakpoint-batch-add("xl", (
       mask-image:
         linear-gradient(
           to right,
@@ -35,8 +35,8 @@
           black 25rem,
           black calc(100% - 25rem),
           transparent
-        );
-    }
+        ),
+    ));
   }
 
   img {

@@ -34,8 +34,8 @@
 }
 
 .o-stat--wide {
-  @include util.breakpoint-min("tablet") {
-    --top: 7.5%;
-    --x: 7.5%;
-  }
+  @include util.breakpoint-batch-add("tablet", (
+    --top: 7.5%,
+    --x: 7.5%,
+  ));
 }
