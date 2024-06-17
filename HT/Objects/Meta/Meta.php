@@ -111,10 +111,10 @@ class Meta {
 						$caret = CaretSvg::render( 'left', 'l-flex l-ht-3xs l-wd-3xs' );
 
 						$output[] = (
-							'<p class="t-wt-bold e-underline-r outline-snug">' .
-								"<a class='l-flex l-align-center' href='$archive_link'>" .
+							'<p class="t-wt-bold outline-snug">' .
+								"<a class='l-flex l-align-center e-underline-r' href='$archive_link'>" .
 									"<span class='l-flex l-mr-5xs'>$caret</span>" .
-									$archive_label .
+									"<span>$archive_label</span>" .
 								'</a>' .
 							'</p>'
 						);
@@ -126,7 +126,7 @@ class Meta {
 					if ( $cat ) {
 						$output[] = (
 							'<p class="t-wt-bold e-underline-r outline-snug">' .
-								'<a class="l-flex" href="' . $cat[1] . '">' . $cat[0] . '</a>' .
+								'<a href="' . $cat[1] . '">' . $cat[0] . '</a>' .
 							'</p>'
 						);
 					}

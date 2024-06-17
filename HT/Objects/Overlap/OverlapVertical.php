@@ -101,7 +101,7 @@ class OverlapVertical {
 		}
 
 		if ( $link ) {
-			$title = "<a href='$link' class='l-before'><span class='l-relative'>$title</span></a>";
+			$title = "<a href='$link' class='l-before'>$title</a>";
 		}
 
 		$title_class = 't-foreground-base e-underline--thick t-inherit';
