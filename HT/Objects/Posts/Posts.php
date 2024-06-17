@@ -200,7 +200,7 @@ class Posts {
 						$pretitle_output .
 						'<div class="h5 t-foreground-base t-inherit e-underline--thick">' .
 							"<$heading_level class='l-m-0 e-underline-r'>" .
-								"<a href='$link'><span class='l-relative'>$title</span></a>" .
+								"<a href='$link'>$title</a>" .
 							"</$heading_level>" .
 						'</div>' .
 					'</div>' .
