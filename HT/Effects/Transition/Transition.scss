@@ -1,0 +1,10 @@
+/**
+ * Effects - Transition Styles
+ */
+
+.e-trans {
+  transition-property: var(--ht-prop);
+  transition-duration: var(--ht-duration);
+  transition-timing-function: var(--ht-easing);
+  transition-delay: var(--ht-delay);
+}

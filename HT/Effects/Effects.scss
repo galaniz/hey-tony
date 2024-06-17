@@ -1,0 +1,37 @@
+/**
+ * Effects - Styles
+ */
+
+/* Imports */
+
+@use "./Accent/Accent";
+@use "./Underline/Underline";
+@use "./Transition/Transition";
+@use "./Color/Color";
+@use "./Scale/Scale";
+@use "./Fade/Fade";
+
+/* Remove animations */
+
+@media (prefers-reduced-motion: reduce) {
+  html#ht {
+    scroll-behavior: auto;
+
+    .ht *,
+    .ht *::before,
+    .ht *::after,
+    .ht .e-color,
+    .ht .fusion-wrapper *,
+    .ht .fusion-button::before,
+    .ht .fusion-button .fusion-button-text {
+      --ht-duration: 0.001ms;
+      --ht-easing: linear;
+
+      transition: none;
+      transition-timing-function: linear;
+      transition-duration: var(--ht-duration);
+      animation-duration: var(--ht-easing);
+      animation-iteration-count: 1;
+    }
+  }
+}

@@ -1,7 +1,8 @@
 node_modules/
 vendor/
-assets/public
-style.css
+assets/css/
+assets/js/
+assets/chunk*
 composer.lock
 package-lock.json
 .DS_Store

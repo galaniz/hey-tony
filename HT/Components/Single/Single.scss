@@ -1,0 +1,109 @@
+/**
+ * Components - Single Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Vertical margin */
+
+.ht-single {
+  --single-margin: var(--ht-s);
+
+  > .fusion-fullwidth {
+    padding: 0;
+  }
+
+  .fusion-column-wrapper {
+    position: relative;
+  }
+
+  .fusion-title {
+    --single-margin: 0;
+  }
+
+  .fusion-builder-row > .fusion-layout-column,
+  .fusion-column-wrapper > * {
+    margin-bottom: var(--single-margin);
+
+    > *:last-child,
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @include util.breakpoint-batch-add("m", (
+    --single-margin: var(--ht-m),
+  ));
+}
+
+/* Sticky nav */
+
+.ht-single-nav {
+  --awb-sticky-offset: calc(var(--ht-scroll-margin));
+
+  .fusion-column-wrapper {
+    @include util.breakpoint-batch-add("desktop", (
+      --awb-border-radius: var(--ht-2xs),
+    ));
+  }
+}
+
+/* Full width */
+
+.ht-single-col .fusion-builder-row {
+  flex-direction: column;
+}
+
+.ht-single-full {
+  --width: 1;
+
+  .fusion_builder_column_1_6 {
+    --width: 0.1666;
+  }
+
+  .fusion_builder_column_1_5 {
+    --width: 0.2;
+  }
+
+  .fusion_builder_column_1_4 {
+    --width: 0.25;
+  }
+
+  .fusion_builder_column_1_3 {
+    --width: 0.3333;
+  }
+
+  .fusion_builder_column_2_5 {
+    --width: 0.4;
+  }
+
+  .fusion_builder_column_1_2 {
+    --width: 0.5;
+  }
+
+  .fusion_builder_column_3_5 {
+    --width: 0.6;
+  }
+
+  .fusion_builder_column_2_3 {
+    --width: 0.6667;
+  }
+
+  .fusion_builder_column_3_4 {
+    --width: 0.75;
+  }
+
+  .fusion_builder_column_4_5 {
+    --width: 0.8;
+  }
+
+  .fusion_builder_column_5_6 {
+    --width: 0.8333;
+  }
+
+  .fusion_builder_column {
+    max-width: calc(#{util.calc-rem(1190px)} * var(--width));
+  }
+}

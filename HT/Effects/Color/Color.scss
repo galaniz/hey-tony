@@ -1,0 +1,14 @@
+/**
+ * Effects - Color Styles
+ */
+
+#ht .ht {
+  .e-color {
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: var(--ht-primary-base);
+      color: var(--ht-primary-base);
+    }
+  }
+}

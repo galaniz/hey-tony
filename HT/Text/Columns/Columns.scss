@@ -1,0 +1,16 @@
+/**
+ * Text - Columns
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.t-cols {
+  @include util.breakpoint-batch-add("m", (
+    column-count: 2,
+    column-gap: var(--ht-m),
+  ));
+}

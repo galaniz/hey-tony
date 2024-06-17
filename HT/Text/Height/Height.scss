@@ -1,0 +1,13 @@
+/**
+ * Text - Height
+ */
+
+#ht .ht {
+  .t-ht-snug {
+    line-height: var(--ht-line-height-snug);
+  }
+
+  .t-ht-tight {
+    line-height: 0;
+  }
+}

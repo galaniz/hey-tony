@@ -1,0 +1,57 @@
+/**
+ * Components - Logos Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+@use "../../Layouts/Placeholder/Placeholder";
+
+/* Styles */
+
+#ht .ht .c-logos .fusion-column-wrapper {
+  @extend %l-gap-margin-s;
+}
+
+.c-logos {
+  --align: auto;
+  --grow: 1;
+  --max-width: var(--ht-5xl);
+  --max-height: var(--ht-s);
+
+  opacity: 0.5;
+  justify-content: center;
+  flex-grow: var(--grow);
+
+  > div > div {
+    margin-left: var(--align);
+  }
+
+  img {
+    max-width: var(--max-width);
+    max-height: var(--max-height);
+    height: auto;
+    width: auto;
+  }
+
+  @include util.breakpoint-batch-add("m", (
+    --align: 0,
+    --grow: 0,
+    --max-width: #{util.calc-rem(210px)},
+    --max-height: var(--ht-l),
+  ));
+}
+
+.c-logos__m {
+  @include util.breakpoint-batch-add("m", (
+    --max-height: var(--ht-m),
+  ));
+}
+
+.c-logos__s {
+  --max-height: var(--ht-xs);
+
+  @include util.breakpoint-batch-add("m", (
+    --max-height: var(--ht-s),
+  ));
+}

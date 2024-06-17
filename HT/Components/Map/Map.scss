@@ -1,0 +1,47 @@
+/**
+ * Components - Map Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.ht-map {
+  @include util.fluid-size(
+    --ht-map-height,
+    util.calc-rem(210px) util.calc-rem(420px),
+    "s" "l"
+  );
+
+  &,
+  span {
+    height: var(--ht-map-height);
+  }
+
+  span {
+    max-width: util.calc-rem(1800px);
+    min-height: util.calc-rem(300px);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+
+    @include util.breakpoint-batch-add("xl", (
+      mask-image:
+        linear-gradient(
+          to right,
+          transparent,
+          black 25rem,
+          black calc(100% - 25rem),
+          transparent
+        ),
+    ));
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

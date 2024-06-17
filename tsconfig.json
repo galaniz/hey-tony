@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "strict": true
+  },
+  "include": [
+    "**/*.ts",
+  ],
+  "exclude": [
+    "./assets",
+    "node_modules"
+  ]
+}

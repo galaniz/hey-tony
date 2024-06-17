@@ -46,10 +46,10 @@ _Type:_ `string`\
 _Default:_ `bottom`\
 _Possible Values:_ `bottom`, `top`
 
-* `featured_image`\
-_Type:_ `boolean`\
-_Default:_ `false`\
-_Note:_ Doesn't apply to archive pages.
+* `location`\
+_Type:_ `string`\
+_Default:_ `'hero'`\
+_Possible Values:_ `nav`, `hero`, `footer`
 
 _Returns:_ `string` of markup
 
@@ -252,11 +252,6 @@ _Type:_ `string`\
 _Default:_ `h3`\
 _Description:_ Heading level for title.
 
-* `accordion`\
-_Type:_ `string`\
-_Default:_ `''`\
-_Description:_ If expect other collapsibles to close when one opens, specify a common string to group them together.
-
 _Returns:_ `string` of markup
 
 ### `ht-device`
@@ -286,7 +281,6 @@ Used to override default size for semantic heading level.
 | Class     | Font-size (mobile → desktop) |
 | --------- | ---------------------------- |
 | `.h1`     | `48px → 96px`                |
-| `.h1-s`   | `48px → 72px`                |
 | `.h2-l`   | `38px → 60px`                |
 | `.h2`     | `36px → 48px`                |
 | `.h3-l`   | `32px → 36px`                |
@@ -295,15 +289,15 @@ Used to override default size for semantic heading level.
 | `.h5`     | `19px → 24px`                |
 | `.h6`     | `18px → 20px`                |
 
-#### Paragraphs/text
+#### Text
 
 | Class     | Font-size (mobile → desktop) |
 | --------- | ---------------------------- |
-| `.p-l`    | `24px → 28px`                |
-| `.p`      | `19px → 24px`                |
-| `.p-m`    | `16px → 18px`                |
-| `.p-s`    | `16px`                       |
-| `.p-xs`   | `14px`                       |
+| `.t-l`    | `24px → 28px`                |
+| `.t`      | `19px → 24px`                |
+| `.t-m`    | `16px → 18px`                |
+| `.t-s`    | `16px`                       |
+| `.t-xs`   | `14px`                       |
 
 ### Layout
 
@@ -317,17 +311,19 @@ Used to override default size for semantic heading level.
 
 | Size      | Value        |
 | --------- | ------------ |
-| `xxxs`    | `20px`       |
-| `xxs`     | `30px`       |
-| `xs`      | `40px`       |
-| `s`       | `60px`       |
-| `r`       | `80px`       |
-| `m`       | `100px`      |
-| `l`       | `120px`      |
+| `2xs`     | `20px`       |
+| `xs`      | `30px`       |
+| `s`       | `45px`       |
+| `m`       | `60px`       |
+| `l`       | `75px`       |
+| `xl`      | `90px`       |
+| `3xl`     | `120px`      |
+| `4xl`     | `150px`      |
+| `5xl`     | `180px`      |
 
 | Breakpoint | Value                           |
 | ---------- | ------------------------------- |
-| `-l`       | `min 1000px` (applies to `xs`+) |
+| `-m`       | `min 900px` (applies to `s`+) |
 
 #### Margin
 
@@ -338,13 +334,13 @@ Used to override default size for semantic heading level.
 
 | Size      | Value        |
 | --------- | ------------ |
-| `xxs`     | `5px`        |
-| `xs`      | `10px`       |
-| `s`       | `15px`       |
-| `r`       | `20px`       |
-| `m`       | `25px`       |
-| `l`       | `40px`       |
-| `xl`      | `60px`       |
+| `5xs`     | `5px`        |
+| `4xs`     | `10px`       |
+| `3xs`     | `15px`       |
+| `2xs`     | `20px`       |
+| `xs`      | `30px`       |
+| `s`       | `45px`       |
+| `m`       | `60px`       |
 
 | Suffix     | Value                   |
 | ---------- | ----------------------- |
@@ -359,31 +355,31 @@ Used to override default size for semantic heading level.
 
 ### Utilities
 
-| Class       | Description                          |
-| ----------- | ------------------------------------ |
-| `.u-v-h`    | Visually hide for screen readers     |
-| `.u-c-i`    | Set all children to `color: inherit` |
-| `.u-bt-1`   | Border top black at 30% opacity      |
-| `.u-o-h`    | `overflow: hidden`                   |
-| `.u-d-n`    | `display: none`                      |
-| `.u-d-b`    | `display: block`                     |
-| `.u-d-i`    | `display: inline`                    |
-| `.u-d-ib`   | `display: inline-block`              |
-| `.u-p-r`    | `position: relative`                 |
-| `.u-p-a`    | `position: absolute`                 |
-| `.u-l-0`    | `left: 0`                            |
-| `.u-r-0`    | `right: 0`                           |
-| `.u-b-0`    | `bottom: 0`                          |
-| `.u-t-0`    | `top: 0`                             |
-| `.u-tlrb-b` | Pseudo element positioned absolutely to fill up container |
+| Class                | Description                          |
+| -------------------- | ------------------------------------ |
+| `.a-hide-vis`        | Visually hide for screen readers     |
+| `.t-inherit`         | Set all children to `color: inherit` |
+| `.b-top`             | Border top black at 30% opacity      |
+| `.l-overflow-hidden` | `overflow: hidden`                   |
+| `.l-none`            | `display: none`                      |
+| `.l-block`           | `display: block`                     |
+| `.l-inline`          | `display: inline`                    |
+| `.l-inline-block`    | `display: inline-block`              |
+| `.l-relative`        | `position: relative`                 |
+| `.l-absolute`        | `position: absolute`                 |
+| `.l-left-0`          | `left: 0`                            |
+| `.l-right-0`         | `right: 0`                           |
+| `.l-bottom-0`        | `bottom: 0`                          |
+| `.l-top-0`           | `top: 0`                             |
+| `.l-before`          | Pseudo element positioned absolutely to fill up container |
 
 ### Objects
 
 | Class          | Description                             |
 | -------------- | --------------------------------------- |
 | `.o-form`      | Wrapper class to style various form elements (inputs, textarea, select, ninja form overrides etc.) |
-| `.o-underline` | Underline for links                     |
-| `.o-accent`    | Curved line for links and text in spans |
+| `.e-underline` | Underline for links                     |
+| `.e-accent`    | Curved line for links and text in spans |
 | `.o-tabs`      | Wrapper class for tablist and tabs      |
 
 ### Components
@@ -394,21 +390,21 @@ Display images in wrappable row.
 
 | Class          | Img size                              |
 | -------------- | ------------------------------------- |
-| default        | `max-width: 180px`	`max-height: 50px` |
-| `.c-logos__m`  | `max-height: 40px`                    |
+| default        | `max-width: 180px`	`max-height: 45px` |
+| `.c-logos__m`  | `max-height: 45px`                    |
 | `.c-logos__s`  | `max-height: 30px`                    |
 
-| Class          | Img size (min 1000px)                 |
+| Class          | Img size (min 900px)                  |
 | -------------- | ------------------------------------- |
-| default        | `max-width: 210px`	`max-height: 70px` |
-| `.c-logos__m`  | `max-height: 55px`                    |
-| `.c-logos__s`  | `max-height: 40px`                    |
+| default        | `max-width: 210px`	`max-height: 75px` |
+| `.c-logos__m`  | `max-height: 60px`                    |
+| `.c-logos__s`  | `max-height: 45px`                    |
 
 ### Themes
 
 | Class                   | Description                                                           |
 | ----------------------- | --------------------------------------------------------------------- |
-| `.t-text-light`         | Set color for all children to be theme light as well as focus outline |
+| `.t-light`              | Set color for all children to be theme light as well as focus outline |
 | `.t-foreground-base`    | Set color to theme black                                              |
 | `.t-background-base`    | Set color to theme beige                                              |
 | `.t-primary-base`       | Set color to theme blue                                               |

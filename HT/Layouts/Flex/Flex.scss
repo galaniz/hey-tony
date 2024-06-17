@@ -1,0 +1,52 @@
+/**
+ * Layouts - Flexbox Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+@use "@alanizcreative/formation/lib/layouts/Flex/Flex";
+@use "@alanizcreative/formation/lib/layouts/Align/Align";
+@use "@alanizcreative/formation/lib/layouts/Justify/Justify";
+
+/* Align */
+
+.l-align-start-m {
+  @include util.breakpoint-batch-add("m", (
+    align-items: flex-start,
+  ));
+}
+
+/* Row */
+
+.l-row-s {
+  @include util.breakpoint-batch-add("s", (
+    flex-direction: row,
+  ));
+}
+
+.l-row-m {
+  @include util.breakpoint-batch-add("m", (
+    flex-direction: row,
+  ));
+}
+
+/* Wrap */
+
+.l-wrap-s {
+  @include util.breakpoint-batch-add("s", (
+    flex-wrap: wrap,
+  ));
+}
+
+.l-wrap-m {
+  @include util.breakpoint-batch-add("m", (
+    flex-wrap: wrap,
+  ));
+}
+
+/* Order */
+
+.l-order-2 {
+  order: 2;
+}

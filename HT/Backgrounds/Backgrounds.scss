@@ -1,0 +1,23 @@
+/**
+ * Backgrounds - Styles
+ */
+
+.t-bg-background-base {
+  background-color: var(--ht-background-base);
+}
+
+.t-bg-background-dark {
+  background-color: var(--ht-background-dark);
+}
+
+.t-bg-foreground-base {
+  background-color: var(--ht-foreground-base);
+}
+
+.t-ov-background-dark {
+  --overlap-bg: var(--ht-background-dark);
+}
+
+.t-bg-inherit {
+  background-color: inherit;
+}

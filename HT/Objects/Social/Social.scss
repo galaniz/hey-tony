@@ -1,0 +1,59 @@
+/**
+ * Objects - Social Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Social */
+
+.ht .fusion-social-networks {
+  overflow: visible;
+}
+
+#ht .ht {
+  .fusion-sharing-box .tagline {
+    --ht-h2: var(--ht-t-m);
+
+    margin: var(--awb-wrapper-padding-top) 0 var(--ht-4xs);
+  }
+
+  .fusion-social-networks-wrapper {
+    --ht-gap-margin: var(--ht-5xs);
+  }
+
+  .fusion-social-networks span {
+    margin-right: var(--ht-5xs);
+  }
+
+  .fusion-social-networks a {
+    position: relative;
+    border-radius: 100%;
+    transition: border-color 400ms ease;
+    background: transparent;
+    color: inherit;
+    border: var(--ht-border-width) solid transparent;
+    width: var(--ht-s);
+    height: var(--ht-s);
+    display: flex;
+    font-size: util.calc-rem(20px);
+    line-height: 1;
+
+    &::before {
+      opacity: 1;
+    }
+
+    i {
+      opacity: 1;
+      font-size: inherit;
+      margin: auto;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: currentcolor;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+/**
+ * Effects - Underline Styles
+ */
+
+/* Imports */
+
+@use "@alanizcreative/formation/lib/utils/utils" as util;
+
+/* Styles */
+
+.e-underline a,
+.e-underline-r a,
+a.e-underline-r span {
+  transition: text-decoration-color 300ms ease;
+  text-decoration: underline;
+  text-decoration-thickness: var(--ht-underline-width);
+  text-underline-offset: var(--ht-5xs);
+}
+
+.e-underline a {
+  text-decoration-color: var(--ht-underline-color);
+}
+
+.e-underline-r a,
+a.e-underline-r span {
+  text-decoration-color: transparent;
+}
+
+.e-underline a:hover,
+.e-underline a:active,
+.e-underline a:focus {
+  text-decoration-color: transparent;
+}
+
+.e-underline-r a:hover,
+.e-underline-r a:active,
+.e-underline-r a:focus,
+a.e-underline-r:hover span,
+a.e-underline-r:active span,
+a.e-underline-r:focus span {
+  text-decoration-color: var(--ht-underline-color);
+}
+
+.e-underline--primary {
+  --ht-underline-color: var(--ht-primary-base);
+}
+
+.e-underline--thick {
+  --ht-underline-width: #{util.calc-rem(2px)};
+}
