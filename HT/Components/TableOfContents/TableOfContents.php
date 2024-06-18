@@ -381,7 +381,7 @@ class TableOfContents {
 				Collapsible::render(
 					[
 						'title'         => $title,
-						'heading_level' => 'h2',
+						'heading_level' => 'div',
 						'size'          => 's',
 						'toc'           => true,
 					],

@@ -119,7 +119,7 @@ class Collapsible {
 
 		if ( 's' === $size ) {
 			$container_classes .= ' l-pt-2xs l-pb-2xs';
-			$heading_classes   .= ' t-m l-mb-5xs';
+			$heading_classes   .= ' t-m t-wt-extrabold l-mb-5xs';
 			$content_classes    = 't-s e-underline-r';
 		}
 

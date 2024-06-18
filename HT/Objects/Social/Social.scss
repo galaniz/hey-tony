@@ -14,9 +14,9 @@
 
 #ht .ht {
   .fusion-sharing-box .tagline {
-    --ht-h2: var(--ht-t-m);
-
     margin: var(--awb-wrapper-padding-top) 0 var(--ht-4xs);
+    font-weight: var(--ht-font-weight-extrabold);
+    font-size: var(--ht-t-m);
   }
 
   .fusion-social-networks-wrapper {

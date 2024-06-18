@@ -70,8 +70,12 @@ button {
 
 /* Content */
 
-#ht .ht #content {
+#content {
   margin-bottom: 0;
+}
+
+#boxed-wrapper {
+  overflow-x: unset;
 }
 
 /* Table */
