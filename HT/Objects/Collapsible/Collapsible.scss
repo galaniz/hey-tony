@@ -31,6 +31,7 @@
   --minus-display: none;
 
   text-align: left;
+  line-height: 1.15;
 
   &[aria-expanded="true"] {
     --minus-display: block;
@@ -43,6 +44,7 @@
 
 .o-collapsible__icon {
   margin-right: var(--icon-margin);
+  padding-top: 0.063rem;
   width: var(--ht-2xs);
 }
 
