@@ -120,6 +120,10 @@ class HT {
 			'layout' => 'cards',
 			'nav'    => true,
 		],
+		'ht_tool'       => [
+			'label' => 'Tools',
+			'layout' => 'media-text',
+		],
 	];
 
 	/**

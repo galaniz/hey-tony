@@ -5,7 +5,7 @@
 /* Imports */
 
 import type { CollapsibleArgs } from '@alanizcreative/formation/lib/objects/Collapsible/CollapsibleTypes'
-import { setItems, onResize, isStringStrict } from '@alanizcreative/formation/lib/utils/utils'
+import { addAction, setItems, onResize, isStringStrict } from '@alanizcreative/formation/lib/utils/utils'
 import { Collapsible } from '@alanizcreative/formation/lib/objects/Collapsible/Collapsible'
 import { configBrowser } from '../../Config/Config'
 
@@ -43,9 +43,11 @@ const CollapsibleBrowser = (): void => {
       }
 
       let isToc = false
+      let isNav = false
 
       if (context !== null) {
         isToc = context.hasAttribute('data-toc')
+        isNav = context.hasAttribute('data-nav')
 
         const triggerId = context.getAttribute('data-trigger')
 
@@ -54,7 +56,18 @@ const CollapsibleBrowser = (): void => {
         }
       }
 
+      if (isNav) {
+        args.doAccordion = 'nav-collapsible-accordion'
+        args.doHover = 'nav-collapsible-hover'
+      }
+
       const instance = new Collapsible(args)
+
+      if (isNav) {
+        addAction('nav-close', () => {
+          instance.toggle(false)
+        })
+      }
 
       if (isToc) {
         if (window.innerWidth >= tocBreakpoint) {
@@ -71,4 +84,6 @@ const CollapsibleBrowser = (): void => {
   }
 }
 
-CollapsibleBrowser()
+/* Exports */
+
+export { CollapsibleBrowser }

@@ -73,7 +73,7 @@ class CaretSvg {
 
 		return (
 			"<svg width='$width' height='$height' aria-hidden='true' focusable='false' role='img'$classes>" .
-				"<use xlink:href='#${id}' />" .
+				"<use xlink:href='#$id' />" .
 			'</svg>'
 		);
 	}

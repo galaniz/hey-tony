@@ -60,13 +60,7 @@ class TableOfContents {
 				}
 
 				return true;
-			},
-			'dependencies' => [
-				'ht-collapsible' => [
-					'style'  => Collapsible::$asset_path,
-					'script' => Collapsible::$asset_path,
-				],
-			],
+			}
 		];
 	}
 

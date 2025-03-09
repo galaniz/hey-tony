@@ -7,6 +7,7 @@
 import { onResize } from '@alanizcreative/formation/lib/utils/utils'
 import { setConfigBrowser } from '../Config/Config'
 import { NavigationBrowser } from '../Components/Navigation/Navigation'
+import { CollapsibleBrowser } from '../Objects/Collapsible/Collapsible'
 
 /* Config */
 
@@ -35,6 +36,10 @@ setScrollbarWidth()
 onResize(() => {
   setScrollbarWidth()
 }, 800)
+
+/* Collapsible */
+
+CollapsibleBrowser()
 
 /* Navigation */
 

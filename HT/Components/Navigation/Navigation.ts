@@ -4,7 +4,7 @@
 
 /* Imports */
 
-import { setItems } from '@alanizcreative/formation/lib/utils/utils'
+import { setItems, doActions } from '@alanizcreative/formation/lib/utils/utils'
 import { Nav } from '@alanizcreative/formation/lib/components/Nav/Nav'
 import { NavigationScaleBrowser } from './NavigationScale'
 
@@ -60,7 +60,28 @@ const NavigationBrowser = (): void => {
     links,
     open,
     close,
-    overlay
+    overlay,
+    endToggle (open: boolean) {
+      if (open) {
+        return
+      }
+
+      setTimeout(() => {
+        doActions('nav-close')
+      }, 800)
+    },
+    onSet () {
+      doActions('nav-collapsible-hover', {
+        // @ts-expect-error
+        state: !this.isOverflowing
+      })
+
+      doActions('nav-collapsible-accordion', {
+        // @ts-expect-error
+        state: !this.isOverflowing,
+        group: 'nav-main'
+      })
+    }
   }
 
   /* Instantiate */
