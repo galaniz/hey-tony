@@ -7,12 +7,14 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy-staging:
+    if: github.ref_name == 'staging'
     runs-on: ubuntu-latest
     env:
       SSH_PORT: ${{ secrets.SSH_PORT }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USER: ${{ secrets.SSH_USER }}
+      TARGET_DIR: /home/heyton/staging.heytony.ca/wp-content/themes/avada-child
 
     steps:
       # Checkout the repository
@@ -23,7 +25,7 @@ jobs:
       - name: Setup php
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.0'
           tools: composer
 
       # Install php dependencies with composer
@@ -46,15 +48,51 @@ jobs:
           npm install
           npm run build
 
-      # Path based on branch
-      - name: Deployment target
-        id: set-target
+      # Deploy
+      - name: Deploy
         run: |
-          if [[ "${{ github.ref_name }}" == "staging" ]]; then
-            echo "TARGET_DIR=/home/heyton/staging.heytony.ca/wp-content/themes/avada-child" >> $GITHUB_ENV
-          elif [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "TARGET_DIR=/home/heyton/public_html/wp-content/themes/avada-child" >> $GITHUB_ENV
-          fi
+          rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:$TARGET_DIR
+
+  deploy-main:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    env:
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      TARGET_DIR: /home/heyton/public_html/wp-content/themes/avada-child
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up php for composer
+      - name: Setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer
+
+      # Install php dependencies with composer
+      - name: Install php dependencies
+        run: composer install --no-dev
+
+      # Dump autoload for composer
+      - name: Dump autoload
+        run: composer dump-autoload
+
+      # Set up node.js
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install npm dependencies
+      - name: Install npm dependencies
+        run: |
+          npm install
+          npm run build
 
       # Deploy
       - name: Deploy
