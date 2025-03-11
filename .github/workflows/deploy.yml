@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy
 
 on:
   push:
@@ -9,9 +9,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: [staging, production]
     env:
       SSH_PORT: ${{ secrets.SSH_PORT }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -49,8 +46,17 @@ jobs:
           npm install
           npm run build
 
+      # Path based on branch
+      - name: Deployment target
+        id: set-target
+        run: |
+          if [[ "${{ github.ref_name }}" == "staging" ]]; then
+            echo "TARGET_DIR=/home/heyton/staging.heytony.ca/wp-content/themes/avada-child" >> $GITHUB_ENV
+          elif [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "TARGET_DIR=/home/heyton/public_html/wp-content/themes/avada-child" >> $GITHUB_ENV
+          fi
+
       # Deploy
       - name: Deploy
         run: |
-          TARGET_DIR=$([[ "${{ github.ref_name }}" == "staging" ]] && echo "/home/heyton/staging.heytony.ca/wp-content/themes/avada-child" || echo "/home/heyton/public_html/wp-content/themes/avada-child")
           rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:$TARGET_DIR
