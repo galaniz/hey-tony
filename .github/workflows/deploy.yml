@@ -55,15 +55,10 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       # Add ssh key to known hosts
-      - name: Add SSH key to known hosts (staging)
+      - name: Add ssh key to known hosts (staging)
         run: |
           mkdir -p ~/.ssh
-          chmod 700 ~/.ssh  # Ensure the correct directory permissions
-          ssh-keyscan -v -H $SSH_HOST >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts  # Correct file permissions
-          cat ~/.ssh/known_hosts  # Check if the key was added
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}  # Use the correct SSH host environment variable
+          ssh-keyscan -vvv -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       # Deploy
       - name: Deploy
@@ -121,7 +116,7 @@ jobs:
       - name: Add ssh key to known hosts (main)
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -vvv -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       # Deploy
       - name: Deploy
