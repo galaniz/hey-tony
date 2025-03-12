@@ -49,17 +49,26 @@ jobs:
           npm run build
 
       # Setup ssh
-      - name: Manually add SSH key
+      - name: Setup ssh for staging
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      # Add ssh key to known hosts
+      - name: Add SSH key to known hosts (staging)
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh  # Ensure the correct directory permissions
+          ssh-keyscan -v -H $SSH_HOST >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts  # Correct file permissions
+          cat ~/.ssh/known_hosts  # Check if the key was added
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}  # Use the correct SSH host environment variable
 
       # Deploy
       - name: Deploy
         run: |
-          rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -i ~/.ssh/id_rsa -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:$TARGET_DIR
+          rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:$TARGET_DIR
 
   deploy-main:
     if: github.ref_name == 'main'
