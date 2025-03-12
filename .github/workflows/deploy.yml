@@ -54,21 +54,12 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Debug SSH variables
-        run: |
-          echo "SSH_PORT: ${{ secrets.SSH_PORT }}"
-          echo "SSH_HOST: ${{ secrets.SSH_HOST }}"
-          echo "SSH_USER: ${{ secrets.SSH_USER }}"
-          echo "TARGET_DIR: ${{ secrets.TARGET_DIR }}"
-          echo "SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}"  # Don't print actual private key for security, just for debugging purpose.
-          echo "SSH_AUTH_SOCK: $SSH_AUTH_SOCK"
-          echo "SSH_AGENT_PID: $SSH_AGENT_PID"
-
       # Add ssh key to known hosts
-      - name: Add ssh key to known hosts (staging)
+      - name: Add SSH key to known hosts (main)
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -vvv -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
       # Deploy
       - name: Deploy
