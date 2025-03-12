@@ -114,10 +114,11 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       # Add ssh key to known hosts
-      - name: Add ssh key to known hosts (main)
+      - name: Add SSH key to known hosts (main)
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -vvv -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
       # Deploy
       - name: Deploy
