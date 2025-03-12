@@ -1,8 +1,6 @@
 <?php
 /**
  * HT
- *
- * @package hey-tony
  */
 namespace HT;
 
