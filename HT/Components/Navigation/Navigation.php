@@ -11,6 +11,7 @@ namespace HT\Components\Navigation;
 use HT\HT as HT;
 use HT\Objects\Swoop\Swoop;
 use HT\Components\Hero\Hero;
+use HT\Svg\Caret\CaretSvg;
 use Formation\Pub\Nav_Walker;
 
 /**
@@ -38,18 +39,53 @@ class Navigation {
 
 		$nav_walker = new Nav_Walker(
 			[
+				'ul_class'      => 'c-nav__list',
 				'li_class'      => 'c-nav__item',
 				'a_class'       => 'c-nav__link',
-				'before_output' => function( &$obj, &$output, $depth, $args ) use ( &$counter ) {
+				'before_link_output' => function ( &$obj, &$output, $depth, $args ) {
+					$output .= "<div class='c-nav__shift l-flex l-justify-between l-align-center' data-depth='$depth'>";
+				},
+				'before_output' => function( &$obj, &$output, $depth, $args, $item ) use ( &$counter ) {
+					$li_attr  = '';
+					$li_class = 'c-nav__item';
+
 					if ( 0 === $depth ) {
-						$delay        = ( 50 * $counter ) . 'ms';
-						$obj->li_attr = " style='--ht-nav-item-delay:$delay'";
+						$delay   = ( 50 * $counter ) . 'ms';
+						$li_attr = " style='--ht-nav-item-delay:$delay' ";
 
 						$counter++;
-					} else {
-						$obj->li_attr = '';
 					}
+
+					if ( $obj->has_children ) {
+						$li_class .= ' o-collapsible';
+						$li_attr  .= ' data-nav ';
+					}
+
+					$obj->li_attr  = $li_attr;
+					$obj->li_class = $li_class;
 				},
+				'after_output' => function ( &$obj, &$output, $depth, $args, $item ) {
+					$ul_attr  = '';
+					$ul_class = 'c-nav__list';
+
+					if ( $obj->has_children ) {
+						$id      = uniqid();
+						$title   = $item->title;
+						$output .= (
+							"<button class='c-nav__toggle o-collapsible__toggle l-flex' type='button' aria-controls='$id' aria-expanded='false' aria-label='$title submenu'>" .
+								CaretSvg::render( 'down', 'c-nav__caret e-trans l-flex' ) .
+							'</button>'
+						);
+
+						$ul_class .= ' o-collapsible__main no-js-collapsible t-inherit t-ls-none e-trans e-underline-r outline-snug';
+						$ul_attr   = " id='$id' role='list' data-collapsible-main ";
+					}
+
+					$output .= '</div>';
+
+					$obj->ul_attr  = $ul_attr;
+					$obj->ul_class = $ul_class;
+				}
 			]
 		);
 
@@ -122,7 +158,7 @@ class Navigation {
 			'<nav aria-label="Main">' .
 				"<div class='$classes'>" .
 					$logo .
-					"<ul class='c-nav__list l-flex l-align-center l-gm-s l-overflow-x-auto t-ls-none t-ws-nowrap e-accent-r' role='list'>$main_nav</ul>" .
+					"<ul class='c-nav__list c-nav__row l-flex l-align-center l-gm-s l-overflow-x-auto t-ls-none t-ws-nowrap e-accent-r' role='list'>$main_nav</ul>" .
 					'<div class="c-nav__hide no-js-none">' .
 						"<button class='c-nav__button c-nav__open l-flex l-relative l-zi-1' type='button' aria-haspopup='true' aria-controls='$id' aria-label='Open menu'>" .
 							'<span class="c-nav-icon l-block" data-nav-icon="1">' .
@@ -144,7 +180,7 @@ class Navigation {
 						'</div>' .
 						'<div class="c-nav__scroll l-wd-full">' .
 							'<div class="fusion-builder-row fusion-row l-mt-auto l-mb-auto">' .
-								"<ul class='c-nav__column l-mb-xs-all t-ls-none e-accent-r' role='list'></ul>" .
+								"<ul class='c-nav__column l-wd-full l-mb-xs-all t-ls-none e-accent-r' role='list'></ul>" .
 							'</div>' .
 						'</div>' .
 						'<div class="c-nav__hide">' .

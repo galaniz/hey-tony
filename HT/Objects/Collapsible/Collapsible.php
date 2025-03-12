@@ -22,13 +22,6 @@ class Collapsible {
 	public static $handle = 'ht-collapsible';
 
 	/**
-	 * Path in assets folder for css and js.
-	 *
-	 * @var string
-	 */
-	public static $asset_path = 'Objects/Collapsible/Collapsible';
-
-	/**
 	 * Default shortcode and render attributes.
 	 *
 	 * @var array {
@@ -54,13 +47,6 @@ class Collapsible {
 	 */
 	public function __construct() {
 		add_shortcode( self::$handle, [$this, 'shortcode'] );
-
-		HT::$shortcode_handles[] = self::$handle;
-
-		HT::$scripts_styles[ self::$handle ] = [
-			'style'  => self::$asset_path,
-			'script' => self::$asset_path,
-		];
 	}
 
 	/**

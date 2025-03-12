@@ -1,8 +1,6 @@
 <?php
 /**
  * HT
- *
- * @package hey-tony
  */
 namespace HT;
 
@@ -119,6 +117,10 @@ class HT {
 			'label'  => 'Services',
 			'layout' => 'cards',
 			'nav'    => true,
+		],
+		'ht_tool'       => [
+			'label' => 'Tools',
+			'layout' => 'media-text',
 		],
 	];
 

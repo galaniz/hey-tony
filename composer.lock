@@ -1,0 +1,62 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "49cb69242783a537e2fd45249331a7cb",
+    "packages": [
+        {
+            "name": "alanizcreative/wp-theme-formation",
+            "version": "3.0.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/galaniz/wp-theme-formation.git",
+                "reference": "a49fca4a5a04889616dd999921dd896d41c73ad6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/galaniz/wp-theme-formation/zipball/a49fca4a5a04889616dd999921dd896d41c73ad6",
+                "reference": "a49fca4a5a04889616dd999921dd896d41c73ad6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Formation/globals.php"
+                ],
+                "psr-4": {
+                    "Formation\\": "Formation"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graciela Alaniz",
+                    "email": "alanizcreative@gmail.com"
+                }
+            ],
+            "description": "Provide base, utilities and added functionality for building WordPress themes",
+            "support": {
+                "issues": "https://github.com/galaniz/wp-theme-formation/issues",
+                "source": "https://github.com/galaniz/wp-theme-formation/tree/3.0.21"
+            },
+            "time": "2023-03-02T04:10:37+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
+}

@@ -3,6 +3,4 @@ vendor/
 assets/css/
 assets/js/
 assets/chunk*
-composer.lock
-package-lock.json
 .DS_Store

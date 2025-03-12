@@ -1,0 +1,126 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - staging
+      - main
+
+jobs:
+  deploy-staging:
+    if: github.ref_name == 'staging'
+    runs-on: ubuntu-latest
+    env:
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      TARGET_DIR: /home/heyton/staging.heytony.ca/wp-content/themes/avada-child
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up php for composer
+      - name: Setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer
+
+      # Install php dependencies with composer
+      - name: Install php dependencies
+        run: composer install --no-dev
+
+      # Dump autoload for composer
+      - name: Dump autoload
+        run: composer dump-autoload
+
+      # Set up node.js
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install npm dependencies
+      - name: Install npm dependencies
+        run: |
+          npm install
+          npm run build
+
+      # Setup ssh
+      - name: Setup ssh for staging
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      # Add ssh key to known hosts
+      - name: Add SSH key to known hosts (main)
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      # Deploy
+      - name: Deploy
+        run: |
+          rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:$TARGET_DIR
+
+  deploy-main:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    env:
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      TARGET_DIR: /home/heyton/public_html/wp-content/themes/avada-child
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up php for composer
+      - name: Setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer
+
+      # Install php dependencies with composer
+      - name: Install php dependencies
+        run: composer install --no-dev
+
+      # Dump autoload for composer
+      - name: Dump autoload
+        run: composer dump-autoload
+
+      # Set up node.js
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install npm dependencies
+      - name: Install npm dependencies
+        run: |
+          npm install
+          npm run build
+
+      # Setup ssh
+      - name: Setup ssh for main
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      # Add ssh key to known hosts
+      - name: Add SSH key to known hosts (main)
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      # Deploy
+      - name: Deploy
+        run: |
+          rsync -avzr --delete --delete-excluded --exclude-from='exclude-list.txt' -e "ssh -p $SSH_PORT" ./ $SSH_USER@$SSH_HOST:$TARGET_DIR

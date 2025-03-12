@@ -14,6 +14,7 @@ use HT\Objects\Overlap\Overlap;
 use HT\Objects\Overlap\OverlapVertical;
 use HT\Objects\Flush\Flush;
 use HT\Objects\Slider\Slider;
+use HT\Objects\MediaText\MediaText;
 use HT\Svg\Caret\CaretSvg;
 use function Formation\additional_script_data;
 
@@ -625,6 +626,17 @@ class Posts {
 					);
 				}
 
+				if ( 'media-text' === $layout ) {
+					$output .= MediaText::render_item(
+						[
+							'title'         => $title,
+							'content'       => get_the_content(),
+							'media_id'      => $media_id,
+							'heading_level' => $heading_level,
+						]
+					);
+				}
+
 				$index++;
 			}
 
@@ -666,6 +678,15 @@ class Posts {
 
 				if ( 'overlap' === $layout ) {
 					$output = Overlap::render(
+						[
+							'content' => $output,
+							'class'   => $pagination ? 'js-insert l-empty' : '',
+						]
+					);
+				}
+
+				if ( 'media-text' === $layout ) {
+					$output = MediaText::render(
 						[
 							'content' => $output,
 							'class'   => $pagination ? 'js-insert l-empty' : '',

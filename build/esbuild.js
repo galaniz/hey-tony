@@ -32,7 +32,6 @@ const assets = {
   'Components/Loader/Loader': styleOnly,
   'Components/Notice/Notice': styleScript,
   'Components/TableOfContents/TableOfContents': styleScript,
-  'Objects/Collapsible/Collapsible': styleScript,
   'Objects/Overflow/Overflow': styleScript,
   'Objects/Slider/Slider': styleScript,
   'Objects/Tabs/Tabs': styleScript

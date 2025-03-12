@@ -43,20 +43,6 @@ class TableOfContents {
 	];
 
 	/**
-	 * Temporarily save modified date.
-	 *
-	 * @var string
-	 */
-	public static $current_mod_date = '';
-
-	/**
-	 * Temporarily save modified date.
-	 *
-	 * @var string
-	 */
-	public static $current_mod_date_gmt = '';
-
-	/**
 	 * Set save post and shortcode actions, styles and scripts.
 	 *
 	 * @return void
@@ -64,33 +50,6 @@ class TableOfContents {
 	public function __construct() {
 		add_action( 'save_post_post', [$this, 'on_save_headings'], 10, 2 );
 		add_shortcode( self::$handle, [$this, 'shortcode'] );
-		add_filter(
-			'wp_insert_post_data',
-			function( $data ) {
-				if ( ! empty( self::$current_mod_date ) && ! empty( self::$current_mod_date_gmt ) ) {
-					$data['post_modified']     = self::$current_mod_date;
-					$data['post_modified_gmt'] = self::$current_mod_date_gmt;
-				}
-
-				return $data;
-			},
-			10,
-			1
-		);
-		add_action(
-			'post_updated',
-			function( $post_id, $post_after, $post_before ) {
-				$current_date = gmdate( 'Y-m-d' );
-				$compare_date = gmdate( 'Y-m-d', strtotime( $post_before->post_modified ) );
-
-				if ( $current_date !== $compare_date ) {
-					self::$current_mod_date     = $post_before->post_modified;
-					self::$current_mod_date_gmt = $post_before->post_modified_gmt;
-				}
-			},
-			10,
-			3
-		);
 
 		HT::$scripts_styles[ self::$handle ] = [
 			'style'        => self::$asset_path,
@@ -101,13 +60,7 @@ class TableOfContents {
 				}
 
 				return true;
-			},
-			'dependencies' => [
-				'ht-collapsible' => [
-					'style'  => Collapsible::$asset_path,
-					'script' => Collapsible::$asset_path,
-				],
-			],
+			}
 		];
 	}
 
