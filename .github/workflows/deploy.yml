@@ -58,7 +58,7 @@ jobs:
       - name: Add ssh key to known hosts (staging)
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       # Deploy
       - name: Deploy
@@ -107,16 +107,16 @@ jobs:
           npm run build
 
       # Setup ssh
-      - name: Setup ssh for staging
+      - name: Setup ssh for main
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       # Add ssh key to known hosts
-      - name: Add ssh key to known hosts (staging)
+      - name: Add ssh key to known hosts (main)
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       # Deploy
       - name: Deploy
